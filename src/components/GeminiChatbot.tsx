@@ -21,6 +21,7 @@ import {
 import ReactMarkdown from 'react-markdown';
 import { ChatMessage, ComprehensiveResult } from '../types';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
+import { requestChatResponse } from '../services/chatService';
 
 interface GeminiChatbotProps {
   result?: ComprehensiveResult;
@@ -144,27 +145,12 @@ Bạn có thể đặt câu hỏi hoặc chọn một trong các gợi ý bên d
 
       const contextData = includeContext ? buildContextPayload() : undefined;
 
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: apiMessages,
-          currentContext: contextData,
-        }),
-      });
+      const replyContent = await requestChatResponse(apiMessages, contextData);
 
-      if (!response.ok) {
-        const errJson = await response.json().catch(() => ({}));
-        throw new Error(errJson.error || `HTTP ${response.status}: Lỗi máy chủ`);
-      }
-
-      const data = await response.json();
       const botMessage: ChatMessage = {
         id: `bot-${Date.now()}`,
         role: 'model',
-        content: data.content || 'Không có phản hồi từ máy chủ.',
+        content: replyContent || 'Không có phản hồi từ máy chủ.',
         timestamp: new Date(),
       };
 
