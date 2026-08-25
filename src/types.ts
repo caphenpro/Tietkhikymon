@@ -98,3 +98,31 @@ export interface BaguaPalace {
   duongJu: number[];
   amJu: number[];
 }
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'model' | 'assistant';
+  content: string;
+  timestamp: Date;
+  error?: boolean;
+}
+
+export interface ChatContextPayload {
+  formattedDateTime?: string;
+  termName?: string;
+  sunLongitude?: string;
+  termType?: string;
+  cungName?: string;
+  canChiYear?: string;
+  canChiMonth?: string;
+  canChiDay?: string;
+  canChiHour?: string;
+  phuDau?: string;
+  nguyenName?: string;
+  trangThaiCuc?: string;
+  doLechDays?: number;
+  cucKetLuan?: string;
+  amDuongDon?: string;
+  lunarInfo?: string;
+}
+

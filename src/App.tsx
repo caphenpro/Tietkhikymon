@@ -8,17 +8,20 @@ import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
+import { GeminiChatbot } from './components/GeminiChatbot';
 import { calculateComprehensiveResult, calculateSolarTermsForYear } from './astronomy/calculator';
 import { SolarTermEvent } from './types';
+import { Bot, Sparkles, MessageSquareText } from 'lucide-react';
 
 export default function App() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
   const [isLive, setIsLive] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<string>('overview');
 
-  // Modals state
+  // Modals & Chat state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
+  const [isFloatingChatOpen, setIsFloatingChatOpen] = useState<boolean>(false);
 
   // Live timer effect
   useEffect(() => {
@@ -57,7 +60,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200 relative">
       {/* Header */}
       <Header
         currentDate={currentDate}
@@ -67,6 +70,7 @@ export default function App() {
         onOpenExport={() => setIsExportOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        onOpenFloatingChat={() => setIsFloatingChatOpen((prev) => !prev)}
       />
 
       {/* Main Container */}
@@ -112,7 +116,42 @@ export default function App() {
             />
           </div>
         )}
+
+        {activeTab === 'chat' && (
+          <div className="space-y-6">
+            <GeminiChatbot result={result} />
+          </div>
+        )}
       </main>
+
+      {/* Floating Chat Trigger Button (only visible if floating chat is closed and not on full chat tab) */}
+      {!isFloatingChatOpen && activeTab !== 'chat' && (
+        <button
+          id="btn-floating-chat-trigger"
+          onClick={() => setIsFloatingChatOpen(true)}
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold rounded-2xl shadow-xl shadow-amber-950/50 hover:shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all group"
+          title="Mở Trợ lý AI Hỏi Đáp Kỳ Môn"
+        >
+          <div className="relative">
+            <Bot className="w-5 h-5" />
+            <Sparkles className="w-3 h-3 text-white absolute -top-1.5 -right-1.5 animate-spin [animation-duration:4s]" />
+          </div>
+          <span className="text-xs sm:text-sm">Hỏi Kỳ Môn AI</span>
+          <span className="flex h-2 w-2 relative">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+          </span>
+        </button>
+      )}
+
+      {/* Floating Chat Drawer */}
+      {isFloatingChatOpen && activeTab !== 'chat' && (
+        <GeminiChatbot
+          result={result}
+          isFloating={true}
+          onClose={() => setIsFloatingChatOpen(false)}
+        />
+      )}
 
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950/80 py-4 text-center text-xs text-slate-400">
@@ -135,6 +174,13 @@ export default function App() {
             >
               Xuất dữ liệu (.MD)
             </button>
+            <span>•</span>
+            <button
+              onClick={() => setActiveTab('chat')}
+              className="hover:text-amber-300 text-amber-400/90 font-medium transition-colors"
+            >
+              Hỏi đáp AI
+            </button>
           </div>
         </div>
       </footer>
@@ -155,3 +201,4 @@ export default function App() {
     </div>
   );
 }
+
