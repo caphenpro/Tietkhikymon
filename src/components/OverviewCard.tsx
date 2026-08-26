@@ -188,34 +188,67 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
                   <Moon className="w-4 h-4 text-cyan-400" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-white">Âm Lịch & Điểm Sóc (Trăng Mới)</h3>
-                  <p className="text-xs text-slate-400">Định vị chu kỳ hội tụ Nhật - Nguyệt</p>
+                  <h3 className="text-base font-bold text-white">Âm Lịch & Chu Kỳ Điểm Sóc</h3>
+                  <p className="text-xs text-slate-400">Khoảng cách 2 điểm Sóc & Tiết Khí định tháng</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30 font-mono">
-                  Ngày {newMoon.lunarDay} Âm Lịch
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-500/30 font-mono">
+                  Ngày {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay}
+                </span>
+                <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${
+                  newMoon.isLeapMonth 
+                    ? 'bg-amber-950/70 text-amber-300 border-amber-500/40' 
+                    : 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40'
+                }`}>
+                  {newMoon.fullMonthDisplay}
                 </span>
               </div>
             </div>
 
-            {/* Lunar Month summary */}
-            <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 mb-3 flex items-center justify-between">
-              <div>
-                <div className="text-xs text-slate-400">Quy mô tháng âm lịch:</div>
-                <div className="text-sm font-semibold text-white mt-0.5">
-                  Tháng {newMoon.totalMonthDays} ngày (
-                  <span className={newMoon.monthType === 'Tháng đủ' ? 'text-emerald-400' : 'text-amber-400'}>
-                    {newMoon.monthType}
-                  </span>
-                  )
+            {/* Lunar Full Date Banner */}
+            <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-3 mb-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">
+                    Thời Điểm Âm Lịch
+                  </div>
+                  <div className="text-base sm:text-lg font-bold text-white font-mono mt-0.5">
+                    {newMoon.lunarFullDateText}
+                  </div>
                 </div>
+                <span className={`text-xs px-2.5 py-1 rounded-lg font-medium border ${
+                  newMoon.totalMonthDays === 30
+                    ? 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
+                    : 'bg-slate-800 text-slate-300 border-slate-700'
+                }`}>
+                  {newMoon.monthType}
+                </span>
               </div>
-              <div className="text-right">
-                <div className="text-xs text-slate-400">Tiến độ tuần trăng:</div>
-                <div className="text-sm font-mono font-medium text-cyan-300 mt-0.5">
-                  {Math.round((newMoon.lunarDay / newMoon.totalMonthDays) * 100)}%
+
+              {/* Solar Terms contained in this Lunar Month */}
+              <div className="mt-2.5 pt-2.5 border-t border-slate-800/80 text-xs flex flex-wrap items-center justify-between gap-1 text-slate-300">
+                <span className="text-slate-400">Tiết khí trong tháng:</span>
+                <div className="flex items-center gap-1.5 flex-wrap font-mono text-[11px]">
+                  {newMoon.tiets.length > 0 ? (
+                    <span className="px-1.5 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-800/50">
+                      Tiết: {newMoon.tiets.join(', ')}
+                    </span>
+                  ) : (
+                    <span className="px-1.5 py-0.5 rounded bg-rose-950/40 text-rose-300 border border-rose-800/50">
+                      Không có Tiết
+                    </span>
+                  )}
+                  {newMoon.khis.length > 0 ? (
+                    <span className="px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/50">
+                      Khí: {newMoon.khis.join(', ')}
+                    </span>
+                  ) : (
+                    <span className="px-1.5 py-0.5 rounded bg-amber-950/40 text-amber-300 border border-amber-800/50">
+                      Không có Khí
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

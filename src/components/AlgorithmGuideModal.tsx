@@ -60,14 +60,22 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
           <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-2">
             <h4 className="font-bold text-cyan-400 text-sm flex items-center gap-2">
               <Moon className="w-4 h-4 text-cyan-400" />
-              2. Điểm Sóc (New Moon) & Ngày Mùng 1 Âm Lịch
+              2. Điểm Sóc (New Moon) & Quy Chuẩn Tháng Âm Lịch Thiên Văn
             </h4>
             <p>
               Điểm Sóc là thời điểm giao hội Nhật - Nguyệt khi hiệu số kinh độ Hoàng đạo (λ<sub>Moon</sub> - λ<sub>Sun</sub>) = 0°. Ngày dương lịch chứa điểm Sóc (theo múi giờ địa phương Việt Nam UTC+7) được quy ước làm <strong>ngày Mùng 1</strong> của tháng âm lịch.
             </p>
-            <p className="text-slate-400">
-              Khoảng cách giữa hai điểm Sóc liên tiếp quyết định tháng đó là <strong>Tháng đủ (30 ngày)</strong> hay <strong>Tháng thiếu (29 ngày)</strong>.
-            </p>
+            <ul className="list-disc list-inside space-y-1 pl-1 text-slate-400">
+              <li>
+                <strong className="text-slate-200">Khoảng cách 2 điểm Sóc:</strong> Mỗi tháng âm lịch là khoảng thời gian kéo dài từ Điểm Sóc này đến Điểm Sóc kế tiếp, tạo nên Tháng đủ (30 ngày) hoặc Tháng thiếu (29 ngày).
+              </li>
+              <li>
+                <strong className="text-slate-200">Điều kiện đủ Tiết và Khí:</strong> Một tháng âm lịch chính quy phải chứa đủ cả 1 Tiết khí (Tiết lệnh) và 1 Trung khí. Cụ thể <strong>Tháng 1 (Tháng Giêng)</strong> là tháng chứa Tiết <em>Lập Xuân</em> (315°) và Trung khí <em>Vũ Thủy</em> (330°).
+              </li>
+              <li>
+                <strong className="text-slate-200">Quy tắc Tháng Nhuận:</strong> Nếu một tháng chỉ có Trung khí mà không có Tiết khí (hoặc thiếu cặp Tiết & Khí chuẩn), tháng đó được xác định là <strong>Tháng Nhuận</strong> của tháng đó (như Tháng 2 Nhuận, Tháng 6 Nhuận...).
+              </li>
+            </ul>
           </div>
 
           {/* Section 3: Quy luật Siêu Thần - Tiếp Khí - Nhuận Cục */}

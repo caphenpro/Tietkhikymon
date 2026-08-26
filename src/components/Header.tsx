@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Clock, Calendar, Sparkles, Download, HelpCircle, Bot } from 'lucide-react';
+import { Compass, Clock, Download, HelpCircle } from 'lucide-react';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
 
 interface HeaderProps {
@@ -10,7 +10,6 @@ interface HeaderProps {
   onOpenExport: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  onOpenFloatingChat?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -21,14 +20,12 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenExport,
   activeTab,
   setActiveTab,
-  onOpenFloatingChat,
 }) => {
   const tabs = [
     { id: 'overview', label: 'Tổng Quan & Luận Cục' },
     { id: 'compass', label: 'Bát Quái & 9 Cung' },
     { id: 'table', label: 'Bảng 24 Tiết Khí Năm' },
     { id: 'moon', label: 'Điểm Sóc & Âm Lịch' },
-    { id: 'chat', label: 'Hỏi Đáp Kỳ Môn AI', isAi: true },
   ];
 
   return (
@@ -104,19 +101,6 @@ export const Header: React.FC<HeaderProps> = ({
               <Download className="w-3.5 h-3.5" />
               <span>Xuất Báo Cáo</span>
             </button>
-
-            {/* Quick Ask AI button if floating chat exists */}
-            {onOpenFloatingChat && (
-              <button
-                id="btn-quick-ai"
-                onClick={onOpenFloatingChat}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500/20 to-amber-600/20 hover:from-amber-500/30 hover:to-amber-600/30 text-amber-300 border border-amber-500/40 rounded-lg transition-all shadow-sm"
-                title="Mở cửa sổ Trợ lý AI Hỏi Đáp"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                <span className="font-semibold">Hỏi AI</span>
-              </button>
-            )}
           </div>
         </div>
 
@@ -135,15 +119,7 @@ export const Header: React.FC<HeaderProps> = ({
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >
-                {tab.isAi ? (
-                  <Sparkles className={`w-3.5 h-3.5 ${isActive ? 'text-amber-400 animate-pulse' : 'text-amber-400/70'}`} />
-                ) : null}
                 <span>{tab.label}</span>
-                {tab.isAi && (
-                  <span className="text-[9px] px-1 rounded font-mono uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    AI
-                  </span>
-                )}
               </button>
             );
           })}

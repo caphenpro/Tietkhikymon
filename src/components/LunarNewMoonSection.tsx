@@ -1,5 +1,5 @@
 import React from 'react';
-import { Moon, Calendar, Clock, Sparkles, Orbit, Compass } from 'lucide-react';
+import { Moon, Calendar, Clock, Sparkles, Orbit, CheckCircle2, AlertCircle, Layers } from 'lucide-react';
 import { NewMoonInfo } from '../types';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
 
@@ -19,40 +19,70 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      {/* Top Main Banner */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg relative overflow-hidden">
+        <div className="absolute -right-10 -top-10 w-56 h-56 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-800">
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0">
-              <Moon className="w-6 h-6 text-cyan-400" />
+            <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 shadow-inner">
+              <Moon className="w-7 h-7 text-cyan-400" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                  Điểm Sóc Thiên Văn & Chu Kỳ Âm Lịch
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                  Âm Lịch & Điểm Sóc Thiên Văn
                 </h3>
-                <span className="text-xs px-2 py-0.5 rounded font-medium bg-cyan-950 text-cyan-300 border border-cyan-500/30">
-                  Hội Tụ Nhật - Nguyệt
+                <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
+                  newMoon.isLeapMonth
+                    ? 'bg-amber-950/70 text-amber-300 border-amber-500/40'
+                    : 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40'
+                }`}>
+                  {newMoon.fullMonthDisplay}
+                </span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-950 text-cyan-300 border border-cyan-500/30">
+                  {newMoon.monthType}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Xác định chính xác ngày Mùng 1 Âm lịch và phân định Tháng đủ (30 ngày) / Tháng thiếu (29 ngày)
+              <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                Định vị chu kỳ hội tụ Nhật - Nguyệt • Khoảng cách 2 điểm Sóc & Tiết Khí định tháng
               </p>
             </div>
           </div>
 
-          <div className="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-right self-start md:self-auto">
-            <div className="text-[10px] uppercase text-slate-400 font-semibold">Hôm nay Âm Lịch</div>
-            <div className="text-xl font-bold text-cyan-300 font-mono">
-              Ngày Mùng {newMoon.lunarDay}
+          <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl text-left md:text-right shrink-0">
+            <div className="text-[11px] uppercase text-slate-400 font-semibold tracking-wider">
+              Hôm nay Âm Lịch (UTC+7)
+            </div>
+            <div className="text-xl sm:text-2xl font-bold text-cyan-300 font-mono mt-0.5">
+              Ngày {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay}
+            </div>
+            <div className="text-xs font-mono text-slate-300 mt-0.5">
+              {newMoon.fullMonthDisplay} • Năm {newMoon.lunarYearCanChi}
             </div>
           </div>
         </div>
 
+        {/* Full Date Banner */}
+        <div className="mt-5 bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <Calendar className="w-5 h-5 text-amber-400 shrink-0" />
+            <div>
+              <span className="text-xs text-slate-400 font-medium">Toàn văn ngày tháng âm lịch:</span>
+              <div className="text-base sm:text-lg font-bold text-white font-mono">
+                {newMoon.lunarFullDateText}
+              </div>
+            </div>
+          </div>
+          <div className="text-xs text-slate-400 font-mono">
+            {newMoon.lunarDay} / {newMoon.totalMonthDays} ngày ({percentComplete}% tuần trăng)
+          </div>
+        </div>
+
         {/* Lunar Month Timeline Visualizer */}
-        <div className="mt-6">
+        <div className="mt-5">
           <div className="flex justify-between text-xs text-slate-400 mb-2">
-            <span>Tiến độ tuần trăng: Ngày {newMoon.lunarDay} / {newMoon.totalMonthDays}</span>
+            <span>Tiến độ tuần trăng trong tháng: Ngày {newMoon.lunarDay} / {newMoon.totalMonthDays}</span>
             <span className="font-mono text-cyan-400 font-semibold">{percentComplete}%</span>
           </div>
 
@@ -65,7 +95,7 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
           </div>
 
           {/* 4 Moon Phases Markers */}
-          <div className="grid grid-cols-4 gap-2 mt-4 text-center text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 text-center text-xs">
             <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
               <div className="text-base mb-1">🌑</div>
               <div className="font-semibold text-slate-200">Điểm Sóc (0°)</div>
@@ -89,6 +119,116 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
               <div className="font-semibold text-slate-200">Hạ Huyền (270°)</div>
               <div className="text-[10px] text-slate-400">Ngày 22 - Ngày 23</div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Rules & Solar Terms Analysis for this Lunar Month */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Rules & Definition Card (2 cols) */}
+        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+          <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
+            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
+              <Layers className="w-4 h-4 text-amber-400" />
+            </div>
+            <div>
+              <h4 className="text-base font-bold text-white">Quy Chuẩn Thiên Văn Định Tháng Âm Lịch</h4>
+              <p className="text-xs text-slate-400">Nguyên lý điểm Sóc & phối hợp Tiết Khí</p>
+            </div>
+          </div>
+
+          <div className="space-y-3 text-xs">
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-semibold text-slate-200">1. Khoảng cách giữa 2 điểm Sóc:</span>
+                <p className="text-slate-400 mt-0.5">
+                  Tháng âm lịch bắt đầu chính xác từ Điểm Sóc (Mùng 1) đến Điểm Sóc tiếp theo. Độ dài chu kỳ giao hội là 29 ngày (tháng thiếu) hoặc 30 ngày (tháng đủ).
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 flex items-start gap-3">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-semibold text-slate-200">2. Điều kiện đủ Tiết khí và Trung khí:</span>
+                <p className="text-slate-400 mt-0.5">
+                  Một tháng âm lịch chính quy phải chứa đủ cả 1 Tiết (Tiết lệnh) và 1 Khí (Trung khí). Cụ thể <strong>Tháng 1 (Tháng Giêng)</strong> là tháng chứa Tiết <em>Lập Xuân</em> và Trung khí <em>Vũ Thủy</em>.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 flex items-start gap-3">
+              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-semibold text-slate-200">3. Quy tắc Tháng Nhuận:</span>
+                <p className="text-slate-400 mt-0.5">
+                  Nếu một tháng âm lịch chỉ có Khí mà không có Tiết (hoặc thiếu cặp Tiết & Khí chuẩn), tháng đó được xác định là <strong>Tháng Nhuận</strong> của tháng đó (như Tháng 2 Nhuận, Tháng 6 Nhuận...).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 font-medium">
+            <span className="text-amber-400 font-semibold">Kết luận tháng hiện tại: </span>
+            <span>{newMoon.monthRuleExplanation}</span>
+          </div>
+        </div>
+
+        {/* Solar Terms Inside This Month (1 col) */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <Orbit className="w-4 h-4 text-cyan-400" />
+                <h4 className="text-sm font-bold text-white">Tiết Khí Trong Tháng Này</h4>
+              </div>
+              <span className="text-[11px] font-mono px-2 py-0.5 bg-slate-800 text-slate-300 rounded">
+                {newMoon.termsInMonth.length} Sự kiện
+              </span>
+            </div>
+
+            <div className="space-y-2.5 mt-3">
+              {newMoon.termsInMonth.length === 0 && (
+                <div className="p-3 rounded-xl bg-slate-950/60 text-slate-400 text-xs text-center">
+                  Không có tiết khí nào rơi vào khoảng giữa 2 điểm Sóc này.
+                </div>
+              )}
+
+              {newMoon.termsInMonth.map((term, idx) => {
+                const isTiet = term.category === 'Tiết';
+                return (
+                  <div
+                    key={idx}
+                    className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-1"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-white">{term.name} ({term.degree}°)</span>
+                      <span
+                        className={`text-[10px] px-2 py-0.5 rounded-full font-medium border ${
+                          isTiet
+                            ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30'
+                            : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
+                        }`}
+                      >
+                        {isTiet ? 'Tiết lệnh' : 'Trung khí'}
+                      </span>
+                    </div>
+                    <div className="text-slate-400 font-mono text-[11px]">
+                      {formatVietnamDateTime(term.exactDate)} (UTC+7)
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="text-[11px] text-slate-400 bg-slate-950/50 p-2.5 rounded-lg border border-slate-800/80 font-mono">
+            {newMoon.hasTiet && newMoon.hasKhi
+              ? '✓ Đủ cả Tiết và Khí (Tháng chính)'
+              : newMoon.hasKhi && !newMoon.hasTiet
+              ? '⚠ Chỉ có Khí không có Tiết (Tháng nhuận)'
+              : '⚠ Thiếu Tiết hoặc Khí'}
           </div>
         </div>
       </div>

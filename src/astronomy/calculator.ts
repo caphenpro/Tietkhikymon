@@ -7,99 +7,18 @@ import {
   TIET_KHI_CUNG_MAP,
 } from './solarTerms';
 import {
-  findExactNewMoonTime,
   findExactSolarTermTime,
-  getMoonSunDiff,
   getSunEclipticLongitude,
 } from './sunMoon';
-import { tinhBatTu, getLocalComponents } from './canChi';
+import { tinhBatTu } from './canChi';
 import { getNextSolarTermEvent, getRealSolarTermEvent, luanCucKyMonSieuThan } from './kyMon';
+import { getAstronomicalLunarDate } from './lunarCalendar';
 
 /**
- * Tìm điểm Sóc trước đó (Mùng 1 tháng hiện tại) và điểm Sóc tiếp theo (Mùng 1 tháng sau)
+ * Lấy thông tin Âm lịch & Điểm Sóc chi tiết theo thuật toán thiên văn
  */
 export function getNewMoonInfo(date: Date): NewMoonInfo {
-  // Tìm điểm Sóc trước đó trong vòng 35 ngày trước
-  const startSearchPrev = new Date(date.getTime() - 35 * 86400 * 1000);
-  let socAPrev: Date | null = null;
-
-  // Quét theo bước 6 giờ để tìm đoạn đổi dấu (d1 > 180 và d2 < 180)
-  let tCheck = new Date(date.getTime());
-  const stepMs = 6 * 3600 * 1000;
-
-  while (tCheck.getTime() > startSearchPrev.getTime()) {
-    const tPrev = new Date(tCheck.getTime() - stepMs);
-    const d1 = getMoonSunDiff(tPrev);
-    const d2 = getMoonSunDiff(tCheck);
-
-    if (d1 > 180 && d2 < 180) {
-      socAPrev = findExactNewMoonTime(tPrev, tCheck, 500);
-      break;
-    }
-    tCheck = tPrev;
-  }
-
-  // Nếu không tìm thấy bằng quét ngược, tìm quét xuôi
-  if (!socAPrev) {
-    let t = new Date(startSearchPrev.getTime());
-    while (t.getTime() < date.getTime()) {
-      const tNext = new Date(t.getTime() + stepMs);
-      const d1 = getMoonSunDiff(t);
-      const d2 = getMoonSunDiff(tNext);
-      if (d1 > 180 && d2 < 180) {
-        socAPrev = findExactNewMoonTime(t, tNext, 500);
-        break;
-      }
-      t = tNext;
-    }
-  }
-
-  // Điểm Sóc tiếp theo
-  let socBNext: Date | null = null;
-  const searchStartB = socAPrev ? new Date(socAPrev.getTime() + 20 * 86400 * 1000) : new Date(date.getTime());
-  const searchEndB = new Date(searchStartB.getTime() + 16 * 86400 * 1000);
-
-  let tCheckB = new Date(searchStartB.getTime());
-  while (tCheckB.getTime() < searchEndB.getTime()) {
-    const tNext = new Date(Math.min(tCheckB.getTime() + stepMs, searchEndB.getTime()));
-    const d1 = getMoonSunDiff(tCheckB);
-    const d2 = getMoonSunDiff(tNext);
-    if (d1 > 180 && d2 < 180) {
-      socBNext = findExactNewMoonTime(tCheckB, tNext, 500);
-      break;
-    }
-    tCheckB = tNext;
-  }
-
-  const prevSocDate = socAPrev || new Date(date.getTime() - 15 * 86400 * 1000);
-  const nextSocDate = socBNext || new Date(date.getTime() + 15 * 86400 * 1000);
-
-  // Tính ngày âm lịch theo lịch Việt Nam (UTC+7)
-  const locSelected = getLocalComponents(date);
-  const locPrevSoc = getLocalComponents(prevSocDate);
-  const locNextSoc = getLocalComponents(nextSocDate);
-
-  const utcDaySelected = Date.UTC(locSelected.year, locSelected.month - 1, locSelected.day);
-  const utcDayPrevSoc = Date.UTC(locPrevSoc.year, locPrevSoc.month - 1, locPrevSoc.day);
-  const utcDayNextSoc = Date.UTC(locNextSoc.year, locNextSoc.month - 1, locNextSoc.day);
-
-  const lunarDay = Math.floor((utcDaySelected - utcDayPrevSoc) / 86400000) + 1;
-  const totalMonthDays = Math.floor((utcDayNextSoc - utcDayPrevSoc) / 86400000);
-
-  const passedMs = date.getTime() - prevSocDate.getTime();
-  const remainingMs = nextSocDate.getTime() - date.getTime();
-
-  return {
-    prevSocDate,
-    prevPassedString: formatTimedeltaHMS(passedMs),
-    prevPassedDays: passedMs / 86400000,
-    nextSocDate,
-    nextRemainingString: formatTimedeltaHMS(remainingMs),
-    nextRemainingDays: remainingMs / 86400000,
-    lunarDay: Math.max(1, Math.min(lunarDay, 30)),
-    totalMonthDays: totalMonthDays >= 28 && totalMonthDays <= 31 ? totalMonthDays : 30,
-    monthType: totalMonthDays === 30 ? 'Tháng đủ' : 'Tháng thiếu',
-  };
+  return getAstronomicalLunarDate(date);
 }
 
 /**
@@ -116,7 +35,7 @@ export function calculateComprehensiveResult(date: Date): ComprehensiveResult {
   const termRemainingMs = nextTermEvent.exactNextDate.getTime() - date.getTime();
 
   const batTu = tinhBatTu(date, lonNow);
-  const newMoon = getNewMoonInfo(date);
+  const newMoon = getAstronomicalLunarDate(date);
   const kyMon = luanCucKyMonSieuThan(date);
 
   const currentCung = TIET_KHI_CUNG_MAP[currentTermEvent.termName] || { cungName: 'Khác', cungNumber: 0 };
@@ -223,7 +142,11 @@ export function generateMarkdownExport(
   md += `- **Đã trôi qua**: ${selected.currentTerm.passedString}\n`;
   md += `- **Còn lại đến ${selected.nextTerm.name}**: ${selected.nextTerm.remainingString}\n\n`;
 
-  md += `## 2. THÔNG TIN ĐIỂM SÓC (TRĂNG MỚI)\n`;
+  md += `## 2. THÔNG TIN ÂM LỊCH & ĐIỂM SÓC (TRĂNG MỚI)\n`;
+  md += `- **Ngày Âm Lịch**: ${selected.newMoon.lunarFullDateText}\n`;
+  md += `- **Tháng Âm Lịch**: ${selected.newMoon.fullMonthDisplay} (${selected.newMoon.monthType})\n`;
+  md += `- **Quy tắc xác định**: ${selected.newMoon.monthRuleExplanation}\n`;
+  md += `- **Tiết & Khí trong tháng**: Tiết [${selected.newMoon.tiets.join(', ') || 'Không có'}], Khí [${selected.newMoon.khis.join(', ') || 'Không có'}]\n`;
   md += `- **Điểm Sóc trước đó (Mùng 1)**: ${formatVietnamDateTime(selected.newMoon.prevSocDate)} (Cách đây: ${selected.newMoon.prevPassedString})\n`;
   md += `- **Điểm Sóc tiếp theo (Mùng 1 tháng sau)**: ${formatVietnamDateTime(selected.newMoon.nextSocDate)} (Còn lại: ${selected.newMoon.nextRemainingString})\n\n`;
 

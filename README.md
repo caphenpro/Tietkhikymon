@@ -1,6 +1,6 @@
-# Tiết Khí & Kỳ Môn Độn Giáp (Skyfield Precision Engine)
+# Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương (Điểm Sóc New Moon)**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)** và **Trợ Lý AI Hỏi Đáp Kỳ Môn (Gemini 3.7 Flash + Offline Engine)**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)** và **La Bàn 9 Cung Hậu Thiên Bát Quái**.
 
 ---
 
@@ -14,11 +14,12 @@
 - Phân bổ 24 Tiết khí vào **8 Cung Hậu Thiên Bát Quái** (Khảm 1, Cấn 8, Chấn 3, Tốn 4, Ly 9, Khôn 2, Đoài 7, Càn 6).
 - Đồng hồ đếm ngược đến Tiết Khí kế tiếp và tính thời gian đã trôi qua trong Tiết Khí đương lệnh.
 
-### 2. 🌑 Điểm Sóc (New Moon) & Lịch Âm Dương
-- Xác định chính xác khoảnh khắc giao hội Nhật - Nguyệt ($(\lambda_{Moon} - \lambda_{Sun}) = 0^\circ$).
-- Xác định **ngày Mùng 1 Âm lịch** theo chuẩn múi giờ Việt Nam (UTC+7).
-- Tính chu kỳ tuần trăng thực tế để kết luận **Tháng đủ (30 ngày)** hoặc **Tháng thiếu (29 ngày)**.
-- Tra cứu ngày Âm lịch hiện tại và đếm ngược đến điểm Sóc tiếp theo.
+### 2. 🌑 Lịch Sóc Âm Dương & Định Tháng Âm Lịch Thiên Văn
+- **Định nghĩa tháng Âm lịch**: Tháng âm lịch được xác định chính xác bằng **khoảng cách giữa 2 điểm Sóc liên tiếp** ($(\lambda_{Moon} - \lambda_{Sun}) = 0^\circ$).
+- **Quy tắc đủ Tiết & Khí**: Một tháng âm lịch chính quy phải chứa **đủ cả 1 Tiết khí (Tiết lệnh) và 1 Trung khí**.
+- **Mốc xác định Tháng 1 (Tháng Giêng)**: Tháng 1 là tháng chứa Tiết **Lập Xuân** ($315^\circ$) và Trung khí **Vũ Thủy** ($330^\circ$).
+- **Quy tắc Tháng Nhuận**: Nếu trong khoảng thời gian giữa 2 điểm Sóc của một tháng chỉ có Trung khí mà **không có Tiết khí** (hoặc thiếu Tiết khí tương ứng), tháng đó được xác định là **Tháng Nhuận** của tháng đó.
+- Phân định **Tháng đủ (30 ngày)** và **Tháng thiếu (29 ngày)** cùng tiến độ tuần trăng thực tế.
 
 ### 3. 🔮 Bát Tự Tứ Trụ (Can Chi 4 Trụ)
 - **Trụ Năm**: Khởi đổi năm mới chính xác tại mốc kinh độ $315^\circ$ (**Tiết Lập Xuân**), chuẩn xác theo nguyên lý Mệnh lý & Kỳ Môn cổ điển.
@@ -44,17 +45,7 @@
 - Tự động làm nổi bật Cung và Tiết khí đang quản sự tại thời điểm tra cứu.
 - Chi tiết Ngũ hành, Phương vị, Quẻ Hậu Thiên và chuỗi Cục số tương ứng của từng Cung.
 
-### 6. 🤖 Trợ Lý AI Hỏi Đáp Kỳ Môn (Gemini 3.7 + Offline Knowledge Engine)
-- **Mô hình AI Gemini 3.7 Flash**: Tích hợp phân tích câu hỏi chuyên sâu về thiên văn và Kỳ Môn Độn Giáp.
-- **Đính kèm Ngữ Cảnh Thời Gian Thực**: Tự động đưa toàn bộ thông số đang hiển thị trên web app vào câu hỏi để AI giải thích lý do ra Cục số đó.
-- **Cơ chế Dự Phòng Đa Tầng (Multi-Tier Resilience)**:
-  - Server-side API (`/api/chat`)
-  - Serverless Functions Netlify (`/.netlify/functions/chat`)
-  - Client-side Gemini API fallback
-  - **Bộ Tri Thức Offline Tự Động**: Đảm bảo trợ lý luôn phản hồi nhanh và chính xác 100% kể cả khi chạy offline hoặc deploy trên static host.
-- Giao diện chat nổi (floating widget) tiện lợi hoặc tab toàn màn hình.
-
-### 7. 📊 Bảng 24 Tiết Khí Toàn Năm & Xuất Báo Cáo
+### 6. 📊 Bảng 24 Tiết Khí Toàn Năm & Xuất Báo Cáo
 - Tra cứu toàn bộ 24 Tiết Khí cho bất kỳ năm nào từ quá khứ đến tương lai.
 - Tìm kiếm, lọc theo Tiết lệnh / Trung khí, hiển thị giờ chuyển tiết chuẩn UTC+7.
 - **Xuất Báo Cáo Markdown (`Tiet_Khi_Nam_YYYY.md`)** và sao chép bảng tính nhanh chóng.
@@ -66,8 +57,7 @@
 - **Frontend**: [React 18+](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vitejs.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/), [Lucide React Icons](https://lucide.dev/)
 - **Backend / Server**: [Express](https://expressjs.com/), [esbuild](https://esbuild.github.io/), [tsx](https://github.com/privatenumber/tsx)
-- **AI Integration**: `@google/genai` (Google Gemini 3.7 Flash)
-- **Thiên Văn Học**: Thuật toán tính toán vị trí Mặt Trời & Mặt Trăng (Solar Longitude & Moon Phase Calculations)
+- **Thiên Văn Học**: Thuật toán tính toán vị trí Mặt Trời & Mặt Trăng (VSOP87 & ELP2000 precision algorithms)
 
 ---
 
@@ -90,20 +80,13 @@
    npm install
    ```
 
-3. **Cấu hình biến môi trường (Tùy chọn cho Gemini AI):**
-   Tạo file `.env` tại thư mục gốc:
-   ```env
-   GEMINI_API_KEY=your_gemini_api_key_here
-   ```
-   *(Lưu ý: Nếu không cấu hình API Key, Trợ lý AI vẫn hoạt động bình thường nhờ Bộ tri thức Offline tích hợp sẵn).*
-
-4. **Chạy máy chủ phát triển (Development):**
+3. **Chạy máy chủ phát triển (Development):**
    ```bash
    npm run dev
    ```
    Mở trình duyệt và truy cập: `http://localhost:3000`
 
-5. **Đóng gói sản phẩm (Production Build):**
+4. **Đóng gói sản phẩm (Production Build):**
    ```bash
    npm run build
    npm start
@@ -115,31 +98,29 @@
 
 ```
 Tietkhikymon/
-├── public/                 # Static assets & Netlify redirects
+├── public/                 # Static assets & favicon
 ├── src/
-│   ├── astronomy/          # Thuật toán thiên văn 24 Tiết Khí & Điểm Sóc
+│   ├── astronomy/          # Thuật toán thiên văn 24 Tiết Khí & Âm Lịch
 │   │   ├── calculator.ts   # Bộ tính toán tổng hợp & xuất Markdown
-│   │   ├── lunarCalendar.ts# Thuật toán tính Điểm Sóc (New Moon)
+│   │   ├── canChi.ts       # Bát Tự Tứ Trụ Can Chi & Ngũ Hổ/Ngũ Thử
+│   │   ├── kyMon.ts        # Thuật toán Định Cục Kỳ Môn Độn Giáp
+│   │   ├── lunarCalendar.ts# Thuật toán điểm Sóc & quy tắc tháng Âm lịch
 │   │   ├── solarTerms.ts   # Tọa độ kinh độ Mặt Trời & 24 Tiết Khí
-│   │   └── types.ts        # Định nghĩa kiểu dữ liệu thiên văn
+│   │   └── sunMoon.ts      # Vị trí Mặt Trời, Mặt Trăng & Điểm Sóc
 │   ├── components/         # Các thành phần giao diện React
 │   │   ├── AlgorithmGuideModal.tsx # Modal thuyết minh thuật toán
 │   │   ├── ExportModal.tsx         # Modal xuất báo cáo Markdown
-│   │   ├── GeminiChatbot.tsx       # Giao diện Chatbot AI đa năng
 │   │   ├── Header.tsx              # Thanh tiêu đề & điều hướng tab
 │   │   ├── KyMonDunJiaPanel.tsx    # Bảng luận Cục Kỳ Môn chi tiết
-│   │   ├── LunarNewMoonSection.tsx # Bảng Điểm Sóc & Âm lịch
+│   │   ├── LunarNewMoonSection.tsx # Bảng Điểm Sóc & Âm lịch chi tiết
 │   │   ├── NinePalacesCompass.tsx  # La bàn Lạc Thư 9 Cung
-│   │   ├── OverviewCard.tsx        # Thẻ tổng quan Tiết Khí & Bát Tự
+│   │   ├── OverviewCard.tsx        # Thẻ tổng quan Tiết Khí & Âm Lịch
 │   │   ├── TimeInputControl.tsx    # Bộ điều khiển chọn thời gian / Live
 │   │   └── YearTermsTable.tsx      # Bảng 24 Tiết Khí toàn năm
-│   ├── services/           # Xử lý Chatbot & Tri thức Offline
-│   │   ├── chatService.ts      # Kết nối đa tầng API / Local
-│   │   └── offlineKnowledge.ts # Bộ máy tri thức Kỳ Môn & Tiết Khí
 │   ├── App.tsx             # Entry component chính
 │   ├── main.tsx            # React root entry
 │   └── types.ts            # Global TypeScript types
-├── server.ts               # Express backend & API proxy
+├── server.ts               # Express backend & static hosting
 ├── package.json            # Scripts & Dependencies
 └── README.md               # Tài liệu dự án
 ```

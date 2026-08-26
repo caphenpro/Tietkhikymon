@@ -14,17 +14,39 @@ export interface SolarTermEvent {
   direction: string;
 }
 
-export interface NewMoonInfo {
+export interface LunarTermDetail {
+  name: string;
+  category: 'Tiết' | 'Khí';
+  degree: number;
+  exactDate: Date;
+}
+
+export interface LunarDateInfo {
+  lunarDay: number;
+  lunarMonth: number;
+  lunarMonthName: string;
+  isLeapMonth: boolean;
+  fullMonthDisplay: string;
+  lunarYear: number;
+  lunarYearCanChi: string;
+  lunarFullDateText: string;
+  totalMonthDays: number;
+  monthType: string;
   prevSocDate: Date;
+  nextSocDate: Date;
   prevPassedString: string;
   prevPassedDays: number;
-  nextSocDate: Date;
   nextRemainingString: string;
   nextRemainingDays: number;
-  lunarDay: number;
-  totalMonthDays: number;
-  monthType: 'Tháng đủ' | 'Tháng thiếu';
+  termsInMonth: LunarTermDetail[];
+  tiets: string[];
+  khis: string[];
+  hasTiet: boolean;
+  hasKhi: boolean;
+  monthRuleExplanation: string;
 }
+
+export type NewMoonInfo = LunarDateInfo;
 
 export interface BatTuInfo {
   yearCanChi: string;
