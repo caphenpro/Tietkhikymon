@@ -1,6 +1,6 @@
 {
   "name": "Tính Tiết Khí & Kỳ Môn Độn Giáp",
-  "description": "Ứng dụng tính toán thiên văn 24 Tiết khí, Điểm Sóc Âm lịch, Bát Tự Can Chi và Định Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục) chuẩn xác.",
+  "description": "Ứng dụng tính toán thiên văn 24 Tiết khí, Điểm Sóc Âm lịch, Bát Tự Can Chi và Lập Bàn Kỳ Môn Độn Giáp hoàn chỉnh với luận giải Thập Can Khắc Ứng, Bát Môn Cung, Cửu Tinh, Bát Thần và Cách Cục theo Bí Kíp Toàn Thư.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

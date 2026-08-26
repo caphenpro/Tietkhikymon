@@ -1,6 +1,16 @@
 import { CAN, CHI } from './canChi';
+import {
+  STEM_COMBINATIONS,
+  DOOR_PALACE_MATRIX,
+  STAR_PROFILES,
+  GOD_PROFILES,
+  StemComboDetail,
+  DoorPalaceDetail,
+  GodDetail,
+} from './kymonFormations';
 
 // Danh sách Lục Nghi & Tam Kỳ chuẩn theo thứ tự vận hành
+
 // Mậu -> Kỷ -> Canh -> Tân -> Nhâm -> Quý -> Đinh -> Bính -> Ất
 export const KY_NGHI_SEQUENCE = ['Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý', 'Đinh', 'Bính', 'Ất'];
 
@@ -78,6 +88,15 @@ export interface PalaceData {
   formations: string[]; // Các cách cục cát hung tại cung
   battleSign?: string; // Khắc ứng việc quân / việc đời
   summary: string;
+  stemComboDetail?: StemComboDetail;
+  doorPalaceDetail?: DoorPalaceDetail;
+  starProfile?: { element: string; nature: string; baseSign: string };
+  godProfile?: GodDetail;
+  kichHinh?: string;
+  nhapMo?: string;
+  thangDien?: string;
+  baThang?: string;
+  batKhaKich?: string;
 }
 
 export interface CompleteKyMonChart {
@@ -401,9 +420,20 @@ export function buildCompleteKyMonChart(
     const isDq = duongQuyPalace === p;
     const isAq = amQuyPalace === p;
 
+    // Formations collection
     const forms: string[] = [];
 
-    // 10 Can tương khắc ứng (Thiên can gia Địa can)
+    // Retrieve detailed combo models
+    const stemCombo = hStem && eStem ? STEM_COMBINATIONS[hStem]?.[eStem] : undefined;
+    const doorDetail = door ? DOOR_PALACE_MATRIX[door]?.[p] : undefined;
+    const starProf = hStar ? STAR_PROFILES[hStar] : undefined;
+    const godProf = god ? GOD_PROFILES[god] : undefined;
+
+    if (stemCombo) {
+      forms.push(`${stemCombo.name} (${stemCombo.nature})`);
+    }
+
+    // 10 Can tương khắc ứng bổ sung nếu chưa có trong stemCombo
     if (hStem && eStem) {
       if (hStem === 'Mậu' && eStem === 'Bính') forms.push('Long Hồi Thủ (Thanh Long phản thủ - Rất cát)');
       if (hStem === 'Bính' && eStem === 'Mậu') forms.push('Phi Điểu Điệt Huyệt (Chim bay về tổ - Đại cát)');
@@ -411,20 +441,34 @@ export function buildCompleteKyMonChart(
       if (hStem === 'Tân' && eStem === 'Ất') forms.push('Bạch Hổ Xướng Cuồng (Hổ trắng gào thét - Hung)');
       if (hStem === 'Đinh' && eStem === 'Quý') forms.push('Chu Tước Đầu Giang (Sẻ son lao sông - Hung)');
       if (hStem === 'Quý' && eStem === 'Đinh') forms.push('Đằng Xà Yêu Kiều (Rắn bay uốn éo - Hung)');
-      if (hStem === 'Canh' && eStem === 'Quý') forms.push('Đại Cách (Canh gia Quý - Trở ngại)');
-      if (hStem === 'Canh' && eStem === 'Nhâm') forms.push('Tiểu Cách (Canh gia Nhâm)');
-      if (hStem === 'Canh' && eStem === 'Kỷ') forms.push('Hình Cách (Canh gia Kỷ - Kiện tụng hình thương)');
-      if (hStem === 'Canh' && eStem === 'Bính') forms.push('Bạch Nhập Huỳnh Hoặc (Thái Bạch nhập Huỳnh - Giặc tới)');
-      if (hStem === 'Bính' && eStem === 'Canh') forms.push('Huỳnh Nhập Bạch (Huỳnh Hoặc nhập Bạch - Giặc rút)');
-      if (hStem === 'Mậu' && eStem === 'Mậu') forms.push('Phục Ngâm Mậu');
-      if (hStem === 'Ất' && eStem === 'Ất') forms.push('Nhật Kỳ Phục Ngâm');
-      if (hStem === 'Bính' && eStem === 'Bính') forms.push('Nguyệt Kỳ Bột Soái');
-      if (hStem === 'Đinh' && eStem === 'Đinh') forms.push('Kỳ Nhập Thái Âm (Cát)');
-      if (hStem === 'Ất' && eStem === 'Đinh') forms.push('Kỳ Nghi Tương Tả (Văn thư cát lợi)');
-      if (hStem === 'Ất' && eStem === 'Bính') forms.push('Kỳ Nghi Thuận Toại');
-      if (hStem === 'Mậu' && eStem === 'Đinh') forms.push('Thanh Long Diệu Minh');
-      if (hStem === 'Đinh' && eStem === 'Mậu') forms.push('Thanh Long Chuyển Quang');
     }
+
+    // Lục Nghi Kích Hình
+    let kichHinhStr: string | undefined = undefined;
+    if (hStem === 'Mậu' && p === 3) kichHinhStr = 'Lục Nghi Kích Hình: Giáp Tý Mậu đáo Chấn 3 (Tý Mão tương hình - Hung)';
+    else if (hStem === 'Kỷ' && p === 2) kichHinhStr = 'Lục Nghi Kích Hình: Giáp Tuất Kỷ đáo Khôn 2 (Tuất Mùi tương hình - Hung)';
+    else if (hStem === 'Canh' && p === 8) kichHinhStr = 'Lục Nghi Kích Hình: Giáp Thân Canh đáo Cấn 8 (Thân Dần tương hình/xung - Đại Hung)';
+    else if (hStem === 'Tân' && p === 9) kichHinhStr = 'Lục Nghi Kích Hình: Giáp Ngọ Tân đáo Ly 9 (Ngọ Ngọ tự hình - Hung)';
+    else if (hStem === 'Nhâm' && p === 4) kichHinhStr = 'Lục Nghi Kích Hình: Giáp Thìn Nhâm đáo Tốn 4 (Thìn Thìn tự hình - Hung)';
+    else if (hStem === 'Quý' && p === 4) kichHinhStr = 'Lục Nghi Kích Hình: Giáp Dần Quý đáo Tốn 4 (Dần Tị tương hình - Hung)';
+
+    if (kichHinhStr) forms.push(kichHinhStr);
+
+    // Tam Kỳ Nhập Mộ
+    let nhapMoStr: string | undefined = undefined;
+    if (hStem === 'Ất' && (p === 6 || p === 2)) nhapMoStr = `Tam Kỳ Nhập Mộ: Nhật Kỳ Ất Mộc nhập Mộ tại ${info.name} (Hào quang u ám - Hung)`;
+    else if (hStem === 'Bính' && p === 6) nhapMoStr = 'Tam Kỳ Nhập Mộ: Nguyệt Kỳ Bính Hỏa nhập Mộ tại Càn 6 (Mặt trời lặn hướng Tây Bắc - Hung)';
+    else if (hStem === 'Đinh' && p === 8) nhapMoStr = 'Tam Kỳ Nhập Mộ: Tinh Kỳ Đinh Hỏa nhập Mộ tại Cấn 8 (Sao mờ trong núi sâu - Hung)';
+
+    if (nhapMoStr) forms.push(nhapMoStr);
+
+    // Tam Kỳ Thăng Điện
+    let thangDienStr: string | undefined = undefined;
+    if (hStem === 'Ất' && p === 3) thangDienStr = 'Tam Kỳ Thăng Điện: Ất đáo Chấn 3 (Nhật xuất Lôi môn - Rực rỡ quang minh)';
+    else if (hStem === 'Bính' && p === 9) thangDienStr = 'Tam Kỳ Thăng Điện: Bính đáo Ly 9 (Nguyệt chiếu Đoan môn - Đại Cát)';
+    else if (hStem === 'Đinh' && p === 7) thangDienStr = 'Tam Kỳ Thăng Điện: Đinh đáo Đoài 7 (Tinh xuất Kim môn - Đại Cát)';
+
+    if (thangDienStr) forms.push(thangDienStr);
 
     // 9 Độn Biến Hóa
     if (['Sinh Môn', 'Khai Môn'].includes(door) && hStem === 'Bính' && (eStem === 'Đinh' || god === 'Cửu Địa' || god === 'Thái Âm')) {
@@ -463,21 +507,32 @@ export function buildCompleteKyMonChart(
     }
 
     // Cung Ba Thắng & Năm Cung Không Kích Được
-    if (p === trucPhuNewPalace) forms.push('Cung Đệ Nhất Thắng (Thiên Ất Trực Phù lâm - Kích phương xung thắng lớn)');
-    if (god === 'Cửu Thiên') forms.push('Cung Đệ Nhị Thắng (Cửu Thiên cư - Oai phong lẫm liệt)');
-    if (door === 'Sinh Môn') forms.push('Cung Đệ Tam Thắng (Sinh Môn cư - Đánh từ Sinh sang Tử bách chiến bách thắng)');
+    let baThangStr: string | undefined = undefined;
+    if (p === trucPhuNewPalace) {
+      baThangStr = 'Cung Đệ Nhất Thắng (Thiên Ất Trực Phù lâm - Kích phương xung thắng lớn)';
+      forms.push(baThangStr);
+    }
+    if (god === 'Cửu Thiên') {
+      baThangStr = 'Cung Đệ Nhị Thắng (Cửu Thiên cư - Oai phong lẫm liệt, đánh đâu thắng đó)';
+      forms.push(baThangStr);
+    }
+    if (door === 'Sinh Môn') {
+      baThangStr = 'Cung Đệ Tam Thắng (Sinh Môn cư - Đánh từ Sinh sang Tử bách chiến bách thắng)';
+      forms.push(baThangStr);
+    }
+
+    let batKhaKichStr: string | undefined = undefined;
+    if (['Trực Phù', 'Cửu Thiên', 'Cửu Địa', 'Thái Âm', 'Lục Hợp'].includes(god)) {
+      batKhaKichStr = `Năm Cung Bất Khả Kích: Phương ${info.name} có ${god} ngự, kỵ tấn công trực diện`;
+      forms.push(batKhaKichStr);
+    }
 
     // Môn Bách & Cung Bách
-    // Khai/Kinh (Kim) ở Chấn/Tốn (Mộc) -> Môn bức Cung (Môn Bách)
-    // Thương/Đỗ (Mộc) ở Cấn/Khôn (Thổ) -> Môn bức Cung
-    // Hưu (Thủy) ở Ly (Hỏa) -> Môn bức Cung
-    // Cảnh (Hỏa) ở Càn/Đoài (Kim) -> Môn bức Cung
-    // Sinh/Tử (Thổ) ở Khảm (Thủy) -> Môn bức Cung
-    if (['Khai Môn', 'Kinh Môn'].includes(door) && [3, 4].includes(p)) forms.push('Môn Bách (Cửa Kim khắc Cung Mộc - Cát hóa hung)');
-    if (['Thương Môn', 'Đỗ Môn'].includes(door) && [2, 8].includes(p)) forms.push('Môn Bách (Cửa Mộc khắc Cung Thổ)');
-    if (door === 'Hưu Môn' && p === 9) forms.push('Môn Bách (Cửa Thủy khắc Cung Hỏa)');
-    if (door === 'Cảnh Môn' && [6, 7].includes(p)) forms.push('Môn Bách (Cửa Hỏa khắc Cung Kim)');
-    if (['Sinh Môn', 'Tử Môn'].includes(door) && p === 1) forms.push('Môn Bách (Cửa Thổ khắc Cung Thủy)');
+    if (doorDetail?.relation.includes('Môn Bách')) {
+      forms.push(`Môn Bách (${doorDetail.relation})`);
+    } else if (doorDetail?.relation.includes('Môn Chế')) {
+      forms.push(`Môn Chế (${doorDetail.relation})`);
+    }
 
     // Phục Ngâm & Phản Ngâm
     if (door === DOOR_ORIGINAL_PALACE[p]) forms.push('Môn Phục Ngâm (Cửa đóng bản cung)');
@@ -488,14 +543,9 @@ export function buildCompleteKyMonChart(
     });
 
     let battleSign = '';
-    if (god === 'Trực Phù') battleSign = 'Đại tướng quân ngự, cờ trống uy nghiêm, vạn ác tiêu tan.';
-    else if (god === 'Cửu Thiên') battleSign = 'Lợi dương binh, phát pháo khởi chiến, thế như vũ bão.';
-    else if (god === 'Cửu Địa') battleSign = 'Lợi phục binh, hạ trại đóng lũy, giấu quân sâu kín.';
-    else if (god === 'Thái Âm') battleSign = 'Lợi trốn lẩn, mưu ngầm, đàm phán bí mật.';
-    else if (god === 'Lục Hợp') battleSign = 'Lợi hòa giải, liên quân, giao dịch, người làm mối.';
-    else if (god === 'Bạch Hổ') battleSign = 'Sát phạt hung bạo, kỵ xuất trận trực diện.';
-    else if (god === 'Huyền Vũ') battleSign = 'Phòng gián điệp, trộm cắp, tin đồn thất thiệt.';
-    else if (god === 'Đằng Xà') battleSign = 'Phòng quái lạ, kinh sợ, hoang mang trong quân.';
+    if (godProf) {
+      battleSign = `${godProf.significance} ${godProf.military}`;
+    }
 
     palaces[p] = {
       palaceNum: p,
@@ -515,9 +565,18 @@ export function buildCompleteKyMonChart(
       isLocVi: isLv,
       isDuongQuy: isDq,
       isAmQuy: isAq,
-      formations: forms,
+      formations: Array.from(new Set(forms)),
       battleSign,
       summary: `${god ? god + ' • ' : ''}${hStar} • ${door} • ${hStem}/${eStem}`,
+      stemComboDetail: stemCombo,
+      doorPalaceDetail: doorDetail,
+      starProfile: starProf,
+      godProfile: godProf,
+      kichHinh: kichHinhStr,
+      nhapMo: nhapMoStr,
+      thangDien: thangDienStr,
+      baThang: baThangStr,
+      batKhaKich: batKhaKichStr,
     };
   }
 
