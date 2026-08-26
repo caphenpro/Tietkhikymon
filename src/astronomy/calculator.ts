@@ -162,5 +162,7 @@ export function generateMarkdownExport(
     md += `| ${idx + 1} | ${term.name} | ${term.category} | ${cungDisplay} | ${term.degree}° | ${formatted} |\n`;
   });
 
+  md += `\n---\n*Dữ liệu được xuất từ hệ thống **Tiết Khí & Kỳ Môn Độn Giáp v2.4.0** (Jean Meeus Astronomical Engine).*\n`;
+
   return md;
 }

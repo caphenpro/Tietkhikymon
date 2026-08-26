@@ -1,6 +1,25 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
+[![Version](https://img.shields.io/badge/version-v2.4.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
+
 Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)** và **La Bàn 9 Cung Hậu Thiên Bát Quái**.
+
+---
+
+## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
+
+### 🚀 **Phiên bản hiện tại: `v2.4.0`** *(Phát hành: 26/08/2026)*
+**Tên mã:** *Bí Kíp Toàn Thư & Luận Giải Khắc Ứng Tinh Thần*
+
+- 🏷️ **Số Hoá Hệ Thống Phiên Bản**: Đánh số phiên bản `v2.4.0` trực tiếp trên thanh tiêu đề (Header), tích hợp cửa sổ xem **Nhật Ký Cập Nhật (Changelog Viewer)** và tệp lưu trữ [CHANGELOG.md](CHANGELOG.md) theo chuẩn quốc tế.
+- 📜 **100 Cặp Thập Can Khắc Ứng**: Luận giải chi tiết Thiên can gia Địa can (*Long Hồi Thủ, Phi Điểu Điệt Huyệt, Bạch Hổ Xướng Cuồng, Thanh Long Đào Tẩu...*) kèm thơ phú cổ thư và 4 phương diện thực tế (*Công Danh, Tài Vận, Xuất Hành, Bệnh Tật*).
+- 🚪 **Bát Môn & Cung Khắc Ứng**: Phân tích Ngũ hành tương quan Môn - Cung với **Tượng Tĩnh** (nội bộ, phòng thủ) và **Tượng Động** (xuất quân, khởi sự).
+- ⭐ **Hồ Sơ Cửu Tinh & Bát Thần**: Chi tiết tính chất Vượng/Tướng/Hưu/Tù/Phế của 9 Tinh và ý nghĩa hộ trì, việc quân binh pháp của 8 Thần.
+- ⚔️ **Cách Cục & Trận Thế Đặc Biệt**: Tự động nhận diện Lục Nghi Kích Hình, Tam Kỳ Nhập Mộ, Tam Kỳ Thăng Điện, Cung Ba Thắng, Năm Cung Bất Khả Kích, 9 Độn Biến Hóa.
+
+👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 

@@ -9,8 +9,10 @@ import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
+import { ChangelogModal } from './components/ChangelogModal';
 import { calculateComprehensiveResult, calculateSolarTermsForYear } from './astronomy/calculator';
 import { SolarTermEvent } from './types';
+import { APP_VERSION, APP_RELEASE_DATE } from './version';
 
 export default function App() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
@@ -20,6 +22,7 @@ export default function App() {
   // Modals state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
+  const [isChangelogOpen, setIsChangelogOpen] = useState<boolean>(false);
 
   // Live timer effect
   useEffect(() => {
@@ -66,6 +69,7 @@ export default function App() {
         onToggleLive={() => setIsLive((prev) => !prev)}
         onOpenGuide={() => setIsGuideOpen(true)}
         onOpenExport={() => setIsExportOpen(true)}
+        onOpenChangelog={() => setIsChangelogOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
@@ -130,11 +134,25 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-slate-900 bg-slate-950/80 py-4 text-center text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div>
+          <div className="flex items-center gap-2">
             <span>Tính Tiết Khí & Kỳ Môn Độn Giáp • </span>
-            <span className="text-slate-400 font-mono">Jean Meeus Precision Astronomical Engine</span>
+            <button
+              onClick={() => setIsChangelogOpen(true)}
+              className="inline-flex items-center gap-1 font-mono text-amber-400 hover:text-amber-300 font-semibold px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 transition-colors"
+              title="Nhấn để xem ghi chú phiên bản"
+            >
+              <span>v{APP_VERSION}</span>
+              <span className="text-[10px] text-slate-400 font-normal">({APP_RELEASE_DATE})</span>
+            </button>
           </div>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsChangelogOpen(true)}
+              className="hover:text-amber-300 transition-colors text-amber-400/90 font-medium"
+            >
+              Nhật ký cập nhật
+            </button>
+            <span>•</span>
             <button
               onClick={() => setIsGuideOpen(true)}
               className="hover:text-amber-300 transition-colors"
@@ -164,6 +182,11 @@ export default function App() {
         result={result}
         yearTerms={yearTerms}
         year={currentYear}
+      />
+
+      <ChangelogModal
+        isOpen={isChangelogOpen}
+        onClose={() => setIsChangelogOpen(false)}
       />
     </div>
   );

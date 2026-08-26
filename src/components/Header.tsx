@@ -1,6 +1,7 @@
 import React from 'react';
-import { Compass, Clock, Download, HelpCircle } from 'lucide-react';
+import { Compass, Clock, Download, HelpCircle, FileText, Sparkles } from 'lucide-react';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
+import { APP_VERSION } from '../version';
 
 interface HeaderProps {
   currentDate: Date;
@@ -8,6 +9,7 @@ interface HeaderProps {
   onToggleLive: () => void;
   onOpenGuide: () => void;
   onOpenExport: () => void;
+  onOpenChangelog?: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
 }
@@ -18,6 +20,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleLive,
   onOpenGuide,
   onOpenExport,
+  onOpenChangelog,
   activeTab,
   setActiveTab,
 }) => {
@@ -33,19 +36,28 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-30 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          {/* Brand & Title */}
+          {/* Brand & Title with Digitized Version Badge */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-amber-600/30 to-amber-700/20 border border-amber-500/40 flex items-center justify-center shadow-inner">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-amber-600/30 to-amber-700/20 border border-amber-500/40 flex items-center justify-center shadow-inner shrink-0">
               <Compass className="w-6 h-6 text-amber-400 animate-[spin_30s_linear_infinite]" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
                   <span>Tiết Khí & Kỳ Môn Độn Giáp</span>
-                  <span className="text-xs px-2 py-0.5 rounded font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                    Skyfield Engine
-                  </span>
                 </h1>
+
+                {/* Clickable Digitized Version Badge */}
+                <button
+                  id="btn-header-version"
+                  onClick={onOpenChangelog}
+                  title="Nhấn để xem ghi chú cập nhật phiên bản mới nhất"
+                  className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-xs font-bold bg-gradient-to-r from-amber-500/20 to-amber-600/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 hover:border-amber-400 transition-all shadow-sm group"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>v{APP_VERSION}</span>
+                  <Sparkles className="w-3 h-3 text-amber-400 group-hover:rotate-12 transition-transform" />
+                </button>
               </div>
               <p className="text-xs text-slate-400">
                 Thiên văn 24 Tiết Khí • Lịch Sóc Âm Dương • Định Cục Siêu Thần Tiếp Khí
@@ -81,6 +93,17 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="text-[10px] uppercase font-semibold text-slate-400">
                 {isLive ? 'Live' : 'Đã chọn'}
               </span>
+            </button>
+
+            {/* Changelog Button */}
+            <button
+              id="btn-open-changelog"
+              onClick={onOpenChangelog}
+              className="flex items-center gap-1 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg transition-colors"
+              title="Xem nhật ký cập nhật phiên bản"
+            >
+              <FileText className="w-3.5 h-3.5 text-amber-400" />
+              <span>Ghi chú v{APP_VERSION}</span>
             </button>
 
             {/* Guide Button */}
