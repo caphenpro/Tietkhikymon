@@ -11,18 +11,49 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.4.0';
+export const APP_VERSION = '2.5.0';
 export const APP_RELEASE_DATE = '2026-08-26';
-export const APP_CODENAME = 'Bí Kíp Toàn Thư & Luận Giải Khắc Ứng Tinh Thần';
+export const APP_CODENAME = 'Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.5.0',
+    releaseDate: '2026-08-26',
+    codename: 'Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời',
+    tagline: 'Phát hành trang Dự Trắc Bàn Kỳ Môn toàn diện với quy luật Tam Bàn, Chủ - Khách, Thân Mệnh và 6 phương diện đời sống.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung khu vực chuyên biệt dẫn trực tiếp từ phía dưới Bàn Kỳ Môn Hoàn Chỉnh tới Trang Dự Trắc Chi Tiết.',
+      'Tích hợp trang riêng "Dự Trắc Kỳ Môn" phân tích chuyên sâu toàn bộ quẻ theo nguyên bản Kỳ Môn Độn Giáp Bí Kíp Toàn Thư.',
+      'Luận giải Quy luật Tam Bàn (Thiên Sao, Nhân Môn, Địa Cung) và Quy tắc Chủ - Khách trong chiêm nghiệm thực tế.',
+      'Dự trắc Thân Mệnh (Nhân Sinh Quý Tiện): Hệ thống Lục Thân (Niên, Nguyệt, Nhật, Thời can), Thê thiếp (Ất, Đinh), Chồng (Canh), Tổ nghiệp (Sinh Môn) và Cô - Hư.',
+      'Dự trắc 6 phương diện đời sống: Hôn Nhân, Y Học Trị Bệnh (Thiên Nhuế 8 cung tạng phủ), Cầu Tài (Giáp Tý Mậu & Sinh Môn), Thi Cử Công Danh, Mất Vật Kẻ Trộm, Kiện Tụng Tranh Chấp.',
+    ],
+    added: [
+      'Module kymonPrognostication.ts tự động liên kết các cung vị thần sát, sao, môn, can trong quẻ với từng phương diện đời sống.',
+      'Component KyMonPrognosticationView với 8 tab chuyên đề chiêm nghiệm, hỗ trợ sao chép nhanh báo cáo.',
+      'Khu vực dẫn đường (Prognostication Section) đặt ngay phía dưới bản đồ Cửu Cung trên Bàn Kỳ Môn Hoàn Chỉnh.',
+      'Thêm tab điều hướng "Dự Trắc Kỳ Môn" trên thanh Header để truy cập tức thì.',
+    ],
+    improved: [
+      'Định dạng bảng phân tích tương quan sinh khắc giữa các đối tượng (Ất - Canh, Sinh Môn - Mậu, Thiên Tâm - Thiên Nhuế).',
+      'Tra cứu chẩn đoán tạng phủ bên trong và tổn thương bên ngoài theo vị trí sao Thiên Nhuế rơi vào 8 cung.',
+      'Tra cứu phân loại đồ vật mất theo 8 cung của Can Giờ và nhận diện kẻ trộm qua sao Thiên Bồng.',
+    ],
+    fixed: [
+      'Hoàn thiện luồng chuyển hướng giữa Bàn Kỳ Môn 9 Cung và Trang Dự Trắc không làm gián đoạn trạng thái quẻ.',
+    ],
+    astronomyNotes: [
+      'Dữ liệu dự trắc được tự động đồng bộ hóa thời gian thực (Live) hoặc theo quẻ do người dùng tự chọn.',
+    ],
+  },
   {
     version: '2.4.0',
     releaseDate: '2026-08-26',
     codename: 'Bí Kíp Toàn Thư & Luận Giải Khắc Ứng Tinh Thần',
     tagline: 'Số hóa phiên bản, hoàn thiện luận giải 100 cặp Thập Can Khắc Ứng, Bát Môn Cung, Cửu Tinh, Bát Thần và Cách Cục Binh Thư.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Số hoá hệ thống số hiệu phiên bản trên thanh tiêu đề và tích hợp trình xem ghi chú cập nhật (Changelog Modal).',
       'Hoàn thiện cơ sở dữ liệu luận giải 100 cặp Thập Can Khắc Ứng (Thiên can gia Địa can) kèm thơ phú cổ và 4 phương diện ứng dụng.',

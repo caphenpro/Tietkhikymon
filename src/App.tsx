@@ -7,6 +7,7 @@ import { NinePalacesCompass } from './components/NinePalacesCompass';
 import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
+import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
@@ -100,6 +101,17 @@ export default function App() {
             <KyMonCompleteBoard
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
+              onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+            />
+          </div>
+        )}
+
+        {activeTab === 'kymon-prognostication' && (
+          <div className="space-y-6">
+            <KyMonPrognosticationView
+              currentKyMon={result.kyMon}
+              currentBatTu={result.batTu}
+              onBackToBoard={() => setActiveTab('kymon-chart')}
             />
           </div>
         )}

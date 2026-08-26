@@ -23,6 +23,12 @@ import {
   Eye,
   Flame,
   ArrowRight,
+  Heart,
+  GraduationCap,
+  Search,
+  Scale,
+  User,
+  ExternalLink,
 } from 'lucide-react';
 import { CAN, CHI } from '../astronomy/canChi';
 import { buildCompleteKyMonChart, CompleteKyMonChart, PalaceData, PALACE_RING_CW } from '../astronomy/kymonChart';
@@ -31,6 +37,7 @@ import { KyMonInfo, BatTuInfo } from '../types';
 interface KyMonCompleteBoardProps {
   currentKyMon?: KyMonInfo;
   currentBatTu?: BatTuInfo;
+  onOpenPrognostication?: () => void;
 }
 
 // Bố cục ma trận Lạc Thư 3x3 chuẩn Kỳ Môn Độn Giáp:
@@ -46,6 +53,7 @@ const LAC_THU_GRID: number[][] = [
 export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
   currentKyMon,
   currentBatTu,
+  onOpenPrognostication,
 }) => {
   // Mode: 'auto' (đồng bộ với thời gian thực / tính toán thiên văn) hoặc 'manual' (tự chọn Cục & Can Chi)
   const [mode, setMode] = useState<'auto' | 'manual'>('auto');
@@ -940,6 +948,167 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
             <span className="font-mono text-amber-400">Trực Phù: Cung {chart.trucPhuNewPalace}</span>
           </div>
         </div>
+      </div>
+
+      {/* DEDICATED PROGNOSTICATION SECTION (DỰ TRẮC BÀN KỲ MÔN ĐƯỢC LẬP) */}
+      <div className="rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/30 border border-amber-500/40 p-5 sm:p-7 shadow-2xl space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-800">
+          <div className="flex items-start sm:items-center gap-3.5">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 shadow-inner">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+                  Dự Trắc Bàn Kỳ Môn Được Lập (Kỳ Môn Toàn Thư)
+                </h3>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  {chart.cucName}
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1">
+                Toàn bộ phương pháp chiêm nghiệm cát hung: <strong>Tam Bàn (Thiên - Nhân - Địa)</strong>, <strong>Chủ - Khách</strong>, <strong>Thân Mệnh (Sang Hèn)</strong> và <strong>6 Phương Diện Đời Sống Cụ Thể</strong>.
+              </p>
+            </div>
+          </div>
+
+          {onOpenPrognostication && (
+            <button
+              id="btn-goto-prognostication-page"
+              onClick={onOpenPrognostication}
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-amber-500/20 shrink-0 cursor-pointer group"
+            >
+              <span>Xem Trang Dự Trắc Chi Tiết</span>
+              <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </button>
+          )}
+        </div>
+
+        {/* 8 Highlights Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
+          {/* 1. Tam Bàn & Chủ Khách */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-amber-400 font-bold">
+              <Layers className="w-4 h-4" />
+              <span>Tam Bàn & Chủ Khách</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • <strong>Thiên thời:</strong> Sao khắc Môn cát, Môn khắc Sao hung.
+              <br />
+              • <strong>Nhân sự:</strong> Môn khắc Cung cát, Cung khắc Môn hung.
+              <br />
+              • <strong>Chủ Khách:</strong> Khách sinh Chủ ít hao tổn đại lợi.
+            </p>
+          </div>
+
+          {/* 2. Thân Mệnh Sang Hèn */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-cyan-400 font-bold">
+              <User className="w-4 h-4" />
+              <span>Thân Mệnh (Lục Thân)</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • Niên can (Cha Mẹ), Nguyệt (Anh Em), Nhật (Bản Thân), Thời (Con Nhỏ).
+              <br />
+              • Đắc Tam Kỳ vượng tướng phú quý; vào Tử Tù Mộ Tuyệt bần hàn.
+            </p>
+          </div>
+
+          {/* 3. Hôn Nhân & Vợ Chồng */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-rose-400 font-bold">
+              <Heart className="w-4 h-4" />
+              <span>1. Hôn Nhân & Vợ Chồng</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • <strong>Chồng (Canh)</strong> vs <strong>Vợ (Ất)</strong>, Lục Hợp làm mối.
+              <br />
+              • Cung Ất và Canh tương sinh tương hợp thì hạnh phúc trăm năm.
+            </p>
+          </div>
+
+          {/* 4. Y Học & Trị Bệnh */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-emerald-400 font-bold">
+              <HeartPulse className="w-4 h-4" />
+              <span>2. Y Học & Trị Bệnh</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • <strong>Thiên Nhuế (Bệnh):</strong> Chỉ tạng phủ & chứng bệnh 8 cung.
+              <br />
+              • <strong>Thiên Tâm / Kỳ Ất:</strong> Lương y khắc chế Thần Bệnh thì khỏi.
+            </p>
+          </div>
+
+          {/* 5. Cầu Tài & Giao Dịch */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-amber-300 font-bold">
+              <Coins className="w-4 h-4" />
+              <span>3. Cầu Tài & Buôn Bán</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • <strong>Giáp Tý Mậu</strong> là vốn, <strong>Sinh Môn</strong> là lợi tức.
+              <br />
+              • Sinh Môn sinh Mậu buôn bán đại lợi; Mậu sinh Sinh Môn phải bù vốn.
+            </p>
+          </div>
+
+          {/* 6. Thi Cử & Công Danh */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-purple-400 font-bold">
+              <GraduationCap className="w-4 h-4" />
+              <span>4. Thi Cử & Công Danh</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • Nhật can (Sĩ tử), Trực Phù (Chủ khảo), Kỳ Đinh (Bài thi văn chương).
+              <br />
+              • Khai Môn thăng quan văn, Đỗ Môn thăng quan võ.
+            </p>
+          </div>
+
+          {/* 7. Tìm Người & Mất Vật */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-blue-400 font-bold">
+              <Search className="w-4 h-4" />
+              <span>5. Mất Vật & Kẻ Trộm</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • Can giờ chỉ nơi rơi mất và giống loài đồ vật trong 8 cung.
+              <br />
+              • Sao <strong>Thiên Bồng</strong> chủ kẻ trộm; Phản Ngâm nhanh tìm lại.
+            </p>
+          </div>
+
+          {/* 8. Kiện Tụng & Tranh Chấp */}
+          <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-amber-500/40 transition-colors space-y-2">
+            <div className="flex items-center gap-2 text-teal-400 font-bold">
+              <Scale className="w-4 h-4" />
+              <span>6. Kiện Tụng & Tranh Chấp</span>
+            </div>
+            <p className="text-slate-300 text-[11px] leading-relaxed">
+              • Nhật can (Nguyên cáo), Thời can (Bị cáo), Trực Phù (Quan tòa).
+              <br />
+              • <strong>Kinh Môn & Cảnh Môn</strong> chỉ văn thư đơn kiện được chuẩn phê.
+            </p>
+          </div>
+        </div>
+
+        {/* Action Bar at bottom */}
+        {onOpenPrognostication && (
+          <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div className="text-slate-400 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>Nhấn vào nút bên dưới để mở toàn bộ trang luận giải dự trắc chuyên sâu theo đúng quẻ hiện tại:</span>
+            </div>
+            <button
+              onClick={onOpenPrognostication}
+              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold flex items-center justify-center gap-1.5 transition-colors"
+            >
+              <span>Xem Toàn Bộ Nội Dung Trang Dự Trắc</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* 6 Steps Detailed Breakdown & Classical Manuals from Bí Kíp Toàn Thư */}

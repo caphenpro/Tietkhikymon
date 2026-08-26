@@ -6,6 +6,32 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.5.0]] - 2026-08-26
+### Codename: *Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời*
+
+#### ✨ Tính Năng Mới (Added)
+- **Khu Vực Dự Trắc Dẫn Đường Trên Bàn Kỳ Môn**:
+  - Bố trí khối giao diện chuyên biệt ngay phía dưới bản đồ Cửu Cung trên **Bàn Kỳ Môn Hoàn Chỉnh**.
+  - Tóm lược nhanh các phương diện dự trắc của quẻ được lập kèm nút bấm **"Xem Trang Dự Trắc Chi Tiết →"**.
+- **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**:
+  - Tích hợp 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**:
+    1. **Quy Luật Tam Bàn & Phân Định Chủ - Khách**: Phân định Thiên bàn (Sao), Nhân bàn (Cửa), Địa bàn (Cung); đánh giá sự tổn - ích của Chủ và Khách khi khởi sự hoặc giao dịch.
+    2. **Dự Trắc Thân Mệnh (Nhân Sinh Quý Tiện)**: Hệ thống Lục Thân (Niên can Cha Mẹ, Nguyệt can Anh Em, Nhật can Bản Thân, Thời can Con Nhỏ, Thê thiếp Ất - Đinh, Chồng Canh), luận vinh khô sang hèn, Sinh Môn tổ nghiệp ly hương, Cô - Hư và ý nghĩa Cửu Tinh - Bát Môn trên cung mệnh.
+    3. **Hôn Nhân & Vợ Chồng**: Đánh giá tương quan sinh khắc giữa cung Ất (Vợ), Canh (Chồng), Đinh (Thiếp) và Lục Hợp (Người mối).
+    4. **Y Học, Trị Bệnh & Tìm Thầy Thuốc**: Tra cứu chi tiết tạng phủ bên trong và triệu chứng bên ngoài theo vị trí sao **Thiên Nhuế** tại 8 cung; xem sự sống chết qua Sinh - Tử Môn; tìm thầy thuốc qua sao **Thiên Tâm** và **Kỳ Ất**.
+    5. **Cầu Tài, Kinh Doanh & Giao Dịch**: Phân tích tiền vốn **Giáp Tý Mậu**, lợi tức **Sinh Môn**, và quan hệ mua bán Nhật can - Thời can.
+    6. **Thi Cử, Học Vấn & Công Danh**: Tra cứu sĩ tử (Nhật can), quan chủ khảo (**Trực Phù**), giám khảo (**Trực Sử**), bài thi (**Kỳ Đinh**), thăng chức quan văn (**Khai Môn**) và quan võ (**Đỗ Môn**).
+    7. **Tìm Người, Mất Vật & Kẻ Trộm**: Tra cứu giống loài đồ vật mất theo 8 cung của Can Giờ và nhận diện kẻ trộm qua sao **Thiên Bồng**.
+    8. **Kiện Tụng & Tranh Chấp**: Phân định Nguyên cáo (Nhật can), Bị cáo (Thời can), Quan tòa (**Trực Phù**), và văn thư đơn trạng qua hai cửa **Kinh Môn**, **Cảnh Môn**.
+- **Tiện Ích Sao Chép Nhanh**:
+  - Hỗ trợ nút sao chép thông số tổng quan dự trắc của quẻ chỉ với 1 cú nhấp chuột.
+
+#### ⚡ Cải Tiến & Tối Ưu (Improved)
+- Thêm tab **"Dự Trắc Kỳ Môn"** trên thanh Header giúp chuyển đổi tức thì giữa bản đồ 9 Cung và trang luận giải.
+- Tự động tính toán quan hệ sinh khắc Ngũ hành tương tác trực tiếp giữa các can và cung trong quẻ hiện tại.
+
+---
+
 ## [[2.4.0]] - 2026-08-26
 ### Codename: *Bí Kíp Toàn Thư & Luận Giải Khắc Ứng Tinh Thần*
 
