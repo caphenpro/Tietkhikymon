@@ -5,9 +5,10 @@ import { formatVietnamDateTime } from '../astronomy/solarTerms';
 
 interface KyMonDunJiaPanelProps {
   kyMon: KyMonInfo;
+  onOpenCompleteBoard?: () => void;
 }
 
-export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({ kyMon }) => {
+export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({ kyMon, onOpenCompleteBoard }) => {
   const isDuongDon = kyMon.isDuongDon;
 
   const getRuleBadgeColor = (rule: string) => {
@@ -67,6 +68,17 @@ export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({ kyMon }) => 
               isDuongDon ? 'bg-amber-500' : 'bg-cyan-500'
             }`}
           />
+          {onOpenCompleteBoard && (
+            <button
+              id="btn-goto-kymon-chart"
+              onClick={onOpenCompleteBoard}
+              className="ml-2 px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md"
+              title="Mở Bàn Kỳ Môn 9 Cung đầy đủ 4 tầng"
+            >
+              <span>Xem Bàn 9 Cung</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
       </div>
 

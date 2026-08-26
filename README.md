@@ -40,12 +40,26 @@
   - **Nhuận Cục**: Khi độ lệch vượt quá 9 ngày (tại Mang Chủng / Đại Tuyết) $\rightarrow$ tiến hành Nhuận Cục.
 - Tra cứu bảng Cục Âm/Dương 1–9 và kết luận Cục số tức thì kèm giải trình từng bước.
 
-### 5. 🗺️ Bản Đồ Bát Quái 9 Cung & La Bàn Lạc Thư
+### 5. 🛡️ Bàn Kỳ Môn Hoàn Chỉnh (Ma Trận 9 Cung Đầy Đủ 4 Tầng)
+- **Quy trình 6 bước lập bàn độc lập**:
+  - **Bước 1**: An Địa Bàn Kỳ Nghi (Lục Nghi Tam Kỳ bay thuận/nghịch theo Dương/Âm Độn).
+  - **Bước 2**: Xác định Tuần thủ của Giờ, tìm Trực Phù (sao gốc) và Trực Sử (cửa gốc).
+  - **Bước 3**: An Thiên Bàn Cửu Tinh (Trực Phù bay theo Can Giờ, 8 sao xoay vòng chu vi Lạc Thư).
+  - **Bước 4**: An Can Thiên Bàn (Kỳ Nghi Địa bàn bay theo Sao, Thiên Cầm gửi Khôn 2).
+  - **Bước 5**: An Bát Môn Nhân Bàn (Trực Sử đếm tiến/lùi theo Địa chi giờ, 8 cửa xoay thuận).
+  - **Bước 6**: An Bát Thần Bàn (Thần Trực Phù theo Sao Trực Phù, Dương xoay thuận / Âm xoay nghịch).
+- **Phân tích Thần Sát & Cách Cục Cổ Điển**:
+  - Nhận diện Tuần Không (Không Vong), Dịch Mã, Lộc Vị, Dương Quý / Âm Quý.
+  - Tự động tra cứu 10 Can tương khắc ứng (*Long Hồi Thủ, Phi Điểu Điệt Huyệt, Bạch Hổ Xướng Cuồng, Thanh Long Đào Tẩu, Chu Tước Đầu Giang, Đằng Xà Yêu Kiều, Đại/Tiểu/Hình Cách, Bạch/Huỳnh tương nhập...*).
+  - Phân tích 9 Độn (*Thiên Độn, Địa Độn, Nhân Độn, Thần Độn, Quỷ Độn, Phong Độn, Vân Độn, Long Độn, Hổ Độn*), Tam Trá, Ngũ Giả, Cung Ba Thắng.
+  - Hỗ trợ cả 2 chế độ: **Đồng bộ tự động theo thời gian thực** hoặc **Tự chọn Cục số & Can Chi** tùy ý.
+
+### 6. 🗺️ Bản Đồ Bát Quái 9 Cung & La Bàn Lạc Thư
 - Hiển thị ma trận 9 Cung Lạc Thư tương tác trực quan.
 - Tự động làm nổi bật Cung và Tiết khí đang quản sự tại thời điểm tra cứu.
 - Chi tiết Ngũ hành, Phương vị, Quẻ Hậu Thiên và chuỗi Cục số tương ứng của từng Cung.
 
-### 6. 📊 Bảng 24 Tiết Khí Toàn Năm & Xuất Báo Cáo
+### 7. 📊 Bảng 24 Tiết Khí Toàn Năm & Xuất Báo Cáo
 - Tra cứu toàn bộ 24 Tiết Khí cho bất kỳ năm nào từ quá khứ đến tương lai.
 - Tìm kiếm, lọc theo Tiết lệnh / Trung khí, hiển thị giờ chuyển tiết chuẩn UTC+7.
 - **Xuất Báo Cáo Markdown (`Tiet_Khi_Nam_YYYY.md`)** và sao chép bảng tính nhanh chóng.

@@ -6,6 +6,7 @@ import { KyMonDunJiaPanel } from './components/KyMonDunJiaPanel';
 import { NinePalacesCompass } from './components/NinePalacesCompass';
 import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
+import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { calculateComprehensiveResult, calculateSolarTermsForYear } from './astronomy/calculator';
@@ -83,7 +84,19 @@ export default function App() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <OverviewCard result={result} />
-            <KyMonDunJiaPanel kyMon={result.kyMon} />
+            <KyMonDunJiaPanel
+              kyMon={result.kyMon}
+              onOpenCompleteBoard={() => setActiveTab('kymon-chart')}
+            />
+          </div>
+        )}
+
+        {activeTab === 'kymon-chart' && (
+          <div className="space-y-6">
+            <KyMonCompleteBoard
+              currentKyMon={result.kyMon}
+              currentBatTu={result.batTu}
+            />
           </div>
         )}
 
