@@ -1,23 +1,22 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from '@google/genai';
+import { getStoredGeminiKey } from '../components/GeminiApiKeyModal';
 
-function getGeminiClient(customApiKey?: string): GoogleGenAI {
-  const apiKey = customApiKey || process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error(
-      "Chưa có Gemini API Key. Vui lòng nhấn nút 'Cấu hình API Key' trong giao diện để nhập API Key của bạn."
-    );
-  }
-  return new GoogleGenAI({
-    apiKey,
-    httpOptions: {
-      headers: {
-        "User-Agent": "aistudio-build",
-      },
-    },
-  });
+export interface ChartPalaceItem {
+  palaceNum: number;
+  palaceName: string;
+  direction: string;
+  element: string;
+  thienCan: string;
+  diaCan: string;
+  star: string;
+  door: string;
+  deity: string;
+  cachCucName?: string;
+  isTuanKhong?: boolean;
+  isDichMa?: boolean;
 }
 
-export interface KyMonInterpretRequest {
+export interface KyMonAiPayload {
   chartInfo: {
     formattedDate: string;
     solarTerm: string;
@@ -40,20 +39,7 @@ export interface KyMonInterpretRequest {
     trucSuPalace: number;
     tuanKhong: string[];
     dichMa: string;
-    palaces: Array<{
-      palaceNum: number;
-      palaceName: string;
-      direction: string;
-      element: string;
-      thienCan: string;
-      diaCan: string;
-      star: string;
-      door: string;
-      deity: string;
-      cachCucName?: string;
-      isTuanKhong?: boolean;
-      isDichMa?: boolean;
-    }>;
+    palaces: ChartPalaceItem[];
   };
   topic: string;
   topicTitle?: string;
@@ -61,13 +47,7 @@ export interface KyMonInterpretRequest {
   customApiKey?: string;
 }
 
-export async function interpretKyMonWithGemini(
-  data: KyMonInterpretRequest,
-  onChunk?: (chunk: string) => void
-): Promise<string> {
-  const ai = getGeminiClient(data.customApiKey);
-
-  const systemInstruction = `Bạn là Đại Sư Kỳ Môn Độn Giáp Hoàng Gia - bậc thầy uyên thâm về thuật số Kỳ Môn Độn Giáp cổ truyền phương Đông (bám sát nguyên bản "Kỳ Môn Độn Giáp Bí Kíp Toàn Thư", "Ngự Định Kỳ Môn Bảo Giám", "Hoàng Đế Âm Phù Kinh").
+const SYSTEM_INSTRUCTION = `Bạn là Đại Sư Kỳ Môn Độn Giáp Hoàng Gia - bậc thầy uyên thâm về thuật số Kỳ Môn Độn Giáp cổ truyền phương Đông (bám sát nguyên bản "Kỳ Môn Độn Giáp Bí Kíp Toàn Thư", "Ngự Định Kỳ Môn Bảo Giám", "Hoàng Đế Âm Phù Kinh").
 
 Nhiệm vụ của bạn:
 Phân tích, giải mã và luận đoán quẻ Kỳ Môn Độn Giáp dựa trên Bàn Kỳ Môn 4 tầng (Thiên Bàn Cửu Tinh, Nhân Bàn Bát Môn, Địa Bàn Bát Quái Cửu Cung, Thần Bàn Bát Thần) cùng Tứ Trụ Bát Tự, Tuần Thủ, Trực Phù, Trực Sử, Tuần Không và Dịch Mã.
@@ -88,6 +68,7 @@ Nguyên tắc luận giải:
    - Kết luận & Lời Khuyên Chiến Lược (Actionable Advice): Cần làm gì, tránh làm gì, chọn phương hướng nào, thời điểm nào thích hợp.
 4. Trình bày bằng Markdown chuyên nghiệp, có các tiêu đề phân cấp rõ ràng (##, ###), gạch đầu dòng súc tích, văn phong cổ điển kết hợp thực tiễn sâu sắc.`;
 
+function buildPrompt(data: KyMonAiPayload): string {
   const { chartInfo, topic, topicTitle, userQuestion } = data;
 
   const palacesText = chartInfo.palaces
@@ -99,7 +80,7 @@ Nguyên tắc luận giải:
     )
     .join('\n');
 
-  const prompt = `HÃY LUẬN GIẢI QUẺ KỲ MÔN ĐỘN GIÁP SAU:
+  return `HÃY LUẬN GIẢI QUẺ KỲ MÔN ĐỘN GIÁP SAU:
 
 ### 1. THỜI KHÔNG & BÁT TỰ:
 - Thời điểm lập quẻ: ${chartInfo.formattedDate} (Giờ VN UTC+7)
@@ -123,47 +104,112 @@ ${palacesText}
 ${userQuestion ? `- Câu hỏi chiêm đoán cụ thể của đương số: "${userQuestion}"` : ''}
 
 Hãy đưa ra bài luận giải chuyên sâu, phân tích tỉ mỉ Thiên - Địa - Nhân - Thần, Dụng Thần, Chủ Khách, Cách Cục Cát Hung và đưa ra định hướng chiến lược sáng suốt nhất cho quẻ Kỳ Môn này.`;
+}
 
-  const models = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-1.5-flash'];
-  let lastErr: unknown = null;
+/**
+ * Trình thực thi AI đa tầng:
+ * 1. Thử gọi qua Backend Server endpoint `/api/gemini/kymon-interpret` (truyền kèm custom key nếu có)
+ * 2. Nếu máy chủ phản hồi 404 hoặc lỗi kết nối mạng, tự động chuyển sang gọi trực tiếp từ trình duyệt qua @google/genai với Key cá nhân
+ */
+export async function streamKyMonAiInterpretation(
+  payload: KyMonAiPayload,
+  onChunk: (text: string) => void
+): Promise<string> {
+  const localKey = getStoredGeminiKey() || payload.customApiKey;
 
-  for (const modelName of models) {
-    try {
-      if (onChunk) {
-        const stream = await ai.models.generateContentStream({
-          model: modelName,
-          contents: prompt,
-          config: {
-            systemInstruction,
-            temperature: 0.7,
-            topP: 0.95,
-          },
-        });
+  // Layer 1: Thử gọi qua Backend API trước
+  try {
+    const response = await fetch('/api/gemini/kymon-interpret?stream=true', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'text/event-stream',
+        ...(localKey ? { 'x-gemini-api-key': localKey } : {}),
+      },
+      body: JSON.stringify({ ...payload, customApiKey: localKey }),
+    });
 
-        let fullText = '';
-        for await (const chunk of stream) {
-          const text = chunk.text || '';
-          fullText += text;
-          onChunk(text);
+    if (response.ok && response.body) {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let accumulated = '';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        const textChunk = decoder.decode(value, { stream: true });
+        const lines = textChunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const dataStr = line.replace('data: ', '').trim();
+            if (dataStr) {
+              try {
+                const parsed = JSON.parse(dataStr);
+                if (parsed.text) {
+                  accumulated += parsed.text;
+                  onChunk(parsed.text);
+                } else if (parsed.error) {
+                  throw new Error(parsed.error);
+                }
+              } catch (e: any) {
+                if (e.message && e.message.includes('API')) {
+                  throw e;
+                }
+              }
+            }
+          }
         }
-        return fullText;
-      } else {
-        const response = await ai.models.generateContent({
-          model: modelName,
-          contents: prompt,
-          config: {
-            systemInstruction,
-            temperature: 0.7,
-            topP: 0.95,
-          },
-        });
-        return response.text || 'Không có phản hồi từ mô hình AI.';
       }
-    } catch (err: unknown) {
-      lastErr = err;
-      console.warn(`Model ${modelName} error, trying next model:`, err);
+
+      if (accumulated.trim()) {
+        return accumulated;
+      }
+    }
+  } catch (serverErr: any) {
+    console.warn('Backend server AI call failed, falling back to direct client execution...', serverErr);
+  }
+
+  // Layer 2: Trực tiếp qua Client SDK với API Key người dùng
+  if (!localKey) {
+    throw new Error(
+      'Chưa cấu hình Gemini API Key. Vui lòng nhấn nút "Cấu hình API Key" phía trên để nhập khóa API miễn phí từ Google AI Studio.'
+    );
+  }
+
+  const ai = new GoogleGenAI({ apiKey: localKey });
+  const prompt = buildPrompt(payload);
+
+  const modelsToTry = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-1.5-flash'];
+  let lastError: Error | null = null;
+
+  for (const modelName of modelsToTry) {
+    try {
+      const stream = await ai.models.generateContentStream({
+        model: modelName,
+        contents: prompt,
+        config: {
+          systemInstruction: SYSTEM_INSTRUCTION,
+          temperature: 0.7,
+          topP: 0.95,
+        },
+      });
+
+      let fullText = '';
+      for await (const chunk of stream) {
+        const chunkText = chunk.text || '';
+        if (chunkText) {
+          fullText += chunkText;
+          onChunk(chunkText);
+        }
+      }
+      return fullText;
+    } catch (err: any) {
+      console.warn(`Thử model ${modelName} thất bại, đang chuyển sang model dự phòng...`, err);
+      lastError = err instanceof Error ? err : new Error(String(err));
     }
   }
 
-  throw lastErr || new Error('Không thể kết nối đến mô hình Gemini.');
+  throw lastError || new Error('Không thể kết nối đến mô hình Gemini. Vui lòng kiểm tra lại API Key.');
 }

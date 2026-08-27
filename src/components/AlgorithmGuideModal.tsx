@@ -357,10 +357,10 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             <div className="p-5 rounded-2xl bg-slate-950/70 border border-amber-500/30 space-y-3">
               <h4 className="text-base font-bold text-amber-300 flex items-center gap-2">
                 <Bot className="w-5 h-5 text-amber-400" />
-                8. Thuật Toán Luận Giải AI Gemini & Trích Xuất Dụng Thần
+                8. Thuật Toán Luận Giải AI Gemini &amp; Cấu Hình API Key Cá Nhân
               </h4>
               <p className="text-xs text-slate-300 leading-relaxed">
-                Hệ thống tích hợp mô hình ngôn ngữ lớn <strong>Gemini 3.7 Flash</strong> với cơ chế phân tích cấu trúc Bàn Kỳ Môn chuyên sâu, xử lý toàn bộ 4 tầng (Thiên Bàn, Nhân Bàn, Địa Bàn, Thần Bàn) và truyền phát kết quả theo thời gian thực (Server-Sent Events):
+                Hệ thống tích hợp mô hình ngôn ngữ lớn <strong>Gemini 3.7 &amp; 2.5 Flash</strong> với cơ chế phân tích cấu trúc Bàn Kỳ Môn chuyên sâu, xử lý toàn bộ 4 tầng (Thiên Bàn, Nhân Bàn, Địa Bàn, Thần Bàn), hỗ trợ cấu hình API Key cá nhân lưu trực tiếp vào <strong>localStorage</strong> và truyền phát kết quả theo thời gian thực (Streaming SSE &amp; Direct Fallback):
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
@@ -377,9 +377,10 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
                   <strong className="text-purple-300 flex items-center gap-1.5">
-                    <BookOpen className="w-4 h-4 text-purple-400" /> Nguyên Tắc Chiêm Đoán Cổ Thư:
+                    <BookOpen className="w-4 h-4 text-purple-400" /> Cơ Chế Cấu Hình &amp; Dự Trắc Cổ Thư:
                   </strong>
                   <ul className="list-disc list-inside space-y-1 text-slate-400 pl-1">
+                    <li><strong>Cấu hình API Key:</strong> Người dùng có thể nạp Google AI Studio API Key cá nhân, lưu vĩnh viễn trong trình duyệt.</li>
                     <li>Xác định chính xác <strong>Dụng Thần</strong> theo câu hỏi của người hỏi (Sự nghiệp, Cầu tài, Hôn nhân, Sức khỏe, Xuất hành, Kiện tụng).</li>
                     <li>Xét quan hệ Ngũ Hành sinh khắc giữa Cung Dụng Thần và Cung Can Ngày (Người hỏi) / Cung Can Giờ (Sự việc).</li>
                     <li>Đưa ra phương án hóa giải, thời điểm ứng kỳ và chiến lược Chủ - Khách hành động thực tế.</li>

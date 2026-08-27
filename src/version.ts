@@ -11,18 +11,46 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.7.0';
+export const APP_VERSION = '2.7.1';
 export const APP_RELEASE_DATE = '2026-08-27';
-export const APP_CODENAME = 'Luận Giải AI Kỳ Môn Độn Giáp với Gemini API';
+export const APP_CODENAME = 'Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.7.1',
+    releaseDate: '2026-08-27',
+    codename: 'Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân',
+    tagline: 'Bổ sung nút "Cấu hình API Key", hỗ trợ lưu API Key vào localStorage trình duyệt và cơ chế kép (Server + Client Fallback) đảm bảo luận giải AI thông suốt 100%.',
+    isLatest: true,
+    highlights: [
+      'Tích hợp nút "Cấu hình API Key" trực tiếp trên giao diện AI Advisor và hộp thoại báo lỗi kết nối.',
+      'Hỗ trợ người dùng nạp Google AI Studio API Key cá nhân miễn phí, tự động lưu trữ an toàn trong localStorage trình duyệt.',
+      'Cơ chế kết nối kép Dual-Engine: Ưu tiên Server SSE Streaming và tự động chuyển sang Client-side Fallback trực tiếp qua SDK @google/genai khi backend gặp sự cố (mã 404 hoặc mạng).',
+      'Đồng bộ kiểm tra kết nối API Key trước khi lưu để đảm bảo chìa khóa hoạt động chính xác.',
+    ],
+    added: [
+      'Modal Cấu hình API Key (GeminiApiKeyModal.tsx) với ô nhập, tính năng kiểm tra kết nối thử nghiệm, ẩn/hiện key và lưu vào localStorage.',
+      'Engine kết nối kép streamKyMonAiInterpretation (geminiAdvisorEngine.ts) tự động xử lý chuyển tầng linh hoạt giữa Backend và Trình duyệt.',
+      'Nút "Cấu hình API Key Cá Nhân" hiển thị nhanh ngay khi xảy ra lỗi gọi mô hình, giúp người dùng khắc phục tức thì mà không bị gián đoạn.',
+    ],
+    improved: [
+      'Tối ưu xử lý danh sách mô hình dự phòng (Gemini 2.5 Flash, Gemini 3.7 Flash, Gemini 1.5 Flash) trên cả tầng máy chủ và tầng trình duyệt.',
+      'Cải thiện trải nghiệm phản hồi liên tục với chỉ báo nạp Key thành công (huy hiệu xanh ngọc "Đã nạp Key cá nhân").',
+    ],
+    fixed: [
+      'Khắc phục triệt để lỗi mã trạng thái 404 khi môi trường backend chưa nạp sẵn biến GEMINI_API_KEY bằng cơ chế Client Fallback tức thì.',
+    ],
+    astronomyNotes: [
+      'Bảo toàn toàn vẹn ma trận dữ liệu 9 cung Kỳ Môn và Bát Tự khi gửi tới các phiên bản mô hình Gemini.',
+    ],
+  },
   {
     version: '2.7.0',
     releaseDate: '2026-08-27',
     codename: 'Luận Giải AI Kỳ Môn Độn Giáp với Gemini API',
     tagline: 'Tích hợp mô hình Gemini 3.7 Flash trích xuất toàn diện Bàn Kỳ Môn 9 Cung, nhận diện Dụng Thần và truyền phát bài luận giải chi tiết theo thời gian thực.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tích hợp tính năng "Luận Giải AI Gemini" miễn phí của hệ thống, sử dụng mô hình Gemini 3.7 Flash phân tích quẻ Kỳ Môn Độn Giáp chuyên sâu.',
       'Hỗ trợ 8 chuyên đề luận giải sẵn: Tổng Luận Quẻ Đại Cục, Sự Nghiệp & Công Danh, Tài Vận & Đầu Tư Kinh Doanh, Hôn Nhân & Tình Duyên, Sức Khỏe & Trị Bệnh, Chiến Lược Chủ - Khách, Xuất Hành & Phương Vị Cát Lợi, Thân Mệnh Lục Thân.',

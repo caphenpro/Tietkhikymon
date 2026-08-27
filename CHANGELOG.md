@@ -6,6 +6,24 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.7.1]] - 2026-08-27
+### Codename: *Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân*
+
+#### ✨ Tính Năng Mới (Added)
+- **Cấu Hình API Key Cá Nhân Linh Hoạt (`GeminiApiKeyModal.tsx`)**:
+  - Tích hợp nút **"Cấu hình API Key"** ngay trên thanh tác vụ AI Advisor và trong hộp cảnh báo khi gặp sự cố kết nối.
+  - Cho phép người dùng nhập khóa cá nhân từ Google AI Studio (miễn phí), hỗ trợ ẩn/hiện mật mã và tự động lưu bền vững vào `localStorage` (`kymon_gemini_api_key`).
+  - Tích hợp nút **"Kiểm Tra Kết Nối"** kiểm thử trực tiếp kết nối với API Gemini trước khi lưu khóa.
+- **Cơ Chế Kép Dual-Engine Fallback (`geminiAdvisorEngine.ts`)**:
+  - Khi hệ thống backend chưa cấu hình sẵn API key hoặc gặp mã trạng thái 404, ứng dụng sẽ tự động chuyển sang luồng gọi trực tiếp client-side SDK `@google/genai` bằng API Key đã lưu trong trình duyệt.
+  - Đảm bảo tính sẵn sàng 100% cho chức năng luận giải quẻ mà không làm gián đoạn trải nghiệm người dùng.
+
+#### ⚡ Cải Tiến & Tinh Chỉnh (Improved)
+- Tối ưu chuỗi fallback đa mô hình (`gemini-2.5-flash`, `gemini-3.7-flash`, `gemini-1.5-flash`) trên cả hai tầng máy chủ và trình duyệt.
+- Thêm huy hiệu nhận diện trạng thái **"Đã nạp Key cá nhân"** để người dùng an tâm về nguồn tài nguyên AI đang sử dụng.
+
+---
+
 ## [[2.7.0]] - 2026-08-27
 ### Codename: *Luận Giải AI Kỳ Môn Độn Giáp với Gemini API*
 

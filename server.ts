@@ -27,12 +27,17 @@ async function startServer() {
     try {
       const payload = req.body as KyMonInterpretRequest;
       const isStream = req.query.stream === "true" || req.headers.accept?.includes("text/event-stream");
+      const customKeyFromHeader = req.headers["x-gemini-api-key"] as string | undefined;
 
       if (!payload || !payload.chartInfo) {
         res.status(400).json({
           error: "Dữ liệu quẻ Kỳ Môn không hợp lệ.",
         });
         return;
+      }
+
+      if (customKeyFromHeader && !payload.customApiKey) {
+        payload.customApiKey = customKeyFromHeader;
       }
 
       if (isStream) {

@@ -24,11 +24,14 @@ import {
   UserCheck,
   ChevronRight,
   Flame,
+  Key,
 } from 'lucide-react';
 import Markdown from 'react-markdown';
 import { KyMonInfo, BatTuInfo, ComprehensiveResult } from '../types';
 import { CompleteKyMonChart, buildCompleteKyMonChart } from '../astronomy/kymonChart';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
+import { GeminiApiKeyModal, getStoredGeminiKey } from './GeminiApiKeyModal';
+import { streamKyMonAiInterpretation, KyMonAiPayload } from '../utils/geminiAdvisorEngine';
 
 interface GeminiKyMonAiAdvisorProps {
   currentKyMon?: KyMonInfo;
@@ -133,7 +136,13 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
   const [aiResponse, setAiResponse] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+  const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState<boolean>(false);
+  const [hasCustomKey, setHasCustomKey] = useState<boolean>(false);
   const responseEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setHasCustomKey(Boolean(getStoredGeminiKey()));
+  }, []);
 
   // Build complete chart details
   const chart: CompleteKyMonChart = useMemo(() => {
@@ -167,7 +176,7 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
   );
 
   // Prepare payload for Gemini interpretation
-  const preparePayload = (topicId: string, question?: string) => {
+  const preparePayload = (topicId: string, question?: string): KyMonAiPayload => {
     const topicObj = AI_TOPICS.find((t) => t.id === topicId) || AI_TOPICS[0];
 
     const palacesData = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((pNum) => {
@@ -231,55 +240,11 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
     const payload = preparePayload(topicId, questionToSend);
 
     try {
-      // Use Server-Sent Events (SSE) stream for interactive streaming response
-      const response = await fetch('/api/gemini/kymon-interpret?stream=true', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'text/event-stream',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `Yêu cầu thất bại với mã trạng thái ${response.status}`);
-      }
-
-      if (!response.body) {
-        throw new Error('Trình duyệt không hỗ trợ luồng dữ liệu phản hồi.');
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder('utf-8');
       let accumulated = '';
-
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-
-        const textChunk = decoder.decode(value, { stream: true });
-        const lines = textChunk.split('\n');
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const dataStr = line.replace('data: ', '').trim();
-            if (dataStr) {
-              try {
-                const parsed = JSON.parse(dataStr);
-                if (parsed.text) {
-                  accumulated += parsed.text;
-                  setAiResponse(accumulated);
-                } else if (parsed.error) {
-                  throw new Error(parsed.error);
-                }
-              } catch {
-                // Ignore parse errors on partial chunks
-              }
-            }
-          }
-        }
-      }
+      await streamKyMonAiInterpretation(payload, (chunk) => {
+        accumulated += chunk;
+        setAiResponse(accumulated);
+      });
     } catch (err: unknown) {
       console.error('Gemini Stream Error:', err);
       const msg =
@@ -301,6 +266,18 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* API Key Modal */}
+      <GeminiApiKeyModal
+        isOpen={isApiKeyModalOpen}
+        onClose={() => setIsApiKeyModalOpen(false)}
+        onKeySaved={(key) => {
+          setHasCustomKey(Boolean(key));
+          if (key) {
+            setErrorMsg(null);
+          }
+        }}
+      />
+
       {/* Header Banner */}
       <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
         <div className="absolute -right-16 -top-16 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -318,26 +295,50 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
                 </h2>
                 <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
                   <Bot className="w-3.5 h-3.5" />
-                  <span>Gemini 3.7 Flash</span>
+                  <span>Gemini 3.7 / 2.5 Flash</span>
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                  Miễn phí hệ thống
-                </span>
+                {hasCustomKey ? (
+                  <span className="text-xs px-2 py-0.5 rounded font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                    <Key className="w-3 h-3 text-emerald-400" />
+                    <span>Đã nạp Key cá nhân</span>
+                  </span>
+                ) : (
+                  <span className="text-xs px-2 py-0.5 rounded font-mono bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+                    Hệ thống AI
+                  </span>
+                )}
               </div>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Phân tích chuyên sâu quẻ Kỳ Môn dựa trên nguyên bản cổ thư, luận giải Dụng Thần, Tam Bàn, Chủ - Khách & đưa ra lời khuyên thực tế.
+                Phân tích chuyên sâu quẻ Kỳ Môn dựa trên nguyên bản cổ thư, luận giải Dụng Thần, Tam Bàn, Chủ - Khách &amp; đưa ra lời khuyên thực tế.
               </p>
             </div>
           </div>
 
-          {/* Current Chart Summary Pill */}
-          <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-800 px-4 py-2.5 rounded-xl shadow-inner text-xs font-mono">
-            <div className="text-right">
-              <div className="text-[10px] text-slate-400 uppercase font-semibold">Quẻ Hiện Tại</div>
-              <div className="text-amber-300 font-bold">{chart.cucName}</div>
-              <div className="text-slate-400 text-[11px]">Giờ {chart.hourCanChi}</div>
+          {/* Action & API Key Config Button */}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <button
+              id="btn-open-api-key-modal"
+              type="button"
+              onClick={() => setIsApiKeyModalOpen(true)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer border shadow-sm ${
+                hasCustomKey
+                  ? 'bg-slate-800/90 hover:bg-slate-700 text-slate-200 border-slate-700'
+                  : 'bg-gradient-to-r from-amber-500/20 to-indigo-500/20 hover:from-amber-500/30 hover:to-indigo-500/30 text-amber-300 border-amber-500/40'
+              }`}
+            >
+              <Key className="w-3.5 h-3.5 text-amber-400" />
+              <span>{hasCustomKey ? 'Cấu Hình API Key' : '🔑 Cấu Hình API Key'}</span>
+            </button>
+
+            {/* Current Chart Summary Pill */}
+            <div className="flex items-center gap-3 bg-slate-950/80 border border-slate-800 px-3.5 py-2 rounded-xl shadow-inner text-xs font-mono">
+              <div className="text-right">
+                <div className="text-[10px] text-slate-400 uppercase font-semibold">Quẻ Hiện Tại</div>
+                <div className="text-amber-300 font-bold">{chart.cucName}</div>
+                <div className="text-slate-400 text-[11px]">Giờ {chart.hourCanChi}</div>
+              </div>
+              <div className="w-2 h-7 rounded-full bg-amber-500" />
             </div>
-            <div className="w-2.5 h-8 rounded-full bg-amber-500" />
           </div>
         </div>
 
@@ -495,16 +496,39 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
         </div>
       </div>
 
-      {/* Error Alert Display */}
+      {/* Error Alert Display with Instant Configure API Key Button */}
       {errorMsg && (
-        <div className="bg-red-950/40 border border-red-800/80 rounded-xl p-4 text-xs sm:text-sm text-red-300 flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-          <div className="space-y-1">
-            <div className="font-bold">Lỗi khi gọi mô hình Gemini AI:</div>
-            <div>{errorMsg}</div>
-            <div className="text-slate-400 text-xs mt-1">
-              Bạn có thể nhấn nút &quot;Luận Giải Quẻ Bằng AI&quot; để thử lại hoặc chọn một chuyên đề khác.
+        <div className="bg-red-950/40 border border-red-800/80 rounded-2xl p-4 sm:p-5 text-xs sm:text-sm text-red-300 space-y-3">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+            <div className="space-y-1 flex-1">
+              <div className="font-bold text-red-200">Lỗi khi gọi mô hình Gemini AI:</div>
+              <div className="text-red-300 leading-relaxed">{errorMsg}</div>
+              <div className="text-slate-400 text-xs mt-1">
+                Bạn có thể nhấn nút <strong>&quot;Cấu hình API Key&quot;</strong> bên dưới để dán API Key cá nhân miễn phí từ Google AI Studio (tự động lưu vào trình duyệt localStorage).
+              </div>
             </div>
+          </div>
+
+          <div className="flex items-center gap-2.5 pt-2 border-t border-red-900/50">
+            <button
+              id="btn-error-config-api-key"
+              type="button"
+              onClick={() => setIsApiKeyModalOpen(true)}
+              className="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold rounded-xl text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+            >
+              <Key className="w-3.5 h-3.5" />
+              <span>Cấu hình API Key Cá Nhân</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleGenerateInterpretation(selectedTopicId, customQuestion)}
+              className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl border border-slate-700 text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <RefreshCw className="w-3.5 h-3.5 text-slate-400" />
+              <span>Thử Lại</span>
+            </button>
           </div>
         </div>
       )}
@@ -541,7 +565,7 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
                     {activeTopic.title}
                   </span>
                 </h3>
-                <p className="text-[11px] text-slate-400">Được tạo bởi Gemini 3.7 Flash</p>
+                <p className="text-[11px] text-slate-400">Được tạo bởi Gemini AI (Kỳ Môn Độn Giáp Engine)</p>
               </div>
             </div>
 
