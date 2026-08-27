@@ -1,26 +1,165 @@
-import React from 'react';
-import { Sun, Moon, Calendar, Sparkles, Orbit, Clock, ChevronRight, Layers } from 'lucide-react';
+import React, { useMemo } from 'react';
+import {
+  Sun,
+  Moon,
+  Calendar,
+  Sparkles,
+  Orbit,
+  Clock,
+  ChevronRight,
+  Layers,
+  Compass,
+  ArrowRight,
+  Shield,
+  User,
+  Heart,
+  HeartPulse,
+  Coins,
+  GraduationCap,
+  Search,
+  Scale,
+  BookOpen,
+  MapPin,
+  Flame,
+  CheckCircle2,
+  ExternalLink,
+} from 'lucide-react';
 import { ComprehensiveResult } from '../types';
-import { formatVietnamDateTime } from '../astronomy/solarTerms';
+import { formatVietnamDateTime, BAGUA_PALACES } from '../astronomy/solarTerms';
+import { buildCompleteKyMonChart, CompleteKyMonChart } from '../astronomy/kymonChart';
 
 interface OverviewCardProps {
   result: ComprehensiveResult;
+  onNavigateTab?: (tabId: string) => void;
 }
 
-export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
-  const { currentTerm, nextTerm, batTu, newMoon, solarLongitude, solarLongitudeDMS } = result;
+export const OverviewCard: React.FC<OverviewCardProps> = ({ result, onNavigateTab }) => {
+  const { currentTerm, nextTerm, batTu, newMoon, kyMon, solarLongitude, solarLongitudeDMS } = result;
 
   const isTiet = currentTerm.category === 'Tiết';
+  const isDuongDon = kyMon.isDuongDon;
+
+  // Build complete Ky Mon chart for dynamic Trực Phù / Trực Sử / Thần Sát display
+  const chart: CompleteKyMonChart = useMemo(() => {
+    const isDuong = kyMon.isDuongDon;
+    const cucNum = kyMon.cucNumber;
+
+    let dCan = 'Giáp';
+    let dChi = 'Tý';
+    let hCan = 'Bính';
+    let hChi = 'Dần';
+
+    if (batTu) {
+      const dParts = batTu.dayCanChi.split(' ');
+      if (dParts.length >= 2) {
+        dCan = dParts[0];
+        dChi = dParts[1];
+      }
+      const hParts = batTu.hourCanChi.split(' ');
+      if (hParts.length >= 2) {
+        hCan = hParts[0];
+        hChi = hParts[1];
+      }
+    }
+
+    return buildCompleteKyMonChart(isDuong, cucNum, dCan, dChi, hCan, hChi);
+  }, [kyMon, batTu]);
+
+  const currentPalace = BAGUA_PALACES.find((p) => p.number === kyMon.cungNumber) || BAGUA_PALACES[0];
+
+  const getRuleBadgeColor = (rule: string) => {
+    switch (rule) {
+      case 'Chính Khí':
+        return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30';
+      case 'Siêu Thần':
+        return 'bg-amber-500/10 text-amber-300 border-amber-500/30';
+      case 'Tiếp Khí':
+        return 'bg-blue-500/10 text-blue-300 border-blue-500/30';
+      case 'Nhuận Cục':
+        return 'bg-purple-500/10 text-purple-300 border-purple-500/30';
+      default:
+        return 'bg-slate-800 text-slate-300 border-slate-700';
+    }
+  };
 
   return (
     <div className="space-y-6">
-      {/* Top Main Banner: Current Solar Term & Solar Coordinates */}
-      <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg">
-        {/* Subtle background decorative element */}
+      {/* 0. EXECUTIVE HEADLINE STATUS STRIP: 5 Core Outcomes at a glance */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-3 text-xs">
+          <div className="flex items-center gap-2 text-slate-300 font-bold uppercase tracking-wider">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span>Tóm Lược Kết Quả Tổng Lực Toàn Chương Trình</span>
+          </div>
+          <span className="text-[11px] font-mono text-slate-400">
+            Thời khắc khảo sát (UTC+7)
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-xs">
+          {/* Item 1: Tiết Khí */}
+          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between">
+            <div className="text-[10px] text-slate-400 uppercase font-semibold">1. Tiết Khí Hiện Tại</div>
+            <div className="text-sm sm:text-base font-extrabold text-amber-400 font-mono my-1 truncate">
+              {currentTerm.name} ({currentTerm.degree}°)
+            </div>
+            <div className="text-[11px] text-slate-400">
+              {isTiet ? 'Tiết Lệnh' : 'Trung Khí'} • {currentTerm.cungName}
+            </div>
+          </div>
+
+          {/* Item 2: Bát Tự */}
+          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between">
+            <div className="text-[10px] text-slate-400 uppercase font-semibold">2. Tứ Trụ Bát Tự</div>
+            <div className="text-xs sm:text-sm font-bold text-cyan-300 font-mono my-1 truncate">
+              {batTu.yearCanChi} • {batTu.monthCanChi}
+            </div>
+            <div className="text-[11px] text-slate-300 font-mono truncate">
+              {batTu.dayCanChi} • {batTu.hourCanChi}
+            </div>
+          </div>
+
+          {/* Item 3: Âm Lịch */}
+          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between">
+            <div className="text-[10px] text-slate-400 uppercase font-semibold">3. Âm Lịch Thiên Văn</div>
+            <div className="text-sm sm:text-base font-extrabold text-emerald-400 font-mono my-1 truncate">
+              {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay} {newMoon.fullMonthDisplay}
+            </div>
+            <div className="text-[11px] text-slate-400">
+              {newMoon.monthType} ({newMoon.totalMonthDays} ngày)
+            </div>
+          </div>
+
+          {/* Item 4: Cục Số Kỳ Môn */}
+          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between">
+            <div className="text-[10px] text-slate-400 uppercase font-semibold">4. Cục Số Kỳ Môn</div>
+            <div className="text-sm sm:text-base font-extrabold text-purple-400 font-mono my-1 truncate">
+              {kyMon.cucResultText}
+            </div>
+            <div className="text-[11px] text-slate-400">
+              Quy tắc: <span className="text-amber-300 font-medium">{kyMon.ruleType}</span>
+            </div>
+          </div>
+
+          {/* Item 5: Trực Phù & Trực Sử */}
+          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 flex flex-col justify-between col-span-2 sm:col-span-1">
+            <div className="text-[10px] text-slate-400 uppercase font-semibold">5. Trực Phù & Trực Sử</div>
+            <div className="text-xs sm:text-sm font-bold text-amber-300 font-mono my-1 truncate">
+              ⭐ {chart.trucPhuStar}
+            </div>
+            <div className="text-[11px] text-slate-300 font-mono truncate">
+              🚪 {chart.trucSuDoor} ({chart.tuanThuGiap})
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 1. THIÊN VĂN 24 TIẾT KHÍ & HOÀNG ĐẠO */}
+      <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg space-y-5">
         <div className="absolute -right-12 -top-12 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -left-12 -bottom-12 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-4 border-b border-slate-800">
           {/* Main Term Highlight */}
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0 shadow-inner">
@@ -30,7 +169,7 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  Tiết Khí Thiên Văn Đương Lệnh
+                  Mô-đun 1: Thiên Văn 24 Tiết Khí Đương Lệnh
                 </span>
                 <span
                   className={`text-xs px-2.5 py-0.5 rounded-full font-medium border ${
@@ -53,7 +192,7 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
                 </span>
               </h2>
 
-              <p className="text-xs sm:text-sm text-slate-300 mt-1.5 flex items-center gap-2">
+              <p className="text-xs sm:text-sm text-slate-300 mt-1.5 flex items-center gap-2 flex-wrap">
                 <span className="text-slate-400">Bắt đầu:</span>
                 <span className="font-mono text-white font-medium">
                   {formatVietnamDateTime(currentTerm.startDate)}
@@ -82,7 +221,7 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
         </div>
 
         {/* Term Elapsed / Remaining Progress Info */}
-        <div className="mt-5 pt-4 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="bg-slate-950/50 rounded-lg p-3 border border-slate-800/60 flex items-center justify-between">
             <span className="text-slate-400 flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-emerald-400" />
@@ -103,21 +242,45 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
             </span>
           </div>
         </div>
+
+        {/* Action Navigation Links for Module 1 */}
+        {onNavigateTab && (
+          <div className="pt-2 flex flex-wrap items-center justify-end gap-2.5 text-xs">
+            <button
+              id="btn-overview-goto-table"
+              onClick={() => onNavigateTab('table')}
+              className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Calendar className="w-3.5 h-3.5 text-amber-400" />
+              <span>Xem Bảng 24 Tiết Khí Cả Năm</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              id="btn-overview-goto-compass"
+              onClick={() => onNavigateTab('compass')}
+              className="px-3.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Compass className="w-3.5 h-3.5" />
+              <span>Xem Bát Quái & 9 Cung</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Grid of Two Core Cards: Bát Tự & Âm Lịch Điểm Sóc */}
+      {/* 2. BÁT TỰ TỨ TRỤ & ÂM LỊCH ĐIỂM SÓC */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Card 1: Bát Tự Tứ Trụ Can Chi */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-4">
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center">
                   <Layers className="w-4 h-4 text-indigo-400" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-white">Bát Tự (Tứ Trụ Can Chi)</h3>
-                  <p className="text-xs text-slate-400">Tính theo Tiết Lệnh thiên văn & Hoa Giáp</p>
+                  <h3 className="text-base font-bold text-white">Mô-đun 2: Bát Tự (Tứ Trụ Can Chi)</h3>
+                  <p className="text-xs text-slate-400">Tiết Lệnh thiên văn & Lập Xuân mốc năm</p>
                 </div>
               </div>
               <span className="text-xs font-mono px-2 py-0.5 bg-indigo-950/60 text-indigo-300 border border-indigo-500/30 rounded">
@@ -128,68 +291,72 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
             {/* 4 Pillars Grid */}
             <div className="grid grid-cols-4 gap-2 text-center my-3">
               {/* Năm */}
-              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <div className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
+              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 sm:p-3">
+                <div className="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
                   Trụ Năm
                 </div>
-                <div className="text-sm sm:text-base font-bold text-amber-300 font-mono">
+                <div className="text-xs sm:text-base font-bold text-amber-300 font-mono">
                   {batTu.yearCanChi}
                 </div>
-                <div className="text-[10px] text-slate-500 mt-1">Lập Xuân mốc</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-500 mt-1">Lập Xuân</div>
               </div>
 
               {/* Tháng */}
-              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <div className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
+              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 sm:p-3">
+                <div className="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
                   Trụ Tháng
                 </div>
-                <div className="text-sm sm:text-base font-bold text-cyan-300 font-mono">
+                <div className="text-xs sm:text-base font-bold text-cyan-300 font-mono">
                   {batTu.monthCanChi}
                 </div>
-                <div className="text-[10px] text-slate-500 mt-1">Tiết Lệnh</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-500 mt-1">Tiết Lệnh</div>
               </div>
 
               {/* Ngày */}
-              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <div className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
+              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 sm:p-3">
+                <div className="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
                   Trụ Ngày
                 </div>
-                <div className="text-sm sm:text-base font-bold text-emerald-300 font-mono">
+                <div className="text-xs sm:text-base font-bold text-emerald-300 font-mono">
                   {batTu.dayCanChi}
                 </div>
-                <div className="text-[10px] text-slate-500 mt-1">Nhật Nguyên</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-500 mt-1">Nhật Nguyên</div>
               </div>
 
               {/* Giờ */}
-              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3">
-                <div className="text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
+              <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 sm:p-3">
+                <div className="text-[10px] sm:text-[11px] font-medium text-slate-400 uppercase tracking-wider mb-1">
                   Trụ Giờ
                 </div>
-                <div className="text-sm sm:text-base font-bold text-purple-300 font-mono">
+                <div className="text-xs sm:text-base font-bold text-purple-300 font-mono">
                   {batTu.hourCanChi}
                 </div>
-                <div className="text-[10px] text-slate-500 mt-1">Thời Trụ</div>
+                <div className="text-[9px] sm:text-[10px] text-slate-500 mt-1">Thời Trụ</div>
               </div>
+            </div>
+
+            <div className="pt-2 text-xs text-slate-300 bg-slate-950/60 p-2.5 rounded-lg font-mono border border-slate-800/80">
+              <span className="text-slate-400">Chuỗi Bát Tự đầy đủ: </span>
+              <span className="text-white font-semibold">{batTu.fullText}</span>
             </div>
           </div>
 
-          <div className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-300 bg-slate-950/40 p-2.5 rounded-lg font-mono">
-            <span className="text-slate-400">Bát tự đầy đủ: </span>
-            <span className="text-white font-semibold">{batTu.fullText}</span>
+          <div className="text-[11px] text-slate-400">
+            * Bát tự được dùng làm dữ liệu đầu vào cốt lõi để tính Tuần Thủ Giáp và phối bàn Kỳ Môn.
           </div>
         </div>
 
         {/* Card 2: Âm Lịch & Điểm Sóc Thiên Văn */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm flex flex-col justify-between space-y-4">
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center">
                   <Moon className="w-4 h-4 text-cyan-400" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-white">Âm Lịch & Chu Kỳ Điểm Sóc</h3>
-                  <p className="text-xs text-slate-400">Khoảng cách 2 điểm Sóc & Tiết Khí định tháng</p>
+                  <h3 className="text-base font-bold text-white">Mô-đun 3: Âm Lịch & Điểm Sóc</h3>
+                  <p className="text-xs text-slate-400">Giao hội Nhật - Nguyệt và Tiết Khí định tháng</p>
                 </div>
               </div>
 
@@ -211,10 +378,10 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
             <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-3 mb-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-[11px] text-slate-400 uppercase tracking-wider font-semibold">
-                    Thời Điểm Âm Lịch
+                  <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                    Thời Điểm Âm Lịch Hiện Tại
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-white font-mono mt-0.5">
+                  <div className="text-sm sm:text-base font-bold text-white font-mono mt-0.5">
                     {newMoon.lunarFullDateText}
                   </div>
                 </div>
@@ -226,68 +393,189 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result }) => {
                   {newMoon.monthType}
                 </span>
               </div>
-
-              {/* Solar Terms contained in this Lunar Month */}
-              <div className="mt-2.5 pt-2.5 border-t border-slate-800/80 text-xs flex flex-wrap items-center justify-between gap-1 text-slate-300">
-                <span className="text-slate-400">Tiết khí trong tháng:</span>
-                <div className="flex items-center gap-1.5 flex-wrap font-mono text-[11px]">
-                  {newMoon.tiets.length > 0 ? (
-                    <span className="px-1.5 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-800/50">
-                      Tiết: {newMoon.tiets.join(', ')}
-                    </span>
-                  ) : (
-                    <span className="px-1.5 py-0.5 rounded bg-rose-950/40 text-rose-300 border border-rose-800/50">
-                      Không có Tiết
-                    </span>
-                  )}
-                  {newMoon.khis.length > 0 ? (
-                    <span className="px-1.5 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/50">
-                      Khí: {newMoon.khis.join(', ')}
-                    </span>
-                  ) : (
-                    <span className="px-1.5 py-0.5 rounded bg-amber-950/40 text-amber-300 border border-amber-800/50">
-                      Không có Khí
-                    </span>
-                  )}
-                </div>
-              </div>
             </div>
 
-            {/* Sóc Previous and Sóc Next */}
-            <div className="space-y-2 text-xs">
+            {/* Sóc Previous and Sóc Next in short summary */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               <div className="bg-slate-950/50 border border-slate-800/60 rounded-lg p-2.5">
-                <div className="flex items-center justify-between text-slate-300">
-                  <span className="font-medium text-slate-400 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
-                    Điểm Sóc trước đó (Mùng 1 đầu tháng):
-                  </span>
-                  <span className="font-mono text-emerald-300 font-medium">
-                    {formatVietnamDateTime(newMoon.prevSocDate)}
-                  </span>
+                <div className="text-slate-400 font-medium text-[11px] mb-0.5">
+                  🌑 Điểm Sóc Đầu Tháng:
                 </div>
-                <div className="text-[11px] text-slate-400 mt-1 flex justify-between">
-                  <span>Khoảng cách:</span>
-                  <span className="font-mono">{newMoon.prevPassedString} ({newMoon.prevPassedDays.toFixed(2)} ngày)</span>
+                <div className="font-mono text-emerald-300 font-semibold">
+                  {formatVietnamDateTime(newMoon.prevSocDate).split(' ')[0]}
                 </div>
+                <div className="text-[10px] text-slate-400">Đã qua {newMoon.prevPassedDays.toFixed(1)} ngày</div>
               </div>
 
               <div className="bg-slate-950/50 border border-slate-800/60 rounded-lg p-2.5">
-                <div className="flex items-center justify-between text-slate-300">
-                  <span className="font-medium text-slate-400 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block"></span>
-                    Điểm Sóc tiếp theo (Mùng 1 tháng sau):
-                  </span>
-                  <span className="font-mono text-cyan-300 font-medium">
-                    {formatVietnamDateTime(newMoon.nextSocDate)}
-                  </span>
+                <div className="text-slate-400 font-medium text-[11px] mb-0.5">
+                  🌑 Điểm Sóc Tháng Sau:
                 </div>
-                <div className="text-[11px] text-slate-400 mt-1 flex justify-between">
-                  <span>Còn lại:</span>
-                  <span className="font-mono">{newMoon.nextRemainingString} ({newMoon.nextRemainingDays.toFixed(2)} ngày)</span>
+                <div className="font-mono text-cyan-300 font-semibold">
+                  {formatVietnamDateTime(newMoon.nextSocDate).split(' ')[0]}
                 </div>
+                <div className="text-[10px] text-slate-400">Còn lại {newMoon.nextRemainingDays.toFixed(1)} ngày</div>
               </div>
             </div>
           </div>
+
+          {/* Action Navigation Link for Module 3 */}
+          {onNavigateTab && (
+            <div className="flex justify-end pt-1">
+              <button
+                id="btn-overview-goto-moon"
+                onClick={() => onNavigateTab('moon')}
+                className="px-3.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-medium text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Moon className="w-3.5 h-3.5" />
+                <span>Xem Chi Tiết Điểm Sóc & Âm Lịch</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 3. BÀN KỲ MÔN 9 CUNG & TOÀN THƯ DỰ TRẮC PORTAL CARDS */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Card 3A: Bàn Kỳ Môn 9 Cung Tinh Túy */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col justify-between space-y-4">
+          <div>
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 shrink-0">
+                  <Compass className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">Mô-đun 4: Bàn Kỳ Môn 9 Cung</h3>
+                  <p className="text-xs text-slate-400">Tam Bàn (Thiên - Nhân - Địa) & Bát Thần</p>
+                </div>
+              </div>
+
+              <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-purple-950 text-purple-300 border border-purple-500/30">
+                {chart.cucName}
+              </span>
+            </div>
+
+            {/* Core 9-Palace Parameters */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 my-3.5 text-xs">
+              <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+                <div className="text-slate-400 text-[10px] uppercase">Tuần Thủ Giáp</div>
+                <div className="font-mono font-bold text-amber-300 text-sm mt-0.5">{chart.tuanThuGiap}</div>
+                <div className="text-[10px] text-slate-400">Can {chart.tuanThuCan} thống lĩnh</div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+                <div className="text-slate-400 text-[10px] uppercase">Sao Trực Phù</div>
+                <div className="font-mono font-bold text-cyan-300 text-sm mt-0.5">{chart.trucPhuStar}</div>
+                <div className="text-[10px] text-slate-400">Cung gốc: {chart.trucPhuPalace} &rarr; Mới: {chart.trucPhuNewPalace}</div>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800 col-span-2 sm:col-span-1">
+                <div className="text-slate-400 text-[10px] uppercase">Cửa Trực Sử</div>
+                <div className="font-mono font-bold text-emerald-300 text-sm mt-0.5">{chart.trucSuDoor}</div>
+                <div className="text-[10px] text-slate-400">Cung gốc: {chart.trucSuPalace} &rarr; Mới: {chart.trucSuNewPalace}</div>
+              </div>
+            </div>
+
+            {/* Special formations badge */}
+            <div className="bg-slate-950/60 p-3 rounded-xl border border-slate-800 text-xs space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Tuần Không & Dịch Mã:</span>
+                <span className="font-mono text-slate-200">
+                  TK: {chart.tuanKhongChi.join(', ')} • Mã: {chart.dichMaChi}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="text-slate-400">Đặc tính:</span>
+                <span className="text-amber-300/90 font-medium">
+                  {chart.specialFormations.length > 0 ? chart.specialFormations.join(' • ') : 'Cục diện bình hòa'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Navigation Link for Module 4 */}
+          {onNavigateTab && (
+            <div className="flex justify-end pt-1">
+              <button
+                id="btn-overview-goto-chart"
+                onClick={() => onNavigateTab('kymon-chart')}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+              >
+                <span>Mở Bàn Kỳ Môn Hoàn Chỉnh</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Card 3B: Toàn Thư Dự Trắc 6 Phương Diện & Thân Mệnh */}
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm flex flex-col justify-between space-y-4">
+          <div>
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">Mô-đun 5: Toàn Thư Dự Trắc</h3>
+                  <p className="text-xs text-slate-400">Chiêm nghiệm việc đời theo Bí Kíp Toàn Thư</p>
+                </div>
+              </div>
+
+              <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                8 Chuyên Đề
+              </span>
+            </div>
+
+            {/* 6 Aspects Quick Badges Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-3 text-xs">
+              <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-center gap-1.5 text-rose-300">
+                <Heart className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Hôn Nhân (Ất-Canh)</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-center gap-1.5 text-emerald-300">
+                <HeartPulse className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Y Học (Thiên Nhuế)</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-center gap-1.5 text-amber-300">
+                <Coins className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Cầu Tài (Mậu-Sinh)</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-center gap-1.5 text-purple-300">
+                <GraduationCap className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Công Danh (Khai Môn)</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-center gap-1.5 text-blue-300">
+                <Search className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Mất Vật (Thiên Bồng)</span>
+              </div>
+              <div className="p-2 rounded-lg bg-slate-950/80 border border-slate-800 flex items-center gap-1.5 text-teal-300">
+                <Scale className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Kiện Tụng (Kinh-Cảnh)</span>
+              </div>
+            </div>
+
+            <div className="bg-slate-950/60 p-2.5 rounded-xl border border-slate-800 text-[11px] text-slate-300 leading-relaxed">
+              <span className="text-amber-400 font-semibold">Bao gồm: </span>
+              Quy luật Tam Bàn (Sao - Cửa - Cung), Phân định Chủ - Khách, Thân Mệnh Lục Thân (Sang Hèn, Tổ Nghiệp, Cô Hư) và 6 việc đời cụ thể.
+            </div>
+          </div>
+
+          {/* Action Navigation Link for Module 5 */}
+          {onNavigateTab && (
+            <div className="flex justify-end pt-1">
+              <button
+                id="btn-overview-goto-prognostication"
+                onClick={() => onNavigateTab('kymon-prognostication')}
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+              >
+                <span>Xem Toàn Bộ Luận Giải Dự Trắc</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

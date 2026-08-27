@@ -6,9 +6,14 @@ import { formatVietnamDateTime } from '../astronomy/solarTerms';
 interface KyMonDunJiaPanelProps {
   kyMon: KyMonInfo;
   onOpenCompleteBoard?: () => void;
+  onOpenPrognostication?: () => void;
 }
 
-export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({ kyMon, onOpenCompleteBoard }) => {
+export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({
+  kyMon,
+  onOpenCompleteBoard,
+  onOpenPrognostication,
+}) => {
   const isDuongDon = kyMon.isDuongDon;
 
   const getRuleBadgeColor = (rule: string) => {
@@ -199,6 +204,35 @@ export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({ kyMon, onOpe
           {kyMon.fullAnalysisText}
         </div>
       </div>
+
+      {/* Direct Quick Nav Action Links */}
+      {(onOpenCompleteBoard || onOpenPrognostication) && (
+        <div className="mt-5 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-end gap-3 text-xs">
+          {onOpenCompleteBoard && (
+            <button
+              id="btn-panel-open-chart"
+              onClick={onOpenCompleteBoard}
+              className="px-4 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-500/30 font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Compass className="w-3.5 h-3.5" />
+              <span>Xem Bàn Kỳ Môn 9 Cung Đầy Đủ</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+
+          {onOpenPrognostication && (
+            <button
+              id="btn-panel-open-prognostication"
+              onClick={onOpenPrognostication}
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center gap-1.5 transition-colors shadow-md cursor-pointer"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Xem Toàn Bộ Luận Giải Dự Trắc</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

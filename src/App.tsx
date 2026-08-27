@@ -88,10 +88,14 @@ export default function App() {
         {/* Tab Content */}
         {activeTab === 'overview' && (
           <div className="space-y-6">
-            <OverviewCard result={result} />
+            <OverviewCard
+              result={result}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
             <KyMonDunJiaPanel
               kyMon={result.kyMon}
               onOpenCompleteBoard={() => setActiveTab('kymon-chart')}
+              onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
             />
           </div>
         )}
