@@ -27,13 +27,25 @@ import {
 import { ComprehensiveResult } from '../types';
 import { formatVietnamDateTime, BAGUA_PALACES } from '../astronomy/solarTerms';
 import { buildCompleteKyMonChart, CompleteKyMonChart } from '../astronomy/kymonChart';
+import { MiniCalendar } from './MiniCalendar';
 
 interface OverviewCardProps {
   result: ComprehensiveResult;
   onNavigateTab?: (tabId: string) => void;
+  currentDate?: Date;
+  onDateChange?: (date: Date) => void;
+  isLive?: boolean;
+  onSetLive?: (live: boolean) => void;
 }
 
-export const OverviewCard: React.FC<OverviewCardProps> = ({ result, onNavigateTab }) => {
+export const OverviewCard: React.FC<OverviewCardProps> = ({
+  result,
+  onNavigateTab,
+  currentDate = new Date(),
+  onDateChange = () => {},
+  isLive = false,
+  onSetLive = () => {},
+}) => {
   const { currentTerm, nextTerm, batTu, newMoon, kyMon, solarLongitude, solarLongitudeDMS } = result;
 
   const isTiet = currentTerm.category === 'Tiết';
@@ -154,118 +166,131 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({ result, onNavigateTa
         </div>
       </div>
 
-      {/* 1. THIÊN VĂN 24 TIẾT KHÍ & HOÀNG ĐẠO */}
-      <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg space-y-5">
-        <div className="absolute -right-12 -top-12 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -left-12 -bottom-12 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. THIÊN VĂN 24 TIẾT KHÍ & LỊCH THÁNG TƯƠNG TÁC */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="lg:col-span-7 flex flex-col">
+          <div className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg space-y-5 h-full flex flex-col justify-between">
+            <div className="absolute -right-12 -top-12 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -left-12 -bottom-12 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-4 border-b border-slate-800">
-          {/* Main Term Highlight */}
-          <div className="flex items-start gap-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0 shadow-inner">
-              <Sun className="w-8 h-8 sm:w-9 sm:h-9 text-amber-400 animate-pulse" />
+            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+              {/* Main Term Highlight */}
+              <div className="flex items-start gap-3.5">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0 shadow-inner">
+                  <Sun className="w-7 h-7 sm:w-8 sm:h-8 text-amber-400 animate-pulse" />
+                </div>
+
+                <div>
+                  <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                      Tiết Khí Đương Lệnh
+                    </span>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-medium border ${
+                        isTiet
+                          ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30'
+                          : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
+                      }`}
+                    >
+                      {isTiet ? 'Tiết Lệnh' : 'Trung Khí'}
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-mono">
+                      {currentTerm.cungName}
+                    </span>
+                  </div>
+
+                  <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight flex items-baseline gap-2">
+                    <span>{currentTerm.name}</span>
+                    <span className="text-amber-400 text-base sm:text-lg font-mono font-semibold">
+                      ({currentTerm.degree}°)
+                    </span>
+                  </h2>
+
+                  <p className="text-xs text-slate-300 mt-1 flex items-center gap-1.5 flex-wrap">
+                    <span className="text-slate-400">Bắt đầu:</span>
+                    <span className="font-mono text-white font-medium">
+                      {formatVietnamDateTime(currentTerm.startDate)}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Sun Ecliptic Longitude Card */}
+              <div className="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3 min-w-[180px] flex flex-col justify-center">
+                <div className="flex items-center justify-between text-[11px] text-slate-400 mb-0.5">
+                  <span className="flex items-center gap-1 font-medium">
+                    <Orbit className="w-3.5 h-3.5 text-amber-400" />
+                    Kinh Độ ☉
+                  </span>
+                  <span className="font-mono text-[10px] text-amber-400/80">Hoàng Đạo</span>
+                </div>
+                <div className="text-lg font-mono font-bold text-amber-300 tracking-wide">
+                  {solarLongitudeDMS}
+                </div>
+                <div className="text-[11px] font-mono text-slate-400">
+                  {solarLongitude.toFixed(4)}°
+                </div>
+              </div>
             </div>
 
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                  Mô-đun 1: Thiên Văn 24 Tiết Khí Đương Lệnh
+            {/* Term Elapsed / Remaining Progress Info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+              <div className="bg-slate-950/50 rounded-lg p-2.5 border border-slate-800/60 flex items-center justify-between">
+                <span className="text-slate-400 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-emerald-400" />
+                  Đã qua:
                 </span>
-                <span
-                  className={`text-xs px-2.5 py-0.5 rounded-full font-medium border ${
-                    isTiet
-                      ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30'
-                      : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
-                  }`}
-                >
-                  {isTiet ? 'Tiết (Tiết Lệnh Quản Bát Tự)' : 'Khí (Trung Khí)'}
-                </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-mono">
-                  {currentTerm.cungName} (Cung {currentTerm.cungNumber})
+                <span className="font-mono font-medium text-emerald-300 text-[11px]">
+                  {currentTerm.passedString}
                 </span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-baseline gap-2">
-                <span>{currentTerm.name}</span>
-                <span className="text-amber-400 text-lg sm:text-xl font-mono font-semibold">
-                  ({currentTerm.degree}°)
+              <div className="bg-slate-950/50 rounded-lg p-2.5 border border-slate-800/60 flex items-center justify-between">
+                <span className="text-slate-400 flex items-center gap-1.5 truncate mr-1">
+                  <Clock className="w-3.5 h-3.5 text-amber-400" />
+                  Đến {nextTerm.name}:
                 </span>
-              </h2>
-
-              <p className="text-xs sm:text-sm text-slate-300 mt-1.5 flex items-center gap-2 flex-wrap">
-                <span className="text-slate-400">Bắt đầu:</span>
-                <span className="font-mono text-white font-medium">
-                  {formatVietnamDateTime(currentTerm.startDate)}
+                <span className="font-mono font-medium text-amber-300 text-[11px] shrink-0">
+                  {nextTerm.remainingString}
                 </span>
-                <span className="text-slate-400">(Giờ VN UTC+7)</span>
-              </p>
+              </div>
             </div>
-          </div>
 
-          {/* Sun Ecliptic Longitude Card */}
-          <div className="bg-slate-950/80 border border-slate-800/80 rounded-xl p-4 min-w-[260px] flex flex-col justify-center">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-              <span className="flex items-center gap-1.5 font-medium">
-                <Orbit className="w-3.5 h-3.5 text-amber-400" />
-                Kinh Độ Mặt Trời (☉)
-              </span>
-              <span className="font-mono text-[11px] text-amber-400/80">Hoàng Đạo</span>
-            </div>
-            <div className="text-xl sm:text-2xl font-mono font-bold text-amber-300 tracking-wide">
-              {solarLongitudeDMS}
-            </div>
-            <div className="text-xs font-mono text-slate-400 mt-0.5">
-              {solarLongitude.toFixed(6)}°
-            </div>
+            {/* Action Navigation Links for Module 1 */}
+            {onNavigateTab && (
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-xs border-t border-slate-800/60">
+                <button
+                  id="btn-overview-goto-table"
+                  onClick={() => onNavigateTab('table')}
+                  className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer text-xs"
+                >
+                  <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Bảng 24 Tiết Khí</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  id="btn-overview-goto-compass"
+                  onClick={() => onNavigateTab('compass')}
+                  className="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium flex items-center gap-1.5 transition-colors cursor-pointer text-xs"
+                >
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>Bát Quái 9 Cung</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Term Elapsed / Remaining Progress Info */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="bg-slate-950/50 rounded-lg p-3 border border-slate-800/60 flex items-center justify-between">
-            <span className="text-slate-400 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-emerald-400" />
-              Đã trôi qua trong tiết:
-            </span>
-            <span className="font-mono font-medium text-emerald-300">
-              {currentTerm.passedString}
-            </span>
-          </div>
-
-          <div className="bg-slate-950/50 rounded-lg p-3 border border-slate-800/60 flex items-center justify-between">
-            <span className="text-slate-400 flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-amber-400" />
-              Còn lại đến <span className="text-amber-300 font-semibold">{nextTerm.name} ({nextTerm.degree}°)</span>:
-            </span>
-            <span className="font-mono font-medium text-amber-300">
-              {nextTerm.remainingString}
-            </span>
-          </div>
+        {/* Persistent Mini Calendar Grid */}
+        <div className="lg:col-span-5 flex flex-col">
+          <MiniCalendar
+            currentDate={currentDate}
+            onDateChange={onDateChange}
+            isLive={isLive}
+            onSetLive={onSetLive}
+          />
         </div>
-
-        {/* Action Navigation Links for Module 1 */}
-        {onNavigateTab && (
-          <div className="pt-2 flex flex-wrap items-center justify-end gap-2.5 text-xs">
-            <button
-              id="btn-overview-goto-table"
-              onClick={() => onNavigateTab('table')}
-              className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <Calendar className="w-3.5 h-3.5 text-amber-400" />
-              <span>Xem Bảng 24 Tiết Khí Cả Năm</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <button
-              id="btn-overview-goto-compass"
-              onClick={() => onNavigateTab('compass')}
-              className="px-3.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Xem Bát Quái & 9 Cung</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
       </div>
 
       {/* 2. BÁT TỰ TỨ TRỤ & ÂM LỊCH ĐIỂM SÓC */}

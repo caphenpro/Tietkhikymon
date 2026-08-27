@@ -6,6 +6,28 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.6.0]] - 2026-08-27
+### Codename: *Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển*
+
+#### ✨ Tính Năng Mới (Added)
+- **Lịch Tháng Tương Tác Thường Trực (Interactive Mini Calendar)**:
+  - Bổ sung thành phần lịch tháng (`MiniCalendar.tsx`) thường trực ngay trên **Tab Tổng Quát (Overview)**.
+  - Cho phép người dùng chuyển nhanh ngày khảo sát chỉ với một cú nhấp chuột trực tiếp vào từng ô ngày trên lịch.
+  - Tự động đánh dấu và làm nổi bật **Ngày Đang Khảo Sát (Active Selected Date)** bằng viền sáng hổ phách (amber highlight) và trạng thái hiển thị giờ.
+  - Hiển thị chấm nhận diện **Ngày Hôm Nay (Current Today)** theo thời gian thực.
+  - Hỗ trợ đầy đủ các phím điều hướng: **-1 Ngày**, **+1 Ngày**, nút quay về **"Hôm nay"**, bộ chọn tháng nhanh và ô nhập năm tùy biến (1000 - 3000).
+- **Bố Cục Lưới Đồng Bộ (Responsive Grid Integration)**:
+  - Đặt Lịch Tháng tương tác song hành cùng Thẻ Tiết Khí Đương Lệnh trong hệ thống lưới 12 cột (`lg:grid-cols-12`), tạo nên khu vực điều phối trung tâm tiện lợi.
+
+#### ⚡ Cải Tiến & Tối Ưu (Improved)
+- **Tinh Gọn Thanh Điều Khiển Thời Gian (Streamlined Control Bar)**:
+  - Lược bỏ hoàn toàn chức năng nhập nhanh chuỗi ký tự CLI và thanh preset mốc cố định cũ theo yêu cầu người dùng, giúp giao diện thông thoáng, gọn gàng và hiện đại.
+  - Giữ lại bộ chọn chuẩn `datetime-local` chi tiết đến từng giây và nút bật/tắt **Thời Gian Thực (Live)** có hiệu ứng xoay mượt mà.
+- **Tối Ưu Đồng Bộ Dữ Liệu**:
+  - Khi nhấp chuyển ngày trên lịch tháng, hệ thống tự động giữ nguyên mốc giờ/phút/giây đã chọn (theo múi giờ Việt Nam UTC+7) để tái lập bàn Kỳ Môn tức thì.
+
+---
+
 ## [[2.5.0]] - 2026-08-26
 ### Codename: *Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời*
 

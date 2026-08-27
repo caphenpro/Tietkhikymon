@@ -11,18 +11,46 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.5.0';
-export const APP_RELEASE_DATE = '2026-08-26';
-export const APP_CODENAME = 'Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời';
+export const APP_VERSION = '2.6.0';
+export const APP_RELEASE_DATE = '2026-08-27';
+export const APP_CODENAME = 'Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.6.0',
+    releaseDate: '2026-08-27',
+    codename: 'Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển',
+    tagline: 'Tích hợp Lịch Tháng tương tác (Mini Calendar) trực quan trên Tab Tổng Quát, nổi bật ngày khảo sát và tinh gọn thanh điều khiển thời gian.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung Lịch Tháng Tương Tác (Mini Calendar) thường trực ngay trên Tab Tổng Quát (Overview) giúp chuyển ngày nhanh bằng 1 cú nhấp chuột.',
+      'Hiển thị trực quan và nổi bật ngày đang khảo sát (Active Date Highlight) với viền sáng, nhãn ngày và trạng thái Thời gian thực (Live).',
+      'Đánh dấu ngày hiện tại (Hôm nay) và hỗ trợ điều hướng nhanh lùi/tiến ngày (-1N, +1N), chuyển tháng, chọn năm tùy ý.',
+      'Tinh gọn thanh điều khiển: lược bỏ ô nhập nhanh chuỗi text và các nút preset cố định để giao diện thanh thoát, trực quan.',
+    ],
+    added: [
+      'Component MiniCalendar.tsx với giao diện lưới lịch 7 ngày (T2..CN), hỗ trợ chọn trực tiếp tháng/năm và đồng bộ múi giờ Việt Nam (UTC+7).',
+      'Tích hợp MiniCalendar song hành cùng Thẻ Tiết Khí Đương Lệnh trong bố cục lưới đáp ứng (responsive grid).',
+      'Thêm các nút điều hướng nhanh -1 ngày, +1 ngày và về "Hôm nay" ngay trên thanh tiêu đề của Lịch Tháng.',
+    ],
+    improved: [
+      'Thanh TimeInputControl được tinh giản tối đa, tập trung vào bộ chọn DateTime picker chuẩn xác và công tắc Live thời gian thực.',
+      'Tối ưu hóa hiệu năng render khi chuyển đổi qua lại giữa các ngày trên lịch mà không làm gián đoạn trạng thái quẻ Kỳ Môn.',
+    ],
+    fixed: [
+      'Đồng bộ mốc giờ/phút/giây hiện tại khi người dùng nhấp chọn ngày mới trên Lịch Tháng.',
+    ],
+    astronomyNotes: [
+      'Lịch tháng tính toán chính xác chu kỳ ngày dương lịch và tự động chuyển đổi sang mốc giờ UTC+7 của Việt Nam.',
+    ],
+  },
   {
     version: '2.5.0',
     releaseDate: '2026-08-26',
     codename: 'Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời',
     tagline: 'Phát hành trang Dự Trắc Bàn Kỳ Môn toàn diện với quy luật Tam Bàn, Chủ - Khách, Thân Mệnh và 6 phương diện đời sống.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung khu vực chuyên biệt dẫn trực tiếp từ phía dưới Bàn Kỳ Môn Hoàn Chỉnh tới Trang Dự Trắc Chi Tiết.',
       'Tích hợp trang riêng "Dự Trắc Kỳ Môn" phân tích chuyên sâu toàn bộ quẻ theo nguyên bản Kỳ Môn Độn Giáp Bí Kíp Toàn Thư.',

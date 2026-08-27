@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.5.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.6.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,25 +10,18 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.5.0`** *(Phát hành: 26/08/2026)*
-**Tên mã:** *Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời*
+### 🚀 **Phiên bản hiện tại: `v2.6.0`** *(Phát hành: 27/08/2026)*
+**Tên mã:** *Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển*
 
-- 🏷️ **Số Hoá Hệ Thống Phiên Bản**: Đánh số phiên bản `v2.5.0` trực tiếp trên thanh tiêu đề (Header), tích hợp cửa sổ xem **Nhật Ký Cập Nhật (Changelog Viewer)** và tệp lưu trữ [CHANGELOG.md](CHANGELOG.md) theo chuẩn quốc tế.
-- 🎯 **Chương Tổng Quát Đa Tầng (Executive Headline & Overview)**: 
-  - Khối tóm lược nhanh 5 chỉ số cốt lõi (*1. Tiết Khí Đương Lệnh, 2. Bát Tự Tứ Trụ, 3. Âm Lịch Thiên Văn, 4. Cục Số Kỳ Môn, 5. Trực Phù & Trực Sử*).
-  - Tích hợp các nút bấm điều hướng nhanh 2 chiều dẫn thẳng tới từng mô-đun chi tiết chuyên sâu.
-- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**:
-  - Tích hợp 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**:
-    1. **Quy Luật Tam Bàn & Phân Định Chủ - Khách**: Phân định Thiên bàn (Sao), Nhân bàn (Cửa), Địa bàn (Cung); đánh giá sự tổn - ích của Chủ và Khách khi khởi sự hoặc giao dịch.
-    2. **Dự Trắc Thân Mệnh (Nhân Sinh Quý Tiện)**: Hệ thống Lục Thân (Niên can Cha Mẹ, Nguyệt can Anh Em, Nhật can Bản Thân, Thời can Con Nhỏ, Thê thiếp Ất - Đinh, Chồng Canh), luận vinh khô sang hèn, Sinh Môn tổ nghiệp ly hương, Cô - Hư và ý nghĩa Cửu Tinh - Bát Môn trên cung mệnh.
-    3. **Hôn Nhân & Vợ Chồng**: Đánh giá tương quan sinh khắc giữa cung Ất (Vợ), Canh (Chồng), Đinh (Thiếp) và Lục Hợp (Người mối).
-    4. **Y Học, Trị Bệnh & Tìm Thầy Thuốc**: Tra cứu chi tiết tạng phủ bên trong và triệu chứng bên ngoài theo vị trí sao **Thiên Nhuế** tại 8 cung; xem sự sống chết qua Sinh - Tử Môn; tìm thầy thuốc qua sao **Thiên Tâm** và **Kỳ Ất**.
-    5. **Cầu Tài, Kinh Doanh & Giao Dịch**: Phân tích tiền vốn **Giáp Tý Mậu**, lợi tức **Sinh Môn**, và quan hệ mua bán Nhật can - Thời can.
-    6. **Thi Cử, Học Vấn & Công Danh**: Tra cứu sĩ tử (Nhật can), quan chủ khảo (**Trực Phù**), giám khảo (**Trực Sử**), bài thi (**Kỳ Đinh**), thăng chức quan văn (**Khai Môn**) và quan võ (**Đỗ Môn**).
-    7. **Tìm Người, Mất Vật & Kẻ Trộm**: Tra cứu giống loài đồ vật mất theo 8 cung của Can Giờ và nhận diện kẻ trộm qua sao **Thiên Bồng**.
-    8. **Kiện Tụng & Tranh Chấp**: Phân định Nguyên cáo (Nhật can), Bị cáo (Thời can), Quan tòa (**Trực Phù**), và văn thư đơn trạng qua hai cửa **Kinh Môn**, **Cảnh Môn**.
-- 📜 **100 Cặp Thập Can Khắc Ứng & 64 Quẻ Bát Môn Cung**: Luận giải chi tiết Thiên can gia Địa can (*Long Hồi Thủ, Phi Điểu Điệt Huyệt, Bạch Hổ Xướng Cuồng, Thanh Long Đào Tẩu...*) kèm thơ phú cổ thư và 4 phương diện thực tế (*Công Danh, Tài Vận, Xuất Hành, Bệnh Tật*).
-- ⚔️ **Cách Cục & Trận Thế Đặc Biệt**: Tự động nhận diện Lục Nghi Kích Hình, Tam Kỳ Nhập Mộ, Tam Kỳ Thăng Điện, Cung Ba Thắng, Năm Cung Bất Khả Kích, 9 Độn Biến Hóa.
+- 📅 **Lịch Tháng Tương Tác Thường Trực (Mini Calendar)**:
+  - Bổ sung thành phần lịch tháng (`MiniCalendar.tsx`) thường trực ngay trên **Tab Tổng Quát (Overview)** song hành cùng Thẻ Tiết Khí Đương Lệnh.
+  - Cho phép người dùng chuyển nhanh ngày khảo sát chỉ với 1 cú nhấp chuột trực tiếp vào từng ô ngày trên lịch.
+  - Làm nổi bật **Ngày Đang Khảo Sát (Active Selected Date)** bằng viền sáng hổ phách (amber highlight) và trạng thái hiển thị giờ.
+  - Đánh dấu **Ngày Hôm Nay (Current Today)** theo thời gian thực và hỗ trợ các phím tắt điều hướng nhanh **-1N**, **+1N**, quay về **Hôm nay**, chọn tháng/năm tùy ý.
+- ⚡ **Tinh Gọn Thanh Điều Khiển Thời Gian (Streamlined Control Bar)**:
+  - Lược bỏ hoàn toàn ô nhập nhanh chuỗi text và các nút preset cố định để giao diện thanh thoát, trực quan.
+  - Giữ lại bộ chọn chuẩn `datetime-local` chi tiết đến từng giây và nút bật/tắt **Thời Gian Thực (Live)**.
+- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**: 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư** (Quy luật Tam Bàn, Chủ - Khách, Thân Mệnh Lục Thân, Hôn Nhân, Y Học Trị Bệnh, Cầu Tài, Thi Cử, Tìm Người Mất Vật, Kiện Tụng).
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
@@ -161,6 +154,7 @@ Tietkhikymon/
 │   │   ├── KyMonDunJiaPanel.tsx       # Bảng phân tích Cục Kỳ Môn chi tiết
 │   │   ├── KyMonPrognosticationView.tsx # Trang Toàn Thư Dự Trắc 8 chuyên đề
 │   │   ├── LunarNewMoonSection.tsx    # Bảng Điểm Sóc & Âm lịch chi tiết
+│   │   ├── MiniCalendar.tsx           # Lịch tháng tương tác & chọn ngày trực quan
 │   │   ├── NinePalacesCompass.tsx     # La bàn Lạc Thư 9 Cung
 │   │   ├── OverviewCard.tsx           # Thẻ tổng quan đa tầng từ cơ bản đến nâng cao
 │   │   ├── TimeInputControl.tsx       # Bộ điều khiển thời gian thực & chọn lịch
