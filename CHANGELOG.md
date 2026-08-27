@@ -6,6 +6,18 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.7.2]] - 2026-08-27
+### Codename: *Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi*
+
+#### 🐛 Sửa Lỗi (Fixed)
+- **Khắc phục lỗi 404 NOT_FOUND (`models/gemini-1.5-flash is not found`)**: Loại bỏ hoàn toàn mã mô hình cũ không còn được hỗ trợ bởi Google Gen AI API v1beta khỏi danh sách gọi chính thức và dự phòng.
+- **Chuẩn hóa danh sách mô hình thế hệ mới**: Cập nhật sang các mô hình được hỗ trợ tối ưu: `gemini-3.7-flash`, `gemini-2.5-flash`, `gemini-flash-latest`, `gemini-3.1-flash-lite`.
+
+#### ⚡ Cải Tiến (Improved)
+- **Làm sạch thông báo lỗi (Error Unwrapping & Localization)**: Tích hợp hàm giải mã `formatClientErrorMessage` / `extractCleanErrorMessage` tự động bóc tách các chuỗi JSON lồng nhau từ API trả về, chuyển đổi sang thông điệp tiếng Việt rõ ràng, thân thiện cho người dùng.
+
+---
+
 ## [[2.7.1]] - 2026-08-27
 ### Codename: *Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân*
 

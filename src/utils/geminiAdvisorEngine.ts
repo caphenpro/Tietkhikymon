@@ -181,7 +181,7 @@ export async function streamKyMonAiInterpretation(
   const ai = new GoogleGenAI({ apiKey: localKey });
   const prompt = buildPrompt(payload);
 
-  const modelsToTry = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-1.5-flash'];
+  const modelsToTry = ['gemini-3.7-flash', 'gemini-2.5-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
   let lastError: Error | null = null;
 
   for (const modelName of modelsToTry) {
@@ -211,5 +211,41 @@ export async function streamKyMonAiInterpretation(
     }
   }
 
-  throw lastError || new Error('Không thể kết nối đến mô hình Gemini. Vui lòng kiểm tra lại API Key.');
+  const cleanMessage = lastError ? formatClientErrorMessage(lastError) : 'Không thể kết nối đến mô hình Gemini. Vui lòng kiểm tra lại API Key.';
+  throw new Error(cleanMessage);
+}
+
+export function formatClientErrorMessage(err: unknown): string {
+  if (!err) return 'Lỗi không xác định khi kết nối Gemini API.';
+  let msg = err instanceof Error ? err.message : String(err);
+
+  for (let i = 0; i < 3; i++) {
+    try {
+      const parsed = typeof msg === 'string' && (msg.startsWith('{') || msg.startsWith('[')) ? JSON.parse(msg) : null;
+      if (parsed) {
+        if (parsed.error && typeof parsed.error === 'object' && parsed.error.message) {
+          msg = parsed.error.message;
+        } else if (parsed.error && typeof parsed.error === 'string') {
+          msg = parsed.error;
+        } else if (parsed.message) {
+          msg = parsed.message;
+        }
+      } else {
+        break;
+      }
+    } catch {
+      break;
+    }
+  }
+
+  if (typeof msg === 'string') {
+    if (msg.includes('API_KEY_INVALID') || msg.includes('API key not valid')) {
+      return 'API Key không hợp lệ hoặc đã hết hạn. Vui lòng nhấn "Cấu hình API Key" để cập nhật API Key mới từ Google AI Studio.';
+    }
+    if (msg.includes('RESOURCE_EXHAUSTED') || msg.includes('Quota')) {
+      return 'Hạn ngạch API Key đã hết lượt gọi tạm thời. Vui lòng đợi 1 phút hoặc đổi API Key khác.';
+    }
+  }
+
+  return msg;
 }

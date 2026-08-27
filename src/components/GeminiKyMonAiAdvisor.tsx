@@ -31,7 +31,7 @@ import { KyMonInfo, BatTuInfo, ComprehensiveResult } from '../types';
 import { CompleteKyMonChart, buildCompleteKyMonChart } from '../astronomy/kymonChart';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
 import { GeminiApiKeyModal, getStoredGeminiKey } from './GeminiApiKeyModal';
-import { streamKyMonAiInterpretation, KyMonAiPayload } from '../utils/geminiAdvisorEngine';
+import { streamKyMonAiInterpretation, KyMonAiPayload, formatClientErrorMessage } from '../utils/geminiAdvisorEngine';
 
 interface GeminiKyMonAiAdvisorProps {
   currentKyMon?: KyMonInfo;
@@ -247,10 +247,7 @@ export const GeminiKyMonAiAdvisor: React.FC<GeminiKyMonAiAdvisorProps> = ({
       });
     } catch (err: unknown) {
       console.error('Gemini Stream Error:', err);
-      const msg =
-        err instanceof Error
-          ? err.message
-          : 'Không thể kết nối đến Gemini API. Vui lòng kiểm tra lại cấu hình.';
+      const msg = formatClientErrorMessage(err);
       setErrorMsg(msg);
     } finally {
       setIsLoading(false);

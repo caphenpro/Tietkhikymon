@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.7.1-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.7.2-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 [![AI Advisor](https://img.shields.io/badge/AI%20Advisor-Gemini%203.7%20%2F%202.5%20Flash-purple.svg?style=flat-square)](/api/gemini/kymon-interpret)
@@ -11,9 +11,11 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.7.1`** *(Phát hành: 27/08/2026)*
-**Tên mã:** *Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân*
+### 🚀 **Phiên bản hiện tại: `v2.7.2`** *(Phát hành: 27/08/2026)*
+**Tên mã:** *Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi*
 
+- 🛡️ **Khắc Phục Triệt Để Lỗi 404 NOT_FOUND**: Loại bỏ hoàn toàn mã mô hình cũ không còn được hỗ trợ, chuẩn hóa sang các mô hình thế hệ mới: **Gemini 3.7 Flash**, **Gemini 2.5 Flash**, **Gemini Flash Latest**, **Gemini 3.1 Flash Lite**.
+- 💬 **Làm Sạch Thông Báo Lỗi Trực Quan**: Tự động bóc tách JSON lỗi từ Google API và hiển thị thông điệp tiếng Việt thân thiện, rõ ràng (chỉ rõ hạn ngạch hoặc tính hợp lệ của API Key).
 - 🔑 **Cấu Hình API Key Cá Nhân & Tự Động Lưu localStorage**: Người dùng có thể nhấn nút **"Cấu hình API Key"** để nạp khóa cá nhân Google AI Studio miễn phí, hệ thống tự động lưu vào trình duyệt cho các lần truy cập tiếp theo.
 - ⚡ **Cơ Chế Kép Dual-Engine (Server + Client Fallback)**: Đảm bảo khả năng phản hồi 100% bằng cách tự động kích hoạt chế độ trực tiếp từ Client khi backend chưa cấu hình hoặc gặp mã lỗi 404.
 - 🤖 **Tích Hợp Luận Giải AI Gemini (`GeminiKyMonAiAdvisor.tsx`)**:

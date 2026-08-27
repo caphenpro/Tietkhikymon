@@ -124,7 +124,7 @@ ${userQuestion ? `- Câu hỏi chiêm đoán cụ thể của đương số: "${
 
 Hãy đưa ra bài luận giải chuyên sâu, phân tích tỉ mỉ Thiên - Địa - Nhân - Thần, Dụng Thần, Chủ Khách, Cách Cục Cát Hung và đưa ra định hướng chiến lược sáng suốt nhất cho quẻ Kỳ Môn này.`;
 
-  const models = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-3.7-flash', 'gemini-2.5-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
   let lastErr: unknown = null;
 
   for (const modelName of models) {
@@ -165,5 +165,45 @@ Hãy đưa ra bài luận giải chuyên sâu, phân tích tỉ mỉ Thiên - Đ
     }
   }
 
-  throw lastErr || new Error('Không thể kết nối đến mô hình Gemini.');
+  // Format and extract clean error message
+  let cleanErrorMessage = 'Không thể kết nối đến mô hình Gemini. Vui lòng kiểm tra lại API Key hoặc hạn ngạch.';
+  if (lastErr) {
+    cleanErrorMessage = extractCleanErrorMessage(lastErr);
+  }
+
+  throw new Error(cleanErrorMessage);
+}
+
+export function extractCleanErrorMessage(err: unknown): string {
+  if (!err) return 'Lỗi không xác định từ Gemini API.';
+  let msg = err instanceof Error ? err.message : String(err);
+  
+  // Try parsing nested JSON errors
+  for (let i = 0; i < 3; i++) {
+    try {
+      const parsed = typeof msg === 'string' && (msg.startsWith('{') || msg.startsWith('[')) ? JSON.parse(msg) : null;
+      if (parsed) {
+        if (parsed.error && typeof parsed.error === 'object' && parsed.error.message) {
+          msg = parsed.error.message;
+        } else if (parsed.error && typeof parsed.error === 'string') {
+          msg = parsed.error;
+        } else if (parsed.message) {
+          msg = parsed.message;
+        }
+      } else {
+        break;
+      }
+    } catch {
+      break;
+    }
+  }
+
+  if (typeof msg === 'string' && msg.includes('API_KEY_INVALID')) {
+    return 'API Key không hợp lệ hoặc đã bị vô hiệu hóa. Vui lòng kiểm tra lại API Key từ Google AI Studio.';
+  }
+  if (typeof msg === 'string' && msg.includes('RESOURCE_EXHAUSTED')) {
+    return 'Hạn ngạch API (Quota) đã hết hoặc bị giới hạn tần suất gọi. Vui lòng thử lại sau giây lát hoặc sử dụng API Key khác.';
+  }
+
+  return msg;
 }

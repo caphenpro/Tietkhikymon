@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Key, Eye, EyeOff, Check, X, Shield, ExternalLink, RefreshCw, AlertCircle, Sparkles, Trash2 } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
+import { formatClientErrorMessage } from '../utils/geminiAdvisorEngine';
 
 interface GeminiApiKeyModalProps {
   isOpen: boolean;
@@ -82,25 +83,44 @@ export const GeminiApiKeyModal: React.FC<GeminiApiKeyModalProps> = ({ isOpen, on
 
     try {
       const ai = new GoogleGenAI({ apiKey: keyToTest });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: 'Xin chào, hãy phản hồi chữ: KẾT NỐI THÀNH CÔNG',
-      });
+      const testModels = ['gemini-2.5-flash', 'gemini-3.7-flash', 'gemini-flash-latest'];
+      let isOk = false;
+      let lastTestErr: unknown = null;
 
-      if (response.text) {
+      for (const modelName of testModels) {
+        try {
+          const response = await ai.models.generateContent({
+            model: modelName,
+            contents: 'Xin chào, hãy phản hồi chữ: KẾT NỐI THÀNH CÔNG',
+          });
+
+          if (response.text) {
+            isOk = true;
+            break;
+          }
+        } catch (mErr) {
+          lastTestErr = mErr;
+        }
+      }
+
+      if (isOk) {
         setTestResult({
           success: true,
           message: 'Tuyệt vời! API Key hợp lệ và kết nối mô hình Gemini thành công.',
         });
       } else {
-        throw new Error('Không nhận được phản hồi từ mô hình.');
+        const cleanMsg = lastTestErr ? formatClientErrorMessage(lastTestErr) : 'API Key không hợp lệ hoặc đã hết hạn ngạch.';
+        setTestResult({
+          success: false,
+          message: `Lỗi kết nối: ${cleanMsg}`,
+        });
       }
     } catch (err: unknown) {
       console.error('Test API Key error:', err);
-      const msg = err instanceof Error ? err.message : 'API Key không hợp lệ hoặc đã hết hạn ngạch.';
+      const cleanMsg = formatClientErrorMessage(err);
       setTestResult({
         success: false,
-        message: `Lỗi kết nối: ${msg}`,
+        message: `Lỗi kết nối: ${cleanMsg}`,
       });
     } finally {
       setIsTesting(false);

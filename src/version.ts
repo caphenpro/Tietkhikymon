@@ -11,18 +11,43 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.7.1';
+export const APP_VERSION = '2.7.2';
 export const APP_RELEASE_DATE = '2026-08-27';
-export const APP_CODENAME = 'Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân';
+export const APP_CODENAME = 'Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.7.2',
+    releaseDate: '2026-08-27',
+    codename: 'Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi',
+    tagline: 'Loại bỏ hoàn toàn các mã mô hình cũ không còn được hỗ trợ, chuẩn hóa sang các mô hình thế hệ mới (Gemini 3.7 Flash, Gemini 2.5 Flash, Gemini Flash Latest, Gemini 3.1 Flash Lite) và làm sạch thông báo lỗi trực quan.',
+    isLatest: true,
+    highlights: [
+      'Loại bỏ triệt để mã mô hình cũ (gemini-1.5-flash) khỏi danh sách gọi API và dự phòng, khắc phục dứt điểm lỗi 404 NOT_FOUND.',
+      'Cập nhật danh sách mô hình chuẩn hỗ trợ đầy đủ generateContent: gemini-3.7-flash, gemini-2.5-flash, gemini-flash-latest, gemini-3.1-flash-lite.',
+      'Tích hợp bộ giải mã làm sạch lỗi (extractCleanErrorMessage / formatClientErrorMessage), bóc tách các chuỗi JSON lồng nhau thành thông báo tiếng Việt ngắn gọn, dễ hiểu.',
+    ],
+    added: [
+      'Bộ phân giải chuỗi lỗi tự động unwrapping JSON nhiều lớp, hiển thị trực quan lỗi Hạn ngạch (RESOURCE_EXHAUSTED) hoặc API Key không hợp lệ.',
+    ],
+    improved: [
+      'Tối ưu thứ tự ưu tiên thử nghiệm mô hình theo tiêu chuẩn mới nhất của Google Gen AI SDK.',
+      'Nâng cấp cơ chế kiểm tra kết nối trong Modal Cấu hình API Key kiểm tra tuần tự các mô hình thế hệ mới.',
+    ],
+    fixed: [
+      'Sửa lỗi 404 "models/gemini-1.5-flash is not found for API version v1beta" khi gọi API qua cả Backend và Trình duyệt.',
+    ],
+    astronomyNotes: [
+      'Đảm bảo dữ liệu chiêm đoán truyền tới mô hình Gemini thế hệ mới luôn nhất quán và chính xác.',
+    ],
+  },
   {
     version: '2.7.1',
     releaseDate: '2026-08-27',
     codename: 'Luận Giải AI Kỳ Môn & Quản Lý API Key Cá Nhân',
     tagline: 'Bổ sung nút "Cấu hình API Key", hỗ trợ lưu API Key vào localStorage trình duyệt và cơ chế kép (Server + Client Fallback) đảm bảo luận giải AI thông suốt 100%.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tích hợp nút "Cấu hình API Key" trực tiếp trên giao diện AI Advisor và hộp thoại báo lỗi kết nối.',
       'Hỗ trợ người dùng nạp Google AI Studio API Key cá nhân miễn phí, tự động lưu trữ an toàn trong localStorage trình duyệt.',
