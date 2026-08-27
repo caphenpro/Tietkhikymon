@@ -6,6 +6,39 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.7.0]] - 2026-08-27
+### Codename: *Luận Giải AI Kỳ Môn Độn Giáp với Gemini API*
+
+#### ✨ Tính Năng Mới (Added)
+- **Tích Hợp Luận Giải AI Gemini Miễn Phí Của Hệ Thống (`GeminiKyMonAiAdvisor.tsx`)**:
+  - Tích hợp mô hình AI **Gemini 3.7 Flash** thế hệ mới nhất, trích xuất toàn bộ cấu trúc bàn Kỳ Môn 9 Cung để tự động chiêm đoán và luận giải chuyên sâu.
+  - Cung cấp **8 Chuyên Đề Luận Giải Sẵn**:
+    1. **Tổng Luận Quẻ Đại Cục**: Cát hung thời vận, Thiên - Nhân - Địa - Thần đắc thất.
+    2. **Sự Nghiệp & Công Danh**: Khai Môn, Trực Phù, Đinh/Bính Kỳ, thi cử, cơ hội thăng quan tiến chức.
+    3. **Tài Vận & Đầu Tư Kinh Doanh**: Sinh Môn, Giáp Tý Mậu, vốn liếng, lợi tức thương mại.
+    4. **Hôn Nhân & Tình Duyên**: Ất (Vợ), Canh (Chồng), Lục Hợp, gia đạo hòa hợp.
+    5. **Sức Khỏe & Trị Bệnh**: Thiên Nhuế bệnh phù, Sinh/Tử Môn, Thiên Tâm thầy thuốc, Kỳ Ất linh dược.
+    6. **Chiến Lược Chủ - Khách & Thế Trận**: Phân định nên xuất kích làm Khách hay án binh bất động làm Chủ.
+    7. **Xuất Hành & Phương Vị Cát Lợi**: Tìm phương vị quý nhân, Tam Kỳ Đắc Sứ và cửa cát lành.
+    8. **Thân Mệnh Lục Thân**: Chiêm đoán bản thân (Nhật Can), gia quyến (Lục Thân) và phúc đức.
+  - **Khung Đặt Câu Hỏi Chiêm Đoán Tùy Biến (Custom Question Box)**: Cho phép người dùng nhập bất kỳ câu hỏi thực tế nào, đi kèm danh sách câu hỏi gợi ý nhanh tiện dụng.
+  - **Phản Hồi Thời Gian Thực (Real-time SSE Streaming)**: Kết nối Server-Sent Events giúp hiển thị bài luận giải tức thì từng chữ, không bị gián đoạn.
+  - **Tiện Ích Đi Kèm**: Hỗ trợ nút sao chép kết quả (Copy Markdown), tái sinh câu trả lời (Regenerate), và nút bấm đối chiếu quay lại Bàn 9 Cung.
+
+#### ⚙️ Cấu Trúc Backend & Bảo Mật (Backend Architecture)
+- **Dịch Vụ AI Chuyên Biệt (`server/geminiService.ts`)**:
+  - Xây dựng module gọi `@google/genai` SDK an toàn ở tầng máy chủ, bảo vệ API Key khỏi trình duyệt (Client).
+  - Tích hợp System Instruction chuyên sâu dựa trên nguyên bản *Kỳ Môn Độn Giáp Bí Kíp Toàn Thư* và *Ngự Định Kỳ Môn Bảo Giám*.
+- **Endpoint `/api/gemini/kymon-interpret`**:
+  - Hỗ trợ cả 2 chế độ: Luồng sự kiện SSE (`stream=true`) cho giao diện tương tác và chuẩn JSON cho các yêu cầu đồng bộ.
+
+#### ⚡ Cải Tiến & Đồng Bộ Hệ Thống (System Synchronization)
+- **Tab Điều Hướng Mới**: Thêm Tab **"Luận Giải AI Gemini"** trên thanh Header với huy hiệu ánh sáng đặc biệt.
+- **Liên Kết Nhanh Xuyên Suốt**: Bổ sung nút bấm trực tiếp dẫn tới AI Advisor từ Bàn Kỳ Môn Hoàn Chỉnh, Bảng Dự Trắc Việc Đời và Bảng Tổng Quan.
+- **Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`)**: Bổ sung Mục 8 trình bày nguyên lý trích xuất Dụng Thần và cơ chế xử lý của Gemini AI.
+
+---
+
 ## [[2.6.0]] - 2026-08-27
 ### Codename: *Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển*
 

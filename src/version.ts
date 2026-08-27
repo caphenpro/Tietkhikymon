@@ -11,18 +11,49 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.6.0';
+export const APP_VERSION = '2.7.0';
 export const APP_RELEASE_DATE = '2026-08-27';
-export const APP_CODENAME = 'Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển';
+export const APP_CODENAME = 'Luận Giải AI Kỳ Môn Độn Giáp với Gemini API';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.7.0',
+    releaseDate: '2026-08-27',
+    codename: 'Luận Giải AI Kỳ Môn Độn Giáp với Gemini API',
+    tagline: 'Tích hợp mô hình Gemini 3.7 Flash trích xuất toàn diện Bàn Kỳ Môn 9 Cung, nhận diện Dụng Thần và truyền phát bài luận giải chi tiết theo thời gian thực.',
+    isLatest: true,
+    highlights: [
+      'Tích hợp tính năng "Luận Giải AI Gemini" miễn phí của hệ thống, sử dụng mô hình Gemini 3.7 Flash phân tích quẻ Kỳ Môn Độn Giáp chuyên sâu.',
+      'Hỗ trợ 8 chuyên đề luận giải sẵn: Tổng Luận Quẻ Đại Cục, Sự Nghiệp & Công Danh, Tài Vận & Đầu Tư Kinh Doanh, Hôn Nhân & Tình Duyên, Sức Khỏe & Trị Bệnh, Chiến Lược Chủ - Khách, Xuất Hành & Phương Vị Cát Lợi, Thân Mệnh Lục Thân.',
+      'Khung đặt câu hỏi chiêm đoán tùy biến với gợi ý nhanh và trích xuất Dụng Thần theo đúng ngữ cảnh thực tế của người hỏi.',
+      'Truyền phát câu trả lời theo thời gian thực (Server-Sent Events streaming) với định dạng Markdown rõ ràng, nút sao chép và liên kết trực tiếp tới Bàn 9 Cung.',
+      'Bảo mật API Key an toàn ở tầng máy chủ Backend (/server/geminiService.ts và endpoint /api/gemini/kymon-interpret).',
+    ],
+    added: [
+      'Component GeminiKyMonAiAdvisor.tsx với giao diện chọn chuyên đề trực quan, danh sách gợi ý nhanh, ô nhập tùy biến và hiển thị Markdown sắc nét.',
+      'Backend service server/geminiService.ts sử dụng @google/genai SDK xử lý trích xuất toàn bộ cấu trúc bàn Kỳ Môn (Thiên Can, Địa Can, Cửu Tinh, Bát Môn, Bát Thần, Trực Phù, Trực Sử, Cách Cục) và sinh phản hồi.',
+      'Endpoint /api/gemini/kymon-interpret hỗ trợ cả SSE stream=true và JSON response tiêu chuẩn.',
+      'Thêm Tab điều hướng chuyên biệt "Luận Giải AI Gemini" trên thanh Header và các nút chuyển nhanh trên Bàn 9 Cung, Dự Trắc và Tổng Quan.',
+      'Cập nhật Thuyết minh thuật toán (AlgorithmGuideModal) bổ sung Mục 8: Thuật toán Luận Giải AI Gemini & Trích Xuất Dụng Thần.',
+    ],
+    improved: [
+      'Nâng cấp trải nghiệm người dùng với phản hồi luồng (streaming) mượt mà, hạn chế tối đa thời gian chờ đợi.',
+      'Phối hợp nguyên lý chiêm đoán cổ thư (Kỳ Môn Toàn Thư, Ngự Định Kỳ Môn Bảo Giám) vào cấu trúc System Instruction của AI.',
+    ],
+    fixed: [
+      'Đảm bảo khởi tạo an toàn lazy initialization cho Gemini API Client không làm gián đoạn ứng dụng khi chưa cấu hình key.',
+    ],
+    astronomyNotes: [
+      'Dữ liệu đưa vào AI bao gồm tọa độ thiên văn, 24 tiết khí, Bát tự trụ giờ và toàn bộ ma trận 9 cung đã được tính toán chính xác.',
+    ],
+  },
   {
     version: '2.6.0',
     releaseDate: '2026-08-27',
     codename: 'Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển',
     tagline: 'Tích hợp Lịch Tháng tương tác (Mini Calendar) trực quan trên Tab Tổng Quát, nổi bật ngày khảo sát và tinh gọn thanh điều khiển thời gian.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung Lịch Tháng Tương Tác (Mini Calendar) thường trực ngay trên Tab Tổng Quát (Overview) giúp chuyển ngày nhanh bằng 1 cú nhấp chuột.',
       'Hiển thị trực quan và nổi bật ngày đang khảo sát (Active Date Highlight) với viền sáng, nhãn ngày và trạng thái Thời gian thực (Live).',

@@ -28,6 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'overview', label: 'Tổng Quan & Luận Cục' },
     { id: 'kymon-chart', label: 'Bàn Kỳ Môn Hoàn Chỉnh' },
     { id: 'kymon-prognostication', label: 'Dự Trắc Kỳ Môn' },
+    { id: 'kymon-ai', label: 'Luận Giải AI Gemini', isSpecial: true },
     { id: 'compass', label: 'Bát Quái & 9 Cung' },
     { id: 'table', label: 'Bảng 24 Tiết Khí Năm' },
     { id: 'moon', label: 'Điểm Sóc & Âm Lịch' },
@@ -141,9 +142,12 @@ export const Header: React.FC<HeaderProps> = ({
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
                   isActive
                     ? 'bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-sm'
+                    : tab.isSpecial
+                    ? 'text-amber-300/90 hover:text-amber-200 hover:bg-amber-500/10 border border-amber-500/20'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
                 }`}
               >
+                {tab.isSpecial && <Sparkles className="w-3.5 h-3.5 text-amber-400" />}
                 <span>{tab.label}</span>
               </button>
             );

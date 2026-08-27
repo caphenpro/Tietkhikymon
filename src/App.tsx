@@ -8,6 +8,7 @@ import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
+import { GeminiKyMonAiAdvisor } from './components/GeminiKyMonAiAdvisor';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
@@ -100,6 +101,7 @@ export default function App() {
               kyMon={result.kyMon}
               onOpenCompleteBoard={() => setActiveTab('kymon-chart')}
               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+              onOpenAiAdvisor={() => setActiveTab('kymon-ai')}
             />
           </div>
         )}
@@ -110,6 +112,7 @@ export default function App() {
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+              onOpenAiAdvisor={() => setActiveTab('kymon-ai')}
             />
           </div>
         )}
@@ -120,6 +123,18 @@ export default function App() {
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
               onBackToBoard={() => setActiveTab('kymon-chart')}
+              onOpenAiAdvisor={() => setActiveTab('kymon-ai')}
+            />
+          </div>
+        )}
+
+        {activeTab === 'kymon-ai' && (
+          <div className="space-y-6">
+            <GeminiKyMonAiAdvisor
+              currentKyMon={result.kyMon}
+              currentBatTu={result.batTu}
+              calculationDate={currentDate}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
         )}

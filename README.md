@@ -1,27 +1,26 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.6.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.7.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
+[![AI Advisor](https://img.shields.io/badge/AI%20Advisor-Gemini%203.7%20Flash-purple.svg?style=flat-square)](/api/gemini/kymon-interpret)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh** và **Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Toàn Thư Dự Trắc Bàn Kỳ Môn** và **Luận Giải AI Kỳ Môn Độn Giáp với Gemini API**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.6.0`** *(Phát hành: 27/08/2026)*
-**Tên mã:** *Lịch Tháng Tương Tác & Tinh Gọn Điều Khiển*
+### 🚀 **Phiên bản hiện tại: `v2.7.0`** *(Phát hành: 27/08/2026)*
+**Tên mã:** *Luận Giải AI Kỳ Môn Độn Giáp với Gemini API*
 
-- 📅 **Lịch Tháng Tương Tác Thường Trực (Mini Calendar)**:
-  - Bổ sung thành phần lịch tháng (`MiniCalendar.tsx`) thường trực ngay trên **Tab Tổng Quát (Overview)** song hành cùng Thẻ Tiết Khí Đương Lệnh.
-  - Cho phép người dùng chuyển nhanh ngày khảo sát chỉ với 1 cú nhấp chuột trực tiếp vào từng ô ngày trên lịch.
-  - Làm nổi bật **Ngày Đang Khảo Sát (Active Selected Date)** bằng viền sáng hổ phách (amber highlight) và trạng thái hiển thị giờ.
-  - Đánh dấu **Ngày Hôm Nay (Current Today)** theo thời gian thực và hỗ trợ các phím tắt điều hướng nhanh **-1N**, **+1N**, quay về **Hôm nay**, chọn tháng/năm tùy ý.
-- ⚡ **Tinh Gọn Thanh Điều Khiển Thời Gian (Streamlined Control Bar)**:
-  - Lược bỏ hoàn toàn ô nhập nhanh chuỗi text và các nút preset cố định để giao diện thanh thoát, trực quan.
-  - Giữ lại bộ chọn chuẩn `datetime-local` chi tiết đến từng giây và nút bật/tắt **Thời Gian Thực (Live)**.
-- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**: 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư** (Quy luật Tam Bàn, Chủ - Khách, Thân Mệnh Lục Thân, Hôn Nhân, Y Học Trị Bệnh, Cầu Tài, Thi Cử, Tìm Người Mất Vật, Kiện Tụng).
+- 🤖 **Tích Hợp Luận Giải AI Gemini Miễn Phí Của Hệ Thống (`GeminiKyMonAiAdvisor.tsx`)**:
+  - Trích xuất toàn bộ cấu trúc bàn Kỳ Môn 9 Cung (Thiên Bàn, Địa Bàn, Cửu Tinh, Bát Môn, Bát Thần, Trực Phù, Trực Sử, Cách Cục, Tuần Không, Dịch Mã) nạp vào mô hình **Gemini 3.7 Flash**.
+  - Cung cấp **8 Chuyên Đề Luận Giải Sẵn**: Tổng Luận Quẻ Đại Cục, Sự Nghiệp & Công Danh, Tài Vận & Đầu Tư Kinh Doanh, Hôn Nhân & Tình Duyên, Sức Khỏe & Trị Bệnh, Chiến Lược Chủ - Khách, Xuất Hành & Phương Vị Cát Lợi, Thân Mệnh Lục Thân.
+  - Khung đặt câu hỏi chiêm đoán tùy biến với danh sách gợi ý nhanh linh hoạt.
+  - Phản hồi dạng dòng (Server-Sent Events streaming) thời gian thực và hiển thị định dạng Markdown sắc nét.
+- 📅 **Lịch Tháng Tương Tác Thường Trực (Mini Calendar)**: Lịch tháng trực quan trên Tab Tổng Quát giúp chuyển ngày nhanh bằng 1 cú nhấp chuột.
+- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**: 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
@@ -29,7 +28,12 @@
 
 ## 🌟 Tính Năng Nổi Bật
 
-### 1. ☀️ Thiên Văn 24 Tiết Khí (Solar Terms)
+### 1. 🤖 Luận Giải AI Kỳ Môn Độn Giáp (Gemini 3.7 Flash)
+- **Tự động trích xuất Dụng Thần**: Xác định đúng Dụng Thần theo câu hỏi chiêm đoán của người hỏi (Sự nghiệp, Tài vận, Hôn nhân, Sức khỏe, Tranh chấp, Xuất hành...).
+- **Phân tích Đa Tầng**: Kết hợp Thiên thời (Cửu Tinh), Nhân hòa (Bát Môn), Địa lợi (Cửu Cung), Thần trợ (Bát Thần) và thế trận Chủ - Khách.
+- **Bảo mật Server-side**: Toàn bộ yêu cầu gọi AI được bảo mật thông qua backend Express và `@google/genai` SDK.
+
+### 2. ☀️ Thiên Văn 24 Tiết Khí (Solar Terms)
 - Tính toán chính xác kinh độ Hoàng đạo của Mặt Trời ($\lambda_\odot$) theo chuẩn độ - phút - giây ($X^\circ Y' Z''$) sử dụng thuật toán Jean Meeus & VSOP87.
 - Phân định rõ ràng:
   - **12 Tiết (Tiết Lệnh)**: Lập Xuân, Kinh Trập, Thanh Minh, Lập Hạ, Mang Chủng, Tiểu Thử, Lập Thu, Bạch Lộ, Hàn Lộ, Lập Đông, Đại Tuyết, Tiểu Hàn (*mốc chuyển tháng Bát Tự*).
