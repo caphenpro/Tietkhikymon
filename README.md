@@ -1,22 +1,33 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.4.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.5.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)** và **La Bàn 9 Cung Hậu Thiên Bát Quái**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh** và **Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.4.0`** *(Phát hành: 26/08/2026)*
-**Tên mã:** *Bí Kíp Toàn Thư & Luận Giải Khắc Ứng Tinh Thần*
+### 🚀 **Phiên bản hiện tại: `v2.5.0`** *(Phát hành: 26/08/2026)*
+**Tên mã:** *Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời*
 
-- 🏷️ **Số Hoá Hệ Thống Phiên Bản**: Đánh số phiên bản `v2.4.0` trực tiếp trên thanh tiêu đề (Header), tích hợp cửa sổ xem **Nhật Ký Cập Nhật (Changelog Viewer)** và tệp lưu trữ [CHANGELOG.md](CHANGELOG.md) theo chuẩn quốc tế.
-- 📜 **100 Cặp Thập Can Khắc Ứng**: Luận giải chi tiết Thiên can gia Địa can (*Long Hồi Thủ, Phi Điểu Điệt Huyệt, Bạch Hổ Xướng Cuồng, Thanh Long Đào Tẩu...*) kèm thơ phú cổ thư và 4 phương diện thực tế (*Công Danh, Tài Vận, Xuất Hành, Bệnh Tật*).
-- 🚪 **Bát Môn & Cung Khắc Ứng**: Phân tích Ngũ hành tương quan Môn - Cung với **Tượng Tĩnh** (nội bộ, phòng thủ) và **Tượng Động** (xuất quân, khởi sự).
-- ⭐ **Hồ Sơ Cửu Tinh & Bát Thần**: Chi tiết tính chất Vượng/Tướng/Hưu/Tù/Phế của 9 Tinh và ý nghĩa hộ trì, việc quân binh pháp của 8 Thần.
+- 🏷️ **Số Hoá Hệ Thống Phiên Bản**: Đánh số phiên bản `v2.5.0` trực tiếp trên thanh tiêu đề (Header), tích hợp cửa sổ xem **Nhật Ký Cập Nhật (Changelog Viewer)** và tệp lưu trữ [CHANGELOG.md](CHANGELOG.md) theo chuẩn quốc tế.
+- 🎯 **Chương Tổng Quát Đa Tầng (Executive Headline & Overview)**: 
+  - Khối tóm lược nhanh 5 chỉ số cốt lõi (*1. Tiết Khí Đương Lệnh, 2. Bát Tự Tứ Trụ, 3. Âm Lịch Thiên Văn, 4. Cục Số Kỳ Môn, 5. Trực Phù & Trực Sử*).
+  - Tích hợp các nút bấm điều hướng nhanh 2 chiều dẫn thẳng tới từng mô-đun chi tiết chuyên sâu.
+- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**:
+  - Tích hợp 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**:
+    1. **Quy Luật Tam Bàn & Phân Định Chủ - Khách**: Phân định Thiên bàn (Sao), Nhân bàn (Cửa), Địa bàn (Cung); đánh giá sự tổn - ích của Chủ và Khách khi khởi sự hoặc giao dịch.
+    2. **Dự Trắc Thân Mệnh (Nhân Sinh Quý Tiện)**: Hệ thống Lục Thân (Niên can Cha Mẹ, Nguyệt can Anh Em, Nhật can Bản Thân, Thời can Con Nhỏ, Thê thiếp Ất - Đinh, Chồng Canh), luận vinh khô sang hèn, Sinh Môn tổ nghiệp ly hương, Cô - Hư và ý nghĩa Cửu Tinh - Bát Môn trên cung mệnh.
+    3. **Hôn Nhân & Vợ Chồng**: Đánh giá tương quan sinh khắc giữa cung Ất (Vợ), Canh (Chồng), Đinh (Thiếp) và Lục Hợp (Người mối).
+    4. **Y Học, Trị Bệnh & Tìm Thầy Thuốc**: Tra cứu chi tiết tạng phủ bên trong và triệu chứng bên ngoài theo vị trí sao **Thiên Nhuế** tại 8 cung; xem sự sống chết qua Sinh - Tử Môn; tìm thầy thuốc qua sao **Thiên Tâm** và **Kỳ Ất**.
+    5. **Cầu Tài, Kinh Doanh & Giao Dịch**: Phân tích tiền vốn **Giáp Tý Mậu**, lợi tức **Sinh Môn**, và quan hệ mua bán Nhật can - Thời can.
+    6. **Thi Cử, Học Vấn & Công Danh**: Tra cứu sĩ tử (Nhật can), quan chủ khảo (**Trực Phù**), giám khảo (**Trực Sử**), bài thi (**Kỳ Đinh**), thăng chức quan văn (**Khai Môn**) và quan võ (**Đỗ Môn**).
+    7. **Tìm Người, Mất Vật & Kẻ Trộm**: Tra cứu giống loài đồ vật mất theo 8 cung của Can Giờ và nhận diện kẻ trộm qua sao **Thiên Bồng**.
+    8. **Kiện Tụng & Tranh Chấp**: Phân định Nguyên cáo (Nhật can), Bị cáo (Thời can), Quan tòa (**Trực Phù**), và văn thư đơn trạng qua hai cửa **Kinh Môn**, **Cảnh Môn**.
+- 📜 **100 Cặp Thập Can Khắc Ứng & 64 Quẻ Bát Môn Cung**: Luận giải chi tiết Thiên can gia Địa can (*Long Hồi Thủ, Phi Điểu Điệt Huyệt, Bạch Hổ Xướng Cuồng, Thanh Long Đào Tẩu...*) kèm thơ phú cổ thư và 4 phương diện thực tế (*Công Danh, Tài Vận, Xuất Hành, Bệnh Tật*).
 - ⚔️ **Cách Cục & Trận Thế Đặc Biệt**: Tự động nhận diện Lục Nghi Kích Hình, Tam Kỳ Nhập Mộ, Tam Kỳ Thăng Điện, Cung Ba Thắng, Năm Cung Bất Khả Kích, 9 Độn Biến Hóa.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
@@ -26,7 +37,7 @@
 ## 🌟 Tính Năng Nổi Bật
 
 ### 1. ☀️ Thiên Văn 24 Tiết Khí (Solar Terms)
-- Tính toán chính xác kinh độ Hoàng đạo của Mặt Trời ($\lambda_\odot$) theo chuẩn độ - phút - giây ($X^\circ Y' Z''$).
+- Tính toán chính xác kinh độ Hoàng đạo của Mặt Trời ($\lambda_\odot$) theo chuẩn độ - phút - giây ($X^\circ Y' Z''$) sử dụng thuật toán Jean Meeus & VSOP87.
 - Phân định rõ ràng:
   - **12 Tiết (Tiết Lệnh)**: Lập Xuân, Kinh Trập, Thanh Minh, Lập Hạ, Mang Chủng, Tiểu Thử, Lập Thu, Bạch Lộ, Hàn Lộ, Lập Đông, Đại Tuyết, Tiểu Hàn (*mốc chuyển tháng Bát Tự*).
   - **12 Khí (Trung Khí)**: Vũ Thủy, Xuân Phân, Cốc Vũ, Tiểu Mãn, Hạ Chí, Đại Thử, Xử Thử, Thu Phân, Sương Giáng, Tiểu Tuyết, Đông Chí, Đại Hàn.
@@ -71,17 +82,11 @@
   - Nhận diện Tuần Không (Không Vong), Dịch Mã, Lộc Vị, Dương Quý / Âm Quý.
   - Tự động tra cứu 10 Can tương khắc ứng (*Long Hồi Thủ, Phi Điểu Điệt Huyệt, Bạch Hổ Xướng Cuồng, Thanh Long Đào Tẩu, Chu Tước Đầu Giang, Đằng Xà Yêu Kiều, Đại/Tiểu/Hình Cách, Bạch/Huỳnh tương nhập...*).
   - Phân tích 9 Độn (*Thiên Độn, Địa Độn, Nhân Độn, Thần Độn, Quỷ Độn, Phong Độn, Vân Độn, Long Độn, Hổ Độn*), Tam Trá, Ngũ Giả, Cung Ba Thắng.
-  - Hỗ trợ cả 2 chế độ: **Đồng bộ tự động theo thời gian thực** hoặc **Tự chọn Cục số & Can Chi** tùy ý.
 
-### 6. 🗺️ Bản Đồ Bát Quái 9 Cung & La Bàn Lạc Thư
-- Hiển thị ma trận 9 Cung Lạc Thư tương tác trực quan.
-- Tự động làm nổi bật Cung và Tiết khí đang quản sự tại thời điểm tra cứu.
-- Chi tiết Ngũ hành, Phương vị, Quẻ Hậu Thiên và chuỗi Cục số tương ứng của từng Cung.
-
-### 7. 📊 Bảng 24 Tiết Khí Toàn Năm & Xuất Báo Cáo
-- Tra cứu toàn bộ 24 Tiết Khí cho bất kỳ năm nào từ quá khứ đến tương lai.
-- Tìm kiếm, lọc theo Tiết lệnh / Trung khí, hiển thị giờ chuyển tiết chuẩn UTC+7.
-- **Xuất Báo Cáo Markdown (`Tiet_Khi_Nam_YYYY.md`)** và sao chép bảng tính nhanh chóng.
+### 6. 📖 Toàn Thư Dự Trắc Bàn Kỳ Môn & Chiêm Đoán Việc Đời
+- **Tam Bàn & Chủ Khách**: Luận giải tương quan sinh khắc giữa Thiên bàn (Sao), Nhân bàn (Cửa), Địa bàn (Cung) và quy luật Chủ - Khách trong xuất hành, đàm phán, giao tranh.
+- **Dự Trắc Thân Mệnh**: Hệ thống Lục Thân (Niên can Cha Mẹ, Nguyệt can Anh Em, Nhật can Bản Thân, Thời can Con Nhỏ, Ất/Đinh Thê thiếp, Canh Chồng), Sinh Môn tổ nghiệp và Cô - Hư.
+- **6 Việc Đời Cụ Thể**: Hôn nhân, Y học trị bệnh (Thiên Nhuế tra 8 cung tạng phủ), Cầu tài buôn bán (Mậu & Sinh Môn), Thi cử công danh, Mất vật kẻ trộm, Kiện tụng tranh chấp.
 
 ---
 
@@ -131,32 +136,48 @@
 
 ```
 Tietkhikymon/
-├── public/                 # Static assets & favicon
+├── AGENTS.md               # Quy chuẩn bắt buộc duy trì & đồng bộ tài liệu hệ thống
+├── CHANGELOG.md            # Nhật ký thay đổi chuẩn Keep a Changelog
+├── metadata.json           # Metadata ứng dụng Google AI Studio
+├── package.json            # Scripts, dependencies & số hiệu phiên bản v2.5.0
+├── server.ts               # Express backend & static hosting
 ├── src/
-│   ├── astronomy/          # Thuật toán thiên văn 24 Tiết Khí & Âm Lịch
-│   │   ├── calculator.ts   # Bộ tính toán tổng hợp & xuất Markdown
-│   │   ├── canChi.ts       # Bát Tự Tứ Trụ Can Chi & Ngũ Hổ/Ngũ Thử
-│   │   ├── kyMon.ts        # Thuật toán Định Cục Kỳ Môn Độn Giáp
+│   ├── astronomy/          # Động cơ thiên văn & thuật toán Kỳ Môn
+│   │   ├── calculator.ts   # Tính toán tổng hợp 24 Tiết Khí & xuất Markdown
+│   │   ├── canChi.ts       # Bát Tự Tứ Trụ Can Chi & Ngũ Hổ/Ngũ Thử Độn
+│   │   ├── kyMon.ts        # Thuật toán Định Cục Kỳ Môn (Siêu Thần Tiếp Khí)
+│   │   ├── kymonChart.ts   # Ma trận 9 Cung Kỳ Môn 4 Tầng & 6 bước lập bàn
+│   │   ├── kymonFormations.ts # 100 Can Khắc Ứng, Bát Môn Cung & Thần Sát
+│   │   ├── kymonPrognostication.ts # Động cơ dự trắc 6 phương diện đời sống & Thân Mệnh
 │   │   ├── lunarCalendar.ts# Thuật toán điểm Sóc & quy tắc tháng Âm lịch
 │   │   ├── solarTerms.ts   # Tọa độ kinh độ Mặt Trời & 24 Tiết Khí
 │   │   └── sunMoon.ts      # Vị trí Mặt Trời, Mặt Trăng & Điểm Sóc
-│   ├── components/         # Các thành phần giao diện React
-│   │   ├── AlgorithmGuideModal.tsx # Modal thuyết minh thuật toán
-│   │   ├── ExportModal.tsx         # Modal xuất báo cáo Markdown
-│   │   ├── Header.tsx              # Thanh tiêu đề & điều hướng tab
-│   │   ├── KyMonDunJiaPanel.tsx    # Bảng luận Cục Kỳ Môn chi tiết
-│   │   ├── LunarNewMoonSection.tsx # Bảng Điểm Sóc & Âm lịch chi tiết
-│   │   ├── NinePalacesCompass.tsx  # La bàn Lạc Thư 9 Cung
-│   │   ├── OverviewCard.tsx        # Thẻ tổng quan Tiết Khí & Âm Lịch
-│   │   ├── TimeInputControl.tsx    # Bộ điều khiển chọn thời gian / Live
-│   │   └── YearTermsTable.tsx      # Bảng 24 Tiết Khí toàn năm
-│   ├── App.tsx             # Entry component chính
-│   ├── main.tsx            # React root entry
-│   └── types.ts            # Global TypeScript types
-├── server.ts               # Express backend & static hosting
-├── package.json            # Scripts & Dependencies
-└── README.md               # Tài liệu dự án
+│   ├── components/         # Giao diện người dùng React
+│   │   ├── AlgorithmGuideModal.tsx    # Modal thuyết minh thuật toán toàn diện
+│   │   ├── ChangelogModal.tsx         # Modal xem nhật ký phiên bản
+│   │   ├── ExportModal.tsx            # Modal xuất báo cáo Markdown
+│   │   ├── Header.tsx                 # Thanh tiêu đề, phiên bản & điều hướng
+│   │   ├── KyMonCompleteBoard.tsx     # Bàn Kỳ Môn 9 Cung 4 tầng hoàn chỉnh
+│   │   ├── KyMonDunJiaPanel.tsx       # Bảng phân tích Cục Kỳ Môn chi tiết
+│   │   ├── KyMonPrognosticationView.tsx # Trang Toàn Thư Dự Trắc 8 chuyên đề
+│   │   ├── LunarNewMoonSection.tsx    # Bảng Điểm Sóc & Âm lịch chi tiết
+│   │   ├── NinePalacesCompass.tsx     # La bàn Lạc Thư 9 Cung
+│   │   ├── OverviewCard.tsx           # Thẻ tổng quan đa tầng từ cơ bản đến nâng cao
+│   │   ├── TimeInputControl.tsx       # Bộ điều khiển thời gian thực & chọn lịch
+│   │   └── YearTermsTable.tsx         # Bảng 24 Tiết Khí toàn năm
+│   ├── version.ts          # Nguồn chân lý phiên bản & dữ liệu Changelog
+│   ├── types.ts            # Hệ thống kiểu dữ liệu TypeScript
+│   ├── App.tsx             # Entry component & điều hướng trung tâm
+│   └── main.tsx            # React root entry
+└── README.md               # Tài liệu tổng quan dự án
 ```
+
+---
+
+## 📜 Giấy Phép (License)
+
+Dự án được phân phối theo giấy phép [MIT License](LICENSE).
+
 
 ---
 

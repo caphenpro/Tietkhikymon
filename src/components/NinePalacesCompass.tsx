@@ -21,7 +21,7 @@ const TRIGRAM_SYMBOLS: Record<number, string> = {
   9: '☲', // Ly (Fire)
 };
 
-export const NinePalacesCompass: React.FC<NinePalacesCompassProps> = ({ result }) => {
+export const NinePalacesCompass: React.FC<NinePalacesCompassProps> = ({ result, onNavigateTab }) => {
   const [selectedPalaceNum, setSelectedPalaceNum] = useState<number>(result.kyMon.cungNumber || 1);
 
   // Traditional 3x3 Luoshu Layout (South on top, North on bottom):

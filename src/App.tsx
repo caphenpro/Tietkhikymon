@@ -122,7 +122,10 @@ export default function App() {
 
         {activeTab === 'compass' && (
           <div className="space-y-6">
-            <NinePalacesCompass result={result} />
+            <NinePalacesCompass
+              result={result}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
           </div>
         )}
 
@@ -133,6 +136,7 @@ export default function App() {
               currentTermName={result.currentTerm.name}
               onSelectTermDate={handleSelectTermDate}
               onExportMarkdown={handleExportMarkdown}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
         )}
@@ -142,6 +146,7 @@ export default function App() {
             <LunarNewMoonSection
               newMoon={result.newMoon}
               calculationDate={currentDate}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
         )}
