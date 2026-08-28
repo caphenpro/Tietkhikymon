@@ -6,6 +6,22 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.9.0]] - 2026-08-28
+### Codename: *Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không*
+
+#### ✨ Tính Năng Mới (Added)
+- **Tab Chuyên Biệt "Cẩm Nang Tri Thức" (`CosmicKnowledgeGuide.tsx`)**:
+  - Đặt ở vị trí ưu tiên đầu tiên trên thanh điều hướng (ngang hàng và đứng ngay trước "Tổng Quan & Luận Cục").
+  - Hệ thống hóa toàn cảnh Mô Hình Hệ Tọa Độ Vũ Trụ 4 Chiều (Thiên Vận - Địa Thế - Nhân Sự - Thời Không).
+  - Trình bày chi tiết 8 hướng Bát Trạch, Cửu Tinh Lạc Thư (tổng ma phương 15), Thiên văn 24 Tiết Khí (12 Tiết Lệnh & 12 Trung Khí), Điểm Sóc Âm Lịch (0° New Moon) và Kỳ Môn Độn Giáp 4 tầng.
+  - Tích hợp công cụ tìm kiếm chủ đề trực quan, bộ lọc chuyên đề nhanh và danh mục hướng dẫn ứng dụng thực tiễn trong đời sống (dưỡng sinh, xuất hành, phong thủy, đàm phán, dự trắc).
+
+#### ⚡ Cải Tiến (Improved)
+- **Điều Hướng Liền Mạch**: Tích hợp các nút thao tác nhanh (Quick Action Buttons) giúp người dùng chuyển đổi tức thì giữa các mục cẩm nang và các bảng tính toán chuyên sâu (Bàn Kỳ Môn 9 Cung, Dự Trắc 8 Phương Diện, La Bàn Bát Quái, Bảng Tiết Khí, Lịch Điểm Sóc).
+- **Đồng Bộ Thuyết Minh**: Cập nhật đồng bộ tài liệu `AlgorithmGuideModal.tsx` và ghi chú phiên bản hệ thống.
+
+---
+
 ## [[2.8.0]] - 2026-08-27
 ### Codename: *Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư*
 

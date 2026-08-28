@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.8.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.9.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,21 +10,16 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.8.0`** *(Phát hành: 27/08/2026)*
-**Tên mã:** *Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư*
+### 🚀 **Phiên bản hiện tại: `v2.9.0`** *(Phát hành: 28/08/2026)*
+**Tên mã:** *Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không*
 
-- ⚡ **Tối Giản Hóa & Vận Hành Độc Lập 100%**: Gỡ bỏ hoàn toàn tính năng cấu hình API Key và luận giải AI bên ngoài, giúp ứng dụng vận hành độc lập, siêu tốc độ và không phụ thuộc vào bất kỳ dịch vụ hay API nào khác.
-- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**: 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**:
-  - *Tổng Quan Luận Cục (Cát Hung Đại Thể)*
-  - *Dự Trắc Thân Mệnh (Sang Hèn & Phúc Lộc)*
-  - *Hôn Nhân & Tình Duyên (Lục Hợp, Ất, Canh)*
-  - *Sức Khỏe & Trị Bệnh (Thiên Nhuế, Sinh Môn, Tử Môn)*
-  - *Cầu Tài & Kinh Doanh (Mậu, Sinh Môn, Giáp Tý)*
-  - *Công Danh & Sự Nghiệp (Khai Môn, Trực Phù, Bính Đinh)*
-  - *Tìm Người & Mất Vật (Thiên Bồng, Huyền Vũ, 8 Cung)*
-  - *Kiện Tụng & Tranh Chấp (Kinh Môn, Cảnh Môn, Trực Phù)*
-- 📅 **Lịch Tháng Tương Tác Thường Trực (Mini Calendar)**: Lịch tháng trực quan trên Tab Tổng Quát giúp chuyển ngày nhanh bằng 1 cú nhấp chuột.
-- 🌌 **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh (`KyMonCompleteBoard.tsx`)**: Đầy đủ Thiên Bàn, Địa Bàn, Cửu Tinh, Bát Môn, Bát Thần, Tuần Không, Dịch Mã, Tam Kỳ Đắc Sứ/Nhập Mộ/Thăng Điện.
+- 📖 **Tab Chuyên Biệt "Cẩm Nang Tri Thức" Thường Trực**: Đứng ở vị trí ưu tiên đầu tiên của thanh điều hướng (ngang hàng và đứng trước *Tổng Quan & Luận Cục*).
+- 🌌 **Hệ Thống Hợp Nhất Hệ Tọa Độ Vũ Trụ 4 Chiều (Thiên - Địa - Nhân - Thời - Không)**:
+  - **Trục Thời Gian (Thiên Vận)**: 24 Tiết Khí (Mặt Trời), 12 Tiết Lệnh định tháng Bát Tự, 12 Trung Khí định tháng nhuận, Điểm Sóc Âm Lịch (0° New Moon).
+  - **Trục Không Gian (Địa Thế)**: Bát Trạch 8 Hướng Hậu Thiên Bát Quái, Cửu Tinh Lạc Thư Ma Trận Ma Phương 3x3 (tổng cân bằng 15).
+  - **Điểm Giao Hòa Kỳ Môn Độn Giáp**: Nạp Thời Gian vào Không Gian 9 Cung theo quy tắc Siêu Thần Tiếp Khí, vận hành 4 tầng năng lượng (Thiên - Địa - Nhân - Thần).
+- 🎯 **Hướng Dẫn Ứng Dụng Thực Tiễn Trong Đời Sống**: Dưỡng sinh theo mùa, trạch cát xuất hành, phong thủy nhà ở và phương pháp dự trắc việc đời.
+- 🔍 **Tìm Kiếm & Lọc Chủ Đề Tức Thì**: Cho phép tra cứu nhanh các khái niệm và chuyển đổi tức thì sang các bảng tính toán chuyên sâu.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 

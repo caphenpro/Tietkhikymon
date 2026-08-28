@@ -25,6 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
   setActiveTab,
 }) => {
   const tabs = [
+    { id: 'guide', label: 'Cẩm Nang Tri Thức' },
     { id: 'overview', label: 'Tổng Quan & Luận Cục' },
     { id: 'kymon-chart', label: 'Bàn Kỳ Môn Hoàn Chỉnh' },
     { id: 'kymon-prognostication', label: 'Dự Trắc Kỳ Môn' },

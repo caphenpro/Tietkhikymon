@@ -567,14 +567,25 @@ export const NinePalacesCompass: React.FC<NinePalacesCompassProps> = ({ result, 
       {/* Navigation Footer */}
       {onNavigateTab && (
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <button
-            id="btn-compass-back-overview"
-            onClick={() => onNavigateTab('overview')}
-            className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Về Tổng Quát</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              id="btn-compass-goto-guide"
+              onClick={() => onNavigateTab('guide')}
+              className="px-3.5 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+              <span>Xem Cẩm Nang Tri Thức</span>
+            </button>
+
+            <button
+              id="btn-compass-back-overview"
+              onClick={() => onNavigateTab('overview')}
+              className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Về Tổng Quát</span>
+            </button>
+          </div>
 
           <div className="flex flex-wrap items-center gap-2">
             <button

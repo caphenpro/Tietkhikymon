@@ -11,18 +11,45 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.8.0';
-export const APP_RELEASE_DATE = '2026-08-27';
-export const APP_CODENAME = 'Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư';
+export const APP_VERSION = '2.9.0';
+export const APP_RELEASE_DATE = '2026-08-28';
+export const APP_CODENAME = 'Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.9.0',
+    releaseDate: '2026-08-28',
+    codename: 'Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không',
+    tagline: 'Ra mắt Tab riêng biệt "Cẩm Nang Tri Thức" đứng trước Tổng Quan Luận Cục, tích hợp đầy đủ hệ thống tri thức 4 chiều: Bát Trạch, Cửu Tinh Lạc Thư, 24 Tiết Khí, Điểm Sóc Âm Lịch và Kỳ Môn Độn Giáp cùng ứng dụng đời sống.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung Tab chuyên biệt "Cẩm Nang Tri Thức" nằm ở vị trí đầu tiên của thanh điều hướng (ngay trước Tổng Quan & Luận Cục).',
+      'Hệ thống hóa toàn diện mô hình Tọa độ Vũ trụ 4 Chiều (Thiên Vận - Địa Thế - Nhân Sự - Thời Không).',
+      'Chi tiết hóa 8 hướng Bát Trạch, Cửu Tinh Lạc Thư (tổng 15), 24 Tiết Khí (12 Tiết lệnh & 12 Trung khí), Điểm Sóc (0° New Moon) và 4 tầng Kỳ Môn (Thiên - Địa - Nhân - Thần).',
+      'Tích hợp công cụ tìm kiếm và lọc chuyên đề nhanh, hướng dẫn ứng dụng thực tiễn trong dưỡng sinh, xuất hành, đàm phán, phong thủy và dự trắc.',
+    ],
+    added: [
+      'Giao diện Cẩm Nang Tri Thức trực quan, sinh động với thanh lọc chuyên đề và ô tìm kiếm nội dung.',
+      'Bộ giải thích chi tiết mối liên hệ tương tác giữa 24 Tiết khí, Điểm Sóc và 18 Cục Kỳ Môn Độn Giáp.',
+    ],
+    improved: [
+      'Nâng cấp trải nghiệm chuyển hướng nhanh giữa Cẩm Nang và các bảng tính toán thực tế.',
+      'Đồng bộ tài liệu thuyết minh và ghi chú phiên bản hệ thống.',
+    ],
+    fixed: [
+      'Tối ưu hóa bố cục thanh điều hướng giúp các tab hiển thị hài hòa, mượt mà trên mọi kích thước màn hình.',
+    ],
+    astronomyNotes: [
+      'Chuẩn hóa công thức định vị Tiết Lệnh và Trung Khí theo kinh độ Hoàng đạo Mặt Trời VSOP87 và Điểm Sóc ELP2000.',
+    ],
+  },
   {
     version: '2.8.0',
     releaseDate: '2026-08-27',
     codename: 'Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư',
     tagline: 'Loại bỏ hoàn toàn tính năng cấu hình API Key và luận giải AI, tối ưu hóa ứng dụng hoạt động 100% độc lập, thuần thuật toán Thiên văn học chính xác và Bí Kíp Cổ Thư Kỳ Môn.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Gỡ bỏ toàn bộ giao diện cấu hình API Key và tab luận giải AI, giúp ứng dụng nhẹ nhàng, gọn gàng và hoàn toàn tự chủ.',
       'Tập trung chuyên sâu vào công cụ tính toán Thiên văn học Meeus (VSOP87/ELP2000), 24 Tiết khí, Điểm Sóc Âm Dương và Bàn Kỳ Môn 9 Cung chuẩn xác.',

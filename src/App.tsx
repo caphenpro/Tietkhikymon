@@ -8,6 +8,7 @@ import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
+import { CosmicKnowledgeGuide } from './components/CosmicKnowledgeGuide';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
@@ -86,6 +87,16 @@ export default function App() {
         />
 
         {/* Tab Content */}
+        {activeTab === 'guide' && (
+          <div className="space-y-6">
+            <CosmicKnowledgeGuide
+              result={result}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+              onOpenAlgorithmModal={() => setIsGuideOpen(true)}
+            />
+          </div>
+        )}
+
         {activeTab === 'overview' && (
            <div className="space-y-6">
              <OverviewCard
