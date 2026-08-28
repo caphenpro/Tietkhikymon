@@ -11,18 +11,43 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.7.2';
+export const APP_VERSION = '2.8.0';
 export const APP_RELEASE_DATE = '2026-08-27';
-export const APP_CODENAME = 'Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi';
+export const APP_CODENAME = 'Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.8.0',
+    releaseDate: '2026-08-27',
+    codename: 'Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư',
+    tagline: 'Loại bỏ hoàn toàn tính năng cấu hình API Key và luận giải AI, tối ưu hóa ứng dụng hoạt động 100% độc lập, thuần thuật toán Thiên văn học chính xác và Bí Kíp Cổ Thư Kỳ Môn.',
+    isLatest: true,
+    highlights: [
+      'Gỡ bỏ toàn bộ giao diện cấu hình API Key và tab luận giải AI, giúp ứng dụng nhẹ nhàng, gọn gàng và hoàn toàn tự chủ.',
+      'Tập trung chuyên sâu vào công cụ tính toán Thiên văn học Meeus (VSOP87/ELP2000), 24 Tiết khí, Điểm Sóc Âm Dương và Bàn Kỳ Môn 9 Cung chuẩn xác.',
+      'Đầy đủ hệ thống dự trắc cổ thư tích hợp sẵn (Thân Mệnh, Tam Bàn, Chủ Khách, 6 Phương diện đời sống) không cần kết nối mạng hay khóa API ngoài.',
+    ],
+    added: [
+      'Tối ưu hóa dung lượng gói nạp và quy trình xử lý không phụ thuộc dịch vụ ngoài.',
+    ],
+    improved: [
+      'Thanh điều hướng và các thẻ tác vụ gọn gàng, liền mạch.',
+      'Đồng bộ tài liệu thuyết minh thuật toán chuẩn xác 7 mục chuyên môn.',
+    ],
+    fixed: [
+      'Loại bỏ các yêu cầu phụ thuộc API Key bên ngoài và mã gọi mạng trung gian.',
+    ],
+    astronomyNotes: [
+      'Hệ thống thuật toán thiên văn và bảng tính Lạc Thư hoạt động độc lập với hiệu năng tối ưu.',
+    ],
+  },
   {
     version: '2.7.2',
     releaseDate: '2026-08-27',
     codename: 'Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi',
     tagline: 'Loại bỏ hoàn toàn các mã mô hình cũ không còn được hỗ trợ, chuẩn hóa sang các mô hình thế hệ mới (Gemini 3.7 Flash, Gemini 2.5 Flash, Gemini Flash Latest, Gemini 3.1 Flash Lite) và làm sạch thông báo lỗi trực quan.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Loại bỏ triệt để mã mô hình cũ (gemini-1.5-flash) khỏi danh sách gọi API và dự phòng, khắc phục dứt điểm lỗi 404 NOT_FOUND.',
       'Cập nhật danh sách mô hình chuẩn hỗ trợ đầy đủ generateContent: gemini-3.7-flash, gemini-2.5-flash, gemini-flash-latest, gemini-3.1-flash-lite.',

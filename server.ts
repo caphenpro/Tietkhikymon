@@ -2,7 +2,6 @@ import express from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import dotenv from "dotenv";
-import { interpretKyMonWithGemini, KyMonInterpretRequest } from "./server/geminiService";
 
 dotenv.config();
 
@@ -18,58 +17,7 @@ async function startServer() {
     res.json({
       status: "ok",
       service: "Skyfield Astronomical & Ky Mon Engine",
-      hasGeminiKey: Boolean(process.env.GEMINI_API_KEY),
     });
-  });
-
-  // Gemini Ky Mon Interpretation Endpoint (Streaming SSE or JSON)
-  app.post("/api/gemini/kymon-interpret", async (req, res) => {
-    try {
-      const payload = req.body as KyMonInterpretRequest;
-      const isStream = req.query.stream === "true" || req.headers.accept?.includes("text/event-stream");
-      const customKeyFromHeader = req.headers["x-gemini-api-key"] as string | undefined;
-
-      if (!payload || !payload.chartInfo) {
-        res.status(400).json({
-          error: "Dữ liệu quẻ Kỳ Môn không hợp lệ.",
-        });
-        return;
-      }
-
-      if (customKeyFromHeader && !payload.customApiKey) {
-        payload.customApiKey = customKeyFromHeader;
-      }
-
-      if (isStream) {
-        res.setHeader("Content-Type", "text/event-stream");
-        res.setHeader("Cache-Control", "no-cache");
-        res.setHeader("Connection", "keep-alive");
-
-        await interpretKyMonWithGemini(payload, (chunk) => {
-          res.write(`data: ${JSON.stringify({ text: chunk })}\n\n`);
-        });
-
-        res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
-        res.end();
-      } else {
-        const fullResponse = await interpretKyMonWithGemini(payload);
-        res.json({
-          success: true,
-          content: fullResponse,
-        });
-      }
-    } catch (err: unknown) {
-      console.error("Gemini Interpretation Error:", err);
-      const errorMessage = err instanceof Error ? err.message : "Đã xảy ra lỗi khi gọi Gemini API.";
-      if (!res.headersSent) {
-        res.status(500).json({
-          error: errorMessage,
-        });
-      } else {
-        res.write(`data: ${JSON.stringify({ error: errorMessage })}\n\n`);
-        res.end();
-      }
-    }
   });
 
   // Vite development middleware vs Static Production serving

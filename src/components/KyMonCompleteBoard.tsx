@@ -38,7 +38,6 @@ interface KyMonCompleteBoardProps {
   currentKyMon?: KyMonInfo;
   currentBatTu?: BatTuInfo;
   onOpenPrognostication?: () => void;
-  onOpenAiAdvisor?: () => void;
 }
 
 // Bố cục ma trận Lạc Thư 3x3 chuẩn Kỳ Môn Độn Giáp:
@@ -55,7 +54,6 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
   currentKyMon,
   currentBatTu,
   onOpenPrognostication,
-  onOpenAiAdvisor,
 }) => {
   // Mode: 'auto' (đồng bộ với thời gian thực / tính toán thiên văn) hoặc 'manual' (tự chọn Cục & Can Chi)
   const [mode, setMode] = useState<'auto' | 'manual'>('auto');
@@ -975,17 +973,6 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
-            {onOpenAiAdvisor && (
-              <button
-                id="btn-goto-ai-from-board"
-                onClick={onOpenAiAdvisor}
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-indigo-500/20 hover:from-amber-500/30 hover:to-purple-500/30 text-amber-300 border border-amber-500/40 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shrink-0 cursor-pointer group"
-              >
-                <Sparkles className="w-4 h-4 text-amber-400 group-hover:rotate-12 transition-transform" />
-                <span>Luận Giải AI Gemini</span>
-              </button>
-            )}
-
             {onOpenPrognostication && (
               <button
                 id="btn-goto-prognostication-page"

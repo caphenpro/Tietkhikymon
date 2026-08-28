@@ -6,6 +6,19 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.8.0]] - 2026-08-27
+### Codename: *Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư*
+
+#### 🗑️ Gỡ Bỏ (Removed)
+- **Loại bỏ cấu hình API Key và tính năng Luận giải AI**: Gỡ bỏ hoàn toàn Modal cấu hình API Key cá nhân, các nút điều hướng và tab luận giải AI Gemini nhằm tối giản ứng dụng, loại bỏ phụ thuộc mạng bên ngoài.
+- **Dọn dẹp mã nguồn backend & client**: Xóa bỏ các endpoint trung gian `/api/gemini/kymon-interpret` và các module hỗ trợ AI không còn sử dụng.
+
+#### ⚡ Cải Tiến (Improved)
+- **Tối ưu hóa độc lập 100%**: Ứng dụng chạy hoàn toàn độc lập, nhanh chóng và mượt mà dựa trên 100% thuật toán Thiên văn học chính xác và hệ thống Dự trắc Cổ thư nguyên bản.
+- **Thuyết minh thuật toán chuẩn hóa 7 mục**: Cập nhật đồng bộ `AlgorithmGuideModal.tsx` tập trung sâu vào 7 trụ cột thuật toán cốt lõi.
+
+---
+
 ## [[2.7.2]] - 2026-08-27
 ### Codename: *Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi*
 

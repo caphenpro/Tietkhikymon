@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Shield, CheckCircle2, ArrowRight, BookOpen, AlertCircle, MapPin, Sparkles } from 'lucide-react';
+import { Compass, Shield, CheckCircle2, ArrowRight, BookOpen, AlertCircle, MapPin } from 'lucide-react';
 import { KyMonInfo } from '../types';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
 
@@ -7,14 +7,12 @@ interface KyMonDunJiaPanelProps {
   kyMon: KyMonInfo;
   onOpenCompleteBoard?: () => void;
   onOpenPrognostication?: () => void;
-  onOpenAiAdvisor?: () => void;
 }
 
 export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({
   kyMon,
   onOpenCompleteBoard,
   onOpenPrognostication,
-  onOpenAiAdvisor,
 }) => {
   const isDuongDon = kyMon.isDuongDon;
 
@@ -208,20 +206,8 @@ export const KyMonDunJiaPanel: React.FC<KyMonDunJiaPanelProps> = ({
       </div>
 
       {/* Direct Quick Nav Action Links */}
-      {(onOpenCompleteBoard || onOpenPrognostication || onOpenAiAdvisor) && (
+      {(onOpenCompleteBoard || onOpenPrognostication) && (
         <div className="mt-5 pt-4 border-t border-slate-800 flex flex-wrap items-center justify-end gap-3 text-xs">
-          {onOpenAiAdvisor && (
-            <button
-              id="btn-panel-open-ai"
-              onClick={onOpenAiAdvisor}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-purple-500/20 hover:from-amber-500/30 hover:to-purple-500/30 text-amber-300 border border-amber-500/40 font-bold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>Luận Giải AI Gemini</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          )}
-
           {onOpenCompleteBoard && (
             <button
               id="btn-panel-open-chart"

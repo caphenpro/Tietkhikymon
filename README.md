@@ -1,30 +1,30 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.7.2-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.8.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
-[![AI Advisor](https://img.shields.io/badge/AI%20Advisor-Gemini%203.7%20%2F%202.5%20Flash-purple.svg?style=flat-square)](/api/gemini/kymon-interpret)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Toàn Thư Dự Trắc Bàn Kỳ Môn** và **Luận Giải AI Kỳ Môn Độn Giáp với Gemini API & Quản Lý Key Cá Nhân**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.7.2`** *(Phát hành: 27/08/2026)*
-**Tên mã:** *Chuẩn Hóa Danh Sách Mô Hình Gemini & Làm Sạch Thông Báo Lỗi*
+### 🚀 **Phiên bản hiện tại: `v2.8.0`** *(Phát hành: 27/08/2026)*
+**Tên mã:** *Tối Giản Độc Lập & Thuần Bản Kỳ Môn Cổ Thư*
 
-- 🛡️ **Khắc Phục Triệt Để Lỗi 404 NOT_FOUND**: Loại bỏ hoàn toàn mã mô hình cũ không còn được hỗ trợ, chuẩn hóa sang các mô hình thế hệ mới: **Gemini 3.7 Flash**, **Gemini 2.5 Flash**, **Gemini Flash Latest**, **Gemini 3.1 Flash Lite**.
-- 💬 **Làm Sạch Thông Báo Lỗi Trực Quan**: Tự động bóc tách JSON lỗi từ Google API và hiển thị thông điệp tiếng Việt thân thiện, rõ ràng (chỉ rõ hạn ngạch hoặc tính hợp lệ của API Key).
-- 🔑 **Cấu Hình API Key Cá Nhân & Tự Động Lưu localStorage**: Người dùng có thể nhấn nút **"Cấu hình API Key"** để nạp khóa cá nhân Google AI Studio miễn phí, hệ thống tự động lưu vào trình duyệt cho các lần truy cập tiếp theo.
-- ⚡ **Cơ Chế Kép Dual-Engine (Server + Client Fallback)**: Đảm bảo khả năng phản hồi 100% bằng cách tự động kích hoạt chế độ trực tiếp từ Client khi backend chưa cấu hình hoặc gặp mã lỗi 404.
-- 🤖 **Tích Hợp Luận Giải AI Gemini (`GeminiKyMonAiAdvisor.tsx`)**:
-  - Trích xuất toàn bộ cấu trúc bàn Kỳ Môn 9 Cung (Thiên Bàn, Địa Bàn, Cửu Tinh, Bát Môn, Bát Thần, Trực Phù, Trực Sử, Cách Cục, Tuần Không, Dịch Mã) nạp vào mô hình **Gemini 3.7 & 2.5 Flash**.
-  - Cung cấp **8 Chuyên Đề Luận Giải Sẵn**: Tổng Luận Quẻ Đại Cục, Sự Nghiệp & Công Danh, Tài Vận & Đầu Tư Kinh Doanh, Hôn Nhân & Tình Duyên, Sức Khỏe & Trị Bệnh, Chiến Lược Chủ - Khách, Xuất Hành & Phương Vị Cát Lợi, Thân Mệnh Lục Thân.
-  - Khung đặt câu hỏi chiêm đoán tùy biến với danh sách gợi ý nhanh linh hoạt.
-  - Phản hồi dạng dòng (Streaming SSE / SDK stream) thời gian thực và hiển thị định dạng Markdown sắc nét.
+- ⚡ **Tối Giản Hóa & Vận Hành Độc Lập 100%**: Gỡ bỏ hoàn toàn tính năng cấu hình API Key và luận giải AI bên ngoài, giúp ứng dụng vận hành độc lập, siêu tốc độ và không phụ thuộc vào bất kỳ dịch vụ hay API nào khác.
+- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**: 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**:
+  - *Tổng Quan Luận Cục (Cát Hung Đại Thể)*
+  - *Dự Trắc Thân Mệnh (Sang Hèn & Phúc Lộc)*
+  - *Hôn Nhân & Tình Duyên (Lục Hợp, Ất, Canh)*
+  - *Sức Khỏe & Trị Bệnh (Thiên Nhuế, Sinh Môn, Tử Môn)*
+  - *Cầu Tài & Kinh Doanh (Mậu, Sinh Môn, Giáp Tý)*
+  - *Công Danh & Sự Nghiệp (Khai Môn, Trực Phù, Bính Đinh)*
+  - *Tìm Người & Mất Vật (Thiên Bồng, Huyền Vũ, 8 Cung)*
+  - *Kiện Tụng & Tranh Chấp (Kinh Môn, Cảnh Môn, Trực Phù)*
 - 📅 **Lịch Tháng Tương Tác Thường Trực (Mini Calendar)**: Lịch tháng trực quan trên Tab Tổng Quát giúp chuyển ngày nhanh bằng 1 cú nhấp chuột.
-- 🔮 **Trang Chuyên Biệt "Dự Trắc Kỳ Môn" Toàn Diện**: 8 tab chuyên đề chiêm đoán bám sát nguyên bản **Kỳ Môn Độn Giáp Bí Kíp Toàn Thư**.
+- 🌌 **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh (`KyMonCompleteBoard.tsx`)**: Đầy đủ Thiên Bàn, Địa Bàn, Cửu Tinh, Bát Môn, Bát Thần, Tuần Không, Dịch Mã, Tam Kỳ Đắc Sứ/Nhập Mộ/Thăng Điện.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
@@ -32,12 +32,7 @@
 
 ## 🌟 Tính Năng Nổi Bật
 
-### 1. 🤖 Luận Giải AI Kỳ Môn Độn Giáp (Gemini 3.7 Flash)
-- **Tự động trích xuất Dụng Thần**: Xác định đúng Dụng Thần theo câu hỏi chiêm đoán của người hỏi (Sự nghiệp, Tài vận, Hôn nhân, Sức khỏe, Tranh chấp, Xuất hành...).
-- **Phân tích Đa Tầng**: Kết hợp Thiên thời (Cửu Tinh), Nhân hòa (Bát Môn), Địa lợi (Cửu Cung), Thần trợ (Bát Thần) và thế trận Chủ - Khách.
-- **Bảo mật Server-side**: Toàn bộ yêu cầu gọi AI được bảo mật thông qua backend Express và `@google/genai` SDK.
-
-### 2. ☀️ Thiên Văn 24 Tiết Khí (Solar Terms)
+### 1. ☀️ Thiên Văn 24 Tiết Khí (Solar Terms)
 - Tính toán chính xác kinh độ Hoàng đạo của Mặt Trời ($\lambda_\odot$) theo chuẩn độ - phút - giây ($X^\circ Y' Z''$) sử dụng thuật toán Jean Meeus & VSOP87.
 - Phân định rõ ràng:
   - **12 Tiết (Tiết Lệnh)**: Lập Xuân, Kinh Trập, Thanh Minh, Lập Hạ, Mang Chủng, Tiểu Thử, Lập Thu, Bạch Lộ, Hàn Lộ, Lập Đông, Đại Tuyết, Tiểu Hàn (*mốc chuyển tháng Bát Tự*).

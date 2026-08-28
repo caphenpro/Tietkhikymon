@@ -41,14 +41,12 @@ interface KyMonPrognosticationViewProps {
   currentKyMon?: KyMonInfo;
   currentBatTu?: BatTuInfo;
   onBackToBoard?: () => void;
-  onOpenAiAdvisor?: () => void;
 }
 
 export const KyMonPrognosticationView: React.FC<KyMonPrognosticationViewProps> = ({
   currentKyMon,
   currentBatTu,
   onBackToBoard,
-  onOpenAiAdvisor,
 }) => {
   const [activeCategory, setActiveCategory] = useState<
     'overview' | 'destiny' | 'marriage' | 'health' | 'wealth' | 'career' | 'lostItems' | 'lawsuit'
@@ -129,17 +127,6 @@ export const KyMonPrognosticationView: React.FC<KyMonPrognosticationViewProps> =
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            {onOpenAiAdvisor && (
-              <button
-                id="btn-goto-ai-from-prognostication"
-                onClick={onOpenAiAdvisor}
-                className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-indigo-500/20 hover:from-amber-500/30 hover:to-purple-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Luận Giải AI Gemini</span>
-              </button>
-            )}
-
             {onBackToBoard && (
               <button
                 id="btn-back-to-kymon-board"

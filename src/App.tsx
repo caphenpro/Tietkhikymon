@@ -8,7 +8,6 @@ import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
-import { GeminiKyMonAiAdvisor } from './components/GeminiKyMonAiAdvisor';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
@@ -88,58 +87,44 @@ export default function App() {
 
         {/* Tab Content */}
         {activeTab === 'overview' && (
-          <div className="space-y-6">
-            <OverviewCard
-              result={result}
-              currentDate={currentDate}
-              onDateChange={(d) => setCurrentDate(d)}
-              isLive={isLive}
-              onSetLive={(live) => setIsLive(live)}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-            <KyMonDunJiaPanel
-              kyMon={result.kyMon}
-              onOpenCompleteBoard={() => setActiveTab('kymon-chart')}
-              onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
-              onOpenAiAdvisor={() => setActiveTab('kymon-ai')}
-            />
-          </div>
-        )}
+           <div className="space-y-6">
+             <OverviewCard
+               result={result}
+               currentDate={currentDate}
+               onDateChange={(d) => setCurrentDate(d)}
+               isLive={isLive}
+               onSetLive={(live) => setIsLive(live)}
+               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+             />
+             <KyMonDunJiaPanel
+               kyMon={result.kyMon}
+               onOpenCompleteBoard={() => setActiveTab('kymon-chart')}
+               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+             />
+           </div>
+         )}
 
-        {activeTab === 'kymon-chart' && (
-          <div className="space-y-6">
-            <KyMonCompleteBoard
-              currentKyMon={result.kyMon}
-              currentBatTu={result.batTu}
-              onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
-              onOpenAiAdvisor={() => setActiveTab('kymon-ai')}
-            />
-          </div>
-        )}
+         {activeTab === 'kymon-chart' && (
+           <div className="space-y-6">
+             <KyMonCompleteBoard
+               currentKyMon={result.kyMon}
+               currentBatTu={result.batTu}
+               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+             />
+           </div>
+         )}
 
-        {activeTab === 'kymon-prognostication' && (
-          <div className="space-y-6">
-            <KyMonPrognosticationView
-              currentKyMon={result.kyMon}
-              currentBatTu={result.batTu}
-              onBackToBoard={() => setActiveTab('kymon-chart')}
-              onOpenAiAdvisor={() => setActiveTab('kymon-ai')}
-            />
-          </div>
-        )}
+         {activeTab === 'kymon-prognostication' && (
+           <div className="space-y-6">
+             <KyMonPrognosticationView
+               currentKyMon={result.kyMon}
+               currentBatTu={result.batTu}
+               onBackToBoard={() => setActiveTab('kymon-chart')}
+             />
+           </div>
+         )}
 
-        {activeTab === 'kymon-ai' && (
-          <div className="space-y-6">
-            <GeminiKyMonAiAdvisor
-              currentKyMon={result.kyMon}
-              currentBatTu={result.batTu}
-              calculationDate={currentDate}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {activeTab === 'compass' && (
+         {activeTab === 'compass' && (
           <div className="space-y-6">
             <NinePalacesCompass
               result={result}

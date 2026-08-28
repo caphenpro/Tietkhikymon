@@ -22,8 +22,6 @@ import {
   Clock,
   ChevronRight,
   Info,
-  Bot,
-  Zap,
 } from 'lucide-react';
 import { APP_VERSION } from '../version';
 
@@ -45,7 +43,6 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'tam-ban', title: '5. Quy Luật Tam Bàn & Chủ Khách', icon: Users },
     { id: 'destiny', title: '6. Dự Trắc Thân Mệnh (Sang Hèn)', icon: User },
     { id: 'aspects', title: '7. 6 Phương Diện Đời Sống Cụ Thể', icon: Sparkles },
-    { id: 'gemini-ai', title: '8. Luận Giải AI Gemini Trích Xuất Dụng Thần', icon: Bot },
   ];
 
   return (
@@ -347,44 +344,6 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                     <Scale className="w-3.5 h-3.5" /> 6. Kiện Tụng & Tranh Chấp:
                   </strong>
                   <p>Nhật can là Nguyên cáo, Thời can là Bị cáo, Trực Phù là Quan tòa hỏi cung. Kinh Môn & Cảnh Môn là đơn trạng văn thư.</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Section 8: Luận Giải AI Gemini */}
-          {(activeSection === 'all' || activeSection === 'gemini-ai') && (
-            <div className="p-5 rounded-2xl bg-slate-950/70 border border-amber-500/30 space-y-3">
-              <h4 className="text-base font-bold text-amber-300 flex items-center gap-2">
-                <Bot className="w-5 h-5 text-amber-400" />
-                8. Thuật Toán Luận Giải AI Gemini &amp; Cấu Hình API Key Cá Nhân
-              </h4>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Hệ thống tích hợp mô hình ngôn ngữ lớn <strong>Gemini 3.7 &amp; 2.5 Flash</strong> với cơ chế phân tích cấu trúc Bàn Kỳ Môn chuyên sâu, xử lý toàn bộ 4 tầng (Thiên Bàn, Nhân Bàn, Địa Bàn, Thần Bàn), hỗ trợ cấu hình API Key cá nhân lưu trực tiếp vào <strong>localStorage</strong> và truyền phát kết quả theo thời gian thực (Streaming SSE &amp; Direct Fallback):
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
-                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-                  <strong className="text-amber-300 flex items-center gap-1.5">
-                    <Zap className="w-4 h-4 text-amber-400" /> Trích Xuất Toàn Bộ Dữ Liệu Bàn Kỳ Môn:
-                  </strong>
-                  <ul className="list-disc list-inside space-y-1 text-slate-400 pl-1">
-                    <li>Dữ liệu 9 Cung đầy đủ: Can Thiên Bàn, Can Địa Bàn, Cửu Tinh, Bát Môn, Bát Thần.</li>
-                    <li>Cục số (Âm/Dương độn), Tiết khí lệnh tháng, Tuần Thủ, Trực Phù, Trực Sử.</li>
-                    <li>Trạng thái không gian: Tuần Không (Không Vong), Dịch Mã, Tam Kỳ Thăng Điện/Nhập Mộ, Cát Hung Cách Cục.</li>
-                  </ul>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
-                  <strong className="text-purple-300 flex items-center gap-1.5">
-                    <BookOpen className="w-4 h-4 text-purple-400" /> Cơ Chế Cấu Hình &amp; Dự Trắc Cổ Thư:
-                  </strong>
-                  <ul className="list-disc list-inside space-y-1 text-slate-400 pl-1">
-                    <li><strong>Cấu hình API Key:</strong> Người dùng có thể nạp Google AI Studio API Key cá nhân, lưu vĩnh viễn trong trình duyệt.</li>
-                    <li>Xác định chính xác <strong>Dụng Thần</strong> theo câu hỏi của người hỏi (Sự nghiệp, Cầu tài, Hôn nhân, Sức khỏe, Xuất hành, Kiện tụng).</li>
-                    <li>Xét quan hệ Ngũ Hành sinh khắc giữa Cung Dụng Thần và Cung Can Ngày (Người hỏi) / Cung Can Giờ (Sự việc).</li>
-                    <li>Đưa ra phương án hóa giải, thời điểm ứng kỳ và chiến lược Chủ - Khách hành động thực tế.</li>
-                  </ul>
                 </div>
               </div>
             </div>
