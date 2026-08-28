@@ -27,6 +27,7 @@ import {
   Zap,
   CheckCircle2,
   HelpCircle,
+  Award,
 } from 'lucide-react';
 import { APP_VERSION } from '../version';
 
@@ -52,6 +53,8 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'tam-ban', title: '9. Quy Luật Tam Bàn & Chủ Khách', icon: Users },
     { id: 'destiny', title: '10. Dự Trắc Thân Mệnh (Sang Hèn)', icon: User },
     { id: 'aspects', title: '11. 6 Phương Diện Đời Sống Cụ Thể', icon: Sparkles },
+    { id: 'evaluation', title: '12. Thuật Toán Đánh Giá Cát/Hung 5 Sao', icon: Award },
+    { id: 'luc-nham', title: '13. Bí Tàng Đại Lục Nhâm Độn Đại Toàn', icon: Compass },
   ];
 
   return (
@@ -597,6 +600,168 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                     <Scale className="w-3.5 h-3.5" /> 6. Kiện Tụng & Tranh Chấp:
                   </strong>
                   <p>Nhật can là Nguyên cáo, Thời can là Bị cáo, Trực Phù là Quan tòa hỏi cung. Kinh Môn & Cảnh Môn là đơn trạng văn thư.</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 12: THUẬT TOÁN ĐÁNH GIÁ CÁT / HUNG 5 SAO */}
+          {(activeSection === 'all' || activeSection === 'evaluation') && (
+            <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-4 shadow-lg">
+              <h4 className="font-bold text-amber-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
+                <Award className="w-4 h-4 text-amber-400" />
+                12. Thuật Toán Đánh Giá Cát / Hung Mốc Thời Gian (Thang Điểm 5 Sao)
+              </h4>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Hệ thống đánh giá độ tốt/xấu của một mốc thời gian cụ thể (giờ/ngày) dựa trên sự kết hợp ma trận 4 chiều giữa <strong className="text-amber-300">Thiên bàn</strong>, <strong className="text-amber-300">Địa bàn</strong>, <strong className="text-amber-300">Nhân bàn (Bát Môn/Cung)</strong>, <strong className="text-amber-300">Thần bàn</strong> và hai cung chúa tể <strong className="text-amber-300">Trực Phù & Trực Sử</strong>:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-amber-300 flex items-center gap-1.5">
+                    <span>1. Thập Can Khắc Ứng (Thiên/Địa)</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">20%</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Phối hợp 100 cặp Can Thiên bàn / Can Địa bàn: Thưởng điểm Cát cách (Thanh Long Phản Thủ, Phi Điểu Điệt Huyệt...) và phạt điểm Hung cách (Lục Nghi Kích Hình, Tam Kỳ Nhập Mộ, Bạch Hổ Cuồng Tố...).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                    <span>2. Môn Cung Sinh Khắc (Nhân/Địa)</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono">20%</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Bát Môn lâm 9 Cung: Môn Sinh Cung (Đại Cát), Cung Sinh Môn (Cát), Tỷ Hòa (Bình), Môn Bách (Cửa khắc Cung - Đại Hung), Cung Bách (Cung khắc Cửa - Hung). Ưu tiên Tam Cát Môn (Khai, Hưu, Sinh).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-purple-300 flex items-center gap-1.5">
+                    <span>3. Cung Trực Phù & Trực Sử</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-mono">30%</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Trực Phù (Thiên Ất Tướng Soái) và Trực Sử (Quan Chấp Pháp lãnh ấn). Cung có Trực Phù và Trực Sử đáo mang trọng số quyết định toàn bàn; nếu gặp Tuần Không hoặc Môn Bách sẽ làm giảm điểm tổng lực.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-cyan-300 flex items-center gap-1.5">
+                    <span>4. Thần Trợ, Tinh Lực & Thần Sát</span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 font-mono">30%</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Tích hợp 9 Độn (Thiên/Địa/Nhân/Thần Độn), Tam Trá, Ngũ Giả, Thần Sát (Lộc Vị, Quý Nhân, Dịch Mã) cộng điểm lớn; Phục Ngâm/Phản Ngâm toàn bàn trừ điểm và hướng dẫn chiến lược Chủ/Khách.
+                  </p>
+                </div>
+              </div>
+
+              {/* Thang quy đổi 5 sao */}
+              <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-1.5">
+                <div className="font-bold text-slate-200">Quy Chuẩn Thang Điểm 5 Sao:</div>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 font-mono text-[11px]">
+                  <div className="p-2 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300">
+                    <div className="font-bold">4.5 - 5.0 ⭐</div>
+                    <div className="text-[10px] text-slate-400">Đại Cát (≥80đ)</div>
+                  </div>
+                  <div className="p-2 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
+                    <div className="font-bold">3.8 - 4.4 ⭐</div>
+                    <div className="text-[10px] text-slate-400">Tiểu Cát (66-79đ)</div>
+                  </div>
+                  <div className="p-2 rounded bg-blue-500/10 border border-blue-500/30 text-blue-300">
+                    <div className="font-bold">2.8 - 3.7 ⭐</div>
+                    <div className="text-[10px] text-slate-400">Bình Hòa (48-65đ)</div>
+                  </div>
+                  <div className="p-2 rounded bg-rose-500/10 border border-rose-500/30 text-rose-300">
+                    <div className="font-bold">1.8 - 2.7 ⭐</div>
+                    <div className="text-[10px] text-slate-400">Tiểu Hung (34-47đ)</div>
+                  </div>
+                  <div className="p-2 rounded bg-rose-950 border border-rose-600/40 text-rose-200">
+                    <div className="font-bold">1.0 - 1.7 ⭐</div>
+                    <div className="text-[10px] text-slate-400">Đại Hung (&lt;34đ)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 13: BÍ TÀNG ĐẠI LỤC NHÂM ĐỘN ĐẠI TOÀN */}
+          {(activeSection === 'all' || activeSection === 'luc-nham') && (
+            <div className="bg-slate-950/70 p-5 rounded-2xl border border-indigo-500/30 space-y-4 shadow-lg">
+              <h4 className="font-bold text-indigo-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-indigo-900/50">
+                <Compass className="w-4 h-4 text-indigo-400" />
+                13. Bí Tàng Đại Lục Nhâm Độn Đại Toàn (Quy Trình Lập Quẻ Chuẩn Mực)
+              </h4>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Đại Lục Nhâm là thuật số đứng đầu trong Cổ Tam Thức (Kỳ Môn - Lục Nhâm - Thái Ất), chuyên sâu về nhân sự, biến hóa tình huống và dự trắc thời khắc vi diệu. Quá trình lập bàn quẻ tuân theo 6 bước kinh điển:
+              </p>
+
+              <div className="space-y-3 text-xs">
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-amber-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px]">1</span>
+                    <span>Bước 1: Xác Định Can Chi & Nguyệt Tướng Theo 24 Tiết Khí</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Thu thập Can Chi của Ngày và Chi của Giờ. Nguyệt Tướng xác định chuẩn xác dựa trên Kinh độ Mặt Trời (Solar Longitude): Vũ Thủy (Hợi - Đăng Minh), Xuân Phân (Tuất - Hà Khôi), Cốc Vũ (Dậu - Tòng Khôi), Tiểu Mãn (Thân - Truyền Tống), Hạ Chí (Mùi - Tiểu Cát), Đại Thử (Ngọ - Thắng Quang), Xử Thử (Tị - Thái Ất), Thu Phân (Thìn - Thiên Cương), Sương Giáng (Mão - Thái Xung), Tiểu Tuyết (Dần - Công Tào), Đông Chí (Sửu - Đại Cát), Đại Hàn (Tý - Thần Hậu).
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px]">2</span>
+                    <span>Bước 2: Lập Địa Bàn & An Thiên Bàn</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Địa bàn 12 Cung Tý..Hợi cố định phương vị. Đặt <strong>Nguyệt Tướng đè lên Chi của Giờ</strong> chiêm trên Địa bàn, rồi xoay thuận chiều kim đồng hồ 11 Địa Chi Thiên bàn tương ứng.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px]">3</span>
+                    <span>Bước 3: An Tứ Khoa (Bốn Trụ Năng Lượng Can Chi)</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Tra Ký Cung của Thiên Can ngày (Giáp Dần, Ất Thìn, Bính/Mậu Tị, Đinh/Kỷ Mùi, Canh Thân, Tân Tuất, Nhâm Hợi, Quý Sửu). 
+                    <br />• <strong>Khoa 1:</strong> Can Thượng Thần / Can Địa Bàn (Bản thân, chủ thể)
+                    <br />• <strong>Khoa 2:</strong> Can Thượng Thần Thượng Thần / Can Thượng Thần (Mưu kín, nội tâm)
+                    <br />• <strong>Khoa 3:</strong> Chi Thượng Thần / Chi Địa Bàn (Đối phương, nhà cửa, nơi chốn)
+                    <br />• <strong>Khoa 4:</strong> Chi Thượng Thần Thượng Thần / Chi Thượng Thần (Biến cố tiềm ẩn, hậu quả)
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-purple-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-[10px]">4</span>
+                    <span>Bước 4: Khởi Tam Truyền Dựa Vào Cửu Tông Môn</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Áp dụng 9 môn phát đoán lọc quẻ: <strong>Nguyên Thủ khóa</strong> (1 Thượng khắc Hạ), <strong>Trùng Thẩm khóa</strong> (1 Hạ khắc Thượng), <strong>Tỷ Dụng khóa</strong> (Đồng khí Âm Dương với Can), <strong>Thiệp Hại khóa</strong> (So độ sâu cạn khi kinh qua cung khắc), <strong>Dao Khắc khóa</strong> (Can Thượng dao khắc), <strong>Mão Tinh khóa</strong> (Can Dương lấy Dậu, Can Âm lấy Mão), <strong>Biệt Trạch / Bát Chuyên</strong>, <strong>Phục Ngâm & Phản Ngâm</strong>. 
+                    <br />• <strong>Trung Truyền</strong> = Thiên bàn đè lên Sơ Truyền; <strong>Mạt Truyền</strong> = Thiên bàn đè lên Trung Truyền.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-cyan-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[10px]">5</span>
+                    <span>Bước 5: An 12 Thiên Tướng (Thập Nhị Thần Tướng)</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Phân biệt <strong>Đán Quý (Ban ngày: Mão..Thân)</strong> và <strong>Dạ Quý (Ban đêm: Dậu..Dần)</strong>. An Quý Nhân theo Can ngày: Giáp/Mậu/Canh (Sửu/Mùi), Ất/Kỷ (Tý/Thân), Bính/Đinh (Hợi/Dậu), Nhâm/Quý (Tị/Mão), Tân (Ngọ/Dần). Nếu Quý Nhân lâm cung Hợi..Tị (nửa Đông) $\rightarrow$ An THUẬN; lâm Ngọ..Tuất (nửa Tây) $\rightarrow$ An NGHỊCH 11 tướng: Đằng Xà, Chu Tước, Lục Hợp, Câu Trận, Thanh Long, Thiên Không, Bạch Hổ, Thái Thường, Huyền Vũ, Thái Âm, Thiên Hậu.
+                  </p>
+                </div>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-rose-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center text-[10px]">6</span>
+                    <span>Bước 6: An Tuần Không, Thần Sát & Chiêm Đoán 6 Chuyên Đề</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Xác định 2 cung Không Vong theo Lục Tuần Giáp, tra Lộc Thần, Dịch Mã, Dương Nhận, Thái Tuế. Kết hợp Lục Thân (Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu) để dự trắc chuẩn xác 6 chuyên đề: Cầu Tài, Hôn Nhân, Quan Vận, Bệnh Tật, Kiện Tụng, Xuất Hành.
+                  </p>
                 </div>
               </div>
             </div>

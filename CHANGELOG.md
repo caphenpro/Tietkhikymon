@@ -6,6 +6,43 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.11.0]] - 2026-08-28
+### Codename: *Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư*
+
+#### ✨ Tính Năng Mới (Added)
+- **Chuyên Mục Độc Lập Đại Lục Nhâm (`LucNhamPanel.tsx`)**:
+  - Bổ sung Tab chuyên biệt **Đại Lục Nhâm** trên thanh điều hướng chính, song hành cùng Kỳ Môn Độn Giáp để hợp nhất Cổ Tam Thức.
+  - **Khởi Nguyệt Tướng Chuẩn Xác**: Tính toán Nguyệt Tướng theo 24 Tiết khí dựa trên Kinh độ Mặt Trời (Solar Longitude) thiên văn.
+  - **Lập Địa Bàn & Thiên Bàn**: Tự động xoay chuyển 12 Cung Thiên bàn đè lên Địa bàn theo Chi của giờ chiêm quẻ.
+  - **An Tứ Khoa (Bốn Khoa)**: Can Thượng Thần (Khoa 1), Can Âm (Khoa 2), Chi Thượng Thần (Khoa 3), Chi Âm (Khoa 4) phân rõ chủ thể (ta) và khách thể (người/hoàn cảnh/nhà cửa).
+  - **Khởi Tam Truyền Chuẩn Cửu Tông Môn**: Tự động nhận diện và phát khởi Sơ Truyền, Trung Truyền, Mạt Truyền theo các khóa: *Nguyên Thủ*, *Trùng Thẩm*, *Tỷ Dụng*, *Thiệp Hại*, *Dao Khắc*, *Mão Tinh*, *Biệt Trạch / Bát Chuyên*, *Phục Ngâm & Phản Ngâm*.
+  - **Thập Nhị Thần Tướng**: An 12 Thần Tướng (*Quý Nhân, Đằng Xà, Chu Tước, Lục Hợp, Câu Trận, Thanh Long, Thiên Không, Bạch Hổ, Thái Thường, Huyền Vũ, Thái Âm, Thiên Hậu*) theo quy tắc *Đán Quý / Dạ Quý* và chiều *Thuận / Nghịch hành*.
+  - **Dự Trắc 6 Chuyên Đề Đời Sống**: Cầu Tài & Giao Thương, Tình Duyên & Hôn Nhân, Công Danh & Sự Nghiệp, Sức Khỏe & Tật Bệnh, Tranh Chấp & Pháp Lý, Xuất Hành & Cầu Vận.
+- **Engine Tính Toán Lục Nhâm (`lucNham.ts`)**:
+  - Xây dựng thuật toán toàn diện xử lý sinh khắc, Lục Thân, Thần Sát (Lộc Thần, Dịch Mã, Dương Nhận, Thái Tuế), Tuần Không và chấm điểm cát hung 5 sao.
+- **Thuyết Minh Cổ Bản Mục 13 (`AlgorithmGuideModal.tsx`)**:
+  - Hệ thống hóa trọn vẹn 6 bước lập quẻ theo kỳ thư *Bí Tàng Đại Lục Nhâm Độn Đại Toàn*.
+
+---
+
+## [[2.10.0]] - 2026-08-28
+### Codename: *Đánh Giá Thời Không 5 Sao & Ma Trận Cát Hung*
+
+#### ✨ Tính Năng Mới (Added)
+- **Công Cụ Đánh Giá Cát / Hung Thời Khắc Thang Điểm 5 Sao (`TimeEvaluationCard.tsx`)**:
+  - Đánh giá tổng hòa độ tốt/xấu của một mốc thời gian cụ thể (cát/hung) quy đổi ra thang điểm $1.0 - 5.0$ sao kèm phân cấp: *Đại Cát*, *Tiểu Cát*, *Bình Hòa*, *Tiểu Hung*, *Đại Hung*.
+  - Phối hợp 4 Cột Trụ cốt lõi: **Thập Can Khắc Ứng** (Thiên/Địa bàn 20%), **Môn Cung Sinh Khắc** (Nhân/Địa bàn 20%), **Cung Trực Phù & Trực Sử** (30%), **Cửu Tinh & Bát Thần** (Thiên Thời & Thần Trợ 30%).
+  - Bảng xếp hạng số sao chi tiết cho toàn bộ 8 phương vị không gian (9 Cung Lạc Thư) giúp lựa chọn hướng xuất hành, khai trương, đàm phán và phòng ngừa sát khí.
+  - Khuyến nghị hành động thực tiễn (Việc nên làm, việc kiêng kỵ, chiến lược Chủ - Khách) cho từng thời khắc.
+- **Module Tính Toán Đánh Giá Năng Lượng (`kymonEvaluation.ts`)**:
+  - Chuẩn hóa công thức chấm điểm 0 - 100 điểm, tính điểm thưởng cho Cát cách (9 Độn, Tam Trá, Ngũ Giả, Thăng Điện, Lộc Vị, Quý Nhân) và điểm phạt cho Hung cách (Kích Hình, Nhập Mộ, Môn Bách, Tuần Không).
+
+#### ⚡ Cải Tiến (Improved)
+- **Tích Hợp Đồng Bộ Đa Màn Hình**: Hiển thị thẻ đánh giá 5 sao tức thì trên cả trang *Tổng Quan & Luận Cục* và *Bàn Kỳ Môn 9 Cung Hoàn Chỉnh*.
+- **Đồng Bộ Thuyết Minh Thuật Toán**: Bổ sung Mục 12 vào `AlgorithmGuideModal.tsx` thuyết minh chi tiết nguyên lý tính điểm 5 sao.
+
+---
+
 ## [[2.9.0]] - 2026-08-28
 ### Codename: *Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không*
 

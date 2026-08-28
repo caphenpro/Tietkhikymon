@@ -11,18 +11,71 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.9.0';
+export const APP_VERSION = '2.11.0';
 export const APP_RELEASE_DATE = '2026-08-28';
-export const APP_CODENAME = 'Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không';
+export const APP_CODENAME = 'Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.11.0',
+    releaseDate: '2026-08-28',
+    codename: 'Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư',
+    tagline: 'Bổ sung chuyên mục độc lập Đại Lục Nhâm (Tam Thức chi nhất) hoàn chỉnh với Thiên Bàn, Địa Bàn, Tứ Khoa, Tam Truyền (Cửu Tông Môn), Thập Nhị Thần Tướng và Dự Trắc 6 Chuyên Đề Đời Sống.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung Tab riêng biệt "Đại Lục Nhâm" trên thanh điều hướng chính, kế thừa đầy đủ chuẩn mực thuật số cổ truyền.',
+      'Khởi Nguyệt Tướng chuẩn xác theo 24 Tiết khí dựa trên Kinh độ Mặt Trời (Solar Longitude) thiên văn.',
+      'Lập Thiên Bàn đè lên Địa Bàn, tự động xoay 12 Cung và an 12 Thần Tướng theo Đán Quý / Dạ Quý (Thuận / Nghịch hành).',
+      'An Tứ Khoa (Can Thượng, Can Âm, Chi Thượng, Chi Âm) và phát khởi Tam Truyền theo chuẩn Cửu Tông Môn (Nguyên Thủ, Trùng Thẩm, Tỷ Dụng, Thiệp Hại, Dao Khắc, Mão Tinh, Phục Ngâm, Phản Ngâm).',
+      'Hệ thống dự trắc chuyên đề 6 phương diện đời sống: Cầu Tài, Hôn Nhân, Quan Vận, Bệnh Tật, Kiện Tụng, Xuất Hành.',
+      'Cập nhật Mục 13 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Module tính toán thuật toán Lục Nhâm `lucNham.ts` xác định Nguyệt Tướng, Tứ Khoa, Tam Truyền, Thần Tướng, Thần Sát và Tuần Không.',
+      'Giao diện tương tác `LucNhamPanel.tsx` gồm Bàn 12 Cung, Thẻ Tam Truyền, Thẻ Tứ Khoa, Khám Phá Cung và Dự Trắc 6 Chuyên Đề.',
+    ],
+    improved: [
+      'Tích hợp liền mạch chuyển đổi giữa Kỳ Môn Độn Giáp và Đại Lục Nhâm theo cùng một mốc thời gian thời khắc thiên văn.',
+    ],
+    astronomyNotes: [
+      'Kinh độ Mặt Trời xác định chính xác thời điểm đổi Nguyệt Tướng theo Tiết khí Trung Khí (Vũ Thủy, Xuân Phân, Cốc Vũ, Tiểu Mãn, Hạ Chí, Đại Thử, Xử Thử, Thu Phân, Sương Giáng, Tiểu Tuyết, Đông Chí, Đại Hàn).',
+    ],
+  },
+  {
+    version: '2.10.0',
+    releaseDate: '2026-08-28',
+    codename: 'Đánh Giá Thời Không 5 Sao & Ma Trận Cát Hung',
+    tagline: 'Tích hợp công cụ đánh giá độ tốt/xấu của một mốc thời gian cụ thể (cát/hung) theo thang điểm 5 sao, kết hợp ma trận 4 chiều giữa Thiên bàn, Địa bàn, Nhân bàn (Bát Môn/Cung), Thần bàn, Trực Phù & Trực Sử.',
+    isLatest: false,
+    highlights: [
+      'Bộ công cụ Đánh Giá Cát / Hung Thời Khắc Thang Điểm 5 Sao (TimeEvaluationCard) trực quan, chi tiết.',
+      'Phối hợp 4 Cột Trụ: Thập Can Khắc Ứng (Thiên/Địa), Môn Cung Sinh Khắc (Nhân/Địa), Cung Trực Phù & Trực Sử (Tướng Soái/Chấp Pháp), Cửu Tinh & Bát Thần (Thiên Thời & Thần Trợ).',
+      'Đánh giá xếp hạng số sao chi tiết cho toàn bộ 8 phương vị không gian (9 Cung Lạc Thư) giúp định hướng xuất hành, hội họp và giao dịch.',
+      'Khuyến nghị hành động thực tiễn (Việc nên làm, việc kiêng kỵ, chiến lược Chủ - Khách) theo từng thời điểm.',
+      'Đồng bộ cập nhật Mục 12 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Module tính toán năng lượng thời gian `kymonEvaluation.ts` chuẩn hóa điểm số từ 0 - 100 quy đổi ra 1.0 - 5.0 sao.',
+      'Thẻ giao diện tương tác `TimeEvaluationCard.tsx` hiển thị điểm số, ngôi sao, thanh đo tiến trình, phân tích 4 cột trụ và bảng xếp hạng 8 hướng.',
+    ],
+    improved: [
+      'Tích hợp đánh giá 5 sao đồng bộ trên cả Trang Tổng Quan & Luận Cục và Bàn Kỳ Môn 9 Cung Hoàn Chỉnh.',
+      'Tối ưu hóa khả năng phản hồi tức thì khi người dùng thay đổi ngày giờ hoặc chuyển đổi Cục số.',
+    ],
+    fixed: [
+      'Chuẩn hóa thuật toán tính điểm Môn Bách và Lục Nghi Kích Hình đảm bảo độ chính xác tuyệt đối theo cổ thư.',
+    ],
+    astronomyNotes: [
+      'Kết hợp chính xác năng lượng thời gian thiên văn học (24 Tiết khí + Điểm Sóc) vào ma trận phân bố 9 cung Kỳ Môn.',
+    ],
+  },
   {
     version: '2.9.0',
     releaseDate: '2026-08-28',
     codename: 'Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không',
     tagline: 'Ra mắt Tab riêng biệt "Cẩm Nang Tri Thức" đứng trước Tổng Quan Luận Cục, tích hợp đầy đủ hệ thống tri thức 4 chiều: Bát Trạch, Cửu Tinh Lạc Thư, 24 Tiết Khí, Điểm Sóc Âm Lịch và Kỳ Môn Độn Giáp cùng ứng dụng đời sống.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung Tab chuyên biệt "Cẩm Nang Tri Thức" nằm ở vị trí đầu tiên của thanh điều hướng (ngay trước Tổng Quan & Luận Cục).',
       'Hệ thống hóa toàn diện mô hình Tọa độ Vũ trụ 4 Chiều (Thiên Vận - Địa Thế - Nhân Sự - Thời Không).',

@@ -1,25 +1,29 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.9.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.11.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.9.0`** *(Phát hành: 28/08/2026)*
-**Tên mã:** *Cẩm Nang Tri Thức Toàn Cảnh & Hợp Nhất Thời Không*
+### 🚀 **Phiên bản hiện tại: `v2.11.0`** *(Phát hành: 28/08/2026)*
+**Tên mã:** *Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư*
 
-- 📖 **Tab Chuyên Biệt "Cẩm Nang Tri Thức" Thường Trực**: Đứng ở vị trí ưu tiên đầu tiên của thanh điều hướng (ngang hàng và đứng trước *Tổng Quan & Luận Cục*).
-- 🌌 **Hệ Thống Hợp Nhất Hệ Tọa Độ Vũ Trụ 4 Chiều (Thiên - Địa - Nhân - Thời - Không)**:
-  - **Trục Thời Gian (Thiên Vận)**: 24 Tiết Khí (Mặt Trời), 12 Tiết Lệnh định tháng Bát Tự, 12 Trung Khí định tháng nhuận, Điểm Sóc Âm Lịch (0° New Moon).
-  - **Trục Không Gian (Địa Thế)**: Bát Trạch 8 Hướng Hậu Thiên Bát Quái, Cửu Tinh Lạc Thư Ma Trận Ma Phương 3x3 (tổng cân bằng 15).
-  - **Điểm Giao Hòa Kỳ Môn Độn Giáp**: Nạp Thời Gian vào Không Gian 9 Cung theo quy tắc Siêu Thần Tiếp Khí, vận hành 4 tầng năng lượng (Thiên - Địa - Nhân - Thần).
-- 🎯 **Hướng Dẫn Ứng Dụng Thực Tiễn Trong Đời Sống**: Dưỡng sinh theo mùa, trạch cát xuất hành, phong thủy nhà ở và phương pháp dự trắc việc đời.
-- 🔍 **Tìm Kiếm & Lọc Chủ Đề Tức Thì**: Cho phép tra cứu nhanh các khái niệm và chuyển đổi tức thì sang các bảng tính toán chuyên sâu.
+- 🧭 **Chuyên Mục Độc Lập Đại Lục Nhâm (`LucNhamPanel.tsx`)**:
+  - Bổ sung Tab chuyên biệt **Đại Lục Nhâm** trên thanh điều hướng chính, song hành cùng Kỳ Môn Độn Giáp để hợp nhất Cổ Tam Thức (Thiên Kỳ Môn - Địa Lục Nhâm - Nhân Thái Ất).
+  - **Khởi Nguyệt Tướng Chuẩn Xác**: Tính toán Nguyệt Tướng theo 24 Tiết khí dựa trên Kinh độ Mặt Trời (Solar Longitude) thiên văn.
+  - **Lập Địa Bàn & Thiên Bàn**: Tự động xoay chuyển 12 Cung Thiên bàn đè lên Địa bàn theo Chi của giờ chiêm quẻ.
+  - **An Tứ Khoa (Bốn Khoa)**: Can Thượng Thần (Khoa 1), Can Âm (Khoa 2), Chi Thượng Thần (Khoa 3), Chi Âm (Khoa 4) phân rõ chủ thể (ta) và khách thể (người/hoàn cảnh/nhà cửa).
+  - **Khởi Tam Truyền Chuẩn Cửu Tông Môn**: Tự động nhận diện và phát khởi Sơ Truyền, Trung Truyền, Mạt Truyền theo các khóa: *Nguyên Thủ*, *Trùng Thẩm*, *Tỷ Dụng*, *Thiệp Hại*, *Dao Khắc*, *Mão Tinh*, *Biệt Trạch / Bát Chuyên*, *Phục Ngâm & Phản Ngâm*.
+  - **Thập Nhị Thần Tướng**: An 12 Thần Tướng (*Quý Nhân, Đằng Xà, Chu Tước, Lục Hợp, Câu Trận, Thanh Long, Thiên Không, Bạch Hổ, Thái Thường, Huyền Vũ, Thái Âm, Thiên Hậu*) theo quy tắc *Đán Quý / Dạ Quý* và chiều *Thuận / Nghịch hành*.
+  - **Dự Trắc 6 Chuyên Đề Đời Sống**: Cầu Tài & Giao Thương, Tình Duyên & Hôn Nhân, Công Danh & Sự Nghiệp, Sức Khỏe & Tật Bệnh, Tranh Chấp & Pháp Lý, Xuất Hành & Cầu Vận.
+- ⭐ **Đánh Giá Độ Tốt/Xấu Thời Khắc (Cát / Hung) Thang Điểm 5 Sao**: Tích hợp công cụ `TimeEvaluationCard` phân tích đa tầng năng lượng của một mốc thời gian cụ thể.
+- 📖 **Cẩm Nang Tri Thức Toàn Cảnh (`CosmicKnowledgeGuide.tsx`)**: Đứng ở vị trí ưu tiên đầu tiên của thanh điều hướng.
+- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 13 trong `AlgorithmGuideModal.tsx` giải thích chi tiết 6 bước lập quẻ Đại Lục Nhâm theo chuẩn cổ bản.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 

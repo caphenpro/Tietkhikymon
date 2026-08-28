@@ -8,6 +8,7 @@ import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
+import { LucNhamPanel } from './components/LucNhamPanel';
 import { CosmicKnowledgeGuide } from './components/CosmicKnowledgeGuide';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
@@ -131,6 +132,16 @@ export default function App() {
                currentKyMon={result.kyMon}
                currentBatTu={result.batTu}
                onBackToBoard={() => setActiveTab('kymon-chart')}
+             />
+           </div>
+         )}
+
+         {activeTab === 'luc-nham' && (
+           <div className="space-y-6">
+             <LucNhamPanel
+               result={result}
+               currentDate={currentDate}
+               onOpenAlgorithmModal={() => setIsGuideOpen(true)}
              />
            </div>
          )}

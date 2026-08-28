@@ -32,6 +32,8 @@ import {
 } from 'lucide-react';
 import { CAN, CHI } from '../astronomy/canChi';
 import { buildCompleteKyMonChart, CompleteKyMonChart, PalaceData, PALACE_RING_CW } from '../astronomy/kymonChart';
+import { evaluateKyMonTimeMoment } from '../astronomy/kymonEvaluation';
+import { TimeEvaluationCard } from './TimeEvaluationCard';
 import { KyMonInfo, BatTuInfo } from '../types';
 
 interface KyMonCompleteBoardProps {
@@ -120,6 +122,10 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
   }, [mode, autoConfig, manualIsDuongDon, manualCucNumber, manualDayCan, manualDayChi, manualHourCan, manualHourChi]);
 
   const selectedPalace: PalaceData | undefined = chart.palaces[selectedPalaceNum];
+
+  const evaluation = useMemo(() => {
+    return evaluateKyMonTimeMoment(chart);
+  }, [chart]);
 
   // Helper colors for Elements
   const getElementBadgeColor = (el: string) => {
@@ -384,6 +390,13 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* ĐÁNH GIÁ ĐỘ TỐT/XẤU THỜI GIAN THANG 5 SAO (THIÊN BÀN / ĐỊA BÀN / MÔN / CUNG) */}
+      <TimeEvaluationCard
+        evaluation={evaluation}
+        chart={chart}
+        onSelectPalace={(pNum) => setSelectedPalaceNum(pNum)}
+      />
 
       {/* Main 9-Palaces Visual Matrix + Palace Detail Explorer */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

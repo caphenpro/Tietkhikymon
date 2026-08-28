@@ -27,7 +27,9 @@ import {
 import { ComprehensiveResult } from '../types';
 import { formatVietnamDateTime, BAGUA_PALACES } from '../astronomy/solarTerms';
 import { buildCompleteKyMonChart, CompleteKyMonChart } from '../astronomy/kymonChart';
+import { evaluateKyMonTimeMoment } from '../astronomy/kymonEvaluation';
 import { MiniCalendar } from './MiniCalendar';
+import { TimeEvaluationCard } from './TimeEvaluationCard';
 
 interface OverviewCardProps {
   result: ComprehensiveResult;
@@ -76,6 +78,10 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({
 
     return buildCompleteKyMonChart(isDuong, cucNum, dCan, dChi, hCan, hChi);
   }, [kyMon, batTu]);
+
+  const evaluation = useMemo(() => {
+    return evaluateKyMonTimeMoment(chart);
+  }, [chart]);
 
   const currentPalace = BAGUA_PALACES.find((p) => p.number === kyMon.cungNumber) || BAGUA_PALACES[0];
 
@@ -165,6 +171,13 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({
           </div>
         </div>
       </div>
+
+      {/* 0.5. ĐÁNH GIÁ CÁT HUNG MỐC THỜI GIAN THANG 5 SAO (THIÊN BÀN / ĐỊA BÀN / MÔN / CUNG) */}
+      <TimeEvaluationCard
+        evaluation={evaluation}
+        chart={chart}
+        onNavigateTab={onNavigateTab}
+      />
 
       {/* 1. THIÊN VĂN 24 TIẾT KHÍ & LỊCH THÁNG TƯƠNG TÁC */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">

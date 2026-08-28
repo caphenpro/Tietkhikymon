@@ -29,6 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'overview', label: 'Tổng Quan & Luận Cục' },
     { id: 'kymon-chart', label: 'Bàn Kỳ Môn Hoàn Chỉnh' },
     { id: 'kymon-prognostication', label: 'Dự Trắc Kỳ Môn' },
+    { id: 'luc-nham', label: 'Đại Lục Nhâm' },
     { id: 'compass', label: 'Bát Quái & 9 Cung' },
     { id: 'table', label: 'Bảng 24 Tiết Khí Năm' },
     { id: 'moon', label: 'Điểm Sóc & Âm Lịch' },
