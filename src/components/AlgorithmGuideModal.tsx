@@ -22,6 +22,11 @@ import {
   Clock,
   ChevronRight,
   Info,
+  Globe,
+  Grid,
+  Zap,
+  CheckCircle2,
+  HelpCircle,
 } from 'lucide-react';
 import { APP_VERSION } from '../version';
 
@@ -36,13 +41,17 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
   if (!isOpen) return null;
 
   const sections = [
-    { id: 'astronomy', title: '1. Thiên Văn 24 Tiết Khí', icon: Sun },
-    { id: 'lunar', title: '2. Điểm Sóc & Âm Lịch', icon: Moon },
-    { id: 'dinhcuc', title: '3. Siêu Thần Tiếp Khí Nhuận Cục', icon: Compass },
-    { id: 'structure', title: '4. Cấu Trúc Bàn 9 Cung Kỳ Môn', icon: Layers },
-    { id: 'tam-ban', title: '5. Quy Luật Tam Bàn & Chủ Khách', icon: Users },
-    { id: 'destiny', title: '6. Dự Trắc Thân Mệnh (Sang Hèn)', icon: User },
-    { id: 'aspects', title: '7. 6 Phương Diện Đời Sống Cụ Thể', icon: Sparkles },
+    { id: 'system-overview', title: '1. Hệ Thống Toàn Cảnh (Dành Cho Người Mới)', icon: Globe },
+    { id: 'bat-trach', title: '2. Bát Trạch & 8 Phương Vị Nạp Khí', icon: Compass },
+    { id: 'cuu-tinh', title: '3. Cửu Tinh Lạc Thư & Ma Trận 9 Cung', icon: Grid },
+    { id: 'astronomy', title: '4. Thiên Văn 24 Tiết Khí', icon: Sun },
+    { id: 'lunar', title: '5. Điểm Sóc & Âm Lịch Thiên Văn', icon: Moon },
+    { id: 'ung-dung', title: '6. Mối Liên Hệ Hợp Nhất & Ứng Dụng Đời Sống', icon: Zap },
+    { id: 'dinhcuc', title: '7. Siêu Thần Tiếp Khí Nhuận Cục', icon: Clock },
+    { id: 'structure', title: '8. Cấu Trúc Bàn Kỳ Môn 9 Cung (4 Tầng)', icon: Layers },
+    { id: 'tam-ban', title: '9. Quy Luật Tam Bàn & Chủ Khách', icon: Users },
+    { id: 'destiny', title: '10. Dự Trắc Thân Mệnh (Sang Hèn)', icon: User },
+    { id: 'aspects', title: '11. 6 Phương Diện Đời Sống Cụ Thể', icon: Sparkles },
   ];
 
   return (
@@ -57,20 +66,20 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                  Thuyết Minh Thuật Toán & Nguyên Lý Kỳ Môn
+                  Cẩm Nang Tri Thức & Thuyết Minh Thuật Toán Toàn Cảnh
                 </h3>
                 <span className="px-2 py-0.5 rounded-full text-[11px] font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   v{APP_VERSION}
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Tài liệu thuyết minh toàn diện: Thiên Văn Meeus • Siêu Thần Tiếp Khí • Bàn 9 Cung • Dự Trắc Toàn Thư
+                Bát Trạch • Cửu Tinh Lạc Thư • 24 Tiết Khí • Điểm Sóc Âm Lịch • Mối Liên Hệ Hợp Nhất & Kỳ Môn Độn Giáp
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition-colors"
+            className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -80,7 +89,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
         <div className="px-4 py-2.5 bg-slate-950/50 border-b border-slate-800/80 flex items-center gap-1.5 overflow-x-auto no-scrollbar text-xs">
           <button
             onClick={() => setActiveSection('all')}
-            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition-all cursor-pointer ${
               activeSection === 'all'
                 ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -95,7 +104,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
               <button
                 key={sec.id}
                 onClick={() => setActiveSection(sec.id)}
-                className={`px-3 py-1.5 rounded-lg whitespace-nowrap flex items-center gap-1.5 transition-all ${
+                className={`px-3 py-1.5 rounded-lg whitespace-nowrap flex items-center gap-1.5 transition-all cursor-pointer ${
                   isActive
                     ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -110,69 +119,313 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
         {/* Scrollable Content */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
-          {/* SECTION 1: THIÊN VĂN 24 TIẾT KHÍ */}
+          {/* SECTION 1: HỆ THỐNG TOÀN CẢNH (CHO NGƯỜI MỚI TIẾP CẬN) */}
+          {(activeSection === 'all' || activeSection === 'system-overview') && (
+            <div className="bg-slate-950/80 p-5 rounded-2xl border border-amber-500/40 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between pb-2 border-b border-amber-500/20">
+                <h4 className="font-bold text-amber-300 text-sm sm:text-base flex items-center gap-2">
+                  <Globe className="w-5 h-5 text-amber-400" />
+                  1. Bức Tranh Toàn Cảnh: Mối Liên Hệ Tạo Thành Hệ Thống Vũ Trụ Hợp Nhất
+                </h4>
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-semibold">
+                  Dành Cho Người Mới Bắt Đầu
+                </span>
+              </div>
+
+              <p className="text-slate-300">
+                Khi mới tiếp cận các môn cổ học phương Đông, người học thường cảm thấy bối rối vì có quá nhiều khái niệm tưởng chừng rời rạc: <em>Bát Trạch, Cửu Tinh Lạc Thư, 24 Tiết Khí, Điểm Sóc Âm Lịch, Bát Tự và Kỳ Môn Độn Giáp</em>. Tuy nhiên, cổ nhân không tạo ra những môn phái riêng rẽ, mà tất cả đều là <strong>4 Mảnh Ghép Của Một Hệ Tọa Độ Vũ Trụ Hợp Nhất (Thiên - Địa - Nhân - Thời - Không)</strong>:
+              </p>
+
+              {/* Sơ đồ 4 trụ cột */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
+                {/* Trụ Cột 1: THỜI GIAN */}
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-amber-500/30 space-y-2">
+                  <div className="flex items-center gap-2 text-amber-300 font-bold">
+                    <Sun className="w-4 h-4 text-amber-400" />
+                    <span>TRỤC THỜI GIAN (THIÊN VẬN - MẶT TRỜI & MẶT TRĂNG)</span>
+                  </div>
+                  <p className="text-slate-300">
+                    • <strong>24 Tiết Khí (Dương Lịch Khí):</strong> Đo lường chu kỳ chuyển động của Trái Đất quanh Mặt Trời, quyết định sự biến thiên của 4 mùa, nhiệt độ, sinh khí và dòng chảy năng lượng Âm - Dương trong năm.
+                  </p>
+                  <p className="text-slate-300">
+                    • <strong>Điểm Sóc Âm Lịch (Chu Kỳ Trăng):</strong> Đo lường lực hấp dẫn và chu kỳ tròn khuyết của Mặt Trăng quanh Trái Đất, điều khiển thủy triều và tâm sinh lý con người.
+                  </p>
+                </div>
+
+                {/* Trụ Cột 2: KHÔNG GIAN */}
+                <div className="p-3.5 rounded-xl bg-slate-900/90 border border-cyan-500/30 space-y-2">
+                  <div className="flex items-center gap-2 text-cyan-300 font-bold">
+                    <Compass className="w-4 h-4 text-cyan-400" />
+                    <span>TRỤC KHÔNG GIAN (ĐỊA THẾ - BÁT TRẠCH & LẠC THƯ)</span>
+                  </div>
+                  <p className="text-slate-300">
+                    • <strong>Bát Trạch (8 Phương Vị Địa Lý):</strong> Chia không gian 360° theo 8 quẻ Hậu Thiên Bát Quái, xác định tính chất nạp khí (Cát/Hung) của từng phương hướng đối với ngôi nhà và con người.
+                  </p>
+                  <p className="text-slate-300">
+                    • <strong>Cửu Tinh Lạc Thư (Ma Trận 9 Cung):</strong> Bản đồ ma phương 3x3 cân bằng năng lượng vũ trụ (tổng = 15), là tấm lưới số học để phân bổ trường năng lượng và các vì sao.
+                  </p>
+                </div>
+              </div>
+
+              {/* Điểm Giao Thoa: KỲ MÔN ĐỘN GIÁP */}
+              <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 via-purple-500/10 to-slate-900 border border-purple-500/40 space-y-2 text-xs">
+                <div className="text-amber-300 font-bold flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  <span>ĐIỂM GIAO THOA HOÀN HẢO: KỲ MÔN ĐỘN GIÁP (THIÊN ĐỊA NHÂN HỢP NHẤT)</span>
+                </div>
+                <p className="text-slate-300 leading-relaxed">
+                  Khi <strong>Thời Gian (24 Tiết Khí & Can Chi)</strong> giao thoa với <strong>Không Gian (Bát Trạch 8 Hướng & 9 Cung Lạc Thư)</strong>, phương pháp <em>Siêu Thần Tiếp Khí</em> sẽ kích hoạt xoay chuyển 4 tầng bàn: <strong>Thiên Bàn (9 Sao - Thiên Thời), Nhân Bàn (8 Cửa - Nhân Hòa), Địa Bàn (9 Cung - Địa Lợi), Thần Bàn (8 Thần - Thần Trợ)</strong>. Từ đó giúp con người biết rõ thời điểm nào, tại phương vị nào đang chứa nguồn năng lượng cát lợi nhất để hành động thành công.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 2: BÁT TRẠCH */}
+          {(activeSection === 'all' || activeSection === 'bat-trach') && (
+            <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
+              <h4 className="font-bold text-amber-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
+                <Compass className="w-4 h-4 text-amber-400" />
+                2. Ý Nghĩa Của Bát Trạch (Bát Quái Hậu Thiên & 8 Hướng Nạp Khí)
+              </h4>
+              <p>
+                <strong>Bát Trạch</strong> (8 Ngôi nhà / 8 Hướng khí) là hệ thống phong thủy chia mặt bằng không gian 360° thành 8 phương vị tương ứng với 8 quẻ Hậu Thiên Bát Quái của Chu Văn Vương. Mỗi phương vị đại diện cho một dạng năng lượng tự nhiên, một hiện tượng vũ trụ và một thành viên trong gia đình:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 text-xs pt-1">
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-cyan-300 font-bold block">1. Cung Khảm (Bắc - Thủy):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Nước, dòng chảy, trí tuệ sâu thẳm, hiểm nạn, thận/tai, đại diện cho Trung Nam.</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-amber-300 font-bold block">2. Cung Khôn (Tây Nam - Thổ):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Đất mẹ, sự dung nạp, hậu phương nuôi dưỡng, bao dung, dạ dày, Người Mẹ/Người vợ.</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-emerald-300 font-bold block">3. Cung Chấn (Đông - Mộc):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Sấm sét, sự bừng tỉnh mùa xuân, hành động dũng mãnh, gan/chân, Trưởng Nam.</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-green-300 font-bold block">4. Cung Tốn (Đông Nam - Mộc):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Gió mát, uyển chuyển, tri thức, tài lộc sinh sôi, danh tiếng, mật, Trưởng Nữ.</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-slate-200 font-bold block">6. Cung Càn (Tây Bắc - Kim):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Trời, quyền uy tối thượng, lãnh đạo, kỷ cương, đầu/phổi, Người Cha/Trụ cột.</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-rose-300 font-bold block">7. Cung Đoài (Tây - Kim):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Đầm hồ, niềm vui, ca hát, giao tiếp, hùng biện, miệng/răng, Thiếu Nữ (Con gái út).</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-yellow-300 font-bold block">8. Cung Cấn (Đông Bắc - Thổ):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Núi non, sự tĩnh lặng dừng nghỉ trước khi bừng sáng, tích lũy, tay/lưng, Thiếu Nam.</p>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <span className="text-red-300 font-bold block">9. Cung Ly (Nam - Hỏa):</span>
+                  <p className="text-slate-300 text-[11px] mt-1">Lửa, ánh sáng mặt trời rực rỡ, văn minh, công danh sáng tỏ, tim/mắt, Trung Nữ.</p>
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
+                <span className="text-amber-300 font-bold">Phân Nhóm Đông Tứ Trạch & Tây Tứ Trạch:</span>
+                <p className="mt-1">
+                  • <strong>Đông Tứ Trạch:</strong> Khảm (1), Chấn (3), Tốn (4), Ly (9) &rarr; Thuộc Thủy, Mộc, Hỏa sinh dưỡng lẫn nhau, hướng về nguồn năng lượng Dương quang phát triển.
+                  <br />• <strong>Tây Tứ Trạch:</strong> Khôn (2), Càn (6), Đoài (7), Cấn (8) &rarr; Thuộc Kim, Thổ tương sinh vững chắc, hướng về sự ổn định, kỷ cương và tích lũy.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 3: CỬU TINH LẠC THƯ */}
+          {(activeSection === 'all' || activeSection === 'cuu-tinh') && (
+            <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
+              <h4 className="font-bold text-cyan-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
+                <Grid className="w-4 h-4 text-cyan-400" />
+                3. Ý Nghĩa Của Cửu Tinh Lạc Thư & Ma Trận Ma Phương 3x3
+              </h4>
+              <p>
+                <strong>Lạc Thư</strong> là đồ hình cổ xưa huyền diệu được khắc trên mai rùa thần thời Đại Vũ trị thủy. Lạc Thư phân bố 9 con số từ 1 đến 9 trên ma trận 3x3 hoàn hảo: tổng của bất kỳ hàng ngang, cột dọc hay đường chéo nào đều chính xác bằng <strong>15</strong> (số ngày của 1 Tiết Khí).
+              </p>
+              <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 font-mono">
+                <span className="text-amber-300 font-bold block font-sans mb-1">Khẩu Quyết Định Cung Lạc Thư:</span>
+                <p className="text-slate-300">
+                  <em>"Đới cửu lý nhất (Đầu đội 9, chân đạp 1),<br />
+                  Tả tam hữu thất (Trái 3, phải 7),<br />
+                  Nhị tứ vi kiên (2 và 4 làm hai vai),<br />
+                  Lục bát vi túc (6 và 8 làm hai chân),<br />
+                  Ngũ cư trung cung (5 ở chính giữa trung tâm)."</em>
+                </p>
+              </div>
+
+              <p className="text-xs text-slate-300">
+                Mỗi cung số Lạc Thư gắn liền với một ngôi sao trong <strong>Cửu Tinh Bắc Đẩu</strong>, quy định trường khí đặc trưng:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-cyan-300 block">Nhất Bạch Tham Lang (1 - Thủy):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ tài lộc, đào hoa, danh tiếng học vấn, xuất ngoại.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-amber-400 block">Nhị Hắc Cự Môn (2 - Thổ):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ bệnh phù, ốm đau, nhưng cũng chủ điền sản đất đai.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-emerald-400 block">Tam Bích Lộc Tồn (3 - Mộc):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ thị phi, tranh chấp, kiện tụng nhưng có tính đột phá.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-green-400 block">Tứ Lục Văn Khúc (4 - Mộc):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ thi cử đỗ đạt, văn chương nghệ thuật, danh vọng.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-yellow-300 block">Ngũ Hoàng Liêm Trinh (5 - Thổ):</strong>
+                  <span className="text-slate-400 text-[11px]">Trung Cung, uy lực lớn nhất, chủ biến động, đại họa sát.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-slate-300 block">Lục Bạch Vũ Khúc (6 - Kim):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ quyền uy, lãnh đạo quan trường, thiên tài (lộc bất ngờ).</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-rose-300 block">Thất Xích Phá Quân (7 - Kim):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ phá bại, trộm cướp, khẩu thiệt, mổ xẻ tổn thương.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-amber-300 block">Bát Bạch Tả Phụ (8 - Thổ):</strong>
+                  <span className="text-slate-400 text-[11px]">Đại cát tinh đương vận, chủ tài lộc chân chính, nhà cửa thịnh.</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <strong className="text-red-400 block">Cửu Tử Hữu Bật (9 - Hỏa):</strong>
+                  <span className="text-slate-400 text-[11px]">Chủ hỷ khánh, hôn nhân, thăng tiến, ánh sáng trí tuệ.</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 4: THIÊN VĂN 24 TIẾT KHÍ */}
           {(activeSection === 'all' || activeSection === 'astronomy') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-amber-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <Sun className="w-4 h-4 text-amber-400" />
-                1. Thiên Văn 24 Tiết Khí & Phân Định Tiết / Khí (Jean Meeus Engine)
+                4. Ý Nghĩa Của 24 Tiết Khí (Dương Lịch Thiên Văn Mặt Trời & 4 Mùa)
               </h4>
               <p>
-                Hệ thống sử dụng mô hình thiên văn chính xác cao <strong>Jean Meeus (Astronomical Algorithms)</strong> kết hợp lý thuyết hành tinh <strong>VSOP87</strong>. Kinh độ Hoàng đạo Mặt Trời (&lambda;<sub>Sun</sub>) trải dài từ 0° &rarr; 360°. Cứ mỗi 15° Mặt Trời dịch chuyển sẽ xác lập thời điểm bắt đầu một Tiết Khí chính xác đến từng giây.
+                <strong>24 Tiết Khí</strong> thực chất là <strong>Dương Lịch thuần túy theo kinh độ Hoàng đạo Mặt Trời</strong> (&lambda;<sub>Sun</sub> từ 0° &rarr; 360°). Cứ mỗi 15° Mặt Trời dịch chuyển sẽ xác lập thời điểm bắt đầu một Tiết Khí chính xác đến từng giây. Đây là thước đo quy luật chuyển hóa Âm - Dương của Trời Đất:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs pt-1">
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                  <strong className="text-amber-300 block mb-1">12 Tiết (Tiết Lệnh):</strong>
+                  <strong className="text-amber-300 block mb-1">12 Tiết (Tiết Lệnh) - Mốc Chuyển Tháng:</strong>
                   <p className="text-slate-300">
                     Lập Xuân (315°), Kinh Trập (345°), Thanh Minh (15°), Lập Hạ (45°), Mang Chủng (75°), Tiểu Thử (105°), Lập Thu (135°), Bạch Lộ (165°), Hàn Lộ (195°), Lập Đông (225°), Đại Tuyết (255°), Tiểu Hàn (285°).
                   </p>
                   <p className="text-slate-400 italic text-[11px] pt-1">
-                    * Tiết là thời điểm chuyển giao chính thức sang Tháng mới trong Bát Tự Tứ Trụ (ví dụ: chạm Lập Xuân là bước sang Tháng Dần).
+                    * Là thời điểm chuyển giao chính thức sang Tháng mới trong Bát Tự Tứ Trụ (ví dụ: chạm Lập Xuân là bước sang Tháng Dần, bất kể ngày âm lịch là ngày nào).
                   </p>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                  <strong className="text-cyan-300 block mb-1">12 Khí (Trung Khí):</strong>
+                  <strong className="text-cyan-300 block mb-1">12 Khí (Trung Khí) - Mốc Cân Bằng & Định Tháng Nhuận:</strong>
                   <p className="text-slate-300">
                     Vũ Thủy (330°), Xuân Phân (0°), Cốc Vũ (30°), Tiểu Mãn (60°), Hạ Chí (90°), Đại Thử (120°), Xử Thử (150°), Thu Phân (180°), Sương Giáng (210°), Tiểu Tuyết (240°), Đông Chí (270°), Đại Hàn (300°).
                   </p>
                   <p className="text-slate-400 italic text-[11px] pt-1">
-                    * Trung Khí nằm giữa hai Tiết, đóng vai trò bản lề để định vị tháng âm lịch chính quy và xác định tháng nhuận.
+                    * Trung Khí nằm giữa hai Tiết, là chiếc chìa khóa quyết định tên tháng âm lịch chính quy và xác định tháng Nhuận.
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* SECTION 2: ĐIỂM SÓC & ÂM LỊCH */}
+          {/* SECTION 5: ĐIỂM SÓC & ÂM LỊCH */}
           {(activeSection === 'all' || activeSection === 'lunar') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-cyan-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <Moon className="w-4 h-4 text-cyan-400" />
-                2. Điểm Sóc (New Moon) & Quy Chuẩn Tháng Âm Lịch Thiên Văn
+                5. Ý Nghĩa Của Điểm Sóc (New Moon) & Âm Lịch Thiên Văn
               </h4>
               <p>
-                <strong>Điểm Sóc</strong> là thời điểm giao hội Nhật - Nguyệt khi hiệu số kinh độ Hoàng đạo (&lambda;<sub>Moon</sub> - &lambda;<sub>Sun</sub>) = 0°. Ngày dương lịch chứa Điểm Sóc theo kinh tuyến múi giờ Việt Nam (UTC+7) được quy ước là <strong>ngày Mùng 1</strong> của tháng âm lịch.
+                <strong>Điểm Sóc</strong> là thời điểm giao hội Nhật - Nguyệt khi hiệu số kinh độ Hoàng đạo (&lambda;<sub>Moon</sub> - &lambda;<sub>Sun</sub>) = 0°. Lúc này Mặt Trăng nằm giữa Mặt Trời và Trái Đất, hoàn toàn quay mặt tối về phía Trái Đất.
               </p>
               <div className="space-y-2 text-xs text-slate-300">
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-                  <strong className="text-emerald-300">• Tháng Đủ (30 ngày) và Tháng Thiếu (29 ngày):</strong> Xác định hoàn toàn tự động bằng khoảng cách thời gian giữa 2 Điểm Sóc liên tiếp.
+                  <strong className="text-emerald-300">• Quy ước Mùng 1 Đầu Tháng:</strong> Ngày dương lịch chứa Điểm Sóc theo múi giờ Việt Nam (UTC+7) được quy ước là <strong>ngày Mùng 1</strong> của tháng âm lịch.
                 </div>
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-                  <strong className="text-amber-300">• Quy tắc Tháng 1 (Tháng Giêng):</strong> Tháng Giêng bắt buộc phải chứa Tiết <em>Lập Xuân</em> (315°) và Trung Khí <em>Vũ Thủy</em> (330°).
+                  <strong className="text-amber-300">• Tháng Đủ (30 ngày) & Tháng Thiếu (29 ngày):</strong> Xác định hoàn toàn tự động bằng khoảng cách thời gian giữa 2 Điểm Sóc liên tiếp (chu kỳ tuần trăng trung bình là 29.53059 ngày).
                 </div>
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-                  <strong className="text-purple-300">• Quy tắc Tháng Nhuận:</strong> Trong năm âm lịch có 13 Điểm Sóc, tháng đầu tiên không chứa Trung Khí (hoặc thiếu cặp Tiết/Khí tương ứng) sẽ được ấn định là <strong>Tháng Nhuận</strong>.
+                  <strong className="text-purple-300">• Quy tắc Tháng Nhuận Phương Đông:</strong> Trong năm âm lịch có 13 Điểm Sóc, tháng đầu tiên sau Đông Chí không chứa Trung Khí sẽ được chọn làm <strong>Tháng Nhuận</strong>. Đây là đỉnh cao của sự hòa hợp giữa chu kỳ Mặt Trời và Mặt Trăng (Âm Dương Hợp Lịch).
                 </div>
               </div>
             </div>
           )}
 
-          {/* SECTION 3: SIÊU THẦN TIẾP KHÍ NHUẬN CỤC */}
+          {/* SECTION 6: MỐI LIÊN HỆ HỢP NHẤT & ỨNG DỤNG ĐỜI SỐNG */}
+          {(activeSection === 'all' || activeSection === 'ung-dung') && (
+            <div className="bg-slate-950/80 p-5 rounded-2xl border border-emerald-500/40 space-y-3.5 shadow-xl">
+              <h4 className="font-bold text-emerald-300 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-emerald-500/20">
+                <Zap className="w-5 h-5 text-emerald-400" />
+                6. Mối Liên Hệ Hợp Nhất & Ý Nghĩa Ứng Dụng Thực Tiễn Trong Cuộc Sống
+              </h4>
+
+              <p className="text-xs sm:text-sm text-slate-300">
+                Làm thế nào để ứng dụng hệ thống Bát Trạch, Lạc Thư, Tiết Khí và Âm Lịch vào đời sống hàng ngày? Dưới đây là 4 trụ cột ứng dụng cốt lõi:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
+                {/* Ứng dụng 1: Thiên Thời */}
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="text-amber-300 font-bold flex items-center gap-1.5">
+                    <Sun className="w-4 h-4 text-amber-400" />
+                    <span>1. ĐẮC THIÊN THỜI (DƯỠNG SINH & KHỞI SỰ THUẬN TỰ NHIÊN)</span>
+                  </div>
+                  <p>
+                    • <strong>Dưỡng sinh theo 24 Tiết khí:</strong> Xuân sinh (mở rộng tâm trí, giải độc gan), Hạ trưởng (vận động bồi bổ tim), Thu thu (thu liễm dưỡng phổi), Đông tàng (bảo tồn năng lượng dưỡng thận).
+                    <br />• <strong>Khởi sự:</strong> Tránh các ngày giao tiết khí khí trường hỗn loạn; chọn ngày Sóc Vọng (Mùng 1, Rằm) để cân bằng tâm thế và khởi tạo kế hoạch mới.
+                  </p>
+                </div>
+
+                {/* Ứng dụng 2: Địa Lợi */}
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="text-cyan-300 font-bold flex items-center gap-1.5">
+                    <Compass className="w-4 h-4 text-cyan-400" />
+                    <span>2. ĐẮC ĐỊA LỢI (PHONG THỦY BÁT TRẠCH & KHAI THÔNG KHÍ TRƯỜNG)</span>
+                  </div>
+                  <p>
+                    • <strong>Định vị không gian:</strong> Bố trí bàn làm việc, cửa chính, phòng ngủ hướng vào cung Sinh Khí, Diên Niên, Thiên Y theo Bát Trạch.
+                    <br />• <strong>Hóa giải hung tinh:</strong> Tra cứu cung đóng của sao Nhị Hắc (bệnh tật) và Ngũ Hoàng (tai ương) trên Cửu Cung Lạc Thư để giữ tĩnh lặng, đặt vật phẩm hóa giải.
+                  </p>
+                </div>
+
+                {/* Ứng dụng 3: Nhân Hòa & Kỳ Môn Trạch Cát */}
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="text-purple-300 font-bold flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-purple-400" />
+                    <span>3. ĐẮC NHÂN HÒA (KỲ MÔN TRẠCH CÁT & XUẤT HÀNH HÀNH ĐỘNG)</span>
+                  </div>
+                  <p>
+                    • <strong>Xuất hành mưu sự:</strong> Chọn giờ và phương vị có Tam Kỳ (Ất, Bính, Đinh) hội cùng Tam Cát Môn (Khai, Hưu, Sinh) và Thần Trực Phù/Thái Âm để đàm phán, ký kết, cầu tài.
+                    <br />• <strong>Chiến lược Chủ - Khách:</strong> Biết khi nào nên chủ động tiến công (làm Khách), khi nào nên tĩnh lặng chờ thời cơ (làm Chủ).
+                  </p>
+                </div>
+
+                {/* Ứng dụng 4: Dự Trắc & Ra Quyết Định */}
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="text-emerald-300 font-bold flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-emerald-400" />
+                    <span>4. DỰ TRẮC SỰ VIỆC & LÀM CHỦ VẬN THẾ</span>
+                  </div>
+                  <p>
+                    • <strong>Soi rọi tương lai:</strong> Sử dụng hệ thống 8 cung Dụng Thần trong trang <em>"Dự Trắc Kỳ Môn"</em> để nhìn thấu bản chất của công danh sự nghiệp, tài vận, hôn nhân, sức khỏe, tìm đồ mất và kiện tụng.
+                    <br />• <strong>Mục tiêu tối thượng:</strong> Giúp con người "Tri mệnh - Thuận thời - Hành động sáng suốt" để làm chủ cuộc đời.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 7: SIÊU THẦN TIẾP KHÍ NHUẬN CỤC */}
           {(activeSection === 'all' || activeSection === 'dinhcuc') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-purple-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
-                <Compass className="w-4 h-4 text-purple-400" />
-                3. Phương Pháp Định Cục Kỳ Môn: Siêu Thần - Tiếp Khí - Nhuận Cục
+                <Clock className="w-4 h-4 text-purple-400" />
+                7. Phương Pháp Định Cục Kỳ Môn: Siêu Thần - Tiếp Khí - Nhuận Cục
               </h4>
               <p>
                 Mỗi Tiết Khí gồm 15 ngày, quản lý 3 Nguyên (Thượng Nguyên 5 ngày, Trung Nguyên 5 ngày, Hạ Nguyên 5 ngày). Chu kỳ 5 ngày gắn liền với Can Chi của <strong>Phù Đầu</strong> (ngày Can Giáp hoặc Kỷ).
@@ -200,12 +453,12 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             </div>
           )}
 
-          {/* SECTION 4: CẤU TRÚC BÀN 9 CUNG KỲ MÔN */}
+          {/* SECTION 8: CẤU TRÚC BÀN 9 CUNG KỲ MÔN */}
           {(activeSection === 'all' || activeSection === 'structure') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-white text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <Layers className="w-4 h-4 text-amber-400" />
-                4. Cấu Trúc Bàn Kỳ Môn 9 Cung (Thiên - Địa - Nhân - Thần)
+                8. Cấu Trúc Bàn Kỳ Môn 9 Cung (Thiên - Địa - Nhân - Thần)
               </h4>
               <p>
                 Bàn Kỳ Môn Độn Giáp hoàn chỉnh phối hợp chặt chẽ 4 tầng không gian và thời gian trên ma trận Lạc Thư:
@@ -239,12 +492,12 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             </div>
           )}
 
-          {/* SECTION 5: TAM BÀN & CHỦ KHÁCH */}
+          {/* SECTION 9: TAM BÀN & CHỦ KHÁCH */}
           {(activeSection === 'all' || activeSection === 'tam-ban') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-amber-300 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <Users className="w-4 h-4 text-amber-400" />
-                5. Quy Luật Tam Bàn & Phân Định Chủ - Khách Trong Chiêm Nghiệm
+                9. Quy Luật Tam Bàn & Phân Định Chủ - Khách Trong Chiêm Nghiệm
               </h4>
               <div className="space-y-2.5 text-xs text-slate-300">
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
@@ -267,12 +520,12 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             </div>
           )}
 
-          {/* SECTION 6: DỰ TRẮC THÂN MỆNH */}
+          {/* SECTION 10: DỰ TRẮC THÂN MỆNH */}
           {(activeSection === 'all' || activeSection === 'destiny') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-emerald-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <User className="w-4 h-4 text-emerald-400" />
-                6. Dự Trắc Thân Mệnh & Xem Kiếp Người Sang Hèn (Chiêm Nhân Sinh Quý Tiện)
+                10. Dự Trắc Thân Mệnh & Xem Kiếp Người Sang Hèn (Chiêm Nhân Sinh Quý Tiện)
               </h4>
               <div className="space-y-2 text-xs text-slate-300">
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
@@ -296,12 +549,12 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             </div>
           )}
 
-          {/* SECTION 7: 6 PHƯƠNG DIỆN ĐỜI SỐNG CỤ THỂ */}
+          {/* SECTION 11: 6 PHƯƠNG DIỆN ĐỜI SỐNG CỤ THỂ */}
           {(activeSection === 'all' || activeSection === 'aspects') && (
             <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
               <h4 className="font-bold text-rose-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <Sparkles className="w-4 h-4 text-rose-400" />
-                7. 6 Phương Diện Dự Trắc Đời Sống Cụ Thể (Kỳ Môn Xem Việc)
+                11. 6 Phương Diện Dự Trắc Đời Sống Cụ Thể (Kỳ Môn Xem Việc)
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
@@ -354,16 +607,17 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
         <div className="p-4 border-t border-slate-800 bg-slate-950 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <div className="text-slate-400 text-center sm:text-left">
             <span>Tài liệu đối chiếu: </span>
-            <span className="text-amber-300/90 font-serif italic">Kỳ Môn Độn Giáp Bí Kíp Toàn Thư & Jean Meeus Algorithms</span>
+            <span className="text-amber-300/90 font-serif italic">Kỳ Môn Độn Giáp Bí Kíp Toàn Thư, Lạc Thư Quỹ Đạo & Jean Meeus Algorithms</span>
           </div>
           <button
             onClick={onClose}
             className="w-full sm:w-auto px-5 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl transition-all shadow-md cursor-pointer"
           >
-            Đã Hiểu Toàn Bộ
+            Đã Hiểu Toàn Bộ Hệ Thống
           </button>
         </div>
       </div>
     </div>
   );
 };
+
