@@ -6,6 +6,21 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.16.1]] - 2026-08-29
+### Codename: *Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch*
+
+#### ✨ Tính Năng Mới (Added)
+- **Tọa Độ Ngày Giờ Dương Lịch Chi Tiết Cho Từng Tháng Âm Lịch (`/src/components/LunarNewMoonSection.tsx`)**:
+  - Hiển thị đầy đủ mốc thời gian Dương Lịch chính xác đến từng giờ, phút, giây (`HH:mm:ss`) và ngày/tháng/năm (`DD/MM/YYYY`) theo giờ Việt Nam (UTC+7).
+  - Định vị rõ ràng mốc **Bắt đầu (Mùng 1 - Điểm Sóc khởi đầu)** và mốc **Kết thúc (Hết tháng - Điểm Sóc tiếp theo)** cho từng tháng trong danh sách 12 hoặc 13 tháng âm lịch.
+- **Bộ Chuyển Đổi Giao Diện 2 Chế Độ (Card Grid vs Table View)**:
+  - **Dạng Thẻ (Card Grid)**: Bố cục trực quan, hiển thị mốc thời gian dạng timeline, độ dài tháng (29 ngày thiếu/30 ngày đủ), huy hiệu phân loại Chính/Nhuận và danh sách Tiết Khí diễn ra trong tháng.
+  - **Dạng Bảng (Detailed Table View)**: So sánh đối chiếu trực tiếp giữa các tháng với các cột Ngày giờ Dương lịch, Độ dài ngày, Tiết Khí và Chỉ dấu trạng thái "Đang diễn ra".
+- **Nâng Cấp Thẻ Tháng Nhuận**:
+  - Cung cấp chính xác giờ phút giây bắt đầu và kết thúc của tháng nhuận trong năm khảo sát.
+
+---
+
 ## [[2.16.0]] - 2026-08-29
 ### Codename: *Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn*
 

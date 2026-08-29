@@ -11,18 +11,40 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.16.0';
+export const APP_VERSION = '2.16.1';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn';
+export const APP_CODENAME = 'Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.16.1',
+    releaseDate: '2026-08-29',
+    codename: 'Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch',
+    tagline: 'Hiển thị chi tiết thời gian Dương Lịch (Giờ:Phút:Giây, Ngày/Tháng/Năm UTC+7) bắt đầu từ Mùng 1 (Điểm Sóc) đến khi kết thúc tháng cho toàn bộ 12 hoặc 13 tháng âm lịch trong năm.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung chính xác thời gian Dương Lịch (Giờ:Phút:Giây, Ngày/Tháng/Năm) bắt đầu Mùng 1 (Điểm Sóc) và kết thúc tháng (Điểm Sóc kế) cho từng tháng trong 12 hoặc 13 tháng âm lịch.',
+      'Tích hợp 2 chế độ hiển thị linh hoạt: Dạng Thẻ (Card Grid trực quan) và Dạng Bảng (Detailed Table View so sánh đa cột).',
+      'Hiển thị danh sách Tiết Khí kèm mốc thời gian diễn ra trong từng tháng âm lịch.',
+      'Nâng cấp thẻ tóm tắt Tháng Nhuận với đầy đủ giờ phút giây bắt đầu và kết thúc Dương lịch.',
+      'Đồng bộ Section 5 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Bộ chuyển đổi giao diện Thẻ / Bảng (Card / Table View Mode) trong danh sách các tháng âm lịch.',
+      'Hàm tiện ích formatVNTimeDetails xuất đầy đủ giờ phút giây và ngày tháng năm UTC+7.',
+    ],
+    improved: [
+      'Bố cục trực quan, màu sắc tương phản cao giữa thời điểm khởi đầu Mùng 1 và kết thúc tháng.',
+      'Trải nghiệm tra cứu lịch âm dương thiên văn chuẩn xác đến từng giây.',
+    ],
+  },
   {
     version: '2.16.0',
     releaseDate: '2026-08-29',
     codename: 'Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn',
     tagline: 'Bổ sung chuyên mục phân tích Tháng Nhuận Âm Lịch trong năm (nếu có), xác định năm nhuận/năm thường, thống kê 12 hoặc 13 tháng âm lịch, ngày bắt đầu/kết thúc và nguyên lý thiên văn Vô Trung Khí.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Thuật toán thiên văn Vô Trung Khí Pháp tự động phân tích toàn bộ chu kỳ năm Âm lịch tương ứng với ngày tra cứu (cửa sổ 600 ngày).',
       'Xác định chính xác năm có tháng nhuận hay năm thường, tên tháng nhuận (ví dụ: Tháng 6 Nhuận), độ dài ngày (29 hay 30 ngày), ngày bắt đầu (Mùng 1) và ngày kết thúc.',

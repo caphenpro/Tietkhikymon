@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Moon,
   Calendar,
@@ -16,9 +16,31 @@ import {
   Sun,
   ChevronRight,
   HelpCircle,
+  LayoutGrid,
+  List,
 } from 'lucide-react';
 import { NewMoonInfo } from '../types';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
+
+// Helper formatting Vietnamese Date and Time with exact hours, minutes, seconds
+function formatVNTimeDetails(date: Date) {
+  const d = new Date(date.getTime() + 7 * 3600 * 1000);
+  const Y = d.getUTCFullYear();
+  const M = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const D = String(d.getUTCDate()).padStart(2, '0');
+  const h = String(d.getUTCHours()).padStart(2, '0');
+  const m = String(d.getUTCMinutes()).padStart(2, '0');
+  const s = String(d.getUTCSeconds()).padStart(2, '0');
+  return {
+    timeHms: `${h}:${m}:${s}`,
+    timeHm: `${h}:${m}`,
+    dateSlash: `${D}/${M}/${Y}`,
+    fullString: `${h}:${m}:${s}, ngày ${D}/${M}/${Y}`,
+    compactString: `${h}:${m}:${s} • ${D}/${M}/${Y}`,
+    timeAndDate: `${h}:${m} (${D}/${M})`,
+    isoDate: `${Y}-${M}-${D}`,
+  };
+}
 
 interface LunarNewMoonSectionProps {
   newMoon: NewMoonInfo;
@@ -31,6 +53,8 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
   calculationDate,
   onNavigateTab,
 }) => {
+  const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
+
   const percentComplete = Math.min(
     100,
     Math.max(0, Math.round((newMoon.lunarDay / newMoon.totalMonthDays) * 100))
@@ -229,30 +253,52 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
               </p>
 
               {/* Date Interval and Details for Leap Month */}
-              {leapInfo.hasLeapMonth && leapInfo.leapMonthStartDate && leapInfo.leapMonthEndDate && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs">
-                  <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[11px] block">Mùng 1 (Bắt đầu):</span>
-                    <span className="font-mono font-bold text-white">
-                      {formatVietnamDateTime(leapInfo.leapMonthStartDate).split(' ')[0]}
-                    </span>
-                  </div>
+              {leapInfo.hasLeapMonth && leapInfo.leapMonthStartDate && leapInfo.leapMonthEndDate && (() => {
+                const sLeap = formatVNTimeDetails(leapInfo.leapMonthStartDate);
+                const eLeap = formatVNTimeDetails(leapInfo.leapMonthEndDate);
+                return (
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs">
+                    <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
+                      <span className="text-slate-400 text-[11px] block flex items-center gap-1">
+                        <Sun className="w-3 h-3 text-amber-400" />
+                        Mùng 1 (Bắt đầu DL):
+                      </span>
+                      <span className="font-mono font-bold text-white block">
+                        {sLeap.timeHms}
+                      </span>
+                      <span className="font-mono text-slate-300 text-[11px] block">
+                        {sLeap.dateSlash} (Dương lịch)
+                      </span>
+                    </div>
 
-                  <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[11px] block">Hết tháng (Kết thúc):</span>
-                    <span className="font-mono font-bold text-white">
-                      {formatVietnamDateTime(leapInfo.leapMonthEndDate).split(' ')[0]}
-                    </span>
-                  </div>
+                    <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
+                      <span className="text-slate-400 text-[11px] block flex items-center gap-1">
+                        <Moon className="w-3 h-3 text-cyan-400" />
+                        Hết tháng (Kết thúc DL):
+                      </span>
+                      <span className="font-mono font-bold text-white block">
+                        {eLeap.timeHms}
+                      </span>
+                      <span className="font-mono text-slate-300 text-[11px] block">
+                        {eLeap.dateSlash} (Dương lịch)
+                      </span>
+                    </div>
 
-                  <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
-                    <span className="text-slate-400 text-[11px] block">Độ dài tháng nhuận:</span>
-                    <span className="font-mono font-bold text-amber-300">
-                      {leapInfo.leapMonthTotalDays} ngày ({leapInfo.leapMonthDaysType})
-                    </span>
+                    <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
+                      <span className="text-slate-400 text-[11px] block flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-amber-400" />
+                        Độ dài tháng nhuận:
+                      </span>
+                      <span className="font-mono font-bold text-amber-300 block">
+                        {leapInfo.leapMonthTotalDays} ngày
+                      </span>
+                      <span className="text-slate-400 text-[11px] block">
+                        {leapInfo.leapMonthDaysType}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Status Note */}
               <div className="text-xs text-slate-400 bg-slate-950/60 p-3 rounded-lg border border-slate-800/80 leading-relaxed">
@@ -280,74 +326,287 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
             </div>
           </div>
 
-          {/* All Months in This Lunar Year Visual Grid */}
+          {/* All Months in This Lunar Year Visual Grid / Table */}
           <div className="space-y-3 pt-2">
-            <div className="flex items-center justify-between text-xs">
-              <div className="flex items-center gap-2 font-bold text-slate-200">
-                <Calendar className="w-4 h-4 text-amber-400" />
-                <span>Bảng Danh Sách {leapInfo.totalMonthsInYear} Tháng Trong Năm {leapInfo.lunarYearCanChi}</span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-800/80">
+              <div>
+                <div className="flex items-center gap-2 font-bold text-slate-200 text-sm">
+                  <Calendar className="w-4 h-4 text-amber-400" />
+                  <span>Bảng Danh Sách {leapInfo.totalMonthsInYear} Tháng Trong Năm {leapInfo.lunarYearCanChi}</span>
+                  <span className="text-xs font-mono font-normal text-slate-400">({leapInfo.lunarYear})</span>
+                </div>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Thời gian bắt đầu (Mùng 1 - Điểm Sóc) đến khi kết thúc tháng (Điểm Sóc kế) quy đổi chính xác theo Dương lịch (UTC+7)
+                </p>
               </div>
-              <span className="text-[11px] text-slate-400">
-                Chấm xanh: Tháng hiện tại • Viền vàng: Tháng Nhuận
-              </span>
+
+              {/* View Mode Toggle Switch */}
+              <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('cards')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    viewMode === 'cards'
+                      ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>Dạng Thẻ</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('table')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    viewMode === 'table'
+                      ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <List className="w-3.5 h-3.5" />
+                  <span>Dạng Bảng</span>
+                </button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
-              {leapInfo.months.map((m, idx) => {
-                return (
-                  <div
-                    key={idx}
-                    className={`p-3 rounded-xl border transition-all space-y-1.5 relative ${
-                      m.isCurrent
-                        ? 'bg-cyan-950/40 border-cyan-500 shadow-md ring-1 ring-cyan-500/50'
-                        : m.isLeap
-                        ? 'bg-amber-950/30 border-amber-500/60'
-                        : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'
-                    }`}
-                  >
-                    {/* Header badge */}
-                    <div className="flex items-center justify-between">
-                      <span className={`font-bold ${
+            {/* CARDS VIEW */}
+            {viewMode === 'cards' ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 text-xs">
+                {leapInfo.months.map((m, idx) => {
+                  const sInfo = formatVNTimeDetails(m.startDate);
+                  const eInfo = formatVNTimeDetails(m.endDate);
+
+                  return (
+                    <div
+                      key={idx}
+                      className={`p-4 rounded-xl border transition-all space-y-3 relative flex flex-col justify-between ${
                         m.isCurrent
-                          ? 'text-cyan-300'
+                          ? 'bg-cyan-950/40 border-cyan-500 shadow-lg ring-1 ring-cyan-500/50'
                           : m.isLeap
-                          ? 'text-amber-300'
-                          : 'text-slate-200'
-                      }`}>
-                        {m.monthName}
-                      </span>
-                      {m.isCurrent && (
-                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0" />
+                          ? 'bg-amber-950/20 border-amber-500/50 hover:border-amber-500/80'
+                          : 'bg-slate-950/70 border-slate-800/80 hover:border-slate-700'
+                      }`}
+                    >
+                      {/* Top Header */}
+                      <div className="space-y-1.5">
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className={`font-bold text-sm ${
+                                m.isCurrent
+                                  ? 'text-cyan-300'
+                                  : m.isLeap
+                                  ? 'text-amber-300'
+                                  : 'text-white'
+                              }`}>
+                                {m.monthName}
+                              </span>
+                              {m.isCurrent && (
+                                <span className="flex h-2 w-2 relative">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                </span>
+                              )}
+                            </div>
+                            <span className="text-[11px] text-slate-400">
+                              {m.totalDays === 30 ? 'Tháng Đủ (30 ngày)' : 'Tháng Thiếu (29 ngày)'}
+                            </span>
+                          </div>
+
+                          <div className="flex flex-col items-end gap-1 shrink-0">
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border ${
+                              m.isLeap
+                                ? 'bg-amber-950 text-amber-300 border-amber-500/40'
+                                : 'bg-slate-900 text-slate-300 border-slate-700'
+                            }`}>
+                              {m.isLeap ? 'Tháng Nhuận' : 'Chính Tháng'}
+                            </span>
+                            {m.isCurrent && (
+                              <span className="text-[9px] font-bold text-cyan-300 uppercase tracking-wider bg-cyan-950/90 px-2 py-0.5 rounded border border-cyan-500/40">
+                                Đang diễn ra
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Solar Datetime Timeline Container */}
+                        <div className="bg-slate-900/90 p-2.5 rounded-lg border border-slate-800 space-y-2 mt-2">
+                          {/* Solar Start */}
+                          <div className="space-y-0.5">
+                            <div className="flex items-center justify-between text-[11px] text-slate-400">
+                              <span className="flex items-center gap-1 font-medium text-slate-300">
+                                <Sun className="w-3 h-3 text-amber-400 shrink-0" />
+                                <span>Bắt đầu (Mùng 1):</span>
+                              </span>
+                              <span className="font-mono text-cyan-300 font-bold">{sInfo.timeHms}</span>
+                            </div>
+                            <div className="text-right font-mono text-[11px] text-slate-200">
+                              {sInfo.dateSlash} <span className="text-slate-400 text-[10px]">(Dương lịch)</span>
+                            </div>
+                          </div>
+
+                          <div className="border-t border-slate-800/80 my-1" />
+
+                          {/* Solar End */}
+                          <div className="space-y-0.5">
+                            <div className="flex items-center justify-between text-[11px] text-slate-400">
+                              <span className="flex items-center gap-1 font-medium text-slate-300">
+                                <Moon className="w-3 h-3 text-cyan-400 shrink-0" />
+                                <span>Kết thúc (Hết tháng):</span>
+                              </span>
+                              <span className="font-mono text-amber-300 font-bold">{eInfo.timeHms}</span>
+                            </div>
+                            <div className="text-right font-mono text-[11px] text-slate-200">
+                              {eInfo.dateSlash} <span className="text-slate-400 text-[10px]">(Dương lịch)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tiết Khí contained in month */}
+                      {m.terms && m.terms.length > 0 && (
+                        <div className="pt-1 text-[11px] border-t border-slate-800/70 space-y-1">
+                          <span className="text-[10px] text-slate-400 block font-medium">Tiết Khí trong tháng:</span>
+                          <div className="flex flex-wrap gap-1">
+                            {m.terms.map((t, tidx) => {
+                              const tTime = formatVNTimeDetails(t.exactDate);
+                              return (
+                                <span
+                                  key={tidx}
+                                  className={`px-2 py-0.5 rounded text-[10px] font-mono border ${
+                                    t.category === 'Tiết'
+                                      ? 'bg-amber-950/40 text-amber-300 border-amber-500/30'
+                                      : 'bg-cyan-950/40 text-cyan-300 border-cyan-500/30'
+                                  }`}
+                                  title={`${t.category} ${t.name}: ${tTime.fullString}`}
+                                >
+                                  {t.name} ({tTime.timeAndDate})
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
                       )}
                     </div>
+                  );
+                })}
+              </div>
+            ) : (
+              /* DETAILED TABLE VIEW */
+              <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/80">
+                <table className="w-full text-left text-xs border-collapse min-w-[700px]">
+                  <thead>
+                    <tr className="bg-slate-900 border-b border-slate-800 text-slate-300 text-[11px]">
+                      <th className="p-3 font-semibold">Tháng Âm Lịch</th>
+                      <th className="p-3 font-semibold">Bắt Đầu (Mùng 1 - Giờ & Ngày DL)</th>
+                      <th className="p-3 font-semibold">Kết Thúc (Hết Tháng - Giờ & Ngày DL)</th>
+                      <th className="p-3 font-semibold text-center">Độ Dài</th>
+                      <th className="p-3 font-semibold">Tiết Khí Trong Tháng</th>
+                      <th className="p-3 font-semibold text-center">Trạng Thái</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/60">
+                    {leapInfo.months.map((m, idx) => {
+                      const sInfo = formatVNTimeDetails(m.startDate);
+                      const eInfo = formatVNTimeDetails(m.endDate);
 
-                    {/* Day count */}
-                    <div className="flex items-center justify-between text-[11px] text-slate-400">
-                      <span>{m.totalDays} ngày</span>
-                      <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                        m.isLeap
-                          ? 'bg-amber-950 text-amber-300 border border-amber-500/30'
-                          : 'bg-slate-900 text-slate-400'
-                      }`}>
-                        {m.isLeap ? 'Nhuận' : 'Chính'}
-                      </span>
-                    </div>
+                      return (
+                        <tr
+                          key={idx}
+                          className={`transition-colors ${
+                            m.isCurrent
+                              ? 'bg-cyan-950/30 text-cyan-100 font-medium'
+                              : m.isLeap
+                              ? 'bg-amber-950/15 hover:bg-amber-950/25'
+                              : 'hover:bg-slate-900/60 text-slate-300'
+                          }`}
+                        >
+                          {/* Month Name */}
+                          <td className="p-3">
+                            <div className="flex items-center gap-2">
+                              <span className={`font-bold ${
+                                m.isCurrent
+                                  ? 'text-cyan-300'
+                                  : m.isLeap
+                                  ? 'text-amber-300'
+                                  : 'text-white'
+                              }`}>
+                                {m.monthName}
+                              </span>
+                              {m.isLeap && (
+                                <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-950 text-amber-300 border border-amber-500/40">
+                                  Nhuận
+                                </span>
+                              )}
+                            </div>
+                          </td>
 
-                    {/* Date range */}
-                    <div className="text-[10px] font-mono text-slate-400 truncate">
-                      {formatVietnamDateTime(m.startDate).split(' ')[0].slice(0, 5)} - {formatVietnamDateTime(m.endDate).split(' ')[0].slice(0, 5)}
-                    </div>
+                          {/* Start Solar */}
+                          <td className="p-3 font-mono">
+                            <div className="text-cyan-300 font-bold">{sInfo.timeHms}</div>
+                            <div className="text-slate-300 text-[11px]">{sInfo.dateSlash}</div>
+                          </td>
 
-                    {/* Current tag */}
-                    {m.isCurrent && (
-                      <div className="text-[9px] font-bold text-cyan-300 text-center uppercase tracking-wider bg-cyan-950/80 py-0.5 rounded border border-cyan-500/40 mt-1">
-                        Đang diễn ra
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                          {/* End Solar */}
+                          <td className="p-3 font-mono">
+                            <div className="text-amber-300 font-bold">{eInfo.timeHms}</div>
+                            <div className="text-slate-300 text-[11px]">{eInfo.dateSlash}</div>
+                          </td>
+
+                          {/* Length */}
+                          <td className="p-3 text-center font-mono">
+                            <span className={`px-2 py-0.5 rounded text-[11px] ${
+                              m.totalDays === 30
+                                ? 'bg-slate-900 text-slate-200 border border-slate-700'
+                                : 'bg-slate-900/60 text-slate-400'
+                            }`}>
+                              {m.totalDays} ngày ({m.totalDays === 30 ? 'Đủ' : 'Thiếu'})
+                            </span>
+                          </td>
+
+                          {/* Terms */}
+                          <td className="p-3">
+                            <div className="flex flex-wrap gap-1">
+                              {m.terms && m.terms.length > 0 ? (
+                                m.terms.map((t, tidx) => {
+                                  const tTime = formatVNTimeDetails(t.exactDate);
+                                  return (
+                                    <span
+                                      key={tidx}
+                                      className={`px-1.5 py-0.5 rounded text-[10px] font-mono border ${
+                                        t.category === 'Tiết'
+                                          ? 'bg-amber-950/40 text-amber-300 border-amber-500/30'
+                                          : 'bg-cyan-950/40 text-cyan-300 border-cyan-500/30'
+                                      }`}
+                                    >
+                                      {t.name} ({tTime.timeAndDate})
+                                    </span>
+                                  );
+                                })
+                              ) : (
+                                <span className="text-slate-500 text-[11px] italic">Vô trung khí</span>
+                              )}
+                            </div>
+                          </td>
+
+                          {/* Status */}
+                          <td className="p-3 text-center">
+                            {m.isCurrent ? (
+                              <span className="text-[10px] font-bold text-cyan-300 uppercase tracking-wider bg-cyan-950 px-2 py-0.5 rounded-full border border-cyan-500/40 inline-flex items-center gap-1">
+                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                                Đang diễn ra
+                              </span>
+                            ) : (
+                              <span className="text-[11px] text-slate-500">-</span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         </div>
       )}

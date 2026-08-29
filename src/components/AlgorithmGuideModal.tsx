@@ -357,6 +357,12 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
                   <strong className="text-amber-300">• Tháng Đủ (30 ngày) & Tháng Thiếu (29 ngày):</strong> Xác định hoàn toàn tự động bằng khoảng cách thời gian giữa 2 Điểm Sóc liên tiếp (chu kỳ tuần trăng trung bình là 29.53059 ngày).
                 </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-cyan-500/30 bg-cyan-950/20 space-y-1">
+                  <strong className="text-cyan-300 block">• Tọa Độ Thời Gian Dương Lịch Của Từng Tháng Âm Lịch:</strong>
+                  <p className="text-slate-300">
+                    Mỗi tháng trong 12 hoặc 13 tháng của năm Âm lịch đều được định vị chính xác từ thời điểm Điểm Sóc khởi đầu (Mùng 1 - Giờ:Phút:Giây, Ngày/Tháng/Năm Dương lịch) đến Điểm Sóc kế tiếp kết thúc tháng, kèm danh sách các Tiết Khí diễn ra trong tháng.
+                  </p>
+                </div>
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-purple-500/30 bg-purple-950/20 space-y-1">
                   <strong className="text-purple-300 block">• Thuật Toán Xác Định Tháng Nhuận Âm Lịch (Vô Trung Khí Pháp):</strong>
                   <p className="text-slate-300">

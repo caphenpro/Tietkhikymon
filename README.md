@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.16.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.16.1-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,24 +10,21 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.16.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn*
+### 🚀 **Phiên bản hiện tại: `v2.16.1`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch*
 
-- 🌙 **Chuyên Mục Phân Tích Tháng Nhuận & Chu Kỳ Năm Âm Lịch**:
-  - Tích hợp thẻ chuyên biệt phân tích chi tiết tình trạng tháng nhuận trong năm âm lịch tra cứu.
-  - Phân định rõ ràng **Năm Nhuận (13 Tháng - 384 Ngày)** hoặc **Năm Thường (12 Tháng - 354 Ngày)**.
-  - Hiển thị đầy đủ thông tin tháng nhuận: Tên tháng (*Tháng 6 Nhuận*), ngày bắt đầu/kết thúc Dương lịch, số ngày (29/30 ngày), trạng thái (Đang diễn ra, Sắp tới, Đã qua).
-- 🗓️ **Bảng Toàn Bộ 12/13 Tháng Trong Năm Âm Lịch**:
-  - Trực quan hóa danh sách toàn bộ các tháng của năm âm lịch với chỉ dấu tháng hiện tại và tháng nhuận.
-- 🔭 **Thuật Toán Thiên Văn Vô Trung Khí Pháp**:
-  - Thuyết minh và áp dụng chuẩn xác quy tắc tháng không chứa Trung Khí và chu kỳ Meton 19 năm.
-- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Section 5 trong `AlgorithmGuideModal.tsx`.
+- 🕒 **Tọa Độ Ngày Giờ Dương Lịch Chi Tiết Của Từng Tháng**:
+  - Bổ sung chính xác mốc thời gian Dương Lịch (`HH:mm:ss`, `DD/MM/YYYY` UTC+7) bắt đầu từ Mùng 1 (Điểm Sóc) đến khi kết thúc tháng (Điểm Sóc tiếp theo) cho toàn bộ 12 hoặc 13 tháng âm lịch.
+- 🎛️ **Bộ Chuyển Đổi Giao Diện Thẻ & Bảng Linh Hoạt**:
+  - Hỗ trợ xem dạng Thẻ trực quan (Card Grid) hoặc Dạng Bảng so sánh đa cột (Table View).
+  - Tích hợp thông tin Tiết Khí và giờ phút tương ứng diễn ra trong từng tháng âm lịch.
+- 🌙 **Nâng Cấp Chi Tiết Tháng Nhuận**: Hiển thị chính xác giờ phút giây bắt đầu và kết thúc của tháng nhuận.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.15.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.16.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 
