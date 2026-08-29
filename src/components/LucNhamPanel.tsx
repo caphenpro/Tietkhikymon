@@ -27,12 +27,14 @@ interface LucNhamPanelProps {
   result: ComprehensiveResult;
   currentDate: Date;
   onOpenAlgorithmModal?: () => void;
+  onSwitchToKyMon?: () => void;
 }
 
 export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
   result,
   currentDate,
   onOpenAlgorithmModal,
+  onSwitchToKyMon,
 }) => {
   const [selectedPalaceChi, setSelectedPalaceChi] = useState<string>('Tý');
   const [activeAspect, setActiveAspect] = useState<'all' | 'cautai' | 'honnhan' | 'quanvan' | 'benhtat' | 'kientung' | 'xuathanh'>('all');
@@ -98,6 +100,40 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
 
   return (
     <div className="space-y-6">
+      {/* TOP TAB SWITCHER: KỲ MÔN ĐỘN GIÁP vs ĐẠI LỤC NHÂM */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-2.5 sm:p-3.5 rounded-2xl shadow-lg">
+        <div className="flex items-center gap-2">
+          {onSwitchToKyMon && (
+            <button
+              id="btn-lucnham-switch-kymon"
+              onClick={onSwitchToKyMon}
+              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all"
+            >
+              <span>🔮</span>
+              <span>Kỳ Môn Độn Giáp</span>
+            </button>
+          )}
+
+          <button
+            id="btn-lucnham-switch-active"
+            className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 ring-2 ring-indigo-400/40"
+          >
+            <span>🧭</span>
+            <span>Đại Lục Nhâm</span>
+          </button>
+        </div>
+
+        {onOpenAlgorithmModal && (
+          <button
+            onClick={onOpenAlgorithmModal}
+            className="px-3.5 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 self-end sm:self-auto transition-colors"
+          >
+            <HelpCircle className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Thuyết Minh Cửu Tông Môn</span>
+          </button>
+        )}
+      </div>
+
       {/* 1. HEADER BANNER & THỜI ĐIỂM CHIÊM QUẺ */}
       <div className="bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-5 shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>

@@ -11,18 +11,41 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.11.0';
+export const APP_VERSION = '2.12.0';
 export const APP_RELEASE_DATE = '2026-08-28';
-export const APP_CODENAME = 'Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư';
+export const APP_CODENAME = 'Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.12.0',
+    releaseDate: '2026-08-28',
+    codename: 'Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal',
+    tagline: 'Tái cấu trúc toàn diện giao diện UX/UI: Gom gọn Header Thiên Văn thời gian thực, Bàn cờ 9 Cung Ma trận Lạc Thư chuẩn 3x3 với cơ chế Click-to-Modal chi tiết và Gom nhóm tiện ích trực quan.',
+    isLatest: true,
+    highlights: [
+      'Giao diện Trang Chính (Main Workspace) tập trung, thoáng đãng, không bị phân tán hay rối mắt.',
+      'Gom gọn thời gian thực (Live clock), Âm/Dương lịch, Can Chi Tứ Trụ và Tiết khí vào dải thông tin trên cùng (Top Header strip).',
+      'Thanh Tab Switcher trực tiếp trên bàn cờ cho phép chuyển đổi tức thì giữa [ Kỳ Môn Độn Giáp ] và [ Đại Lục Nhâm ].',
+      'Bàn cờ 9 Cung Kỳ Môn dạng Lưới Grid 3x3 chuẩn Ma trận Lạc Thư (Tốn-Ly-Khôn, Chấn-Trung-Đoài, Cấn-Khảm-Càn) với thẻ tóm tắt thông số sạch sẽ.',
+      'Cơ chế Click-to-Modal / Drawer tương tác: Nhấp bất kỳ ô cung nào mở Modal chi tiết toàn diện (Thập Can Khắc Ứng, Bát Môn, Cửu Tinh, Bát Thần, Cách Cục) mà không làm nhảy giao diện.',
+      'Gom nhóm hệ thống menu điều hướng theo các cụm chức năng (Bàn Quẻ Tam Thức, Dự Trắc & Phân Tích, Lịch & Tiết Khí, Tri Thức).',
+    ],
+    added: [
+      'Component `PalaceDetailModal.tsx` phục vụ cơ chế Click-to-Modal / Drawer chi tiết cung trên cả PC và thiết bị di động.',
+      'Dải thông tin thiên văn trực quan đa năng (Cosmic Header Strip) tích hợp Live clock, Âm Dương Lịch và Bát Tự Tứ Trụ.',
+    ],
+    improved: [
+      'Tái cấu trúc `KyMonCompleteBoard.tsx` sang lưới 3x3 cân đối, tối ưu hóa không gian hiển thị và giảm tải độ phức tạp thị giác.',
+      'Đồng bộ Tab Switcher hai chiều giữa Kỳ Môn Độn Giáp và Đại Lục Nhâm.',
+    ],
+  },
   {
     version: '2.11.0',
     releaseDate: '2026-08-28',
     codename: 'Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư',
     tagline: 'Bổ sung chuyên mục độc lập Đại Lục Nhâm (Tam Thức chi nhất) hoàn chỉnh với Thiên Bàn, Địa Bàn, Tứ Khoa, Tam Truyền (Cửu Tông Môn), Thập Nhị Thần Tướng và Dự Trắc 6 Chuyên Đề Đời Sống.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung Tab riêng biệt "Đại Lục Nhâm" trên thanh điều hướng chính, kế thừa đầy đủ chuẩn mực thuật số cổ truyền.',
       'Khởi Nguyệt Tướng chuẩn xác theo 24 Tiết khí dựa trên Kinh độ Mặt Trời (Solar Longitude) thiên văn.',

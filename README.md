@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.11.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.12.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,20 +10,16 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.11.0`** *(Phát hành: 28/08/2026)*
-**Tên mã:** *Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư*
+### 🚀 **Phiên bản hiện tại: `v2.12.0`** *(Phát hành: 28/08/2026)*
+**Tên mã:** *Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal*
 
-- 🧭 **Chuyên Mục Độc Lập Đại Lục Nhâm (`LucNhamPanel.tsx`)**:
-  - Bổ sung Tab chuyên biệt **Đại Lục Nhâm** trên thanh điều hướng chính, song hành cùng Kỳ Môn Độn Giáp để hợp nhất Cổ Tam Thức (Thiên Kỳ Môn - Địa Lục Nhâm - Nhân Thái Ất).
-  - **Khởi Nguyệt Tướng Chuẩn Xác**: Tính toán Nguyệt Tướng theo 24 Tiết khí dựa trên Kinh độ Mặt Trời (Solar Longitude) thiên văn.
-  - **Lập Địa Bàn & Thiên Bàn**: Tự động xoay chuyển 12 Cung Thiên bàn đè lên Địa bàn theo Chi của giờ chiêm quẻ.
-  - **An Tứ Khoa (Bốn Khoa)**: Can Thượng Thần (Khoa 1), Can Âm (Khoa 2), Chi Thượng Thần (Khoa 3), Chi Âm (Khoa 4) phân rõ chủ thể (ta) và khách thể (người/hoàn cảnh/nhà cửa).
-  - **Khởi Tam Truyền Chuẩn Cửu Tông Môn**: Tự động nhận diện và phát khởi Sơ Truyền, Trung Truyền, Mạt Truyền theo các khóa: *Nguyên Thủ*, *Trùng Thẩm*, *Tỷ Dụng*, *Thiệp Hại*, *Dao Khắc*, *Mão Tinh*, *Biệt Trạch / Bát Chuyên*, *Phục Ngâm & Phản Ngâm*.
-  - **Thập Nhị Thần Tướng**: An 12 Thần Tướng (*Quý Nhân, Đằng Xà, Chu Tước, Lục Hợp, Câu Trận, Thanh Long, Thiên Không, Bạch Hổ, Thái Thường, Huyền Vũ, Thái Âm, Thiên Hậu*) theo quy tắc *Đán Quý / Dạ Quý* và chiều *Thuận / Nghịch hành*.
-  - **Dự Trắc 6 Chuyên Đề Đời Sống**: Cầu Tài & Giao Thương, Tình Duyên & Hôn Nhân, Công Danh & Sự Nghiệp, Sức Khỏe & Tật Bệnh, Tranh Chấp & Pháp Lý, Xuất Hành & Cầu Vận.
-- ⭐ **Đánh Giá Độ Tốt/Xấu Thời Khắc (Cát / Hung) Thang Điểm 5 Sao**: Tích hợp công cụ `TimeEvaluationCard` phân tích đa tầng năng lượng của một mốc thời gian cụ thể.
-- 📖 **Cẩm Nang Tri Thức Toàn Cảnh (`CosmicKnowledgeGuide.tsx`)**: Đứng ở vị trí ưu tiên đầu tiên của thanh điều hướng.
-- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 13 trong `AlgorithmGuideModal.tsx` giải thích chi tiết 6 bước lập quẻ Đại Lục Nhâm theo chuẩn cổ bản.
+- 🖥️ **Tái Cấu Trúc UX/UI Toàn Diện - Không Rối Mắt**:
+  - **Dải Header Thiên Văn Hợp Nhất**: Gom gọn Live clock thời gian thực, Lịch Âm Dương, Can Chi Tứ Trụ và Tiết khí lên thanh trên cùng.
+  - **Tab Switcher Trực Tiếp Trên Bàn Cờ**: Chuyển đổi nhanh chóng giữa `[ 🔮 Kỳ Môn Độn Giáp ]` và `[ 🧭 Đại Lục Nhâm ]` ở khu vực làm việc chính.
+  - **Ma Trận 9 Cung Lưới Grid 3x3 Lạc Thư**: Bố cục Tốn 4 - Ly 9 - Khôn 2; Chấn 3 - Trung 5 - Đoài 7; Cấn 8 - Khảm 1 - Càn 6 với thẻ tóm tắt thanh thoát.
+  - **Cơ Chế Click-to-Modal / Drawer (`PalaceDetailModal.tsx`)**: Nhấp vào bất kỳ ô cung nào để mở bảng luận giải chi tiết toàn diện (Thập Can Khắc Ứng, Môn Cung Sinh Khắc, Cửu Tinh, Bát Thần, Cách Cục, Thần Sát) mà không làm xáo trộn bố cục trang.
+  - **Gom Nhóm Menu Điều Hướng**: Nhóm các tiện ích khoa học theo 4 nhóm (*Bàn Quẻ Tam Thức*, *Dự Trắc & Phân Tích*, *Lịch & Tiết Khí*, *Tri Thức*).
+- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 14 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 

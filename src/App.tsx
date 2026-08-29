@@ -20,7 +20,7 @@ import { APP_VERSION, APP_RELEASE_DATE } from './version';
 export default function App() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
   const [isLive, setIsLive] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<string>('overview');
+  const [activeTab, setActiveTab] = useState<string>('kymon-chart');
 
   // Modals state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
@@ -75,18 +75,12 @@ export default function App() {
         onOpenChangelog={() => setIsChangelogOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        result={result}
+        onDateChange={(d) => setCurrentDate(d)}
       />
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Time Control Bar */}
-        <TimeInputControl
-          currentDate={currentDate}
-          onDateChange={(d) => setCurrentDate(d)}
-          isLive={isLive}
-          onSetLive={(live) => setIsLive(live)}
-        />
-
         {/* Tab Content */}
         {activeTab === 'guide' && (
           <div className="space-y-6">
@@ -122,6 +116,7 @@ export default function App() {
                currentKyMon={result.kyMon}
                currentBatTu={result.batTu}
                onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+               onSwitchToLucNham={() => setActiveTab('luc-nham')}
              />
            </div>
          )}
@@ -142,6 +137,7 @@ export default function App() {
                result={result}
                currentDate={currentDate}
                onOpenAlgorithmModal={() => setIsGuideOpen(true)}
+               onSwitchToKyMon={() => setActiveTab('kymon-chart')}
              />
            </div>
          )}

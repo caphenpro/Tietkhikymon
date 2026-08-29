@@ -55,6 +55,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'aspects', title: '11. 6 Phương Diện Đời Sống Cụ Thể', icon: Sparkles },
     { id: 'evaluation', title: '12. Thuật Toán Đánh Giá Cát/Hung 5 Sao', icon: Award },
     { id: 'luc-nham', title: '13. Bí Tàng Đại Lục Nhâm Độn Đại Toàn', icon: Compass },
+    { id: 'ux-ui', title: '14. Kiến Trúc Ma Trận Lạc Thư & Click-to-Modal', icon: Layers },
   ];
 
   return (
@@ -761,6 +762,62 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                   </div>
                   <p className="text-slate-300">
                     Xác định 2 cung Không Vong theo Lục Tuần Giáp, tra Lộc Thần, Dịch Mã, Dương Nhận, Thái Tuế. Kết hợp Lục Thân (Huynh Đệ, Tử Tôn, Thê Tài, Quan Quỷ, Phụ Mẫu) để dự trắc chuẩn xác 6 chuyên đề: Cầu Tài, Hôn Nhân, Quan Vận, Bệnh Tật, Kiện Tụng, Xuất Hành.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* MỤC 14: KIẾN TRÚC GIAO DIỆN MA TRẬN LẠC THƯ & CLICK-TO-MODAL */}
+          {(activeSection === 'all' || activeSection === 'ux-ui') && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/70 border border-amber-500/30 space-y-4">
+              <div className="flex items-center gap-2.5 text-amber-300 font-bold text-sm sm:text-base border-b border-amber-500/20 pb-2">
+                <Layers className="w-5 h-5 text-amber-400" />
+                <span>14. Kiến Trúc UX/UI Ma Trận Lạc Thư 3x3 & Tương Tác Click-to-Modal (v2.12.0)</span>
+              </div>
+
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Phiên bản v2.12.0 tối ưu hóa toàn diện trải nghiệm người dùng với mô hình kiến trúc giao diện hiện đại, giữ nguyên 100% logic thuật toán cổ truyền:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-amber-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px]">1</span>
+                    <span>Dải Header Thiên Văn Hợp Nhất</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Gom gọn đồng hồ thời gian thực (Live clock), Lịch Âm Dương, Can Chi Tứ Trụ (Năm, Tháng, Ngày, Giờ) và Tiết Khí vào một dải băng thông tin trên cùng, giải phóng toàn bộ không gian làm việc chính.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px]">2</span>
+                    <span>Tab Switcher Tam Thức Trực Tiếp</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Hai nút chuyển đổi <code>[ Kỳ Môn Độn Giáp ]</code> và <code>[ Đại Lục Nhâm ]</code> đặt ngay góc trên bàn cờ cho phép chiêm nghiệm và so sánh đồng thời 2 môn bí truyền tại cùng một thời khắc.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px]">3</span>
+                    <span>Lưới Grid 3x3 Chuẩn Ma Trận Lạc Thư</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Bố trí 9 cung theo phương vị chuẩn: Hàng trên (Tốn 4 - Ly 9 - Khôn 2), Hàng giữa (Chấn 3 - Trung 5 - Đoài 7), Hàng dưới (Cấn 8 - Khảm 1 - Càn 6). Mỗi ô hiển thị súc tích Thần - Sao - Cửa - Can và các Thần sát nổi bật.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <div className="font-bold text-cyan-300 flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[10px]">4</span>
+                    <span>Cơ Chế Click-to-Modal / Drawer Toàn Diện</span>
+                  </div>
+                  <p className="text-slate-300">
+                    Nhấp vào bất kỳ ô cung nào để mở Modal chi tiết (Thập Can Khắc Ứng, Môn Cung Sinh Khắc, 4 Tầng Bàn, Cách Cục Cát Hung, Thần Sát) trên nền mờ, không làm xáo trộn hay kéo dãn trang chính.
                   </p>
                 </div>
               </div>

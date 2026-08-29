@@ -6,6 +6,29 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.12.0]] - 2026-08-28
+### Codename: *Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal*
+
+#### ✨ Tính Năng Mới (Added)
+- **Cơ Chế Click-to-Modal / Drawer Toàn Diện (`PalaceDetailModal.tsx`)**:
+  - Nhấp vào bất kỳ ô Cung nào trong ma trận 9 cung để mở cửa sổ Modal / Drawer chi tiết mà không làm biến dạng hay co kéo layout trang chính.
+  - Hiển thị đầy đủ 4 tầng bàn (Thần, Tinh, Môn, Nghi), Thập Can Khắc Ứng, Môn Cung Sinh Khắc, Cách Cục Cát Hung, Thần Sát và Khuyến Nghị Ứng Dụng.
+  - Hỗ trợ chuyển đổi qua lại giữa 9 cung ngay bên trong Modal, đóng bằng phím ESC hoặc nhấp ra ngoài.
+- **Dải Thông Tin Thiên Văn Hợp Nhất (Cosmic Header Strip)**:
+  - Tích hợp đồng hồ thời gian thực (Live clock), Lịch Âm Dương, Can Chi Tứ Trụ (Năm, Tháng, Ngày, Giờ) và Tiết Khí ngay trên thanh Header trên cùng.
+- **Thanh Tab Switcher Trực Tiếp Trên Bàn Cờ**:
+  - Đặt 2 nút chuyển đổi `[ 🔮 Kỳ Môn Độn Giáp ]` và `[ 🧭 Đại Lục Nhâm ]` ngay tại khu vực làm việc chính để so sánh trực quan hai môn Tam Thức.
+
+#### ⚡ Cải Tiến (Improved)
+- **Tái Cấu Trúc Bàn Cờ 9 Cung Lưới Grid 3x3 (`KyMonCompleteBoard.tsx`)**:
+  - Bố cục Ma trận Lạc Thư chuẩn xác: Hàng 1 (Tốn 4 - Ly 9 - Khôn 2), Hàng 2 (Chấn 3 - Trung 5 - Đoài 7), Hàng 3 (Cấn 8 - Khảm 1 - Càn 6).
+  - Tối giản các ô thẻ hiển thị súc tích, giữ nguyên 100% dữ liệu nguồn và logic an quẻ thiên văn.
+- **Gom Nhóm Hệ Thống Menu Điều Hướng**:
+  - Phân loại rõ ràng 4 cụm: *Bàn Quẻ Tam Thức*, *Dự Trắc & Phân Tích*, *Lịch & Tiết Khí*, *Tri Thức*.
+- **Đồng Bộ Tài Liệu**: Bổ sung Mục 14 vào `AlgorithmGuideModal.tsx`.
+
+---
+
 ## [[2.11.0]] - 2026-08-28
 ### Codename: *Bí Tàng Đại Lục Nhâm Độn Giáp Toàn Thư*
 
