@@ -28,6 +28,7 @@ import {
   CheckCircle2,
   HelpCircle,
   Award,
+  Bookmark,
 } from 'lucide-react';
 import { APP_VERSION } from '../version';
 
@@ -57,6 +58,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'luc-nham', title: '13. Bí Tàng Đại Lục Nhâm Độn Đại Toàn', icon: Compass },
     { id: 'ux-ui', title: '14. Kiến Trúc Ma Trận Lạc Thư & Click-to-Modal', icon: Layers },
     { id: 'home-guide', title: '15. Cẩm Nang Tri Thức Trang Chủ & Toàn Thư Lục Nhâm', icon: BookOpen },
+    { id: 'glossary', title: '16. Từ Điển Thuật Ngữ Kỳ Môn, Lục Nhâm & Thiên Văn', icon: Bookmark },
   ];
 
   return (
@@ -863,6 +865,43 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                   <strong className="text-emerald-300 block font-bold">4. Thập Nhị Thần Tướng & Đán/Dạ Quý</strong>
                   <p className="text-slate-400">
                     An 12 Thần Tướng theo bài thơ Đán Quý Nhân (ngày) và Dạ Quý Nhân (đêm), cùng quy tắc Thuận/Nghịch hành tùy theo cung Địa bàn Quý Nhân ngự.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Section 16: Glossary Section */}
+          {(activeSection === 'all' || activeSection === 'glossary') && (
+            <div id="glossary" className="p-5 rounded-2xl bg-slate-950 border border-cyan-500/30 space-y-4">
+              <h3 className="text-base font-bold text-cyan-300 flex items-center gap-2">
+                <Bookmark className="w-5 h-5 text-cyan-400" />
+                <span>16. Từ Điển Thuật Ngữ Kỳ Môn, Lục Nhâm & Thiên Văn (GlossarySection)</span>
+              </h3>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Nhằm hỗ trợ người dùng mới dễ dàng tiếp cận và tra cứu các thuật ngữ chuyên sâu, ứng dụng tích hợp thành phần <strong>Từ Điển Thuật Ngữ (GlossarySection)</strong> ngay trên Trang Chủ với các tiêu chuẩn học thuật:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold">🔮 Kỳ Môn Độn Giáp</strong>
+                  <p className="text-slate-400">
+                    Trực Phù, Trực Sử, Tam Kỳ (Ất-Bính-Đinh), Lục Nghi, Bát Môn, Cửu Tinh, Bát Thần, Siêu Thần Tiếp Khí, Phục Ngâm, Phản Ngâm, Kích Hình, Nhập Mộ.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold">🧭 Đại Lục Nhâm</strong>
+                  <p className="text-slate-400">
+                    Nguyệt Tướng (12 Tướng Thái Dương), Tứ Khoa (Can/Chi Thượng Thần & Âm Thần), Tam Truyền (Sơ-Trung-Mạt), Cửu Tông Môn, Đán/Dạ Quý, Thuận/Nghịch hành.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold">☀️ Thiên Văn & Lạc Thư</strong>
+                  <p className="text-slate-400">
+                    Điểm Sóc thiên văn (New Moon), 24 Tiết Khí (Solar Longitude 15°), Cửu Cung Lạc Thư (tổng 15), Không Vong, Dịch Mã.
                   </p>
                 </div>
               </div>

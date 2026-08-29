@@ -11,18 +11,38 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.13.0';
+export const APP_VERSION = '2.14.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm';
+export const APP_CODENAME = 'Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.14.0',
+    releaseDate: '2026-08-29',
+    codename: 'Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm',
+    tagline: 'Bổ sung thành phần GlossarySection tra cứu thuật ngữ chuyên sâu Kỳ Môn Độn Giáp, Đại Lục Nhâm và Thiên Văn Hoàng Đạo ngay trên Trang Chủ, giải thích trực quan, dễ hiểu cho người mới.',
+    isLatest: true,
+    highlights: [
+      'Tạo mới thành phần GlossarySection trên Trang Chủ CosmicKnowledgeGuide với hệ thống phân loại theo 3 chuyên mục lớn (Kỳ Môn, Lục Nhâm, Thiên Văn/Lạc Thư).',
+      'Định nghĩa đầy đủ, ngắn gọn kèm ứng dụng thực tế và lưu ý cho các thuật ngữ trọng yếu: Trực Phù, Trực Sử, Tam Kỳ, Lục Nghi, Bát Môn, Cửu Tinh, Bát Thần, Siêu Thần Tiếp Khí, Phục/Phản Ngâm, Kích Hình, Nguyệt Tướng, Tứ Khoa, Tam Truyền, Cửu Tông Môn, Đán/Dạ Quý, Thuận/Nghịch hành, Điểm Sóc, 24 Tiết Khí, Ma Trận Lạc Thư.',
+      'Bộ lọc thời gian thực, tìm kiếm tức thì theo từ khóa, thẻ tag phân loại (#Bát Thần, #Tam Truyền, #Điểm Sóc...).',
+      'Đồng bộ Mục 16 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Thành phần GlossarySection (Từ Điển Thuật Ngữ) tích hợp tra cứu và lọc theo danh mục / từ khóa.',
+      'Mục 16 trong Thuyết Minh Thuật Toán & Nguyên Lý Hệ Thống.',
+    ],
+    improved: [
+      'Tích hợp tab "📖 Tra Cứu Thuật Ngữ" và nút truy cập nhanh trên Hero banner của Trang Chủ.',
+    ],
+  },
   {
     version: '2.13.0',
     releaseDate: '2026-08-29',
     codename: 'Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm',
     tagline: 'Chuyển Cẩm Nang Tri Thức lên vị trí Trang Chủ mặc định khi mở ứng dụng, bổ sung kho tàng kiến thức Đại Lục Nhâm chuyên sâu, cập nhật bộ nhận diện Logo & Favicon thiên văn.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Thiết lập Cẩm Nang Tri Thức làm Trang Chủ mặc định khi mở ứng dụng, giúp người dùng nắm bắt nền tảng tri thức thiên văn và tam thức trước khi chiêm quẻ.',
       'Bổ sung toàn diện kiến thức Đại Lục Nhâm vào Cẩm Nang Tri Thức: Thập Nhị Nguyệt Tướng, An Tứ Khoa, Cửu Tông Môn Khởi Tam Truyền, Thập Nhị Thần Tướng Đán/Dạ Quý Thuận Nghịch, và Ứng Dụng 6 Chuyên Đề Đời Sống.',

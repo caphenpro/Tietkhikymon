@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.13.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.14.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,22 +10,21 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.13.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm*
+### 🚀 **Phiên bản hiện tại: `v2.14.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm*
 
-- 📚 **Cẩm Nang Tri Thức Làm Trang Chủ Mặc Định**:
-  - Mở trang chủ lập tức tiếp cận Cẩm Nang Tri Thức Toàn Cảnh (Bát Trạch, Cửu Tinh, 24 Tiết Khí, Điểm Sóc, Kỳ Môn Độn Giáp, Đại Lục Nhâm).
-- 🧭 **Bổ Sung Toàn Thư Kiến Thức Đại Lục Nhâm**:
-  - Tích hợp chuyên mục Đại Lục Nhâm: Thập Nhị Nguyệt Tướng (Thái Dương), An Tứ Khoa (Chủ/Khách), Cửu Tông Môn Khởi Tam Truyền, Thập Nhị Thần Tướng (Đán/Dạ Quý Thuận Nghịch), và Ứng Dụng 6 Chuyên Đề Đời Sống.
-- 🎨 **Cập Nhật Bộ Nhận Diện Logo & Favicon**:
-  - Logo Thiên Văn hợp nhất mới hiển thị trên Header, Favicon trình duyệt và Thẻ Open Graph chia sẻ mạng xã hội.
-- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 15 trong `AlgorithmGuideModal.tsx`.
+- 📖 **Thành Phần Tra Cứu Thuật Ngữ `GlossarySection`**:
+  - Tra cứu nhanh, giải nghĩa cô đọng và dễ hiểu các khái niệm chuyên sâu trong **Kỳ Môn Độn Giáp**, **Đại Lục Nhâm** và **Thiên Văn & Lạc Thư**.
+  - Tích hợp tìm kiếm tức thời, phân loại danh mục, thẻ hashtag và ví dụ ứng dụng trong chiêm đoán.
+- 🎯 **Tích Hợp Trực Tiếp Vào Trang Chủ**:
+  - Truy cập ngay qua tab `[ 📖 Tra Cứu Thuật Ngữ ]` hoặc nút thao tác nhanh trên Hero banner của Trang Chủ.
+- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Bổ sung Mục 16 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.12.0`** *(Phát hành: 28/08/2026)*
+### 📦 **Phiên bản trước: `v2.13.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

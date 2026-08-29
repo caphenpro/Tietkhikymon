@@ -6,6 +6,23 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.14.0]] - 2026-08-29
+### Codename: *Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm*
+
+#### ✨ Tính Năng Mới (Added)
+- **Thành Phần Tra Cứu Thuật Ngữ `GlossarySection` (`/src/components/GlossarySection.tsx`)**:
+  - Tích hợp từ điển thuật ngữ chuyên sâu bao quát cả 3 môn thuật số: **Kỳ Môn Độn Giáp**, **Đại Lục Nhâm**, và **Thiên Văn & Lạc Thư**.
+  - Giải nghĩa cô đọng, dễ hiểu cho người mới; nêu rõ ứng dụng trong chiêm đoán quẻ và các lưu ý then chốt.
+  - Hỗ trợ tìm kiếm tức thì theo tên thuật ngữ, chữ Hán, định nghĩa, thẻ hashtag hoặc nội dung ứng dụng.
+  - Phân loại danh mục tab trực quan: Tất Cả, Kỳ Môn Độn Giáp, Đại Lục Nhâm, Thiên Văn & Lạc Thư kèm bộ đếm số lượng thuật ngữ thời gian thực.
+- **Tích Hợp Vào Trang Chủ `CosmicKnowledgeGuide`**:
+  - Thêm tab bộ lọc `[ 📖 Tra Cứu Thuật Ngữ ]` trên thanh phân loại.
+  - Bổ sung nút truy cập nhanh trên Hero banner của Trang Chủ để người dùng tra cứu nhanh chóng.
+- **Đồng Bộ Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`)**:
+  - Bổ sung **Mục 16** thuyết minh chi tiết về kiến trúc Từ Điển Thuật Ngữ.
+
+---
+
 ## [[2.13.0]] - 2026-08-29
 ### Codename: *Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm*
 
