@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.16.1-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.17.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,21 +10,23 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.16.1`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch*
+### 🚀 **Phiên bản hiện tại: `v2.17.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí*
 
-- 🕒 **Tọa Độ Ngày Giờ Dương Lịch Chi Tiết Của Từng Tháng**:
-  - Bổ sung chính xác mốc thời gian Dương Lịch (`HH:mm:ss`, `DD/MM/YYYY` UTC+7) bắt đầu từ Mùng 1 (Điểm Sóc) đến khi kết thúc tháng (Điểm Sóc tiếp theo) cho toàn bộ 12 hoặc 13 tháng âm lịch.
-- 🎛️ **Bộ Chuyển Đổi Giao Diện Thẻ & Bảng Linh Hoạt**:
-  - Hỗ trợ xem dạng Thẻ trực quan (Card Grid) hoặc Dạng Bảng so sánh đa cột (Table View).
-  - Tích hợp thông tin Tiết Khí và giờ phút tương ứng diễn ra trong từng tháng âm lịch.
-- 🌙 **Nâng Cấp Chi Tiết Tháng Nhuận**: Hiển thị chính xác giờ phút giây bắt đầu và kết thúc của tháng nhuận.
+- ❄️ **Mốc Cứng Đông Chí = Tháng 11 Âm Lịch**:
+  - Tháng âm lịch (giữa 2 ngày Sóc liên tiếp) chứa thời khắc Đông Chí (270°) luôn được **gán cứng = Tháng 11 Âm Lịch**.
+- 🧮 **Đếm Số Tháng Giữa 2 Lần Đông Chí Liên Tiếp (12 hay 13 tháng)**:
+  - Nếu khoảng cách có 13 tháng: Xác định chu kỳ có tháng nhuận, tự động quét tìm tháng **Vô Trung Khí** đầu tiên để đánh dấu làm **Tháng Nhuận**.
+- 🔄 **Lan Tỏa Số Thứ Tự Tháng Sang Hai Phía**:
+  - Từ mốc Tháng 11 tiến lên Tháng 12, Tháng Giêng, Tháng 2... và lùi về Tháng 10, Tháng 9...
+  - Xác lập trọn vẹn 12 hoặc 13 tháng của Năm Âm Lịch Can Chi (Tháng 1 đến Tháng 12).
+- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật toàn diện Mục 5 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.16.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.16.1`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

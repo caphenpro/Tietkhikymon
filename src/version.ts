@@ -11,18 +11,41 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.16.1';
+export const APP_VERSION = '2.17.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch';
+export const APP_CODENAME = 'Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.17.0',
+    releaseDate: '2026-08-29',
+    codename: 'Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí',
+    tagline: 'Áp dụng quy tắc thiên văn cổ điển: Gán cứng tháng chứa Đông Chí = Tháng 11, đếm số tháng giữa 2 lần Đông Chí liên tiếp để xác định năm 13 tháng, tìm tháng Vô Trung Khí làm Tháng Nhuận và lan tỏa số thứ tự tháng sang hai phía.',
+    isLatest: true,
+    highlights: [
+      'Gán cứng tháng âm lịch (khoảng giữa 2 điểm Sóc) chứa thời khắc Đông Chí (270°) cố định là Tháng 11 Âm Lịch.',
+      'Đếm số tháng giữa 2 điểm Đông Chí liên tiếp của năm trước và năm đang xét (12 tháng = năm thường, 13 tháng = năm nhuận).',
+      'Xác định tháng Vô Trung Khí đầu tiên giữa 2 lần Đông Chí làm Tháng Nhuận lặp lại số hiệu của tháng liền trước.',
+      'Lan tỏa số thứ tự các tháng từ mốc Tháng 11 sang hai phía: tiến đến Tháng 12, Tháng Giêng, Tháng 2... và lùi về Tháng 10, Tháng 9...',
+      'Xác lập chu kỳ trọn vẹn của Năm Âm Lịch (Can Chi) từ Tháng 1 (Giêng) đến Tháng 12 (Chạp) gồm đủ 12 hoặc 13 tháng.',
+      'Đồng bộ hóa toàn diện Mục 5 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Thuật toán gán cứng mốc Đông Chí = Tháng 11 và lan tỏa hai phía trong lunarCalendar.ts.',
+      'Cơ chế phân định 13 tháng và quét tháng Vô Trung Khí chính xác theo chu kỳ Đông Chí liên tiếp.',
+    ],
+    improved: [
+      'Độ chính xác thiên văn tuyệt đối cho việc phân định tháng nhuận và chu kỳ các năm âm lịch qua hàng ngàn năm.',
+      'Thuyết minh thuật toán trực quan, dễ hiểu trong Modal Thuyết Minh.',
+    ],
+  },
   {
     version: '2.16.1',
     releaseDate: '2026-08-29',
     codename: 'Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch',
     tagline: 'Hiển thị chi tiết thời gian Dương Lịch (Giờ:Phút:Giây, Ngày/Tháng/Năm UTC+7) bắt đầu từ Mùng 1 (Điểm Sóc) đến khi kết thúc tháng cho toàn bộ 12 hoặc 13 tháng âm lịch trong năm.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung chính xác thời gian Dương Lịch (Giờ:Phút:Giây, Ngày/Tháng/Năm) bắt đầu Mùng 1 (Điểm Sóc) và kết thúc tháng (Điểm Sóc kế) cho từng tháng trong 12 hoặc 13 tháng âm lịch.',
       'Tích hợp 2 chế độ hiển thị linh hoạt: Dạng Thẻ (Card Grid trực quan) và Dạng Bảng (Detailed Table View so sánh đa cột).',

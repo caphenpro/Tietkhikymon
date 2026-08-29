@@ -6,6 +6,21 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.17.0]] - 2026-08-29
+### Codename: *Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí*
+
+#### ✨ Tính Năng Mới & Cải Tiến Thiên Văn (Added & Improved)
+- **Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng (`/src/astronomy/lunarCalendar.ts`)**:
+  - **Mốc Cứng Đông Chí = Tháng 11**: Tính chính xác thời điểm Đông Chí (Mặt Trời đạt kinh độ 270°) của năm trước và năm đang xét; tháng âm lịch (khoảng giữa 2 điểm Sóc liên tiếp) chứa thời khắc Đông Chí được **gán cứng cố định là Tháng 11 Âm Lịch**.
+  - **Đếm Số Tháng Giữa 2 Đông Chí Liên Tiếp**: Xác định khoảng cách tháng giữa 2 lần Đông Chí (12 tháng = năm thường, 13 tháng = năm nhuận).
+  - **Quy Tắc Vô Trung Khí**: Nếu có 13 tháng giữa 2 Đông Chí, thuật toán tự động tìm tháng đầu tiên **không chứa bất kỳ Trung Khí nào** để đánh dấu là **Tháng Nhuận** lặp lại số thứ tự của tháng liền trước.
+  - **Lan Tỏa Số Thứ Tự Tháng**: Từ mốc Tháng 11, lan tỏa số thứ tự sang hai phía: tiến đến Tháng 12, Tháng Giêng, Tháng 2... và lùi về Tháng 10, Tháng 9...
+  - **Xác Lập Trọn Vẹn Năm Âm Lịch**: Toàn bộ chu kỳ năm âm lịch Can Chi được tạo bởi các tháng từ Tháng 1 (Giêng) đến Tháng 12 (Chạp) (cộng thêm Tháng Nhuận nếu có), đảm bảo luôn có chính xác 12 hoặc 13 tháng.
+- **Đồng Bộ Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Cập nhật chi tiết 5 bước của quy tắc Đông Chí Mốc 11 & Vô Trung Khí Pháp trong Mục 5.
+
+---
+
 ## [[2.16.1]] - 2026-08-29
 ### Codename: *Tọa Độ Ngày Giờ Dương Lịch Toàn Bộ 12 & 13 Tháng Âm Lịch*
 

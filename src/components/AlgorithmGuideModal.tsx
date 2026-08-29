@@ -363,11 +363,27 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                     Mỗi tháng trong 12 hoặc 13 tháng của năm Âm lịch đều được định vị chính xác từ thời điểm Điểm Sóc khởi đầu (Mùng 1 - Giờ:Phút:Giây, Ngày/Tháng/Năm Dương lịch) đến Điểm Sóc kế tiếp kết thúc tháng, kèm danh sách các Tiết Khí diễn ra trong tháng.
                   </p>
                 </div>
-                <div className="p-2.5 rounded-xl bg-slate-900 border border-purple-500/30 bg-purple-950/20 space-y-1">
-                  <strong className="text-purple-300 block">• Thuật Toán Xác Định Tháng Nhuận Âm Lịch (Vô Trung Khí Pháp):</strong>
-                  <p className="text-slate-300">
-                    Trong một năm thiên văn, năm âm lịch thông thường có 12 tháng (~354 ngày), năm nhuận có 13 tháng (~384 ngày). Thuật toán kiểm tra 12 Trung Khí (Mặt Trời) nằm trong các khoảng thời gian giữa 2 Điểm Sóc liên tiếp. <strong>Tháng âm lịch đầu tiên sau Đông Chí mà không chứa bất kỳ Trung Khí nào sẽ được quy định là Tháng Nhuận</strong>.
-                  </p>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-purple-500/30 bg-purple-950/20 space-y-2">
+                  <strong className="text-purple-300 block text-xs">• Thuật Toán Thiên Văn Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng (Mốc Đông Chí & Vô Trung Khí Pháp):</strong>
+                  <ul className="text-slate-300 space-y-1.5 list-disc list-inside">
+                    <li>
+                      <strong>1. Quét Điểm Sóc & Tiết Khí Dải Rộng:</strong> Tính toán tất cả các thời điểm Sóc (New Moon) và 24 Tiết Khí (đặc biệt là 12 Trung Khí) trong phạm vi đa năm quanh thời điểm khảo sát.
+                    </li>
+                    <li>
+                      <strong>2. Mốc Cứng Đông Chí = Tháng 11 Âm Lịch:</strong> Xác định ngày giờ diễn ra điểm Đông Chí (Mặt Trời đạt kinh độ 270°) của năm trước và năm đang xét. Tháng âm lịch (nằm giữa 2 điểm Sóc liên tiếp) nào chứa thời khắc Đông Chí sẽ được <strong>gán cứng cố định là Tháng 11 Âm Lịch</strong>.
+                    </li>
+                    <li>
+                      <strong>3. Đếm Số Tháng Giữa 2 Lần Đông Chí Liên Tiếp:</strong>
+                      <br />• Nếu có <strong>12 tháng</strong>: Chu kỳ bình thường (Năm thường không nhuận).
+                      <br />• Nếu có <strong>13 tháng</strong>: Chu kỳ có tháng nhuận. Hệ thống tìm tháng đầu tiên nằm giữa 2 lần Đông Chí mà <strong>không chứa bất kỳ Trung Khí nào (Vô Trung Khí)</strong> để đánh dấu là <strong>Tháng Nhuận</strong>.
+                    </li>
+                    <li>
+                      <strong>4. Lan Tỏa Số Thứ Tự Tháng Từ Mốc Tháng 11:</strong> Từ Tháng 11 (mốc Đông Chí), lan tỏa số thứ tự sang hai phía: tiến tới Tháng 12 (Chạp), Tháng 1 (Tháng Giêng năm mới), Tháng 2... (nếu gặp tháng Vô Trung Khí thì gán là Tháng Nhuận lặp lại số hiệu tháng trước), và lùi về Tháng 10, Tháng 9...
+                    </li>
+                    <li>
+                      <strong>5. Cấu Trúc Trọn Vẹn Năm Âm Lịch (Can Chi):</strong> Toàn bộ các tháng từ Tháng 1 (Giêng) đến Tháng 12 (Chạp) (cộng thêm Tháng Nhuận nếu có) tạo thành trọn vẹn 12 hoặc 13 tháng của Năm Âm Lịch.
+                    </li>
+                  </ul>
                   <p className="text-slate-400 text-[11px] pt-1">
                     Chu kỳ Meton (19 năm Dương lịch = 235 tuần trăng = 19 năm Âm lịch + 7 Tháng Nhuận) đảm bảo các mùa trong năm và Tết cổ truyền luôn quay về đúng chu kỳ tuần hoàn tự nhiên của Trái Đất quanh Mặt Trời.
                   </p>

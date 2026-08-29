@@ -37,18 +37,25 @@ const MONTH_NAMES: Record<number, string> = {
 };
 
 /**
- * Thuật toán Thiên văn Lịch Âm Dương:
- * 1. Tháng Âm lịch là khoảng cách giữa 2 điểm Sóc (Trăng mới) liên tiếp.
- * 2. Một tháng âm lịch chính quy phải có đủ cả Tiết (Tiết lệnh) và Khí (Trung khí).
- * 3. Tháng 1 (Tháng Giêng) là tháng chứa tiết Lập Xuân và trung khí Vũ Thủy (hoặc bắt đầu năm âm lịch).
- * 4. Nếu tháng âm lịch chỉ có Khí không có Tiết (hoặc thiếu cặp Tiết & Khí), tháng đó là Tháng Nhuận của tháng đó.
+ * Thuật toán Thiên văn Lịch Âm Dương Chuẩn Xác (Đông Chí Mốc 11 & Vô Trung Khí Pháp):
+ * 1. Tính tất cả các Điểm Sóc (New Moon) và 24 Tiết Khí (Đặc biệt là 12 Trung Khí) trong dải rộng.
+ * 2. Phân tách từng Tháng Âm Lịch (Khoảng cách giữa 2 điểm Sóc liên tiếp [NM_i, NM_{i+1})).
+ * 3. Tìm các tháng âm lịch chứa điểm Đông Chí (Trung Khí 270°) của các năm liên tiếp.
+ *    -> Gán cứng tháng chứa Đông Chí của năm Y = Tháng 11 Âm Lịch.
+ * 4. Đếm số tháng âm lịch giữa 2 lần Đông Chí liên tiếp (k_next - k_prev):
+ *    - Nếu có 12 tháng: Năm thường (không có tháng nhuận giữa 2 Đông Chí này).
+ *    - Nếu có 13 tháng: Năm nhuận (có 13 tháng). Tìm tháng đầu tiên không chứa Trung Khí (Vô Trung Khí) để đánh dấu là Tháng Nhuận.
+ * 5. Lan tỏa số thứ tự tháng:
+ *    - Từ Tháng 11 (mốc Đông Chí) lan tỏa sang Tháng 12 (Chạp), Tháng 1 (Giêng), Tháng 2...
+ *    - Nếu gặp tháng Vô Trung Khí thì gán là Tháng Nhuận của tháng trước đó.
+ * 6. Năm Âm Lịch Y (Can Chi) gồm toàn bộ các tháng từ Tháng 1 (Giêng) đến Tháng 12 (Chạp) của năm Y (kèm Tháng Nhuận nếu có).
  */
 export function getAstronomicalLunarDate(date: Date): LunarDateInfo {
   const currentUtcMs = date.getTime();
 
-  // Search window: 600 ngày trước đến 600 ngày sau để bao phủ trọn vẹn các chu kỳ năm thiên văn
-  const searchStart = new Date(currentUtcMs - 600 * 86400 * 1000);
-  const searchEnd = new Date(currentUtcMs + 600 * 86400 * 1000);
+  // Search window: 1000 ngày trước đến 1000 ngày sau để bao phủ trọn vẹn các chu kỳ Đông Chí liên tiếp
+  const searchStart = new Date(currentUtcMs - 1000 * 86400 * 1000);
+  const searchEnd = new Date(currentUtcMs + 1000 * 86400 * 1000);
 
   // 1. Tìm tất cả các Điểm Sóc (New Moons) trong dải tìm kiếm
   const newMoons: Date[] = [];
@@ -68,8 +75,8 @@ export function getAstronomicalLunarDate(date: Date): LunarDateInfo {
 
   // 2. Tìm tất cả 24 Tiết Khí trong dải tìm kiếm
   const allTerms: { name: string; category: 'Tiết' | 'Khí'; degree: number; date: Date }[] = [];
-  const startYear = searchStart.getUTCFullYear();
-  const endYear = searchEnd.getUTCFullYear() + 1;
+  const startYear = searchStart.getUTCFullYear() - 1;
+  const endYear = searchEnd.getUTCFullYear() + 2;
 
   for (let y = startYear; y <= endYear; y++) {
     const yStart = new Date(Date.UTC(y, 0, 1));
@@ -99,7 +106,7 @@ export function getAstronomicalLunarDate(date: Date): LunarDateInfo {
   }
   allTerms.sort((a, b) => a.date.getTime() - b.date.getTime());
 
-  // 3. Phân tách từng Tháng Âm Lịch (Khoảng cách giữa 2 điểm Sóc)
+  // 3. Phân tách từng Tháng Âm Lịch (Khoảng cách giữa 2 điểm Sóc liên tiếp)
   const lunarMonths: LunarMonthDetail[] = [];
   for (let i = 0; i < newMoons.length - 1; i++) {
     const mStart = newMoons[i];
@@ -129,54 +136,53 @@ export function getAstronomicalLunarDate(date: Date): LunarDateInfo {
     });
   }
 
-  // 4. Xác định các tháng chứa Đông Chí (Trung Khí 270°) -> Luôn là Tháng 11
-  const dongChiIndices: number[] = [];
+  // 4. Tìm các tháng chứa Đông Chí (Trung Khí 270°) -> Gán cứng = Tháng 11 Âm Lịch
+  const dongChiIndices: { index: number; year: number; date: Date }[] = [];
   for (let i = 0; i < lunarMonths.length; i++) {
-    if (lunarMonths[i].khis.includes('Đông Chí')) {
-      dongChiIndices.push(i);
+    const dcTerm = lunarMonths[i].terms.find((t) => t.name === 'Đông Chí');
+    if (dcTerm) {
+      const dcYear = getLocalComponents(dcTerm.date).year;
+      dongChiIndices.push({ index: i, year: dcYear, date: dcTerm.date });
     }
   }
 
-  // 5. Đánh số các tháng và xác định Năm Âm Lịch từ Đông Chí năm trước đến Đông Chí năm sau
+  // 5. Đếm số tháng giữa 2 lần Đông Chí liên tiếp & lan tỏa số thứ tự tháng
   for (let d = 0; d < dongChiIndices.length - 1; d++) {
-    const idx11_prev = dongChiIndices[d];
-    const idx11_next = dongChiIndices[d + 1];
-    const monthsCount = idx11_next - idx11_prev; // 12 (năm thường) hoặc 13 (năm nhuận)
+    const idx11_prev = dongChiIndices[d].index;
+    const year_prev = dongChiIndices[d].year;
+    const idx11_next = dongChiIndices[d + 1].index;
+    const monthsCount = idx11_next - idx11_prev; // 12 (Năm thường) hoặc 13 (Năm nhuận)
 
-    // Lấy năm dương lịch của điểm Đông Chí trước
-    const dongChiTerm = lunarMonths[idx11_prev].terms.find((t) => t.name === 'Đông Chí');
-    const dongChiYear = dongChiTerm
-      ? getLocalComponents(dongChiTerm.date).year
-      : getLocalComponents(lunarMonths[idx11_prev].startDate).year;
-
+    // Tháng chứa Đông Chí năm trước luôn là Tháng 11 Âm Lịch (năm year_prev)
     lunarMonths[idx11_prev].monthIndex = 11;
     lunarMonths[idx11_prev].monthName = MONTH_NAMES[11];
     lunarMonths[idx11_prev].isLeap = false;
-    lunarMonths[idx11_prev].lunarYear = dongChiYear;
+    lunarMonths[idx11_prev].lunarYear = year_prev;
 
     if (monthsCount === 12) {
-      // Năm thường 12 tháng: 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+      // Chu kỳ năm thường (12 tháng giữa 2 Đông Chí): 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
       let curMonth = 12;
       for (let j = idx11_prev + 1; j < idx11_next; j++) {
         lunarMonths[j].monthIndex = curMonth;
         lunarMonths[j].monthName = MONTH_NAMES[curMonth] || `Tháng ${curMonth}`;
         lunarMonths[j].isLeap = false;
-        // Tháng 12 thuộc năm cũ, Tháng 1..10 thuộc năm mới (dongChiYear + 1)
-        lunarMonths[j].lunarYear = curMonth === 12 ? dongChiYear : dongChiYear + 1;
+        // Tháng 12 thuộc năm cũ (year_prev), từ Tháng 1 trở đi thuộc năm mới (year_prev + 1)
+        lunarMonths[j].lunarYear = curMonth === 12 ? year_prev : year_prev + 1;
         curMonth = curMonth === 12 ? 1 : curMonth + 1;
       }
     } else if (monthsCount === 13) {
-      // Năm nhuận 13 tháng: Tìm tháng đầu tiên không chứa Trung Khí (hoặc thiếu Tiết/Khí)
+      // Chu kỳ năm nhuận (13 tháng giữa 2 Đông Chí): Tìm tháng đầu tiên Vô Trung Khí
       let leapIndex = -1;
       for (let j = idx11_prev + 1; j < idx11_next; j++) {
-        if (lunarMonths[j].khis.length === 0 || lunarMonths[j].tiets.length === 0) {
+        if (lunarMonths[j].khis.length === 0) {
           leapIndex = j;
           break;
         }
       }
+      // Dự phòng nếu tất cả đều có khí (hiếm gặp) thì tìm tháng thiếu cả tiết và khí
       if (leapIndex === -1) {
         for (let j = idx11_prev + 1; j < idx11_next; j++) {
-          if (lunarMonths[j].khis.length === 0) {
+          if (lunarMonths[j].khis.length === 0 || lunarMonths[j].tiets.length === 0) {
             leapIndex = j;
             break;
           }
@@ -186,33 +192,31 @@ export function getAstronomicalLunarDate(date: Date): LunarDateInfo {
       let curMonth = 12;
       for (let j = idx11_prev + 1; j < idx11_next; j++) {
         if (j === leapIndex) {
-          const actualM = curMonth - 1 === 0 ? 12 : curMonth - 1;
+          // Tháng nhuận: Lấy số hiệu của tháng liền trước
+          const actualM = curMonth === 1 ? 12 : (curMonth - 1 === 0 ? 12 : curMonth - 1);
           lunarMonths[j].monthIndex = actualM;
           lunarMonths[j].monthName = `${MONTH_NAMES[actualM]} (Nhuận)`;
           lunarMonths[j].isLeap = true;
-          lunarMonths[j].lunarYear = actualM === 12 ? dongChiYear : dongChiYear + 1;
+          lunarMonths[j].lunarYear = actualM === 12 ? year_prev : year_prev + 1;
         } else {
           lunarMonths[j].monthIndex = curMonth;
           lunarMonths[j].monthName = MONTH_NAMES[curMonth] || `Tháng ${curMonth}`;
           lunarMonths[j].isLeap = false;
-          lunarMonths[j].lunarYear = curMonth === 12 ? dongChiYear : dongChiYear + 1;
+          lunarMonths[j].lunarYear = curMonth === 12 ? year_prev : year_prev + 1;
           curMonth = curMonth === 12 ? 1 : curMonth + 1;
         }
       }
     }
   }
 
-  // Đảm bảo gán lunarYear cho các tháng cuối
+  // Đảm bảo gán cho điểm Đông Chí cuối cùng trong danh sách
   if (dongChiIndices.length > 0) {
-    const lastIdx = dongChiIndices[dongChiIndices.length - 1];
-    if (lunarMonths[lastIdx]) {
-      lunarMonths[lastIdx].monthIndex = 11;
-      lunarMonths[lastIdx].monthName = MONTH_NAMES[11];
-      const dongChiTerm = lunarMonths[lastIdx].terms.find((t) => t.name === 'Đông Chí');
-      const y = dongChiTerm
-        ? getLocalComponents(dongChiTerm.date).year
-        : getLocalComponents(lunarMonths[lastIdx].startDate).year;
-      lunarMonths[lastIdx].lunarYear = y;
+    const lastDc = dongChiIndices[dongChiIndices.length - 1];
+    if (lunarMonths[lastDc.index]) {
+      lunarMonths[lastDc.index].monthIndex = 11;
+      lunarMonths[lastDc.index].monthName = MONTH_NAMES[11];
+      lunarMonths[lastDc.index].isLeap = false;
+      lunarMonths[lastDc.index].lunarYear = lastDc.year;
     }
   }
 
