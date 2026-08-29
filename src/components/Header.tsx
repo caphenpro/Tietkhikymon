@@ -113,8 +113,18 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Brand & Logo */}
           <div className="flex items-center justify-between sm:justify-start gap-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-amber-600/30 to-amber-700/20 border border-amber-500/40 flex items-center justify-center shadow-inner shrink-0">
-                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 animate-[spin_40s_linear_infinite]" />
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-amber-600/30 to-amber-700/20 border border-amber-500/40 flex items-center justify-center shadow-inner shrink-0 overflow-hidden relative">
+                <img
+                  src="/logo.png"
+                  alt="Tiết Khí Kỳ Môn Lục Nhâm Logo"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover rounded-xl"
+                  onError={(e) => {
+                    // Fallback to hidden if image fails
+                    (e.target as HTMLElement).style.display = 'none';
+                  }}
+                />
+                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 animate-[spin_40s_linear_infinite] absolute inset-0 m-auto -z-10 pointer-events-none" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
