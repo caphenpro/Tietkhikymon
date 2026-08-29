@@ -635,188 +635,84 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
         </div>
       )}
 
-      {/* Rules & Solar Terms Analysis for this Lunar Month */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Rules & Definition Card (2 cols) */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center">
-              <Layers className="w-4 h-4 text-amber-400" />
+      {/* Rules & Astronomical Standards for Lunar Month & Leap Calculation */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+              <Layers className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-base font-bold text-white">Quy Chuẩn Thiên Văn Định Tháng Âm Lịch</h4>
-              <p className="text-xs text-slate-400">Nguyên lý điểm Sóc & phối hợp Tiết Khí</p>
+              <h4 className="text-base sm:text-lg font-bold text-white">
+                Quy Chuẩn Thiên Văn Định Tháng Âm Lịch & Xác Định Tháng Nhuận
+              </h4>
+              <p className="text-xs text-slate-400">
+                Nguyên lý Mốc cứng Đông Chí (270°) = Tháng 11 • Chu kỳ 13 tháng • Vô Trung Khí Pháp
+              </p>
             </div>
           </div>
+          <span className="text-xs px-3 py-1 rounded-full font-mono bg-slate-950 text-cyan-300 border border-slate-800 self-start sm:self-auto">
+            Chuẩn Thiên Văn VSOP87
+          </span>
+        </div>
 
-          <div className="space-y-3 text-xs">
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-semibold text-slate-200">1. Khoảng cách giữa 2 điểm Sóc:</span>
-                <p className="text-slate-400 mt-0.5">
-                  Tháng âm lịch bắt đầu chính xác từ Điểm Sóc (Mùng 1) đến Điểm Sóc tiếp theo. Độ dài chu kỳ giao hội là 29 ngày (tháng thiếu) hoặc 30 ngày (tháng đủ).
-                </p>
-              </div>
+        {/* 4 Core Astronomical Standards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
+          <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
+            <div className="flex items-center gap-2 text-cyan-300 font-bold">
+              <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+              <span>1. Mốc Cứng Đông Chí (270°) = Tháng 11 Âm Lịch</span>
             </div>
-
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-semibold text-slate-200">2. Điều kiện đủ Tiết khí và Trung khí:</span>
-                <p className="text-slate-400 mt-0.5">
-                  Một tháng âm lịch chính quy phải chứa đủ cả 1 Tiết (Tiết lệnh) và 1 Khí (Trung khí). Cụ thể <strong>Tháng 1 (Tháng Giêng)</strong> là tháng chứa Tiết <em>Lập Xuân</em> và Trung khí <em>Vũ Thủy</em>.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800/70 flex items-start gap-3">
-              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-semibold text-slate-200">3. Quy tắc Tháng Nhuận:</span>
-                <p className="text-slate-400 mt-0.5">
-                  Nếu một tháng âm lịch chỉ có Khí mà không có Tiết (hoặc thiếu cặp Tiết & Khí chuẩn), tháng đó được xác định là <strong>Tháng Nhuận</strong> của tháng đó (như Tháng 2 Nhuận, Tháng 6 Nhuận...).
-                </p>
-              </div>
-            </div>
+            <p className="text-slate-300 leading-relaxed pl-6">
+              Thời điểm Đông Chí (Mặt Trời đạt kinh độ Hoàng đạo 270°) luôn được xác định chính xác theo thiên văn. Tháng âm lịch (khoảng giữa 2 điểm Sóc liên tiếp) chứa thời khắc Đông Chí được <strong className="text-white">gán cứng cố định là Tháng 11 Âm Lịch</strong>.
+            </p>
           </div>
 
-          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200 font-medium">
-            <span className="text-amber-400 font-semibold">Kết luận tháng hiện tại: </span>
-            <span>{newMoon.monthRuleExplanation}</span>
+          <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
+            <div className="flex items-center gap-2 text-emerald-300 font-bold">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>2. Đếm Số Tháng Giữa 2 Lần Đông Chí Liên Tiếp</span>
+            </div>
+            <p className="text-slate-300 leading-relaxed pl-6">
+              Hệ thống tính toán số tháng âm lịch nằm giữa Đông Chí năm trước và Đông Chí năm đang xét. Nếu có <strong className="text-white">12 tháng</strong> là năm thường; nếu có <strong className="text-white">13 tháng</strong> là chu kỳ có tháng nhuận.
+            </p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
+            <div className="flex items-center gap-2 text-amber-300 font-bold">
+              <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>3. Quy Tắc Vô Trung Khí Định Tháng Nhuận</span>
+            </div>
+            <p className="text-slate-300 leading-relaxed pl-6">
+              Khi có 13 tháng giữa 2 Đông Chí, tháng âm lịch đầu tiên <strong className="text-amber-200">không chứa bất kỳ Trung Khí nào</strong> (các góc hoàng đạo chẵn 30°, 60°, 90°...) sẽ được chọn làm <strong className="text-white">Tháng Nhuận</strong> lặp lại số thứ tự của tháng liền trước.
+            </p>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-1.5">
+            <div className="flex items-center gap-2 text-purple-300 font-bold">
+              <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0" />
+              <span>4. Lan Tỏa Số Thứ Tự & Xác Lập Năm Âm Lịch</span>
+            </div>
+            <p className="text-slate-300 leading-relaxed pl-6">
+              Từ mốc Tháng 11, thuật toán lan tỏa tiến lên (Tháng 12, Tháng Giêng, Tháng 2...) và lùi về (Tháng 10, Tháng 9...) để xác lập trọn vẹn chu kỳ 12 hoặc 13 tháng âm lịch của năm Can Chi.
+            </p>
           </div>
         </div>
 
-        {/* Solar Terms Inside This Month (1 col) */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-3 flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <Orbit className="w-4 h-4 text-cyan-400" />
-                <h4 className="text-sm font-bold text-white">Tiết Khí Trong Tháng Này</h4>
-              </div>
-              <span className="text-[11px] font-mono px-2 py-0.5 bg-slate-800 text-slate-300 rounded">
-                {newMoon.termsInMonth.length} Sự kiện
-              </span>
-            </div>
-
-            <div className="space-y-2.5 mt-3">
-              {newMoon.termsInMonth.length === 0 && (
-                <div className="p-3 rounded-xl bg-slate-950/60 text-slate-400 text-xs text-center">
-                  Không có tiết khí nào rơi vào khoảng giữa 2 điểm Sóc này.
-                </div>
-              )}
-
-              {newMoon.termsInMonth.map((term, idx) => {
-                const isTiet = term.category === 'Tiết';
-                return (
-                  <div
-                    key={idx}
-                    className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-1"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-white">{term.name} ({term.degree}°)</span>
-                      <span
-                        className={`text-[10px] px-2 py-0.5 rounded-full font-medium border ${
-                          isTiet
-                            ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30'
-                            : 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30'
-                        }`}
-                      >
-                        {isTiet ? 'Tiết lệnh' : 'Trung khí'}
-                      </span>
-                    </div>
-                    <div className="text-slate-400 font-mono text-[11px]">
-                      {formatVietnamDateTime(term.exactDate)} (UTC+7)
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="text-[11px] text-slate-400 bg-slate-950/50 p-2.5 rounded-lg border border-slate-800/80 font-mono">
-            {newMoon.hasTiet && newMoon.hasKhi
-              ? '✓ Đủ cả Tiết và Khí (Tháng chính)'
-              : newMoon.hasKhi && !newMoon.hasTiet
-              ? '⚠ Chỉ có Khí không có Tiết (Tháng nhuận)'
-              : '⚠ Thiếu Tiết hoặc Khí'}
-          </div>
-        </div>
-      </div>
-
-      {/* Two Detailed Sóc Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Previous Sóc */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-3">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <div className="flex items-center gap-2 text-sm font-bold text-emerald-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-              <span>Điểm Sóc Trước Đó (Mùng 1 Đầu Tháng)</span>
-            </div>
-            <span className="text-xs font-mono px-2 py-0.5 bg-emerald-950 text-emerald-300 rounded border border-emerald-500/30">
-              Đã diễn ra
+        {/* Current Assessment Summary Banner */}
+        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs text-slate-200 space-y-1">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-amber-400 font-bold flex items-center gap-1.5">
+              <Orbit className="w-4 h-4 text-amber-400" />
+              Tổng Kết Tháng & Năm Âm Lịch Hiện Tại:
+            </span>
+            <span className="font-mono text-[11px] text-slate-400">
+              Mùng 1: {formatVietnamDateTime(newMoon.prevSocDate)} → Hết tháng: {formatVietnamDateTime(newMoon.nextSocDate)}
             </span>
           </div>
-
-          <div className="text-xs space-y-2 text-slate-300">
-            <div className="flex justify-between py-1 bg-slate-950/60 p-2 rounded-lg">
-              <span className="text-slate-400">Thời điểm chính xác:</span>
-              <span className="font-mono text-white font-medium">
-                {formatVietnamDateTime(newMoon.prevSocDate)}
-              </span>
-            </div>
-
-            <div className="flex justify-between py-1 bg-slate-950/60 p-2 rounded-lg">
-              <span className="text-slate-400">Đã trôi qua:</span>
-              <span className="font-mono text-emerald-300 font-medium">
-                {newMoon.prevPassedString}
-              </span>
-            </div>
-
-            <div className="flex justify-between py-1 bg-slate-950/60 p-2 rounded-lg">
-              <span className="text-slate-400">Quy đổi số ngày:</span>
-              <span className="font-mono text-slate-300">
-                {newMoon.prevPassedDays.toFixed(4)} ngày
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Next Sóc */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm space-y-3">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <div className="flex items-center gap-2 text-sm font-bold text-cyan-400">
-              <span className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
-              <span>Điểm Sóc Tiếp Theo (Mùng 1 Tháng Sau)</span>
-            </div>
-            <span className="text-xs font-mono px-2 py-0.5 bg-cyan-950 text-cyan-300 rounded border border-cyan-500/30">
-              Sắp tới
-            </span>
-          </div>
-
-          <div className="text-xs space-y-2 text-slate-300">
-            <div className="flex justify-between py-1 bg-slate-950/60 p-2 rounded-lg">
-              <span className="text-slate-400">Thời điểm chính xác:</span>
-              <span className="font-mono text-white font-medium">
-                {formatVietnamDateTime(newMoon.nextSocDate)}
-              </span>
-            </div>
-
-            <div className="flex justify-between py-1 bg-slate-950/60 p-2 rounded-lg">
-              <span className="text-slate-400">Còn lại:</span>
-              <span className="font-mono text-cyan-300 font-medium">
-                {newMoon.nextRemainingString}
-              </span>
-            </div>
-
-            <div className="flex justify-between py-1 bg-slate-950/60 p-2 rounded-lg">
-              <span className="text-slate-400">Quy đổi số ngày:</span>
-              <span className="font-mono text-slate-300">
-                {newMoon.nextRemainingDays.toFixed(4)} ngày
-              </span>
-            </div>
-          </div>
+          <p className="text-slate-300 leading-relaxed">
+            Hiện tại đang là <strong className="text-cyan-300">{newMoon.fullMonthDisplay}</strong> ({newMoon.monthType}, {newMoon.totalMonthDays} ngày) thuộc Năm <strong className="text-amber-300">{newMoon.lunarYearCanChi}</strong> ({newMoon.lunarYear}). {leapInfo?.hasLeapMonth ? `Năm này là Năm Nhuận có tổng cộng 13 tháng (${leapInfo.leapMonthDisplay}).` : 'Năm này là Năm Thường có 12 tháng không nhuận.'}
+          </p>
         </div>
       </div>
 

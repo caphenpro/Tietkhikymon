@@ -11,18 +11,37 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.18.0';
+export const APP_VERSION = '2.19.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch';
+export const APP_CODENAME = 'Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.19.0',
+    releaseDate: '2026-08-29',
+    codename: 'Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc',
+    tagline: 'Cập nhật nội dung Quy Chuẩn Thiên Văn Định Tháng Âm Lịch theo thuật toán chuẩn Mốc Đông Chí (270°) = Tháng 11 & Vô Trung Khí Pháp; lược bỏ các khối thông tin trùng lặp với bảng danh sách tháng âm lịch.',
+    isLatest: true,
+    highlights: [
+      'Chuẩn hóa thẻ "Quy Chuẩn Thiên Văn Định Tháng Âm Lịch & Xác Định Tháng Nhuận": Trình bày trực quan 4 nguyên tắc thiên văn cốt lõi (Mốc cứng Đông Chí = Tháng 11, Đếm số tháng 12/13, Vô Trung Khí Pháp, Lan tỏa số thứ tự tháng).',
+      'Lược bỏ các thành phần trùng lặp: Loại bỏ khối Tiết Khí Trong Tháng Này và Hai Thẻ Điểm Sóc Trước/Sau do toàn bộ thông tin này đã được tích hợp đầy đủ, chi tiết trong Bảng Danh Sách 12/13 Tháng Âm Lịch.',
+      'Giao diện gọn gàng, liền mạch: Nhóm Điểm Sóc & Âm Lịch đạt độ tinh giản tối đa, tập trung vào Bảng Tra Cứu Toàn Bộ Tháng và Cơ Chế Thiên Văn Học.',
+    ],
+    added: [
+      'Giao diện 4 thẻ nguyên lý thiên văn định tháng âm lịch và xác định tháng nhuận trực quan, mạch lạc.',
+    ],
+    improved: [
+      'Loại bỏ dữ liệu dư thừa, tránh lặp lại thông tin điểm Sóc và tiết khí đơn lẻ.',
+      'Tối ưu hóa không gian hiển thị của nhóm Điểm Sóc Âm Lịch.',
+    ],
+  },
   {
     version: '2.18.0',
     releaseDate: '2026-08-29',
     codename: 'Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch',
     tagline: 'Tái cấu trúc bố cục: Di chuyển Lịch Tra Cứu Nhanh (MiniCalendar) từ thẻ Tổng Quan sang nhóm Điểm Sóc & Âm Lịch để tối ưu thao tác tra cứu tuần trăng, 4 pha Mặt Trăng và tháng âm lịch.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Dời hoàn toàn component Lịch Tra Cứu Nhanh (MiniCalendar) từ Tổng Quan Luận Cục sang nhóm Điểm Sóc & Âm Lịch Thiên Văn.',
       'Tối ưu giao diện Tổng Quan: Thẻ Tiết Khí Đương Lệnh mở rộng toàn chiều rộng, hiển thị thông thoáng và tập trung vào các kết quả cốt lõi.',

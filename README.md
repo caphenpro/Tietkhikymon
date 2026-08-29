@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.18.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.19.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,21 +10,21 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.18.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch*
+### 🚀 **Phiên bản hiện tại: `v2.19.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc*
 
-- 🗓️ **Dời Lịch Tra Cứu Nhanh (MiniCalendar) Sang Nhóm Điểm Sóc & Âm Lịch**:
-  - Di chuyển toàn bộ component MiniCalendar từ thẻ Tổng Quan sang đặt trực tiếp cạnh thẻ Điểm Sóc Âm Lịch (tỷ lệ lưới 7/5 hài hòa).
-  - Tối ưu hóa việc tra cứu: Người dùng chọn nhanh ngày trên lịch và theo dõi trực quan tuần trăng, 4 pha Mặt Trăng, tình trạng tháng nhuận và danh sách 12/13 tháng âm lịch biến đổi theo thời gian thực.
-- 🎨 **Tinh Gọn Giao Diện Tổng Quan Luận Cục**:
-  - Thẻ Tiết Khí Đương Lệnh mở rộng toàn chiều rộng (full width), giúp bố cục thoáng đãng, dễ đọc và tập trung vào các kết quả cốt lõi.
-- 📖 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 5 trong `AlgorithmGuideModal.tsx`.
+- 🌙 **Chuẩn Hóa Thẻ Quy Chuẩn Thiên Văn Định Tháng & Tháng Nhuận**:
+  - Trình bày trực quan 4 bước chuẩn tắc: Mốc cứng Đông Chí (270°) = Tháng 11, Đếm số tháng 12/13 giữa 2 lần Đông Chí, Quy tắc Vô Trung Khí xác định tháng nhuận, và Lan tỏa số thứ tự tháng sang hai phía.
+- 🧹 **Lược Bỏ Các Thành Phần Dư Thừa & Trùng Lặp**:
+  - Loại bỏ khối *Tiết Khí Trong Tháng Này* và *Hai Thẻ Điểm Sóc Trước/Sau* vì dữ liệu đã được cung cấp toàn diện và chi tiết trong **Bảng Danh Sách 12/13 Tháng Âm Lịch**.
+- 💫 **Tối Ưu Trải Nghiệm Giao Diện**:
+  - Giao diện nhóm Điểm Sóc & Âm Lịch Thiên Văn đạt sự liền mạch, thoáng đãng và trực quan tối đa.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.17.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.18.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

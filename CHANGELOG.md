@@ -6,6 +6,19 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.19.0]] - 2026-08-29
+### Codename: *Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc*
+
+#### ✨ Tính Năng Mới & Tinh Gọn Giao Diện (Added & Improved)
+- **Chuẩn Hóa Thẻ Quy Chuẩn Thiên Văn Định Tháng & Xác Định Tháng Nhuận (`/src/components/LunarNewMoonSection.tsx`)**:
+  - Cập nhật toàn bộ nội dung thuyết minh thiên văn theo 4 nguyên tắc chuẩn hóa: Mốc cứng Đông Chí (270°) = Tháng 11, Đếm số tháng 12/13 giữa 2 lần Đông Chí, Quy tắc Vô Trung Khí xác định tháng nhuận đầu tiên, và Lan tỏa số thứ tự tháng sang hai phía.
+- **Lược Bỏ Các Thành Phần Dư Thừa & Trùng Lặp**:
+  - Bỏ khối *Tiết Khí Trong Tháng Này* và *Hai Thẻ Điểm Sóc Trước/Sau* đơn lẻ ở cuối trang, vì toàn bộ ngày giờ điểm Sóc khởi đầu (Mùng 1), điểm Sóc kết thúc (Hết tháng) và danh sách Tiết Khí đã được hiển thị đầy đủ, chi tiết và trực quan trong **Bảng/Thẻ Danh Sách 12/13 Tháng Âm Lịch** ở phần trên.
+- **Tối Ưu Trải Nghiệm Giao Diện**:
+  - Bố cục nhóm Điểm Sóc & Âm Lịch trở nên gọn gàng, liền mạch, loại bỏ trùng lặp và tập trung vào các công cụ khảo sát chu kỳ lịch thiên văn.
+
+---
+
 ## [[2.18.0]] - 2026-08-29
 ### Codename: *Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch*
 
