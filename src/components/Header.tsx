@@ -45,8 +45,14 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  // Grouped Navigation Structure
+  // Grouped Navigation Structure - Cẩm Nang Tri Thức as Trang Chủ (First)
   const navGroups = [
+    {
+      groupName: 'Trang Chủ',
+      tabs: [
+        { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Trang Chủ' },
+      ],
+    },
     {
       groupName: 'Bàn Quẻ Tam Thức',
       tabs: [
@@ -67,12 +73,6 @@ export const Header: React.FC<HeaderProps> = ({
       tabs: [
         { id: 'table', label: '24 Tiết Khí Năm', icon: '📅', badge: 'Toàn Niên' },
         { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Sóc Vọng' },
-      ],
-    },
-    {
-      groupName: 'Tri Thức',
-      tabs: [
-        { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Bí Điển' },
       ],
     },
   ];

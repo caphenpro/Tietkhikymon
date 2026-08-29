@@ -20,7 +20,7 @@ import { APP_VERSION, APP_RELEASE_DATE } from './version';
 export default function App() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
   const [isLive, setIsLive] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<string>('kymon-chart');
+  const [activeTab, setActiveTab] = useState<string>('guide');
 
   // Modals state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);

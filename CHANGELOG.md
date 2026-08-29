@@ -6,6 +6,28 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.13.0]] - 2026-08-29
+### Codename: *Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm*
+
+#### ✨ Tính Năng Mới (Added)
+- **Cẩm Nang Tri Thức Làm Trang Chủ Mặc Định**:
+  - Khi mở ứng dụng, giao diện lập tức hiển thị Cẩm Nang Tri Thức Toàn Cảnh, trang bị hệ thống tri thức cơ bản và chuyên sâu cho người dùng trước khi thao tác chiêm quẻ.
+- **Bổ Sung Toàn Thư Tri Thức Đại Lục Nhâm (`CosmicKnowledgeGuide.tsx`)**:
+  - Thập Nhị Nguyệt Tướng (Thái Dương) theo 24 Tiết Khí và quy tắc khởi Thiên Bàn.
+  - Bí kíp an Tứ Khoa (Can Thượng Thần, Can Âm, Chi Thượng Thần, Chi Âm) và quy luật Chủ - Khách.
+  - Cửu Tông Môn Tuyệt Kỹ: 9 phép phát khởi Tam Truyền (Sơ - Trung - Mạt Truyền).
+  - Thập Nhị Thần Tướng: Phép an Đán Quý Nhân / Dạ Quý Nhân và quy luật Thuận / Nghịch hành.
+  - Hướng dẫn luận đoán 6 chuyên đề đời sống: Cầu Tài, Tình Duyên, Công Danh, Bệnh Tật, Tranh Chấp, Xuất Hành.
+- **Cập Nhật Bộ Nhận Diện Logo & Favicon**:
+  - Logo Thiên Văn hợp nhất mới hiển thị trên Header, Favicon trình duyệt và Thẻ Open Graph chia sẻ mạng xã hội.
+
+#### ⚡ Cải Tiến (Improved)
+- **Điều Hướng Linh Hoạt**:
+  - Tích hợp các nút điều hướng nhanh trực tiếp trên Banner Trang Chủ dẫn vào Bàn Kỳ Môn 9 Cung và Bàn Đại Lục Nhâm.
+  - Bổ sung Mục 15 trong Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`).
+
+---
+
 ## [[2.12.0]] - 2026-08-28
 ### Codename: *Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal*
 

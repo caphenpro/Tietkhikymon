@@ -56,6 +56,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'evaluation', title: '12. Thuật Toán Đánh Giá Cát/Hung 5 Sao', icon: Award },
     { id: 'luc-nham', title: '13. Bí Tàng Đại Lục Nhâm Độn Đại Toàn', icon: Compass },
     { id: 'ux-ui', title: '14. Kiến Trúc Ma Trận Lạc Thư & Click-to-Modal', icon: Layers },
+    { id: 'home-guide', title: '15. Cẩm Nang Tri Thức Trang Chủ & Toàn Thư Lục Nhâm', icon: BookOpen },
   ];
 
   return (
@@ -818,6 +819,50 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                   </div>
                   <p className="text-slate-300">
                     Nhấp vào bất kỳ ô cung nào để mở Modal chi tiết (Thập Can Khắc Ứng, Môn Cung Sinh Khắc, 4 Tầng Bàn, Cách Cục Cát Hung, Thần Sát) trên nền mờ, không làm xáo trộn hay kéo dãn trang chính.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Section 15: Home Knowledge Guide & Dai Luc Nham */}
+          {(activeSection === 'all' || activeSection === 'home-guide') && (
+            <div id="home-guide" className="p-5 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-4">
+              <h3 className="text-base font-bold text-amber-300 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-amber-400" />
+                <span>15. Cẩm Nang Tri Thức Trang Chủ & Toàn Thư Lục Nhâm</span>
+              </h3>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Tại phiên bản <strong>v2.13.0</strong>, <strong>Cẩm Nang Tri Thức Toàn Cảnh</strong> được nâng lên làm <strong>Trang Chủ Mặc Định</strong> khi người dùng truy cập ứng dụng, giúp người học dễ dàng tiếp cận hệ thống tri thức trước khi thực hành chiêm quẻ. Đồng thời, toàn bộ kho tàng học thuật <strong>Đại Lục Nhâm</strong> được tích hợp đầy đủ:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold">1. Thập Nhị Nguyệt Tướng (12 Tướng Thái Dương)</strong>
+                  <p className="text-slate-400">
+                    Tính toán chính xác góc kinh độ Mặt Trời (Solar Longitude) theo 24 Tiết khí để định Nguyệt Tướng (từ Đăng Minh Hợi đến Thần Hậu Tý).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold">2. An Tứ Khoa & Thể Dụng Tương Tương</strong>
+                  <p className="text-slate-400">
+                    Khoa 1 (Can Thượng Thần) & Khoa 2 (Can Âm) đại diện cho Thân Chủ; Khoa 3 (Chi Thượng Thần) & Khoa 4 (Chi Âm) đại diện cho Đối Tác/Gia Trạch.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold">3. Cửu Tông Môn Khởi Tam Truyền</strong>
+                  <p className="text-slate-400">
+                    Sơ Truyền (Nguyên nhân) → Trung Truyền (Diễn tiến) → Mạt Truyền (Kết cục) dựa trên 9 khóa cổ bản chuẩn xác.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold">4. Thập Nhị Thần Tướng & Đán/Dạ Quý</strong>
+                  <p className="text-slate-400">
+                    An 12 Thần Tướng theo bài thơ Đán Quý Nhân (ngày) và Dạ Quý Nhân (đêm), cùng quy tắc Thuận/Nghịch hành tùy theo cung Địa bàn Quý Nhân ngự.
                   </p>
                 </div>
               </div>

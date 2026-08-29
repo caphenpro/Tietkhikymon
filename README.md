@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.12.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.13.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,20 +10,22 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.12.0`** *(Phát hành: 28/08/2026)*
-**Tên mã:** *Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal*
+### 🚀 **Phiên bản hiện tại: `v2.13.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm*
 
-- 🖥️ **Tái Cấu Trúc UX/UI Toàn Diện - Không Rối Mắt**:
-  - **Dải Header Thiên Văn Hợp Nhất**: Gom gọn Live clock thời gian thực, Lịch Âm Dương, Can Chi Tứ Trụ và Tiết khí lên thanh trên cùng.
-  - **Tab Switcher Trực Tiếp Trên Bàn Cờ**: Chuyển đổi nhanh chóng giữa `[ 🔮 Kỳ Môn Độn Giáp ]` và `[ 🧭 Đại Lục Nhâm ]` ở khu vực làm việc chính.
-  - **Ma Trận 9 Cung Lưới Grid 3x3 Lạc Thư**: Bố cục Tốn 4 - Ly 9 - Khôn 2; Chấn 3 - Trung 5 - Đoài 7; Cấn 8 - Khảm 1 - Càn 6 với thẻ tóm tắt thanh thoát.
-  - **Cơ Chế Click-to-Modal / Drawer (`PalaceDetailModal.tsx`)**: Nhấp vào bất kỳ ô cung nào để mở bảng luận giải chi tiết toàn diện (Thập Can Khắc Ứng, Môn Cung Sinh Khắc, Cửu Tinh, Bát Thần, Cách Cục, Thần Sát) mà không làm xáo trộn bố cục trang.
-  - **Gom Nhóm Menu Điều Hướng**: Nhóm các tiện ích khoa học theo 4 nhóm (*Bàn Quẻ Tam Thức*, *Dự Trắc & Phân Tích*, *Lịch & Tiết Khí*, *Tri Thức*).
-- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 14 trong `AlgorithmGuideModal.tsx`.
+- 📚 **Cẩm Nang Tri Thức Làm Trang Chủ Mặc Định**:
+  - Mở trang chủ lập tức tiếp cận Cẩm Nang Tri Thức Toàn Cảnh (Bát Trạch, Cửu Tinh, 24 Tiết Khí, Điểm Sóc, Kỳ Môn Độn Giáp, Đại Lục Nhâm).
+- 🧭 **Bổ Sung Toàn Thư Kiến Thức Đại Lục Nhâm**:
+  - Tích hợp chuyên mục Đại Lục Nhâm: Thập Nhị Nguyệt Tướng (Thái Dương), An Tứ Khoa (Chủ/Khách), Cửu Tông Môn Khởi Tam Truyền, Thập Nhị Thần Tướng (Đán/Dạ Quý Thuận Nghịch), và Ứng Dụng 6 Chuyên Đề Đời Sống.
+- 🎨 **Cập Nhật Bộ Nhận Diện Logo & Favicon**:
+  - Logo Thiên Văn hợp nhất mới hiển thị trên Header, Favicon trình duyệt và Thẻ Open Graph chia sẻ mạng xã hội.
+- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 15 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
+
+### 📦 **Phiên bản trước: `v2.12.0`** *(Phát hành: 28/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

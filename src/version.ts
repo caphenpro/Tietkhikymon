@@ -11,18 +11,39 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.12.0';
-export const APP_RELEASE_DATE = '2026-08-28';
-export const APP_CODENAME = 'Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal';
+export const APP_VERSION = '2.13.0';
+export const APP_RELEASE_DATE = '2026-08-29';
+export const APP_CODENAME = 'Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.13.0',
+    releaseDate: '2026-08-29',
+    codename: 'Trang Chủ Cẩm Nang Tri Thức & Toàn Thư Đại Lục Nhâm',
+    tagline: 'Chuyển Cẩm Nang Tri Thức lên vị trí Trang Chủ mặc định khi mở ứng dụng, bổ sung kho tàng kiến thức Đại Lục Nhâm chuyên sâu, cập nhật bộ nhận diện Logo & Favicon thiên văn.',
+    isLatest: true,
+    highlights: [
+      'Thiết lập Cẩm Nang Tri Thức làm Trang Chủ mặc định khi mở ứng dụng, giúp người dùng nắm bắt nền tảng tri thức thiên văn và tam thức trước khi chiêm quẻ.',
+      'Bổ sung toàn diện kiến thức Đại Lục Nhâm vào Cẩm Nang Tri Thức: Thập Nhị Nguyệt Tướng, An Tứ Khoa, Cửu Tông Môn Khởi Tam Truyền, Thập Nhị Thần Tướng Đán/Dạ Quý Thuận Nghịch, và Ứng Dụng 6 Chuyên Đề Đời Sống.',
+      'Cập nhật Logo Thiên Văn mới trên Header, Favicon trình duyệt và Thẻ xem trước Open Graph (OG Image) khi chia sẻ liên kết.',
+      'Cập nhật Mục 15 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Chuyên mục Đại Lục Nhâm trong Cẩm Nang Tri Thức với 6 chủ đề học thuật chi tiết và trực quan.',
+      'Section 15 trong Thuyết Minh Thuật Toán & Nguyên Lý Hệ Thống.',
+    ],
+    improved: [
+      'Tái cấu trúc menu điều hướng: đưa Trang Chủ (Cẩm Nang Tri Thức) lên vị trí đầu tiên.',
+      'Thêm nút thao tác nhanh trên Hero Banner dẫn trực tiếp vào Bàn Kỳ Môn 9 Cung và Bàn Đại Lục Nhâm.',
+    ],
+  },
   {
     version: '2.12.0',
     releaseDate: '2026-08-28',
     codename: 'Tái Cấu Trúc UX/UI Ma Trận Lạc Thư & Click-to-Modal',
     tagline: 'Tái cấu trúc toàn diện giao diện UX/UI: Gom gọn Header Thiên Văn thời gian thực, Bàn cờ 9 Cung Ma trận Lạc Thư chuẩn 3x3 với cơ chế Click-to-Modal chi tiết và Gom nhóm tiện ích trực quan.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Giao diện Trang Chính (Main Workspace) tập trung, thoáng đãng, không bị phân tán hay rối mắt.',
       'Gom gọn thời gian thực (Live clock), Âm/Dương lịch, Can Chi Tứ Trụ và Tiết khí vào dải thông tin trên cùng (Top Header strip).',

@@ -41,18 +41,19 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
   onOpenAlgorithmModal
 }) => {
   const [activeCategory, setActiveCategory] = useState<
-    'all' | 'unified' | 'battrach' | 'cuutinh' | 'tietkhi' | 'diemsoc' | 'kymon' | 'ungdung'
+    'all' | 'unified' | 'battrach' | 'cuutinh' | 'tietkhi' | 'diemsoc' | 'kymon' | 'lucnham' | 'ungdung'
   >('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const categories = [
     { id: 'all', label: 'Tất Cả Tri Thức', icon: BookOpen },
+    { id: 'lucnham', label: '🧭 Đại Lục Nhâm Tam Thức', icon: Compass },
+    { id: 'kymon', label: '🌀 Kỳ Môn Độn Giáp', icon: Layers },
     { id: 'unified', label: '🌟 Hợp Nhất 4 Chiều', icon: Globe },
     { id: 'battrach', label: '🧭 Bát Trạch 8 Hướng', icon: Compass },
     { id: 'cuutinh', label: '🔢 Cửu Tinh Lạc Thư', icon: Grid },
     { id: 'tietkhi', label: '☀️ 24 Tiết Khí & Độn Cục', icon: Sun },
     { id: 'diemsoc', label: '🌙 Điểm Sóc & Âm Lịch', icon: Moon },
-    { id: 'kymon', label: '🌀 Kỳ Môn Tam Thức', icon: Layers },
     { id: 'ungdung', label: '🎯 Ứng Dụng Thực Tiễn', icon: Zap },
   ];
 
@@ -410,7 +411,364 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
         )
       },
 
-      // 7. Practical Applications
+      // 7. Dai Luc Nham Overview
+      {
+        id: 'lucnham-tongquan',
+        category: 'lucnham',
+        title: 'Đại Lục Nhâm: Đỉnh Cao Chiêm Đoán Nhân Sự Cổ Tam Thức',
+        subtitle: 'Hợp nhất Cổ Tam Thức: Thiên Kỳ Môn (Quân sự, Không gian) - Địa Lục Nhâm (Nhân sự vi tế) - Nhân Thái Ất (Vận nước)',
+        keywords: ['đại lục nhâm', 'lục nhâm', 'tam thức', 'thái ất', 'kỳ môn', 'tứ khoa', 'tam truyền', 'nguyệt tướng', 'thần tướng'],
+        content: (
+          <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p>
+              Trong kho tàng thuật số phương Đông, <strong>Cổ Tam Thức</strong> là ba bộ môn tối cao: 
+              <em> "Thiên Kỳ Môn - Địa Lục Nhâm - Nhân Thái Ất"</em>. Nếu Kỳ Môn chuyên về bố trận, phương vị không gian 9 cung thì 
+              <strong> Đại Lục Nhâm</strong> là đỉnh cao quán triệt về <strong>mọi chuyển biến nhân sự, tâm lý, diễn tiến chi tiết của việc đời</strong>:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-amber-500/30 space-y-1.5">
+                <div className="flex items-center gap-2 text-amber-300 font-bold text-xs">
+                  <Sun className="w-4 h-4 text-amber-400" />
+                  <span>1. Thái Dương Nguyệt Tướng</span>
+                </div>
+                <p className="text-slate-400 text-xs">
+                  Sử dụng vị trí thực của Mặt Trời đi qua 12 Cung Hoàng đạo theo 24 Tiết khí để định <strong>Nguyệt Tướng</strong>, nạp thời gian thiên văn vào Địa bàn 12 Chi.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-cyan-500/30 space-y-1.5">
+                <div className="flex items-center gap-2 text-cyan-300 font-bold text-xs">
+                  <Compass className="w-4 h-4 text-cyan-400" />
+                  <span>2. Tứ Khoa (Bốn Cột Trụ)</span>
+                </div>
+                <p className="text-slate-400 text-xs">
+                  Thiết lập mối tương tác giữa <strong>Can Ngày (Chủ/Ta)</strong> và <strong>Chi Ngày (Khách/Đối tác/Nhà đất)</strong> để thấy rõ mầm mống họa phúc ban đầu.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-purple-500/30 space-y-1.5">
+                <div className="flex items-center gap-2 text-purple-300 font-bold text-xs">
+                  <Layers className="w-4 h-4 text-purple-400" />
+                  <span>3. Tam Truyền (Dòng Thời Gian)</span>
+                </div>
+                <p className="text-slate-400 text-xs">
+                  Truy tìm quy luật chuyển hóa nhân quả 3 chặng: <strong>Sơ Truyền (Phát Khởi)</strong> → <strong>Trung Truyền (Diễn Biến)</strong> → <strong>Mạt Truyền (Kết Cục)</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+        )
+      },
+
+      // 8. Thap Nhi Nguyet Tuong & Thien Ban
+      {
+        id: 'lucnham-nguyettuong',
+        category: 'lucnham',
+        title: 'Thập Nhị Nguyệt Tướng & Bí Quyết Khởi Thiên Bàn',
+        subtitle: '12 Tướng Thái Dương theo 24 Tiết Khí và quy tắc xoay chuyển Thiên Bàn đè lên Địa Bàn',
+        keywords: ['nguyệt tướng', 'thái dương', 'thiên bàn', 'địa bàn', 'thắng quang', 'tiểu cát', 'truyền tống', 'thần hậu', 'đại cát', 'đăng minh'],
+        content: (
+          <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p>
+              <strong>Nguyệt Tướng</strong> chính là vị trí của Thái Dương (Mặt Trời) ở mỗi cung hoàng đạo ứng với 12 Tiết lệnh trong năm:
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 text-xs">
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 space-y-0.5">
+                <strong className="text-amber-300 block">1. Đăng Minh (Hợi)</strong>
+                <span className="text-slate-400">Tiết Vũ Thủy → Xuân Phân</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 space-y-0.5">
+                <strong className="text-amber-300 block">2. Hà Khôi (Tuất)</strong>
+                <span className="text-slate-400">Tiết Xuân Phân → Cốc Vũ</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 space-y-0.5">
+                <strong className="text-amber-300 block">3. Tùng Khôi (Dậu)</strong>
+                <span className="text-slate-400">Tiết Cốc Vũ → Tiểu Mãn</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 space-y-0.5">
+                <strong className="text-amber-300 block">4. Truyền Tống (Thân)</strong>
+                <span className="text-slate-400">Tiết Tiểu Mãn → Hạ Chí</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 space-y-0.5">
+                <strong className="text-cyan-300 block">5. Tiểu Cát (Mùi)</strong>
+                <span className="text-slate-400">Tiết Hạ Chí → Đại Thử</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-cyan-300 block space-y-0.5">
+                <strong className="text-cyan-300 block">6. Thắng Quang (Ngọ)</strong>
+                <span className="text-slate-400">Tiết Đại Thử → Xử Thử</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-cyan-300 block space-y-0.5">
+                <strong className="text-cyan-300 block">7. Thái Ất (Tị)</strong>
+                <span className="text-slate-400">Tiết Xử Thử → Thu Phân</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-cyan-300 block space-y-0.5">
+                <strong className="text-cyan-300 block">8. Thiên Cương (Thìn)</strong>
+                <span className="text-slate-400">Tiết Thu Phân → Sương Giáng</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-purple-500/30 space-y-0.5">
+                <strong className="text-purple-300 block">9. Thái Xung (Mão)</strong>
+                <span className="text-slate-400">Tiết Sương Giáng → Tiểu Tuyết</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-purple-500/30 space-y-0.5">
+                <strong className="text-purple-300 block">10. Công Tào (Dần)</strong>
+                <span className="text-slate-400">Tiết Tiểu Tuyết → Đông Chí</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-purple-500/30 space-y-0.5">
+                <strong className="text-purple-300 block">11. Đại Cát (Sửu)</strong>
+                <span className="text-slate-400">Tiết Đông Chí → Đại Hàn</span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-slate-950 border border-purple-500/30 space-y-0.5">
+                <strong className="text-purple-300 block">12. Thần Hậu (Tý)</strong>
+                <span className="text-slate-400">Tiết Đại Hàn → Vũ Thủy</span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 text-xs">
+              <strong className="text-amber-300 block mb-1">🌀 Quy Tắc Lập Thiên Bàn:</strong>
+              <p className="text-slate-300">
+                Đem <strong>Nguyệt Tướng</strong> đặt lên cung <strong>Chi của Giờ chiêm quẻ</strong> trên Địa Bàn, sau đó an thuận 11 cung tiếp theo. Đây là sự lồng ghép giữa <em>Thời Gian Của Năm (Nguyệt Tướng)</em> và <em>Thời Gian Của Giờ (Chi Giờ)</em>.
+              </p>
+            </div>
+          </div>
+        )
+      },
+
+      // 9. Tu Khoa
+      {
+        id: 'lucnham-tukhoa',
+        category: 'lucnham',
+        title: 'Bí Kíp An Tứ Khoa: Thể Dụng Tương Tương & Chủ Khách',
+        subtitle: 'Can Thượng Thần (Ta), Can Âm (Ẩn tình của Ta), Chi Thượng Thần (Khách/Nhà), Chi Âm (Ẩn tình đối phương)',
+        keywords: ['tứ khoa', 'can thượng thần', 'can âm', 'chi thượng thần', 'chi âm', 'chủ khách', 'ký cung'],
+        content: (
+          <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p>
+              <strong>Tứ Khoa (Bốn Khoa)</strong> là bức tranh thu nhỏ mô tả vị thế của người hỏi và đối tượng hữu quan:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/30 space-y-1.5">
+                <strong className="text-emerald-300 block font-bold text-xs sm:text-sm">
+                  Khoa 1 & Khoa 2 (Can Khoa - Chủ Thể / Bản Thân)
+                </strong>
+                <p className="text-slate-400 text-xs">
+                  • <strong>Khoa 1 (Can Thượng Thần):</strong> Lấy Thần trên Thiên Bàn đè lên Cung Ký của Can ngày. Tượng trưng cho diện mạo, hành động công khai, thân thể của Ta.
+                  <br />• <strong>Khoa 2 (Can Âm):</strong> Lấy Thần trên Thiên Bàn đè lên Khoa 1. Tượng trưng cho nội tâm, tâm tư thầm kín, việc xảy ra sau lưng hoặc hậu vận của Ta.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-cyan-500/30 space-y-1.5">
+                <strong className="text-cyan-300 block font-bold text-xs sm:text-sm">
+                  Khoa 3 & Khoa 4 (Chi Khoa - Khách Thể / Nhà Cửa / Đối Tác)
+                </strong>
+                <p className="text-slate-400 text-xs">
+                  • <strong>Khoa 3 (Chi Thượng Thần):</strong> Lấy Thần trên Thiên Bàn đè lên Chi ngày. Tượng trưng cho đối tác, gia đạo, nơi cư ngụ, hoàn cảnh bên ngoài.
+                  <br />• <strong>Khoa 4 (Chi Âm):</strong> Lấy Thần trên Thiên Bàn đè lên Khoa 3. Tượng trưng cho mưu toan ngấm ngầm của đối phương hoặc điềm ẩn tàng của nhà cửa.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-xs text-purple-200">
+              ⚡ <strong>Quy Luật Khắc Sinh:</strong> Thượng Thần khắc Hạ Thần gọi là <em>Khắc Hạ (Tặc)</em> - tượng trưng tai họa từ ngoài ập tới. Hạ Thần khắc Thượng Thần gọi là <em>Thượng Khắc</em> - tượng trưng nội bộ phát sinh sự biến. Đây là mấu chốt để khởi Tam Truyền.
+            </div>
+          </div>
+        )
+      },
+
+      // 10. Tam Truyen & Cuu Tong Mon
+      {
+        id: 'lucnham-tamtruyen',
+        category: 'lucnham',
+        title: 'Cửu Tông Môn Khởi Tam Truyền: Sơ - Trung - Mạt Truyền',
+        subtitle: '9 Phép khởi Tam Truyền tinh diệu: Tặc Khắc, Tỷ Dụng, Thiệp Hại, Dao Khắc, Mão Tinh, Biệt Trạch, Bát Chuyên, Phục Ngâm, Phản Ngâm',
+        keywords: ['cửu tông môn', 'tam truyền', 'sơ truyền', 'trung truyền', 'mạt truyền', 'tặc khắc', 'tỷ dụng', 'thiệp hại', 'dao khắc', 'mão tinh', 'biệt trạch', 'bát chuyên', 'phục ngâm', 'phản ngâm'],
+        content: (
+          <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p>
+              <strong>Tam Truyền</strong> là tiến trình ba giai đoạn của vạn sự:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="p-3 rounded-xl bg-slate-950 border border-amber-500/30 space-y-1">
+                <strong className="text-amber-300 block text-xs">1. Sơ Truyền (Phát Đoan)</strong>
+                <p className="text-slate-400 text-xs">Khởi đầu sự việc, nguyên nhân cốt lõi, động cơ thúc đẩy ban đầu.</p>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950 border border-cyan-500/30 space-y-1">
+                <strong className="text-cyan-300 block text-xs">2. Trung Truyền (Di Chuyển)</strong>
+                <p className="text-slate-400 text-xs">Quá trình diễn biến thực tế, những trở ngại, chuyển giao nhân sự giữa đường.</p>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950 border border-purple-500/30 space-y-1">
+                <strong className="text-purple-300 block text-xs">3. Mạt Truyền (Quy Túc)</strong>
+                <p className="text-slate-400 text-xs">Kết quả cuối cùng, hậu vận của sự việc, cái kết thành hay bại.</p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+              <strong className="text-slate-200 block text-xs font-bold">Cửu Tông Môn (9 Phương Pháp Khởi Sơ Truyền):</strong>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-amber-400">1. Tặc Khắc (Nguyên Thủ/Trùng Thẩm):</strong> Ưu tiên lấy Thượng thần khắc Hạ thần hoặc Hạ thần khắc Thượng thần độc nhất làm Sơ truyền.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-amber-400">2. Tỷ Dụng (Tri Nhất):</strong> Khi có từ 2 khắc trở lên, chọn Thần nào đồng tính Âm/Dương với Can Ngày.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-cyan-400">3. Thiệp Hại (Kiến Cơ/Sát Gian):</strong> Khi các thần khắc đều đồng tính Âm/Dương, so sánh số lần vượt qua các cung khắc trên Địa bàn.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-cyan-400">4. Dao Khắc (Cảo Cừu/Dao Khắc):</strong> Tứ khoa không có khắc, tìm Thần ở xa khắc Can Ngày hoặc Can Ngày khắc Thần.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-purple-400">5. Mão Tinh:</strong> Không có khắc lẫn nhau, mượn thần Dậu (Mão Tinh) để kích phát sự việc.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-purple-400">6. Biệt Trạch:</strong> Bất toàn khoa, lấy Can hợp hoặc Chi thần làm Sơ truyền.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-rose-400">7. Bát Chuyên:</strong> Can Chi đồng vị (ngày Giáp Dần, Kỷ Mùi...), không khắc, mượn Dương thần/Âm thần.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-rose-400">8. Phục Ngâm:</strong> Thiên bàn trùng khít Địa bàn, vạn sự đình trệ, lấy Hình Sát làm Sơ truyền.
+                </div>
+                <div className="p-2 rounded-lg bg-slate-900 border border-slate-800">
+                  <strong className="text-emerald-400">9. Phản Ngâm:</strong> Thiên bàn đối xung 180° Địa bàn, biến động mãnh liệt, lấy Dịch Mã làm Sơ truyền.
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      },
+
+      // 11. Thap Nhi Than Tuong
+      {
+        id: 'lucnham-thapnhithantuong',
+        category: 'lucnham',
+        title: 'Thập Nhị Thần Tướng Lục Nhâm: Đán Quý / Dạ Quý & Thuận Nghịch',
+        subtitle: '12 Vị Thần Tướng biểu trưng năng lượng tâm lý, hoàn cảnh và phúc họa trong cuộc sống',
+        keywords: ['thập nhị thần tướng', 'quý nhân', 'thanh long', 'chu tước', 'lục hợp', 'câu trận', 'đằng xà', 'bạch hổ', 'thái thường', 'huyền vũ', 'thái âm', 'thiên hậu', 'thiên không', 'đán quý', 'dạ quý'],
+        content: (
+          <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p>
+              12 Thần Tướng Đại Lục Nhâm là các trường năng lượng bao trùm lên 12 Cung Thiên Bàn:
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs">
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-amber-500/40 space-y-1">
+                <strong className="text-amber-300 block font-bold">1. Quý Nhân (Cát Thần)</strong>
+                <p className="text-slate-400">Vua của bách thần, cứu khổ ban ơn, gặp quý nhân trợ giúp, hóa hung thành cát.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-rose-500/30 space-y-1">
+                <strong className="text-rose-400 block font-bold">2. Đằng Xà (Hung Thần)</strong>
+                <p className="text-slate-400">Quái dị, ác mộng, lo sợ kinh hãi, ngấm ngầm hãm hại, bệnh tật dây dưa.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-red-500/30 space-y-1">
+                <strong className="text-red-400 block font-bold">3. Chu Tước (Khẩu Thiệt)</strong>
+                <p className="text-slate-400">Văn thư, thư từ, tin tức, tranh cãi thị phi, khẩu thiệt kiện tụng nảy lửa.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-emerald-500/30 space-y-1">
+                <strong className="text-emerald-300 block font-bold">4. Lục Hợp (Hôn Nhân/Hòa Hợp)</strong>
+                <p className="text-slate-400">Hôn nhân giai ngẫu, ký kết hợp đồng, trung gian môi giới, bạn bè thân thiết.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-yellow-500/30 space-y-1">
+                <strong className="text-yellow-400 block font-bold">5. Câu Trận (Trì Trệ/Tranh Tụng)</strong>
+                <p className="text-slate-400">Tranh chấp đất đai, nhà tù ngục hình, vướng mắc pháp lý, công việc ứ đọng.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-cyan-500/30 space-y-1">
+                <strong className="text-cyan-300 block font-bold">6. Thanh Long (Đại Tài Lộc)</strong>
+                <p className="text-slate-400">Tài chính hưng vượng, hỷ khánh phát tài, thăng quan tiến chức, quý nhân trao tiền của.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-600/30 space-y-1">
+                <strong className="text-slate-300 block font-bold">7. Thiên Không (Hư Vô)</strong>
+                <p className="text-slate-400">Lời hứa suông, lừa dối, hư vô không thực, nhưng rất tốt cho tu dưỡng tâm linh, Phật đạo.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-400/40 space-y-1">
+                <strong className="text-slate-200 block font-bold">8. Bạch Hổ (Đại Hung Sát)</strong>
+                <p className="text-slate-400">Tang tóc, đổ máu, tai nạn bất ngờ, bệnh tật nguy cấp, dao kéo phẫu thuật.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-amber-300/30 space-y-1">
+                <strong className="text-amber-200 block font-bold">9. Thái Thường (Yến Tiệc/Lễ Nghi)</strong>
+                <p className="text-slate-400">Hội họp ăn uống, nhận bằng khen, quần áo trang phục, rượu chè yến tiệc.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-indigo-500/30 space-y-1">
+                <strong className="text-indigo-300 block font-bold">10. Huyền Vũ (Trộm Cắp/Mờ Ám)</strong>
+                <p className="text-slate-400">Mất trộm, tiểu nhân lừa gạt, gian tà tà dâm, sự việc mờ ám khó tỏ tường.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-purple-400/30 space-y-1">
+                <strong className="text-purple-300 block font-bold">11. Thái Âm (Che Chở/Âm Đức)</strong>
+                <p className="text-slate-400">Mưu kế kín đáo, người nữ che chở, âm đức tổ tiên phù hộ, sự việc bình an bí mật.</p>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-950 border border-pink-400/30 space-y-1">
+                <strong className="text-pink-300 block font-bold">12. Thiên Hậu (Ân Sủng/Nữ Giới)</strong>
+                <p className="text-slate-400">Ân điển bề trên, quý phụ nữ giúp đỡ, tình duyên êm đẹp, thai sản cát lợi.</p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 text-xs">
+              <strong className="text-cyan-300 block mb-1">⚖️ Quy Luật Đán/Dạ Quý & Thuận/Nghịch Hành:</strong>
+              <p className="text-slate-300">
+                • <strong>Đán Quý (Ban ngày):</strong> Giờ từ Mão đến Dậu dùng bài thơ Đán Quý Nhân.
+                <br />• <strong>Dạ Quý (Ban đêm):</strong> Giờ từ Dậu đến Mão dùng bài thơ Dạ Quý Nhân.
+                <br />• <strong>Thuận / Nghịch hành:</strong> Nếu vị trí Quý Nhân lâm vào các cung từ Hợi, Tý, Sửu, Dần, Mão, Thìn trên Địa bàn thì Thần Tướng <strong>đi Thuận</strong>; nếu lâm vào Tị, Ngọ, Mùi, Thân, Dậu, Tuất thì <strong>đi Nghịch</strong>.
+              </p>
+            </div>
+          </div>
+        )
+      },
+
+      // 12. Dai Luc Nham Ung Dung
+      {
+        id: 'lucnham-ungdung-chuyensau',
+        category: 'lucnham',
+        title: 'Ứng Dụng Đại Lục Nhâm Dự Trắc 6 Lĩnh Vực Đời Sống',
+        subtitle: 'Cầu tài thương mại, Hôn nhân tình duyên, Công danh sự nghiệp, Bệnh tật sức khỏe, Pháp lý tranh chấp, Xuất hành mưu sự',
+        keywords: ['ứng dụng lục nhâm', 'cầu tài', 'hôn nhân', 'công danh', 'bệnh tật', 'tranh chấp', 'xuất hành'],
+        content: (
+          <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-amber-500/30 space-y-1">
+                <strong className="text-amber-300 block text-xs sm:text-sm">💰 1. Cầu Tài & Giao Thương</strong>
+                <p className="text-slate-400">
+                  Xem Can Thượng Thần và Sơ Truyền gặp Thanh Long, Thái Thường hay Thiên Tài là đắc tài hanh thông. Gặp Huyền Vũ, Thiên Không hay Huynh Đệ là hao tài, phá của, lừa đảo.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-pink-500/30 space-y-1">
+                <strong className="text-pink-300 block text-xs sm:text-sm">❤️ 2. Tình Duyên & Hôn Nhân</strong>
+                <p className="text-slate-400">
+                  Can là Nam, Chi là Nữ. Can Chi tương sinh, gặp Lục Hợp, Thiên Hậu, Thái Âm là lương duyên mỹ mãn. Gặp Bạch Hổ, Đằng Xà, Huyền Vũ là khẩu thiệt, nghi kỵ, chia lìa.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-cyan-500/30 space-y-1">
+                <strong className="text-cyan-300 block text-xs sm:text-sm">📜 3. Công Danh & Sự Nghiệp</strong>
+                <p className="text-slate-400">
+                  Xem Sơ Truyền gặp Quan Tinh, Quý Nhân, Chu Tước sinh vượng là đỗ đạt thăng chức. Gặp Tử Tuyệt, Phục Ngâm hay Không Vong là chức vị bị giáng, công việc đình trệ.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-emerald-500/30 space-y-1">
+                <strong className="text-emerald-300 block text-xs sm:text-sm">🌿 4. Sức Khỏe & Tật Bệnh</strong>
+                <p className="text-slate-400">
+                  Khắc Can là chứng bệnh nguy cấp, gặp Bạch Hổ là đau đớn, phẫu thuật, gặp Đằng Xà là ma quái tâm thần. Sơ truyền gặp Tử Tôn (Thần Dược) là gặp thầy gặp thuốc cứu mạng.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-rose-500/30 space-y-1">
+                <strong className="text-rose-400 block text-xs sm:text-sm">⚖️ 5. Tranh Chấp & Pháp Lý</strong>
+                <p className="text-slate-400">
+                  Can là Nguyên đơn, Chi là Bị đơn. Bên nào được Quý Nhân, Quan Tinh sinh trợ thì bên đó thắng lý. Gặp Câu Trận, Chu Tước là tranh kiện dây dưa kéo dài nhiều năm.
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-purple-500/30 space-y-1">
+                <strong className="text-purple-300 block text-xs sm:text-sm">🚀 6. Xuất Hành & Cầu Vận</strong>
+                <p className="text-slate-400">
+                  Xem Sơ Truyền gặp Dịch Mã, Thanh Long là đi xa đắc ý, tài lộc dồi dào. Gặp Bát Chuyên, Phục Ngâm là cản trở giữa đường, không nên xuất hành.
+                </p>
+              </div>
+            </div>
+          </div>
+        )
+      },
+
+      // 13. Practical Applications
       {
         id: 'ungdung-thuctien',
         category: 'ungdung',
@@ -490,12 +848,12 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
         <div className="relative z-10 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Cẩm Nang Tri Thức Toàn Diện • Thời Gian & Không Gian Vũ Trụ</span>
+            <span>Cẩm Nang Tri Thức Toàn Cảnh • Cổ Tam Thức & Thiên Văn Vũ Trụ</span>
           </div>
 
           <div className="max-w-3xl space-y-2">
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-              Bản Đồ Tri Thức: Bát Trạch • Cửu Tinh • Tiết Khí • Điểm Sóc • Kỳ Môn
+              Kỳ Môn Độn Giáp • Đại Lục Nhâm • Bát Trạch • Cửu Tinh • 24 Tiết Khí
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               Khám phá mối tương tác vi diệu giữa <strong className="text-amber-300">Thiên Vận (Thời gian)</strong>,{' '}
@@ -507,18 +865,25 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
           {/* Quick Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5 pt-2">
             <button
-              onClick={() => onNavigateTab('overview')}
+              onClick={() => onNavigateTab('kymon-chart')}
               className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all group"
             >
-              <span>Xem Tổng Quan & Luận Cục</span>
+              <Layers className="w-4 h-4 text-slate-950" />
+              <span>Bàn Kỳ Môn 9 Cung (3x3)</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
-              onClick={() => onNavigateTab('kymon-chart')}
+              onClick={() => onNavigateTab('luc-nham')}
+              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
+            >
+              <Compass className="w-4 h-4 text-amber-400" />
+              <span>Bàn Đại Lục Nhâm (Tam Truyền)</span>
+            </button>
+            <button
+              onClick={() => onNavigateTab('overview')}
               className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
             >
-              <Layers className="w-3.5 h-3.5 text-purple-400" />
-              <span>Bàn Kỳ Môn Hoàn Chỉnh</span>
+              <span>Tổng Quan & Luận Cục</span>
             </button>
             <button
               onClick={() => onNavigateTab('compass')}
@@ -533,7 +898,7 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
                 className="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
               >
                 <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-                <span>Thuyết Minh Thuật Toán Đầy Đủ</span>
+                <span>Thuyết Minh Thuật Toán</span>
               </button>
             )}
           </div>
