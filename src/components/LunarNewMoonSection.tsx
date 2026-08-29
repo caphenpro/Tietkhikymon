@@ -1,5 +1,22 @@
 import React from 'react';
-import { Moon, Calendar, Clock, Sparkles, Orbit, CheckCircle2, AlertCircle, Layers, ArrowLeft, ArrowRight, Compass, BookOpen } from 'lucide-react';
+import {
+  Moon,
+  Calendar,
+  Clock,
+  Sparkles,
+  Orbit,
+  CheckCircle2,
+  AlertCircle,
+  Layers,
+  ArrowLeft,
+  ArrowRight,
+  Compass,
+  BookOpen,
+  Info,
+  Sun,
+  ChevronRight,
+  HelpCircle,
+} from 'lucide-react';
 import { NewMoonInfo } from '../types';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
 
@@ -18,6 +35,8 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
     100,
     Math.max(0, Math.round((newMoon.lunarDay / newMoon.totalMonthDays) * 100))
   );
+
+  const leapInfo = newMoon.yearLeapInfo;
 
   return (
     <div className="space-y-6">
@@ -45,6 +64,15 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
                 <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-950 text-cyan-300 border border-cyan-500/30">
                   {newMoon.monthType}
                 </span>
+                {leapInfo && (
+                  <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
+                    leapInfo.hasLeapMonth
+                      ? 'bg-purple-950/80 text-purple-300 border-purple-500/40'
+                      : 'bg-slate-800 text-slate-300 border-slate-700'
+                  }`}>
+                    {leapInfo.hasLeapMonth ? `Năm Nhuận (${leapInfo.leapMonthDisplay})` : 'Năm Không Nhuận'}
+                  </span>
+                )}
               </div>
               <p className="text-xs sm:text-sm text-slate-400 mt-1">
                 Định vị chu kỳ hội tụ Nhật - Nguyệt • Khoảng cách 2 điểm Sóc & Tiết Khí định tháng
@@ -124,6 +152,205 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
           </div>
         </div>
       </div>
+
+      {/* DEDICATED LEAP MONTH & YEAR CYCLE SECTION */}
+      {leapInfo && (
+        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-md space-y-5">
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+            <div className="flex items-center gap-3">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center border shadow-inner ${
+                leapInfo.hasLeapMonth
+                  ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
+                  : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+              }`}>
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                  <span>Tháng Nhuận & Chu Kỳ Năm Âm Lịch {leapInfo.lunarYearCanChi}</span>
+                  <span className="text-xs font-mono text-slate-400 font-normal">({leapInfo.lunarYear})</span>
+                </h4>
+                <p className="text-xs text-slate-400">
+                  Tra cứu chi tiết tình trạng tháng nhuận, độ dài năm và danh sách các tháng âm lịch
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={`text-xs px-3 py-1 rounded-full font-bold border ${
+                leapInfo.hasLeapMonth
+                  ? 'bg-amber-950/80 text-amber-300 border-amber-500/50'
+                  : 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50'
+              }`}>
+                {leapInfo.hasLeapMonth ? `NĂM NHUẬN (${leapInfo.totalMonthsInYear} Tháng)` : `NĂM THƯỜNG (${leapInfo.totalMonthsInYear} Tháng)`}
+              </span>
+              <span className="text-xs font-mono px-3 py-1 rounded-full bg-slate-950 text-slate-300 border border-slate-800">
+                {leapInfo.totalDaysInYear} ngày
+              </span>
+            </div>
+          </div>
+
+          {/* Main Leap Status Card */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Left: Leap Status Highlight (2 cols) */}
+            <div className={`lg:col-span-2 p-4 sm:p-5 rounded-xl border space-y-3.5 ${
+              leapInfo.hasLeapMonth
+                ? 'bg-amber-950/20 border-amber-500/30'
+                : 'bg-slate-950/60 border-slate-800'
+            }`}>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm font-bold ${leapInfo.hasLeapMonth ? 'text-amber-300' : 'text-emerald-300'}`}>
+                    {leapInfo.hasLeapMonth ? `🌙 ${leapInfo.leapMonthDisplay}` : '✨ Năm Nay Không Có Tháng Nhuận'}
+                  </span>
+                </div>
+
+                {leapInfo.hasLeapMonth && (
+                  <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
+                    leapInfo.leapMonthStatus === 'current'
+                      ? 'bg-emerald-950 text-emerald-300 border-emerald-500/40 animate-pulse'
+                      : leapInfo.leapMonthStatus === 'upcoming'
+                      ? 'bg-cyan-950 text-cyan-300 border-cyan-500/40'
+                      : 'bg-slate-800 text-slate-300 border-slate-700'
+                  }`}>
+                    {leapInfo.leapMonthStatus === 'current'
+                      ? '● Hiện Đang Là Tháng Nhuận Này'
+                      : leapInfo.leapMonthStatus === 'upcoming'
+                      ? '⏳ Sắp Tới Trong Năm'
+                      : '✓ Đã Kết Thúc Trong Năm'}
+                  </span>
+                )}
+              </div>
+
+              {/* Description */}
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
+                {leapInfo.leapStatusDescription}
+              </p>
+
+              {/* Date Interval and Details for Leap Month */}
+              {leapInfo.hasLeapMonth && leapInfo.leapMonthStartDate && leapInfo.leapMonthEndDate && (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs">
+                  <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
+                    <span className="text-slate-400 text-[11px] block">Mùng 1 (Bắt đầu):</span>
+                    <span className="font-mono font-bold text-white">
+                      {formatVietnamDateTime(leapInfo.leapMonthStartDate).split(' ')[0]}
+                    </span>
+                  </div>
+
+                  <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
+                    <span className="text-slate-400 text-[11px] block">Hết tháng (Kết thúc):</span>
+                    <span className="font-mono font-bold text-white">
+                      {formatVietnamDateTime(leapInfo.leapMonthEndDate).split(' ')[0]}
+                    </span>
+                  </div>
+
+                  <div className="p-2.5 bg-slate-950/80 rounded-lg border border-slate-800 space-y-1">
+                    <span className="text-slate-400 text-[11px] block">Độ dài tháng nhuận:</span>
+                    <span className="font-mono font-bold text-amber-300">
+                      {leapInfo.leapMonthTotalDays} ngày ({leapInfo.leapMonthDaysType})
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Status Note */}
+              <div className="text-xs text-slate-400 bg-slate-950/60 p-3 rounded-lg border border-slate-800/80 leading-relaxed">
+                <strong className="text-cyan-300">Nhận định trạng thái: </strong>
+                <span>{leapInfo.leapMonthStatusText}</span>
+              </div>
+            </div>
+
+            {/* Right: Astronomical Reason (1 col) */}
+            <div className="p-4 sm:p-5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3 flex flex-col justify-between text-xs">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-cyan-300 font-bold">
+                  <Orbit className="w-4 h-4 text-cyan-400" />
+                  <span>Nguyên Lý Thiên Văn Lịch</span>
+                </div>
+                <p className="text-slate-300 leading-relaxed text-xs">
+                  {leapInfo.leapAstronomicalReason}
+                </p>
+              </div>
+
+              <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+                <div className="font-semibold text-slate-200">Chu kỳ Meton 19 năm:</div>
+                <p>19 năm dương lịch = 235 tuần trăng = 19 năm âm lịch + 7 tháng nhuận.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* All Months in This Lunar Year Visual Grid */}
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2 font-bold text-slate-200">
+                <Calendar className="w-4 h-4 text-amber-400" />
+                <span>Bảng Danh Sách {leapInfo.totalMonthsInYear} Tháng Trong Năm {leapInfo.lunarYearCanChi}</span>
+              </div>
+              <span className="text-[11px] text-slate-400">
+                Chấm xanh: Tháng hiện tại • Viền vàng: Tháng Nhuận
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 text-xs">
+              {leapInfo.months.map((m, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    className={`p-3 rounded-xl border transition-all space-y-1.5 relative ${
+                      m.isCurrent
+                        ? 'bg-cyan-950/40 border-cyan-500 shadow-md ring-1 ring-cyan-500/50'
+                        : m.isLeap
+                        ? 'bg-amber-950/30 border-amber-500/60'
+                        : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700'
+                    }`}
+                  >
+                    {/* Header badge */}
+                    <div className="flex items-center justify-between">
+                      <span className={`font-bold ${
+                        m.isCurrent
+                          ? 'text-cyan-300'
+                          : m.isLeap
+                          ? 'text-amber-300'
+                          : 'text-slate-200'
+                      }`}>
+                        {m.monthName}
+                      </span>
+                      {m.isCurrent && (
+                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping shrink-0" />
+                      )}
+                    </div>
+
+                    {/* Day count */}
+                    <div className="flex items-center justify-between text-[11px] text-slate-400">
+                      <span>{m.totalDays} ngày</span>
+                      <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                        m.isLeap
+                          ? 'bg-amber-950 text-amber-300 border border-amber-500/30'
+                          : 'bg-slate-900 text-slate-400'
+                      }`}>
+                        {m.isLeap ? 'Nhuận' : 'Chính'}
+                      </span>
+                    </div>
+
+                    {/* Date range */}
+                    <div className="text-[10px] font-mono text-slate-400 truncate">
+                      {formatVietnamDateTime(m.startDate).split(' ')[0].slice(0, 5)} - {formatVietnamDateTime(m.endDate).split(' ')[0].slice(0, 5)}
+                    </div>
+
+                    {/* Current tag */}
+                    {m.isCurrent && (
+                      <div className="text-[9px] font-bold text-cyan-300 text-center uppercase tracking-wider bg-cyan-950/80 py-0.5 rounded border border-cyan-500/40 mt-1">
+                        Đang diễn ra
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Rules & Solar Terms Analysis for this Lunar Month */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

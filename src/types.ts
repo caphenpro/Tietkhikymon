@@ -21,6 +21,37 @@ export interface LunarTermDetail {
   exactDate: Date;
 }
 
+export interface LunarYearMonthSummary {
+  monthIndex: number;
+  monthName: string;
+  isLeap: boolean;
+  startDate: Date;
+  endDate: Date;
+  totalDays: number;
+  isCurrent: boolean;
+  terms: LunarTermDetail[];
+}
+
+export interface LunarYearLeapInfo {
+  lunarYear: number;
+  lunarYearCanChi: string;
+  hasLeapMonth: boolean;
+  leapMonthNumber?: number;
+  leapMonthName?: string;
+  leapMonthDisplay?: string;
+  leapMonthStartDate?: Date;
+  leapMonthEndDate?: Date;
+  leapMonthTotalDays?: number;
+  leapMonthDaysType?: string;
+  leapMonthStatus?: 'current' | 'upcoming' | 'passed' | 'none';
+  leapMonthStatusText?: string;
+  totalMonthsInYear: number; // 12 or 13
+  totalDaysInYear: number; // e.g. 354, 355, 383, 384, 385
+  months: LunarYearMonthSummary[];
+  leapStatusDescription: string;
+  leapAstronomicalReason: string;
+}
+
 export interface LunarDateInfo {
   lunarDay: number;
   lunarMonth: number;
@@ -44,6 +75,7 @@ export interface LunarDateInfo {
   hasTiet: boolean;
   hasKhi: boolean;
   monthRuleExplanation: string;
+  yearLeapInfo: LunarYearLeapInfo;
 }
 
 export type NewMoonInfo = LunarDateInfo;

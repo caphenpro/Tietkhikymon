@@ -342,13 +342,13 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
           {/* SECTION 5: ĐIỂM SÓC & ÂM LỊCH */}
           {(activeSection === 'all' || activeSection === 'lunar') && (
-            <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3 shadow-lg">
+            <div className="bg-slate-950/70 p-5 rounded-2xl border border-slate-800 space-y-3.5 shadow-lg">
               <h4 className="font-bold text-cyan-400 text-sm sm:text-base flex items-center gap-2 pb-2 border-b border-slate-800/80">
                 <Moon className="w-4 h-4 text-cyan-400" />
-                5. Ý Nghĩa Của Điểm Sóc (New Moon) & Âm Lịch Thiên Văn
+                5. Ý Nghĩa Của Điểm Sóc (New Moon), Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn
               </h4>
               <p>
-                <strong>Điểm Sóc</strong> là thời điểm giao hội Nhật - Nguyệt khi hiệu số kinh độ Hoàng đạo (&lambda;<sub>Moon</sub> - &lambda;<sub>Sun</sub>) = 0°. Lúc này Mặt Trăng nằm giữa Mặt Trời và Trái Đất, hoàn toàn quay mặt tối về phía Trái Đất.
+                <strong>Điểm Sóc (New Moon)</strong> là thời điểm giao hội Nhật - Nguyệt khi hiệu số kinh độ Hoàng đạo (&lambda;<sub>Moon</sub> - &lambda;<sub>Sun</sub>) = 0°. Lúc này Mặt Trăng nằm giữa Mặt Trời và Trái Đất, hoàn toàn quay mặt tối về phía Trái Đất.
               </p>
               <div className="space-y-2 text-xs text-slate-300">
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
@@ -357,8 +357,14 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
                   <strong className="text-amber-300">• Tháng Đủ (30 ngày) & Tháng Thiếu (29 ngày):</strong> Xác định hoàn toàn tự động bằng khoảng cách thời gian giữa 2 Điểm Sóc liên tiếp (chu kỳ tuần trăng trung bình là 29.53059 ngày).
                 </div>
-                <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
-                  <strong className="text-purple-300">• Quy tắc Tháng Nhuận Phương Đông:</strong> Trong năm âm lịch có 13 Điểm Sóc, tháng đầu tiên sau Đông Chí không chứa Trung Khí sẽ được chọn làm <strong>Tháng Nhuận</strong>. Đây là đỉnh cao của sự hòa hợp giữa chu kỳ Mặt Trời và Mặt Trăng (Âm Dương Hợp Lịch).
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-purple-500/30 bg-purple-950/20 space-y-1">
+                  <strong className="text-purple-300 block">• Thuật Toán Xác Định Tháng Nhuận Âm Lịch (Vô Trung Khí Pháp):</strong>
+                  <p className="text-slate-300">
+                    Trong một năm thiên văn, năm âm lịch thông thường có 12 tháng (~354 ngày), năm nhuận có 13 tháng (~384 ngày). Thuật toán kiểm tra 12 Trung Khí (Mặt Trời) nằm trong các khoảng thời gian giữa 2 Điểm Sóc liên tiếp. <strong>Tháng âm lịch đầu tiên sau Đông Chí mà không chứa bất kỳ Trung Khí nào sẽ được quy định là Tháng Nhuận</strong>.
+                  </p>
+                  <p className="text-slate-400 text-[11px] pt-1">
+                    Chu kỳ Meton (19 năm Dương lịch = 235 tuần trăng = 19 năm Âm lịch + 7 Tháng Nhuận) đảm bảo các mùa trong năm và Tết cổ truyền luôn quay về đúng chu kỳ tuần hoàn tự nhiên của Trái Đất quanh Mặt Trời.
+                  </p>
                 </div>
               </div>
             </div>

@@ -6,6 +6,26 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.16.0]] - 2026-08-29
+### Codename: *Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn*
+
+#### ✨ Tính Năng Mới (Added)
+- **Chuyên Mục Phân Tích Tháng Nhuận & Chu Kỳ Năm Âm Lịch (`/src/components/LunarNewMoonSection.tsx`)**:
+  - Tích hợp thẻ chuyên biệt phân tích chi tiết tình trạng tháng nhuận trong năm âm lịch tra cứu.
+  - Phân loại rõ ràng **Năm Nhuận (13 Tháng - 384 Ngày)** hoặc **Năm Thường (12 Tháng - 354 Ngày)**.
+  - Hiển thị đầy đủ thông tin tháng nhuận (nếu có): Tên tháng (ví dụ: *Tháng 6 Nhuận*), khoảng thời gian Dương lịch (từ Mùng 1 đến ngày kết thúc), số ngày thực tế (29 hay 30 ngày).
+  - Nhận định trạng thái thời gian thực: 🟢 *Hiện đang là tháng nhuận*, ⏳ *Tháng nhuận sắp tới trong năm*, hoặc ✓ *Tháng nhuận đã kết thúc trong năm*.
+- **Bảng Danh Sách Trực Quan 12 Hoặc 13 Tháng Trong Năm**:
+  - Hiển thị ma trận toàn bộ các tháng của năm âm lịch kèm số ngày (đủ/thiếu), ngày bắt đầu - kết thúc.
+  - Đánh dấu nổi bật tháng hiện tại đang diễn ra (*glowing badge*) và tháng nhuận (*amber border badge*).
+- **Thuật Toán Thiên Văn Vô Trung Khí Pháp (`/src/astronomy/lunarCalendar.ts`)**:
+  - Tự động quét và khớp 12 Trung Khí với các điểm Sóc trong khoảng thời gian rộng 600 ngày quanh năm khảo sát.
+  - Thuyết minh nguyên lý chu kỳ Meton 19 năm (19 năm dương lịch = 235 tuần trăng = 19 năm âm lịch + 7 tháng nhuận).
+- **Đồng Bộ Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Bổ sung và mở rộng **Mục 5** về Thuật Toán Xác Định Tháng Nhuận Âm Lịch (Vô Trung Khí Pháp).
+
+---
+
 ## [[2.15.0]] - 2026-08-29
 ### Codename: *Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn*
 

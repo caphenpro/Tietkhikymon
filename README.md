@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.15.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.16.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,21 +10,24 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.15.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn*
+### 🚀 **Phiên bản hiện tại: `v2.16.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn*
 
-- 🌓 **Hệ Thống Chế Độ Sáng / Tối Linh Hoạt**:
-  - Hỗ trợ 3 tùy chọn: **Tự động theo hệ thống/trình duyệt (System)**, **Chế độ Sáng (Light Mode)**, và **Chế độ Tối (Dark Mode)**.
-  - Tự động phản hồi thay đổi `prefers-color-scheme` từ hệ điều hành và lưu trạng thái bền vững vào `localStorage`.
-- 🎨 **Bộ Điều Khiển Giao Diện `ThemeSwitcher`**:
-  - Tích hợp nút chuyển đổi giao diện tinh tế trên thanh điều hướng Header (cả phiên bản Desktop và Di Động).
-- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Bổ sung Mục 17 trong `AlgorithmGuideModal.tsx`.
+- 🌙 **Chuyên Mục Phân Tích Tháng Nhuận & Chu Kỳ Năm Âm Lịch**:
+  - Tích hợp thẻ chuyên biệt phân tích chi tiết tình trạng tháng nhuận trong năm âm lịch tra cứu.
+  - Phân định rõ ràng **Năm Nhuận (13 Tháng - 384 Ngày)** hoặc **Năm Thường (12 Tháng - 354 Ngày)**.
+  - Hiển thị đầy đủ thông tin tháng nhuận: Tên tháng (*Tháng 6 Nhuận*), ngày bắt đầu/kết thúc Dương lịch, số ngày (29/30 ngày), trạng thái (Đang diễn ra, Sắp tới, Đã qua).
+- 🗓️ **Bảng Toàn Bộ 12/13 Tháng Trong Năm Âm Lịch**:
+  - Trực quan hóa danh sách toàn bộ các tháng của năm âm lịch với chỉ dấu tháng hiện tại và tháng nhuận.
+- 🔭 **Thuật Toán Thiên Văn Vô Trung Khí Pháp**:
+  - Thuyết minh và áp dụng chuẩn xác quy tắc tháng không chứa Trung Khí và chu kỳ Meton 19 năm.
+- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Section 5 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.14.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.15.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 
@@ -42,6 +45,7 @@
 - **Mốc xác định Tháng 1 (Tháng Giêng)**: Tháng 1 là tháng chứa Tiết **Lập Xuân** ($315^\circ$) và Trung khí **Vũ Thủy** ($330^\circ$).
 - **Quy tắc Tháng Nhuận**: Nếu trong khoảng thời gian giữa 2 điểm Sóc của một tháng chỉ có Trung khí mà **không có Tiết khí** (hoặc thiếu Tiết khí tương ứng), tháng đó được xác định là **Tháng Nhuận** của tháng đó.
 - Phân định **Tháng đủ (30 ngày)** và **Tháng thiếu (29 ngày)** cùng tiến độ tuần trăng thực tế.
+- **Thống kê toàn bộ chu kỳ năm Âm Lịch**: Bảng 12 hoặc 13 tháng âm lịch trong năm với thông tin tháng nhuận (nếu có), số ngày và trạng thái diễn ra.
 
 ### 3. 🔮 Bát Tự Tứ Trụ (Can Chi 4 Trụ)
 - **Trụ Năm**: Khởi đổi năm mới chính xác tại mốc kinh độ $315^\circ$ (**Tiết Lập Xuân**), chuẩn xác theo nguyên lý Mệnh lý & Kỳ Môn cổ điển.

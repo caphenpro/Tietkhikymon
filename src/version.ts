@@ -11,18 +11,41 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.15.0';
+export const APP_VERSION = '2.16.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn';
+export const APP_CODENAME = 'Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.16.0',
+    releaseDate: '2026-08-29',
+    codename: 'Chuyên Mục Tháng Nhuận & Chu Kỳ Năm Âm Lịch Thiên Văn',
+    tagline: 'Bổ sung chuyên mục phân tích Tháng Nhuận Âm Lịch trong năm (nếu có), xác định năm nhuận/năm thường, thống kê 12 hoặc 13 tháng âm lịch, ngày bắt đầu/kết thúc và nguyên lý thiên văn Vô Trung Khí.',
+    isLatest: true,
+    highlights: [
+      'Thuật toán thiên văn Vô Trung Khí Pháp tự động phân tích toàn bộ chu kỳ năm Âm lịch tương ứng với ngày tra cứu (cửa sổ 600 ngày).',
+      'Xác định chính xác năm có tháng nhuận hay năm thường, tên tháng nhuận (ví dụ: Tháng 6 Nhuận), độ dài ngày (29 hay 30 ngày), ngày bắt đầu (Mùng 1) và ngày kết thúc.',
+      'Hiển thị trạng thái tương tác trực quan: Hiện đang là tháng nhuận, Tháng nhuận sắp tới trong năm, hoặc Tháng nhuận đã qua.',
+      'Bảng danh sách toàn bộ 12 hoặc 13 tháng trong năm âm lịch với chỉ dấu tháng hiện tại (glowing active badge) và tháng nhuận (amber badge).',
+      'Thuyết minh nguyên lý chu kỳ Meton 19 năm và đồng bộ Section 5 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Cấu trúc dữ liệu LunarYearLeapInfo & LunarYearMonthSummary trong types.ts.',
+      'Thẻ chuyên mục "Tháng Nhuận & Chu Kỳ Năm Âm Lịch" và Bảng 12/13 tháng trong LunarNewMoonSection.',
+      'Thuật toán trích xuất chu kỳ năm âm lịch trong astronomy/lunarCalendar.ts.',
+    ],
+    improved: [
+      'Giao diện chuyên mục Điểm Sóc & Âm Lịch với biểu đồ tiến trình và thông tin tổng quan năm âm lịch.',
+      'Đồng bộ tài liệu thuyết minh thuật toán và các tệp nhật ký phiên bản.',
+    ],
+  },
   {
     version: '2.15.0',
     releaseDate: '2026-08-29',
     codename: 'Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn',
     tagline: 'Hỗ trợ chuyển đổi chế độ Sáng / Tối linh hoạt: Tự động theo cài đặt trình duyệt/hệ thống hoặc tùy chọn thủ công, lưu trữ bền vững trên thiết bị.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tích hợp ThemeContext & ThemeSwitcher hỗ trợ 3 chế độ: Tự động (Hệ thống/Trình duyệt), Chế độ Sáng (Light Mode thanh lịch, tương phản cao), và Chế độ Tối (Dark Mode huyền bí thiên văn).',
       'Tự động lắng nghe thay đổi prefers-color-scheme theo thời gian thực từ trình duyệt và hệ điều hành.',
