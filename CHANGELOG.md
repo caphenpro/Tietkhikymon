@@ -6,6 +6,20 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.18.0]] - 2026-08-29
+### Codename: *Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch*
+
+#### ✨ Tính Năng Mới & Tái Cấu Trúc Giao Diện (Added & Improved)
+- **Dời Lịch Tra Cứu Nhanh (MiniCalendar) Sang Nhóm Điểm Sóc & Âm Lịch (`/src/components/LunarNewMoonSection.tsx`)**:
+  - Chuyển toàn bộ component Lịch Tra Cứu Nhanh sang đặt cạnh thẻ Điểm Sóc & Âm Lịch Thiên Văn trong bố cục lưới cân đối (7 cột banner Âm Lịch + 5 cột MiniCalendar).
+  - Tương tác tức thì: Cho phép người dùng chuyển ngày/tháng/năm nhanh chóng, quan sát trực quan sự biến thiên của tuần trăng, 4 pha Mặt Trăng và toàn bộ chu kỳ 12/13 tháng âm lịch theo ngày được chọn.
+- **Tối Ưu Giao Diện Tổng Quan Luận Cục (`/src/components/OverviewCard.tsx`)**:
+  - Mở rộng thẻ Tiết Khí Đương Lệnh thành toàn chiều rộng (full width), trình bày thông thoáng, cân đối và tập trung mạch lạc vào các kết quả luận đoán cốt lõi.
+- **Đồng Bộ Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Cập nhật Mục 5 thuyết minh về việc tích hợp Lịch Tra Cứu Nhanh trong nhóm Điểm Sóc.
+
+---
+
 ## [[2.17.0]] - 2026-08-29
 ### Codename: *Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí*
 

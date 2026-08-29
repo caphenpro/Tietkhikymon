@@ -357,6 +357,12 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-800">
                   <strong className="text-amber-300">• Tháng Đủ (30 ngày) & Tháng Thiếu (29 ngày):</strong> Xác định hoàn toàn tự động bằng khoảng cách thời gian giữa 2 Điểm Sóc liên tiếp (chu kỳ tuần trăng trung bình là 29.53059 ngày).
                 </div>
+                <div className="p-2.5 rounded-xl bg-slate-900 border border-emerald-500/30 bg-emerald-950/20 space-y-1">
+                  <strong className="text-emerald-300 block">• Tích Hợp Lịch Tra Cứu Nhanh Trực Tiếp Trong Nhóm Điểm Sóc:</strong>
+                  <p className="text-slate-300">
+                    Hỗ trợ chọn ngày/tháng/năm nhanh chóng với giao diện Lịch Tra Cứu Nhanh (MiniCalendar) đặt ngay cạnh thẻ Điểm Sóc, cho phép nhảy nhanh đến bất kỳ mốc thời gian nào để quan sát ngay sự biến thiên của tuần trăng, 4 pha Mặt Trăng và tọa độ âm lịch tương ứng.
+                  </p>
+                </div>
                 <div className="p-2.5 rounded-xl bg-slate-900 border border-cyan-500/30 bg-cyan-950/20 space-y-1">
                   <strong className="text-cyan-300 block">• Tọa Độ Thời Gian Dương Lịch Của Từng Tháng Âm Lịch:</strong>
                   <p className="text-slate-300">

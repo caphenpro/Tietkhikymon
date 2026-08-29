@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { NewMoonInfo } from '../types';
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
+import { MiniCalendar } from './MiniCalendar';
 
 // Helper formatting Vietnamese Date and Time with exact hours, minutes, seconds
 function formatVNTimeDetails(date: Date) {
@@ -46,12 +47,20 @@ interface LunarNewMoonSectionProps {
   newMoon: NewMoonInfo;
   calculationDate: Date;
   onNavigateTab?: (tabId: string) => void;
+  currentDate?: Date;
+  onDateChange?: (date: Date) => void;
+  isLive?: boolean;
+  onSetLive?: (live: boolean) => void;
 }
 
 export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
   newMoon,
   calculationDate,
   onNavigateTab,
+  currentDate = new Date(),
+  onDateChange = () => {},
+  isLive = false,
+  onSetLive = () => {},
 }) => {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
 
@@ -64,116 +73,131 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Top Main Banner */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg relative overflow-hidden">
-        <div className="absolute -right-10 -top-10 w-56 h-56 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Top Row: Âm Lịch & Điểm Sóc Thiên Văn + Lịch Tra Cứu Nhanh */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* Top Main Banner (Left: 7 cols) */}
+        <div className="lg:col-span-7 flex flex-col">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg relative overflow-hidden h-full flex flex-col justify-between space-y-5">
+            <div className="absolute -right-10 -top-10 w-56 h-56 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-800">
-          <div className="flex items-center gap-3.5">
-            <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 shadow-inner">
-              <Moon className="w-7 h-7 text-cyan-400" />
-            </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Âm Lịch & Điểm Sóc Thiên Văn
-                </h3>
-                <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
-                  newMoon.isLeapMonth
-                    ? 'bg-amber-950/70 text-amber-300 border-amber-500/40'
-                    : 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40'
-                }`}>
-                  {newMoon.fullMonthDisplay}
-                </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-950 text-cyan-300 border border-cyan-500/30">
-                  {newMoon.monthType}
-                </span>
-                {leapInfo && (
-                  <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
-                    leapInfo.hasLeapMonth
-                      ? 'bg-purple-950/80 text-purple-300 border-purple-500/40'
-                      : 'bg-slate-800 text-slate-300 border-slate-700'
-                  }`}>
-                    {leapInfo.hasLeapMonth ? `Năm Nhuận (${leapInfo.leapMonthDisplay})` : 'Năm Không Nhuận'}
-                  </span>
-                )}
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-800">
+              <div className="flex items-center gap-3.5">
+                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 shadow-inner">
+                  <Moon className="w-7 h-7 text-cyan-400" />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                      Âm Lịch & Điểm Sóc Thiên Văn
+                    </h3>
+                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
+                      newMoon.isLeapMonth
+                        ? 'bg-amber-950/70 text-amber-300 border-amber-500/40'
+                        : 'bg-emerald-950/70 text-emerald-300 border-emerald-500/40'
+                    }`}>
+                      {newMoon.fullMonthDisplay}
+                    </span>
+                    <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-cyan-950 text-cyan-300 border border-cyan-500/30">
+                      {newMoon.monthType}
+                    </span>
+                    {leapInfo && (
+                      <span className={`text-xs px-2.5 py-0.5 rounded-full font-semibold border ${
+                        leapInfo.hasLeapMonth
+                          ? 'bg-purple-950/80 text-purple-300 border-purple-500/40'
+                          : 'bg-slate-800 text-slate-300 border-slate-700'
+                      }`}>
+                        {leapInfo.hasLeapMonth ? `Năm Nhuận (${leapInfo.leapMonthDisplay})` : 'Năm Không Nhuận'}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1">
+                    Định vị chu kỳ hội tụ Nhật - Nguyệt • Khoảng cách 2 điểm Sóc & Tiết Khí định tháng
+                  </p>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm text-slate-400 mt-1">
-                Định vị chu kỳ hội tụ Nhật - Nguyệt • Khoảng cách 2 điểm Sóc & Tiết Khí định tháng
-              </p>
-            </div>
-          </div>
 
-          <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl text-left md:text-right shrink-0">
-            <div className="text-[11px] uppercase text-slate-400 font-semibold tracking-wider">
-              Hôm nay Âm Lịch (UTC+7)
+              <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl text-left md:text-right shrink-0">
+                <div className="text-[11px] uppercase text-slate-400 font-semibold tracking-wider">
+                  Hôm nay Âm Lịch (UTC+7)
+                </div>
+                <div className="text-xl sm:text-2xl font-bold text-cyan-300 font-mono mt-0.5">
+                  Ngày {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay}
+                </div>
+                <div className="text-xs font-mono text-slate-300 mt-0.5">
+                  {newMoon.fullMonthDisplay} • Năm {newMoon.lunarYearCanChi}
+                </div>
+              </div>
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-cyan-300 font-mono mt-0.5">
-              Ngày {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay}
+
+            {/* Full Date Banner */}
+            <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <Calendar className="w-5 h-5 text-amber-400 shrink-0" />
+                <div>
+                  <span className="text-xs text-slate-400 font-medium">Toàn văn ngày tháng âm lịch:</span>
+                  <div className="text-base sm:text-lg font-bold text-white font-mono">
+                    {newMoon.lunarFullDateText}
+                  </div>
+                </div>
+              </div>
+              <div className="text-xs text-slate-400 font-mono">
+                {newMoon.lunarDay} / {newMoon.totalMonthDays} ngày ({percentComplete}% tuần trăng)
+              </div>
             </div>
-            <div className="text-xs font-mono text-slate-300 mt-0.5">
-              {newMoon.fullMonthDisplay} • Năm {newMoon.lunarYearCanChi}
+
+            {/* Lunar Month Timeline Visualizer */}
+            <div>
+              <div className="flex justify-between text-xs text-slate-400 mb-2">
+                <span>Tiến độ tuần trăng trong tháng: Ngày {newMoon.lunarDay} / {newMoon.totalMonthDays}</span>
+                <span className="font-mono text-cyan-400 font-semibold">{percentComplete}%</span>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="w-full h-3 bg-slate-950 rounded-full border border-slate-800 overflow-hidden relative">
+                <div
+                  className="h-full bg-gradient-to-r from-cyan-600 via-cyan-400 to-amber-400 rounded-full transition-all duration-500"
+                  style={{ width: `${percentComplete}%` }}
+                />
+              </div>
+
+              {/* 4 Moon Phases Markers */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 text-center text-xs">
+                <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+                  <div className="text-base mb-1">🌑</div>
+                  <div className="font-semibold text-slate-200">Điểm Sóc (0°)</div>
+                  <div className="text-[10px] text-slate-400">Mùng 1 (Trăng mới)</div>
+                </div>
+
+                <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+                  <div className="text-base mb-1">🌓</div>
+                  <div className="font-semibold text-slate-200">Thượng Huyền (90°)</div>
+                  <div className="text-[10px] text-slate-400">Mùng 7 - Mùng 8</div>
+                </div>
+
+                <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+                  <div className="text-base mb-1">🌕</div>
+                  <div className="font-semibold text-slate-200">Điểm Vọng (180°)</div>
+                  <div className="text-[10px] text-slate-400">Ngày 15 (Trăng tròn)</div>
+                </div>
+
+                <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
+                  <div className="text-base mb-1">🌗</div>
+                  <div className="font-semibold text-slate-200">Hạ Huyền (270°)</div>
+                  <div className="text-[10px] text-slate-400">Ngày 22 - Ngày 23</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Full Date Banner */}
-        <div className="mt-5 bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <Calendar className="w-5 h-5 text-amber-400 shrink-0" />
-            <div>
-              <span className="text-xs text-slate-400 font-medium">Toàn văn ngày tháng âm lịch:</span>
-              <div className="text-base sm:text-lg font-bold text-white font-mono">
-                {newMoon.lunarFullDateText}
-              </div>
-            </div>
-          </div>
-          <div className="text-xs text-slate-400 font-mono">
-            {newMoon.lunarDay} / {newMoon.totalMonthDays} ngày ({percentComplete}% tuần trăng)
-          </div>
-        </div>
-
-        {/* Lunar Month Timeline Visualizer */}
-        <div className="mt-5">
-          <div className="flex justify-between text-xs text-slate-400 mb-2">
-            <span>Tiến độ tuần trăng trong tháng: Ngày {newMoon.lunarDay} / {newMoon.totalMonthDays}</span>
-            <span className="font-mono text-cyan-400 font-semibold">{percentComplete}%</span>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="w-full h-3 bg-slate-950 rounded-full border border-slate-800 overflow-hidden relative">
-            <div
-              className="h-full bg-gradient-to-r from-cyan-600 via-cyan-400 to-amber-400 rounded-full transition-all duration-500"
-              style={{ width: `${percentComplete}%` }}
-            />
-          </div>
-
-          {/* 4 Moon Phases Markers */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 text-center text-xs">
-            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
-              <div className="text-base mb-1">🌑</div>
-              <div className="font-semibold text-slate-200">Điểm Sóc (0°)</div>
-              <div className="text-[10px] text-slate-400">Mùng 1 (Trăng mới)</div>
-            </div>
-
-            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
-              <div className="text-base mb-1">🌓</div>
-              <div className="font-semibold text-slate-200">Thượng Huyền (90°)</div>
-              <div className="text-[10px] text-slate-400">Mùng 7 - Mùng 8</div>
-            </div>
-
-            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
-              <div className="text-base mb-1">🌕</div>
-              <div className="font-semibold text-slate-200">Điểm Vọng (180°)</div>
-              <div className="text-[10px] text-slate-400">Ngày 15 (Trăng tròn)</div>
-            </div>
-
-            <div className="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">
-              <div className="text-base mb-1">🌗</div>
-              <div className="font-semibold text-slate-200">Hạ Huyền (270°)</div>
-              <div className="text-[10px] text-slate-400">Ngày 22 - Ngày 23</div>
-            </div>
-          </div>
+        {/* Lịch Tra Cứu Nhanh (Right: 5 cols) */}
+        <div className="lg:col-span-5 flex flex-col">
+          <MiniCalendar
+            currentDate={currentDate || calculationDate}
+            onDateChange={onDateChange}
+            isLive={isLive}
+            onSetLive={onSetLive}
+          />
         </div>
       </div>
 

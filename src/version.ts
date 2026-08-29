@@ -11,18 +11,38 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.17.0';
+export const APP_VERSION = '2.18.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí';
+export const APP_CODENAME = 'Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.18.0',
+    releaseDate: '2026-08-29',
+    codename: 'Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch',
+    tagline: 'Tái cấu trúc bố cục: Di chuyển Lịch Tra Cứu Nhanh (MiniCalendar) từ thẻ Tổng Quan sang nhóm Điểm Sóc & Âm Lịch để tối ưu thao tác tra cứu tuần trăng, 4 pha Mặt Trăng và tháng âm lịch.',
+    isLatest: true,
+    highlights: [
+      'Dời hoàn toàn component Lịch Tra Cứu Nhanh (MiniCalendar) từ Tổng Quan Luận Cục sang nhóm Điểm Sóc & Âm Lịch Thiên Văn.',
+      'Tối ưu giao diện Tổng Quan: Thẻ Tiết Khí Đương Lệnh mở rộng toàn chiều rộng, hiển thị thông thoáng và tập trung vào các kết quả cốt lõi.',
+      'Tương tác trực quan trong nhóm Âm Lịch: Người dùng có thể chọn nhanh ngày bất kỳ trên Lịch Tra Cứu Nhanh để theo dõi tức thì sự thay đổi của tuần trăng, 4 pha trăng và danh sách 12/13 tháng âm lịch.',
+      'Đồng bộ thuyết minh thuật toán tại Mục 5 trong AlgorithmGuideModal.',
+    ],
+    added: [
+      'Tích hợp MiniCalendar trực tiếp vào giao diện Điểm Sóc & Âm Lịch (LunarNewMoonSection).',
+    ],
+    improved: [
+      'Tối ưu trải nghiệm tra cứu âm lịch và tuần trăng theo ngày dương lịch được chọn trực tiếp.',
+      'Bố cục giao diện Tổng Quan mạch lạc, gọn gàng và thẩm mỹ cao.',
+    ],
+  },
   {
     version: '2.17.0',
     releaseDate: '2026-08-29',
     codename: 'Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí',
     tagline: 'Áp dụng quy tắc thiên văn cổ điển: Gán cứng tháng chứa Đông Chí = Tháng 11, đếm số tháng giữa 2 lần Đông Chí liên tiếp để xác định năm 13 tháng, tìm tháng Vô Trung Khí làm Tháng Nhuận và lan tỏa số thứ tự tháng sang hai phía.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Gán cứng tháng âm lịch (khoảng giữa 2 điểm Sóc) chứa thời khắc Đông Chí (270°) cố định là Tháng 11 Âm Lịch.',
       'Đếm số tháng giữa 2 điểm Đông Chí liên tiếp của năm trước và năm đang xét (12 tháng = năm thường, 13 tháng = năm nhuận).',

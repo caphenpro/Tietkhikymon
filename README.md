@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.17.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.18.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,23 +10,21 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.17.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Chuẩn Hóa Thuật Toán Xác Định Tháng Nhuận & Chu Kỳ 13 Tháng Mốc Đông Chí*
+### 🚀 **Phiên bản hiện tại: `v2.18.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Dời Lịch Tra Cứu Nhanh Sang Nhóm Điểm Sóc & Âm Lịch*
 
-- ❄️ **Mốc Cứng Đông Chí = Tháng 11 Âm Lịch**:
-  - Tháng âm lịch (giữa 2 ngày Sóc liên tiếp) chứa thời khắc Đông Chí (270°) luôn được **gán cứng = Tháng 11 Âm Lịch**.
-- 🧮 **Đếm Số Tháng Giữa 2 Lần Đông Chí Liên Tiếp (12 hay 13 tháng)**:
-  - Nếu khoảng cách có 13 tháng: Xác định chu kỳ có tháng nhuận, tự động quét tìm tháng **Vô Trung Khí** đầu tiên để đánh dấu làm **Tháng Nhuận**.
-- 🔄 **Lan Tỏa Số Thứ Tự Tháng Sang Hai Phía**:
-  - Từ mốc Tháng 11 tiến lên Tháng 12, Tháng Giêng, Tháng 2... và lùi về Tháng 10, Tháng 9...
-  - Xác lập trọn vẹn 12 hoặc 13 tháng của Năm Âm Lịch Can Chi (Tháng 1 đến Tháng 12).
-- 🔍 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật toàn diện Mục 5 trong `AlgorithmGuideModal.tsx`.
+- 🗓️ **Dời Lịch Tra Cứu Nhanh (MiniCalendar) Sang Nhóm Điểm Sóc & Âm Lịch**:
+  - Di chuyển toàn bộ component MiniCalendar từ thẻ Tổng Quan sang đặt trực tiếp cạnh thẻ Điểm Sóc Âm Lịch (tỷ lệ lưới 7/5 hài hòa).
+  - Tối ưu hóa việc tra cứu: Người dùng chọn nhanh ngày trên lịch và theo dõi trực quan tuần trăng, 4 pha Mặt Trăng, tình trạng tháng nhuận và danh sách 12/13 tháng âm lịch biến đổi theo thời gian thực.
+- 🎨 **Tinh Gọn Giao Diện Tổng Quan Luận Cục**:
+  - Thẻ Tiết Khí Đương Lệnh mở rộng toàn chiều rộng (full width), giúp bố cục thoáng đãng, dễ đọc và tập trung vào các kết quả cốt lõi.
+- 📖 **Đồng Bộ Thuyết Minh Thuật Toán**: Cập nhật Mục 5 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.16.1`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.17.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

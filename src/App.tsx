@@ -96,10 +96,6 @@ export default function App() {
            <div className="space-y-6">
              <OverviewCard
                result={result}
-               currentDate={currentDate}
-               onDateChange={(d) => setCurrentDate(d)}
-               isLive={isLive}
-               onSetLive={(live) => setIsLive(live)}
                onNavigateTab={(tabId: string) => setActiveTab(tabId)}
              />
              <KyMonDunJiaPanel
@@ -168,6 +164,10 @@ export default function App() {
             <LunarNewMoonSection
               newMoon={result.newMoon}
               calculationDate={currentDate}
+              currentDate={currentDate}
+              onDateChange={(d) => setCurrentDate(d)}
+              isLive={isLive}
+              onSetLive={(live) => setIsLive(live)}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
