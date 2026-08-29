@@ -11,18 +11,40 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.14.0';
+export const APP_VERSION = '2.15.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm';
+export const APP_CODENAME = 'Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.15.0',
+    releaseDate: '2026-08-29',
+    codename: 'Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn',
+    tagline: 'Hỗ trợ chuyển đổi chế độ Sáng / Tối linh hoạt: Tự động theo cài đặt trình duyệt/hệ thống hoặc tùy chọn thủ công, lưu trữ bền vững trên thiết bị.',
+    isLatest: true,
+    highlights: [
+      'Tích hợp ThemeContext & ThemeSwitcher hỗ trợ 3 chế độ: Tự động (Hệ thống/Trình duyệt), Chế độ Sáng (Light Mode thanh lịch, tương phản cao), và Chế độ Tối (Dark Mode huyền bí thiên văn).',
+      'Tự động lắng nghe thay đổi prefers-color-scheme theo thời gian thực từ trình duyệt và hệ điều hành.',
+      'Giao diện chuyển đổi theme trực quan trên Header cho cả máy tính và thiết bị di động.',
+      'Lưu trữ tùy chọn bền vững vào localStorage để duy trì trạng thái xem yêu thích.',
+      'Đồng bộ Mục 17 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal).',
+    ],
+    added: [
+      'Bộ điều khiển giao diện ThemeSwitcher & ThemeContext quản lý theme toàn diện.',
+      'Mục 17 trong Thuyết Minh Thuật Toán & Nguyên Lý Hệ Thống.',
+    ],
+    improved: [
+      'Tối ưu hóa bảng màu tương phản WCAG AA cho chế độ Sáng và Tối.',
+      'Bổ sung nút chuyển đổi theme tức thời trên thanh điều hướng Header.',
+    ],
+  },
   {
     version: '2.14.0',
     releaseDate: '2026-08-29',
     codename: 'Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm',
     tagline: 'Bổ sung thành phần GlossarySection tra cứu thuật ngữ chuyên sâu Kỳ Môn Độn Giáp, Đại Lục Nhâm và Thiên Văn Hoàng Đạo ngay trên Trang Chủ, giải thích trực quan, dễ hiểu cho người mới.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tạo mới thành phần GlossarySection trên Trang Chủ CosmicKnowledgeGuide với hệ thống phân loại theo 3 chuyên mục lớn (Kỳ Môn, Lục Nhâm, Thiên Văn/Lạc Thư).',
       'Định nghĩa đầy đủ, ngắn gọn kèm ứng dụng thực tế và lưu ý cho các thuật ngữ trọng yếu: Trực Phù, Trực Sử, Tam Kỳ, Lục Nghi, Bát Môn, Cửu Tinh, Bát Thần, Siêu Thần Tiếp Khí, Phục/Phản Ngâm, Kích Hình, Nguyệt Tướng, Tứ Khoa, Tam Truyền, Cửu Tông Môn, Đán/Dạ Quý, Thuận/Nghịch hành, Điểm Sóc, 24 Tiết Khí, Ma Trận Lạc Thư.',

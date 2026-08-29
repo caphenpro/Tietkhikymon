@@ -59,6 +59,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'ux-ui', title: '14. Kiến Trúc Ma Trận Lạc Thư & Click-to-Modal', icon: Layers },
     { id: 'home-guide', title: '15. Cẩm Nang Tri Thức Trang Chủ & Toàn Thư Lục Nhâm', icon: BookOpen },
     { id: 'glossary', title: '16. Từ Điển Thuật Ngữ Kỳ Môn, Lục Nhâm & Thiên Văn', icon: Bookmark },
+    { id: 'theme-mode', title: '17. Chế Độ Sáng / Tối (Auto & Custom Theme)', icon: Sun },
   ];
 
   return (
@@ -904,6 +905,47 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                     Điểm Sóc thiên văn (New Moon), 24 Tiết Khí (Solar Longitude 15°), Cửu Cung Lạc Thư (tổng 15), Không Vong, Dịch Mã.
                   </p>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* Section 17: Theme Mode & System Sync */}
+          {(activeSection === 'all' || activeSection === 'theme-mode') && (
+            <div id="theme-mode" className="p-5 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-4">
+              <h3 className="text-base font-bold text-amber-300 flex items-center gap-2">
+                <Sun className="w-5 h-5 text-amber-400" />
+                <span>17. Chế Độ Sáng / Tối & Tương Thích Trình Duyệt (Theme Mode & System Sync)</span>
+              </h3>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Hệ thống cung cấp cơ chế chuyển đổi giao diện linh hoạt, đáp ứng nhu cầu nghiên cứu trong nhiều điều kiện ánh sáng khác nhau:
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold">💻 1. Tự Động Theo Hệ Thống (System)</strong>
+                  <p className="text-slate-400">
+                    Lắng nghe thuộc tính <code className="text-cyan-300 font-mono">prefers-color-scheme</code> từ hệ điều hành / trình duyệt. Tự động đồng bộ ngay khi thiết bị chuyển chế độ mà không cần tải lại trang.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold">☀️ 2. Chế Độ Sáng (Light Mode)</strong>
+                  <p className="text-slate-400">
+                    Phong cách thanh nhã, độ tương phản cao đạt chuẩn WCAG AA, phù hợp cho việc đọc tài liệu, in ấn hoặc tra cứu ban ngày với ánh sáng mạnh.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold">🌙 3. Chế Độ Tối (Dark Mode)</strong>
+                  <p className="text-slate-400">
+                    Không gian thiên văn huyền bí với nền Slate-950 và các dải màu Cửu Tinh, Bát Thần rực rỡ, bảo vệ thị lực khi chiêm quẻ ban đêm.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-emerald-400 font-bold">Lưu trữ bền vững (Persistence):</span> Tùy chọn của người dùng được tự động lưu vào <code className="text-amber-300 font-mono">localStorage</code> để duy trì trạng thái yêu thích trong tất cả các phiên làm việc tiếp theo.
               </div>
             </div>
           )}

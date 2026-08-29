@@ -64,7 +64,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200 relative">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-800 dark:selection:text-amber-200 relative transition-colors duration-200">
       {/* Header */}
       <Header
         currentDate={currentDate}
@@ -175,37 +175,37 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950/80 py-4 text-center text-xs text-slate-400">
+      <footer className="border-t border-slate-200 dark:border-slate-900 bg-white/80 dark:bg-slate-950/80 py-4 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <span>Tính Tiết Khí & Kỳ Môn Độn Giáp • </span>
             <button
               onClick={() => setIsChangelogOpen(true)}
-              className="inline-flex items-center gap-1 font-mono text-amber-400 hover:text-amber-300 font-semibold px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 transition-colors"
+              className="inline-flex items-center gap-1 font-mono text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-semibold px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 transition-colors"
               title="Nhấn để xem ghi chú phiên bản"
             >
               <span>v{APP_VERSION}</span>
-              <span className="text-[10px] text-slate-400 font-normal">({APP_RELEASE_DATE})</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-500 font-normal">({APP_RELEASE_DATE})</span>
             </button>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsChangelogOpen(true)}
-              className="hover:text-amber-300 transition-colors text-amber-400/90 font-medium"
+              className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors text-amber-600 dark:text-amber-400/90 font-medium"
             >
               Nhật ký cập nhật
             </button>
             <span>•</span>
             <button
               onClick={() => setIsGuideOpen(true)}
-              className="hover:text-amber-300 transition-colors"
+              className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
             >
               Thuyết minh thuật toán
             </button>
             <span>•</span>
             <button
               onClick={() => setIsExportOpen(true)}
-              className="hover:text-amber-300 transition-colors"
+              className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
             >
               Xuất dữ liệu (.MD)
             </button>

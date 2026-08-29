@@ -6,6 +6,24 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.15.0]] - 2026-08-29
+### Codename: *Chế Độ Sáng/Tối Tương Thích Trình Duyệt & Tùy Chọn*
+
+#### ✨ Tính Năng Mới (Added)
+- **Hệ Thống Quản Lý Giao Diện `ThemeContext` (`/src/context/ThemeContext.tsx`)**:
+  - Hỗ trợ 3 chế độ hiển thị linh hoạt: **Tự động theo hệ thống/trình duyệt (System)**, **Chế độ Sáng (Light Mode)**, và **Chế độ Tối (Dark Mode)**.
+  - Lắng nghe biến động của thuộc tính `prefers-color-scheme` từ hệ điều hành / trình duyệt theo thời gian thực để chuyển đổi mượt mà.
+  - Lưu trữ trạng thái tùy chọn bền vững vào `localStorage` (`kymon_theme_mode_v2`), giữ nguyên giao diện yêu thích qua các phiên làm việc.
+- **Thành Phần Điều Khiển `ThemeSwitcher` (`/src/components/ThemeSwitcher.tsx`)**:
+  - Thiết kế menu dropdown hiện đại hiển thị trực tiếp trên thanh Header (cả phiên bản Desktop và Di Động).
+  - Biểu tượng trực quan: 💻 Màn hình máy tính (Tự động), ☀️ Mặt trời (Chế độ Sáng), 🌙 Mặt trăng (Chế độ Tối).
+- **Tối Ưu Hóa Trực Quan Toàn Bộ Ứng Dụng Trong Chế Độ Sáng (`/src/index.css`)**:
+  - Tinh chỉnh độ tương phản chuẩn WCAG AA cho văn bản, đường viền, thẻ quẻ, bảng tiết khí và hộp thoại.
+- **Đồng Bộ Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`)**:
+  - Bổ sung **Mục 17** thuyết minh chi tiết về cơ chế Theme Mode & System Sync.
+
+---
+
 ## [[2.14.0]] - 2026-08-29
 ### Codename: *Từ Điển Thuật Ngữ Thuật Số & Tra Cứu Kỳ Môn - Lục Nhâm*
 

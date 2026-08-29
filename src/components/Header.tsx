@@ -17,6 +17,7 @@ import {
 import { formatVietnamDateTime } from '../astronomy/solarTerms';
 import { ComprehensiveResult } from '../types';
 import { APP_VERSION } from '../version';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface HeaderProps {
   currentDate: Date;
@@ -106,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur-md shadow-xl transition-all">
+    <header className="bg-white/95 dark:bg-slate-900/95 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 backdrop-blur-md shadow-md dark:shadow-xl transition-all">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 space-y-2.5">
         {/* ROW 1: Brand Title + Cosmic Real-Time Information Strip + Actions */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2.5">
@@ -124,11 +125,11 @@ export const Header: React.FC<HeaderProps> = ({
                     (e.target as HTMLElement).style.display = 'none';
                   }}
                 />
-                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 animate-[spin_40s_linear_infinite] absolute inset-0 m-auto -z-10 pointer-events-none" />
+                <Compass className="w-5 h-5 sm:w-6 sm:h-6 text-amber-500 dark:text-amber-400 animate-[spin_40s_linear_infinite] absolute inset-0 m-auto -z-10 pointer-events-none" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-base sm:text-lg font-black tracking-tight text-white flex items-center gap-1.5 font-sans">
+                  <h1 className="text-base sm:text-lg font-black tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5 font-sans">
                     <span>Kỳ Môn & Lục Nhâm</span>
                   </h1>
 
@@ -137,13 +138,13 @@ export const Header: React.FC<HeaderProps> = ({
                     id="btn-header-version"
                     onClick={onOpenChangelog}
                     title="Xem ghi chú cập nhật phiên bản mới nhất"
-                    className="flex items-center gap-1 px-2 py-0.5 rounded-full font-mono text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 hover:border-amber-400 transition-all group"
+                    className="flex items-center gap-1 px-2 py-0.5 rounded-full font-mono text-[11px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 hover:border-amber-400 transition-all group"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
                     <span>v{APP_VERSION}</span>
                   </button>
                 </div>
-                <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
                   Cổ Tam Thức • Thiên Văn 24 Tiết Khí • Siêu Thần Tiếp Khí
                 </p>
               </div>
@@ -151,12 +152,13 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Mobile Actions Hamburger/Trigger */}
             <div className="flex items-center gap-1.5 sm:hidden">
+              <ThemeSwitcher compact={true} />
               <button
                 onClick={onToggleLive}
                 className={`p-1.5 rounded-lg border text-xs ${
                   isLive
-                    ? 'bg-emerald-950/80 border-emerald-500/50 text-emerald-300'
-                    : 'bg-slate-800 border-slate-700 text-slate-300'
+                    ? 'bg-emerald-100 dark:bg-emerald-950/80 border-emerald-500/50 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300'
                 }`}
                 title="Bật/Tắt Live"
               >
@@ -164,7 +166,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
               <button
                 onClick={() => setIsTimePickerOpen((prev) => !prev)}
-                className="p-1.5 rounded-lg bg-slate-800 border border-slate-700 text-amber-300"
+                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-300"
                 title="Chọn thời gian"
               >
                 <Calendar className="w-4 h-4" />
@@ -174,15 +176,15 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* COSMIC REAL-TIME COMPACT READOUT STRIP (Can Chi, Tiết Khí, Âm Dương Lịch) */}
           {result && (
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px] bg-slate-950/80 p-1.5 sm:p-2 rounded-xl border border-slate-800">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11px] bg-slate-100/90 dark:bg-slate-950/80 p-1.5 sm:p-2 rounded-xl border border-slate-200 dark:border-slate-800">
               {/* Live Button & Time */}
               <button
                 id="btn-live-toggle"
                 onClick={onToggleLive}
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border transition-all ${
                   isLive
-                    ? 'bg-emerald-950/80 border-emerald-500/50 text-emerald-300 shadow-sm'
-                    : 'bg-slate-900 border-slate-700 text-slate-300 hover:border-slate-600'
+                    ? 'bg-emerald-100 dark:bg-emerald-950/80 border-emerald-500/50 text-emerald-800 dark:text-emerald-300 shadow-sm'
+                    : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-slate-400 dark:hover:border-slate-600'
                 }`}
                 title="Nhấn để bật/tắt cập nhật thời gian thực tự động"
               >
@@ -192,20 +194,20 @@ export const Header: React.FC<HeaderProps> = ({
                   )}
                   <span
                     className={`relative inline-flex rounded-full h-2 w-2 ${
-                      isLive ? 'bg-emerald-500' : 'bg-slate-500'
+                      isLive ? 'bg-emerald-500' : 'bg-slate-400 dark:bg-slate-500'
                     }`}
                   ></span>
                 </span>
                 <span className="font-mono font-bold">{formatVietnamDateTime(currentDate).split(' ')[1]}</span>
-                <span className="text-[10px] uppercase font-semibold text-slate-400 hidden md:inline">
+                <span className="text-[10px] uppercase font-semibold text-slate-500 dark:text-slate-400 hidden md:inline">
                   {isLive ? 'Live' : 'Đã chọn'}
                 </span>
               </button>
 
               {/* Âm Dương Lịch */}
-              <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-900/90 rounded-lg border border-slate-800 text-slate-300">
-                <span className="text-amber-400 font-bold">AL:</span>
-                <span className="font-medium text-amber-200">
+              <div className="flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-slate-900/90 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300">
+                <span className="text-amber-600 dark:text-amber-400 font-bold">AL:</span>
+                <span className="font-medium text-amber-800 dark:text-amber-200">
                   {result.newMoon.lunarDay}/{result.newMoon.lunarMonth}
                   {result.newMoon.isLeapMonth ? ' (Nhuận)' : ''}
                 </span>
@@ -215,20 +217,20 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {/* Can Chi Tứ Trụ (Năm - Tháng - Ngày - Giờ) */}
-              <div className="flex items-center gap-1 px-2 py-1 bg-slate-900/90 rounded-lg border border-slate-800 text-slate-200 font-mono">
-                <span className="text-cyan-400 font-bold hidden sm:inline">Tứ Trụ:</span>
-                <span className="text-slate-300">
+              <div className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-slate-900/90 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 font-mono">
+                <span className="text-cyan-600 dark:text-cyan-400 font-bold hidden sm:inline">Tứ Trụ:</span>
+                <span className="text-slate-700 dark:text-slate-300">
                   {result.batTu.yearCanChi} • {result.batTu.monthCanChi} •{' '}
-                  <strong className="text-amber-300">{result.batTu.dayCanChi}</strong> •{' '}
-                  <strong className="text-cyan-300">{result.batTu.hourCanChi}</strong>
+                  <strong className="text-amber-600 dark:text-amber-300">{result.batTu.dayCanChi}</strong> •{' '}
+                  <strong className="text-cyan-600 dark:text-cyan-300">{result.batTu.hourCanChi}</strong>
                 </span>
               </div>
 
               {/* Tiết Khí & Cục Số */}
-              <div className="flex items-center gap-1 px-2 py-1 bg-slate-900/90 rounded-lg border border-amber-500/20 text-amber-300 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <div className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-slate-900/90 rounded-lg border border-amber-500/30 text-amber-700 dark:text-amber-300 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400"></span>
                 <span>{result.currentTerm.name}</span>
-                <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-200 border border-amber-500/40 font-mono">
+                <span className="text-[10px] px-1.5 py-0.2 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-500/40 font-mono">
                   {result.kyMon.cucResultText}
                 </span>
               </div>
@@ -239,8 +241,8 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => setIsTimePickerOpen((prev) => !prev)}
                 className={`p-1.5 rounded-lg border transition-all ${
                   isTimePickerOpen
-                    ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold'
-                    : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+                    ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold shadow-sm'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
                 title="Mở bảng chỉnh giờ chiêm quẻ"
               >
@@ -249,22 +251,25 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
 
-          {/* Action Buttons: Thuyết Minh, Báo Cáo */}
+          {/* Action Buttons: ThemeSwitcher, Thuyết Minh, Báo Cáo */}
           <div className="hidden sm:flex items-center gap-1.5 text-xs shrink-0">
+            {/* Light / Dark / System Theme Switcher */}
+            <ThemeSwitcher />
+
             <button
               id="btn-open-guide"
               onClick={onOpenGuide}
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-lg transition-colors shadow-xs"
               title="Thuyết minh nguyên lý thuật toán cổ truyền"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-amber-400" />
+              <HelpCircle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               <span className="hidden md:inline">Thuyết minh</span>
             </button>
 
             <button
               id="btn-open-export"
               onClick={onOpenExport}
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded-lg transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg transition-colors shadow-xs"
               title="Xuất báo cáo quẻ Markdown"
             >
               <Download className="w-3.5 h-3.5" />
@@ -275,17 +280,17 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* TIME PICKER POPUP BAR (WHEN EXPANDED) */}
         {isTimePickerOpen && (
-          <div className="p-3 bg-slate-950 border border-amber-500/30 rounded-xl flex flex-wrap items-center justify-between gap-3 text-xs animate-fadeIn">
+          <div className="p-3 bg-white dark:bg-slate-950 border border-amber-500/30 rounded-xl flex flex-wrap items-center justify-between gap-3 text-xs animate-fadeIn shadow-lg">
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-amber-400" />
-              <span className="font-semibold text-slate-300">Tùy chọn thời điểm chiêm quẻ:</span>
+              <Calendar className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+              <span className="font-semibold text-slate-700 dark:text-slate-300">Tùy chọn thời điểm chiêm quẻ:</span>
               <input
                 id="input-header-datetime-picker"
                 type="datetime-local"
                 step="1"
                 value={getInputValue(currentDate)}
                 onChange={handleDateTimeLocalChange}
-                className="bg-slate-900 border border-slate-700 text-amber-300 font-mono text-xs px-2.5 py-1 rounded-lg focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
+                className="bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-amber-700 dark:text-amber-300 font-mono text-xs px-2.5 py-1 rounded-lg focus:outline-none focus:border-amber-500 transition-colors cursor-pointer"
               />
             </div>
 
@@ -299,7 +304,7 @@ export const Header: React.FC<HeaderProps> = ({
                   }
                   setIsTimePickerOpen(false);
                 }}
-                className="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-semibold hover:bg-emerald-500/30 flex items-center gap-1.5"
+                className="px-3 py-1 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/40 text-xs font-semibold hover:bg-emerald-500/30 flex items-center gap-1.5"
               >
                 <RefreshCw className="w-3 h-3" />
                 <span>Trở Về Hiện Tại (Live)</span>
@@ -307,7 +312,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 type="button"
                 onClick={() => setIsTimePickerOpen(false)}
-                className="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white border border-slate-700 text-xs"
+                className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-700 text-xs"
               >
                 Đóng
               </button>
@@ -316,7 +321,7 @@ export const Header: React.FC<HeaderProps> = ({
         )}
 
         {/* ROW 2: GROUPED NAVIGATION TABS (Categorized & Modern) */}
-        <nav className="flex items-center space-x-1 sm:space-x-2 pt-1 border-t border-slate-800/80 overflow-x-auto no-scrollbar">
+        <nav className="flex items-center space-x-1 sm:space-x-2 pt-1 border-t border-slate-200 dark:border-slate-800/80 overflow-x-auto no-scrollbar">
           {navGroups.map((group, gIdx) => (
             <div key={gIdx} className="flex items-center space-x-1 shrink-0">
               {group.tabs.map((tab) => {
@@ -328,14 +333,14 @@ export const Header: React.FC<HeaderProps> = ({
                     onClick={() => setActiveTab(tab.id)}
                     className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
                       isActive
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-md font-bold'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
+                        ? 'bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/50 shadow-md font-bold'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
                     }`}
                   >
                     <span>{tab.icon}</span>
                     <span>{tab.label}</span>
                     {isActive && (
-                      <span className="hidden sm:inline text-[10px] px-1.5 py-0.2 rounded-full bg-amber-500/30 text-amber-200 font-mono">
+                      <span className="hidden sm:inline text-[10px] px-1.5 py-0.2 rounded-full bg-amber-200 dark:bg-amber-500/30 text-amber-900 dark:text-amber-200 font-mono font-semibold">
                         {tab.badge}
                       </span>
                     )}
@@ -343,7 +348,7 @@ export const Header: React.FC<HeaderProps> = ({
                 );
               })}
               {gIdx < navGroups.length - 1 && (
-                <span className="h-4 w-px bg-slate-800 mx-1 shrink-0" />
+                <span className="h-4 w-px bg-slate-300 dark:bg-slate-800 mx-1 shrink-0" />
               )}
             </div>
           ))}
@@ -352,3 +357,4 @@ export const Header: React.FC<HeaderProps> = ({
     </header>
   );
 };
+
