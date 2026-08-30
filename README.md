@@ -1,30 +1,30 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.24.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.24.1-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Trực Diện & Dẫn Chuyện Chuyên Môn Sâu)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Trực Diện & Gợi Ý 1 Chạm Tương Tác)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.24.0`** *(Phát hành: 30/08/2026)*
-**Tên mã:** *Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)*
+### 🚀 **Phiên bản hiện tại: `v2.24.1`** *(Phát hành: 30/08/2026)*
+**Tên mã:** *Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)*
 
-- 🎯 **Phản Hồi Trực Diện, Ngắn Gọn & Không Dài Dòng**:
-  - Chuẩn hóa cấu trúc câu trả lời 3 phần súc tích (~150 - 300 từ): Kết Luận Trực Diện (Cát/Hung 1-2 câu) $\rightarrow$ Căn Cứ Quẻ Then Chốt (2-3 Dụng Thần) $\rightarrow$ Lời Khuyên Hành Động.
-  - Loại bỏ hoàn toàn các câu chào rườm rà hay lý thuyết dài dòng.
-- 🔮 **Dẫn Chuyện Chuyên Môn Sâu & Interactive Follow-Up Chips**:
-  - Tự động gợi ý 2-3 hướng đào sâu chuyên môn (pháp lý Cung Cảnh Môn, tiến độ Lục Nhâm Tam Truyền, thế trận Chủ/Khách, hóa giải phương vị).
-  - Tích hợp các nút bấm 1-nhấp chuột ngay trong tin nhắn AI để tiếp tục đào sâu chuyên môn tức thì.
+- 🎯 **Phản Hồi Trực Diện, Ngắn Gọn & Súc Tích**:
+  - Câu trả lời tập trung 100% vào trọng tâm, loại bỏ hoàn toàn tiêu đề dài dòng hay dẫn chuyện rườm rà.
+  - Cấu trúc 3 phần chuẩn: Kết Luận Trực Diện (1-2 câu) $\rightarrow$ Căn Cứ Quẻ Then Chốt (2-3 Dụng thần) $\rightarrow$ Lời Khuyên Hành Động.
+- 💡 **Gợi Ý 1 Chạm Tương Tác Tự Nhiên (Interactive Action Chips)**:
+  - Tự động hiển thị cụm nút bấm bên dưới câu trả lời: *"Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?"*.
+  - Người dùng có thể nhấn 1 chạm để lập tức đào sâu vào các khía cạnh cổ thuật liên quan (hóa giải phương vị, chọn giờ xuất hành, chiến lược đàm phán Chủ - Khách...).
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.23.0`** *(Phát hành: 30/08/2026)*
+### 📦 **Phiên bản trước: `v2.24.0`** *(Phát hành: 30/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

@@ -1053,13 +1053,13 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
           {/* Section 19: AI Chatbot Metaphysics Advisor & OpenRouter Integration */}
           {(activeSection === 'all' || activeSection === 'ai-chatbot') && (
             <div id="ai-chatbot" className="p-5 rounded-2xl bg-slate-950 border border-purple-500/30 space-y-4">
-              <h3 className="text-base font-bold text-purple-300 flex items-center gap-2">
+              <h3 className="text-base font-bold text-purple-300 flex items-center gap-1.5">
                 <Bot className="w-5 h-5 text-purple-400" />
-                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Trả Lời Trực Diện & Dẫn Chuyện Chuyên Môn</span>
+                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Trả Lời Trực Diện & Gợi Ý 1 Chạm</span>
               </h3>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Tại phiên bản <strong>v2.24.0</strong>, hệ thống nâng cấp toàn diện <strong>AI Đại Sư Luận Giải Cổ Thuật</strong>: Tối ưu hóa phản hồi <strong>ngắn gọn, sắc bén, đi thẳng vào trọng tâm câu hỏi</strong>, đồng thời tự động đề xuất <strong>gợi ý dẫn chuyện mở rộng chuyên môn tương tác 1-nhấp chuột</strong> (Interactive Follow-up Chips).
+                Tại phiên bản <strong>v2.24.1</strong>, hệ thống tối ưu hóa hoàn toàn <strong>AI Đại Sư Luận Giải Cổ Thuật</strong>: Phản hồi <strong>ngắn gọn, sắc bén, đi thẳng vào câu hỏi</strong> mà không có tiêu đề dẫn chuyện rườm rà trong văn bản, đồng thời tự động hiển thị <strong>bộ câu hỏi gợi ý 1 chạm</strong> ("Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?") giúp người dùng tiếp tục đào sâu các khía cạnh liên quan chỉ với 1 cú click.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -1076,21 +1076,21 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
                   <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-400" />
-                    <span>2. Cấu Trúc Trả Lời 3 Phần Ngắn Gọn & Dẫn Chuyện Mở Rộng</span>
+                    <span>2. Cấu Trúc Trả Lời Trực Diện & Gợi Ý 1 Chạm</span>
                   </strong>
                   <p className="text-slate-400">
-                    AI không giải thích rườm rà hay mở bài sáo rỗng. Cấu trúc chuẩn gồm: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu cung vị/tinh/môn cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và 🔮 <strong>Dẫn chuyện mở rộng chuyên môn</strong> (pháp lý, tiến độ, phong thủy).
+                    Nội dung trả lời chỉ gồm 3 phần cô đọng: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu Dụng thần cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và hệ thống nút bấm <strong>Gợi ý 1 chạm</strong> tự động bóc tách dưới chân tin nhắn.
                   </p>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-2 text-slate-300">
-                <strong className="text-cyan-300 block font-semibold">Quy Chuẩn Luận Đoán Ngắn Gọn & Khám Phá Chuyên Môn Sâu:</strong>
+                <strong className="text-cyan-300 block font-semibold">Quy Chuẩn Luận Đoán Ngắn Gọn & Gợi Ý 1 Chạm Tương Tác:</strong>
                 <ol className="list-decimal list-inside space-y-1 text-slate-400 text-xs">
                   <li><strong>Phán Đoán Trực Diện & Dứt Khoát:</strong> Trả lời thẳng vào câu hỏi (Có/Không, Cát/Hung, Nên/Không nên), tiết kiệm thời gian cho người tra cứu.</li>
                   <li><strong>Trích Xuất Dụng Thần Then Chốt:</strong> Chỉ phân tích đúng Cung Dụng Thần tương ứng với việc hỏi (Tài lộc: Sinh Môn, Sự nghiệp: Khai Môn/Trực Phù, Đàm phán: Chủ/Khách, Sức khỏe: Thiên Nhuế/Tử Môn).</li>
                   <li><strong>Định Hướng Hành Động Cụ Thể:</strong> Nêu rõ phương vị cát lợi, giờ xuất hành và sách lược hành động.</li>
-                  <li><strong>Dẫn Chuyện Chuyên Môn 1-Nhấp:</strong> Tự động bóc tách các câu hỏi mở rộng sang nút bấm trực quan để người dùng khám phá sâu hơn các khía cạnh liên đới chỉ với một cú nhấp chuột.</li>
+                  <li><strong>Gợi Ý 1 Chạm Hành Động:</strong> Trực tiếp biến các câu hỏi tiếp theo thành nút bấm (bạn muốn biết thêm gì, bạn muốn làm gì với kết quả vừa nhận...) giúp thao tác liền mạch trên mọi thiết bị.</li>
                 </ol>
               </div>
 

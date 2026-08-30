@@ -164,42 +164,56 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
     return buildCosmicSystemContext(result, currentDate);
   }, [result, currentDate]);
 
-  // Helper to extract follow-up suggestions from AI response text
-  const extractFollowUpSuggestions = (content: string): string[] => {
-    const suggestions: string[] = [];
-    const lines = content.split('\n');
-    let inSuggestionSection = false;
+  // Helper to separate main answer from 1-touch suggestions
+  const parseMessageContent = (content: string): { cleanContent: string; suggestions: string[] } => {
+    const markers = [
+      '[GỢI Ý 1 CHẠM]',
+      '[GỢI Ý MỞ RỘNG]',
+      'Gợi ý mở rộng chuyên môn & Dẫn chuyện tiếp theo:',
+      'Gợi ý mở rộng chuyên môn:',
+      '🔮 Gợi ý mở rộng',
+      'Bạn muốn biết gì thêm',
+      'Bạn muốn làm gì tiếp theo',
+    ];
 
+    let markerIndex = -1;
+    let foundMarker = '';
+    for (const marker of markers) {
+      const idx = content.indexOf(marker);
+      if (idx !== -1 && (markerIndex === -1 || idx < markerIndex)) {
+        markerIndex = idx;
+        foundMarker = marker;
+      }
+    }
+
+    if (markerIndex === -1) {
+      return { cleanContent: content, suggestions: [] };
+    }
+
+    const cleanContent = content.substring(0, markerIndex).trim();
+    const rawSuggestionPart = content.substring(markerIndex + foundMarker.length);
+    const suggestions: string[] = [];
+
+    const lines = rawSuggestionPart.split('\n');
     for (const line of lines) {
       const trimmed = line.trim();
-      if (
-        trimmed.includes('Gợi ý mở rộng chuyên môn') ||
-        trimmed.includes('Dẫn chuyện tiếp theo') ||
-        trimmed.includes('Gợi ý mở rộng')
-      ) {
-        inSuggestionSection = true;
-        continue;
-      }
-
-      if (inSuggestionSection) {
-        if (trimmed.startsWith('-') || trimmed.startsWith('*') || /^\d+\./.test(trimmed)) {
-          let cleaned = trimmed
-            .replace(/^[-*•\d.]+\s*/, '')
-            .replace(/^[➡️👉🔹🔸🔮✨]+\s*/, '')
-            .replace(/^\[.*?\]:\s*/, '')
-            .trim();
-          // Remove bold markdown wrap if entire line is wrapped
-          cleaned = cleaned.replace(/^\*\*(.*?)\*\*$/, '$1').trim();
-          if (cleaned.length > 5 && !cleaned.startsWith('#')) {
-            suggestions.push(cleaned);
-          }
-        } else if (trimmed.startsWith('#') || trimmed.startsWith('---')) {
-          inSuggestionSection = false;
+      if (trimmed.startsWith('-') || trimmed.startsWith('*') || /^\d+\./.test(trimmed) || trimmed.startsWith('•')) {
+        let cleaned = trimmed
+          .replace(/^[-*•\d.]+\s*/, '')
+          .replace(/^[➡️👉🔹🔸🔮✨💡❓]+\s*/, '')
+          .replace(/^\[.*?\]:\s*/, '')
+          .trim();
+        cleaned = cleaned.replace(/^\*\*(.*?)\*\*$/, '$1').trim();
+        if (cleaned.length > 5 && !cleaned.startsWith('#') && !cleaned.startsWith('---')) {
+          suggestions.push(cleaned);
         }
       }
     }
 
-    return suggestions.slice(0, 3);
+    return {
+      cleanContent,
+      suggestions: suggestions.slice(0, 3),
+    };
   };
 
   const quickPrompts = [
@@ -789,39 +803,43 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
                   {msg.role === 'user' ? (
                     <div className="whitespace-pre-wrap font-sans">{msg.content}</div>
                   ) : (
-                    <div className="space-y-3">
-                      <div className="prose prose-invert prose-xs sm:prose-sm max-w-none text-slate-200 space-y-2 [&>h3]:text-amber-300 [&>h3]:font-bold [&>h3]:text-sm [&>h4]:text-cyan-300 [&>h4]:font-bold [&>h4]:text-xs [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>blockquote]:border-l-2 [&>blockquote]:border-amber-500/50 [&>blockquote]:pl-3 [&>blockquote]:italic [&>table]:w-full [&>table]:border-collapse [&>table]:text-xs [&>table_th]:border [&>table_th]:border-slate-700 [&>table_th]:p-1.5 [&>table_th]:bg-slate-900 [&>table_td]:border [&>table_td]:border-slate-800 [&>table_td]:p-1.5 [&>p>strong]:text-amber-300">
-                        <Markdown>{msg.content}</Markdown>
-                      </div>
-
-                      {/* Interactive Follow-Up Chips */}
-                      {!msg.isError && (() => {
-                        const suggestions = extractFollowUpSuggestions(msg.content);
-                        if (suggestions.length === 0) return null;
-                        return (
-                          <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1.5 animate-fadeIn">
-                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-400">
-                              <Sparkles className="w-3 h-3 text-amber-400" />
-                              <span>Dẫn chuyện & mở rộng chuyên môn (Nhấp để hỏi ngay):</span>
-                            </div>
-                            <div className="flex flex-col gap-1.5">
-                              {suggestions.map((sug, sIdx) => (
-                                <button
-                                  key={sIdx}
-                                  type="button"
-                                  onClick={() => handleSendMessage(sug)}
-                                  disabled={isLoading}
-                                  className="text-left text-xs text-slate-300 hover:text-amber-200 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 rounded-xl p-2 transition-all flex items-start justify-between gap-2 group cursor-pointer disabled:opacity-50 shadow-sm"
-                                >
-                                  <span className="leading-snug">➡️ {sug}</span>
-                                  <ArrowRight className="w-3.5 h-3.5 text-amber-400/60 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0 mt-0.5" />
-                                </button>
-                              ))}
-                            </div>
+                    (() => {
+                      const { cleanContent, suggestions } = parseMessageContent(msg.content);
+                      return (
+                        <div className="space-y-3">
+                          <div className="prose prose-invert prose-xs sm:prose-sm max-w-none text-slate-200 space-y-2 [&>h3]:text-amber-300 [&>h3]:font-bold [&>h3]:text-sm [&>h4]:text-cyan-300 [&>h4]:font-bold [&>h4]:text-xs [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>blockquote]:border-l-2 [&>blockquote]:border-amber-500/50 [&>blockquote]:pl-3 [&>blockquote]:italic [&>table]:w-full [&>table]:border-collapse [&>table]:text-xs [&>table_th]:border [&>table_th]:border-slate-700 [&>table_th]:p-1.5 [&>table_th]:bg-slate-900 [&>table_td]:border [&>table_td]:border-slate-800 [&>table_td]:p-1.5 [&>p>strong]:text-amber-300">
+                            <Markdown>{cleanContent}</Markdown>
                           </div>
-                        );
-                      })()}
-                    </div>
+
+                          {/* 1-Touch Interactive Follow-up Action Chips */}
+                          {!msg.isError && suggestions.length > 0 && (
+                            <div className="mt-4 pt-3 border-t border-slate-800/90 space-y-2 animate-fadeIn">
+                              <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-300">
+                                <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                                <span>Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?</span>
+                              </div>
+                              <div className="flex flex-col gap-1.5">
+                                {suggestions.map((sug, sIdx) => (
+                                  <button
+                                    key={sIdx}
+                                    type="button"
+                                    onClick={() => handleSendMessage(sug)}
+                                    disabled={isLoading}
+                                    className="text-left text-xs text-slate-200 hover:text-amber-200 bg-slate-900/95 hover:bg-slate-800/90 border border-slate-700/60 hover:border-amber-500/60 rounded-xl px-3 py-2.5 transition-all flex items-start justify-between gap-2.5 group cursor-pointer disabled:opacity-50 shadow-sm"
+                                  >
+                                    <div className="flex items-start gap-2">
+                                      <span className="text-amber-400 font-bold mt-0.5">👉</span>
+                                      <span className="leading-snug font-medium">{sug}</span>
+                                    </div>
+                                    <ArrowRight className="w-4 h-4 text-amber-400/70 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0 mt-0.5" />
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()
                   )}
 
                   {msg.role === 'user' && (

@@ -11,18 +11,38 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.24.0';
+export const APP_VERSION = '2.24.1';
 export const APP_RELEASE_DATE = '2026-08-30';
-export const APP_CODENAME = 'Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)';
+export const APP_CODENAME = 'Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.24.1',
+    releaseDate: '2026-08-30',
+    codename: 'Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)',
+    tagline: 'Loại bỏ tiêu đề dẫn chuyện rườm rà trong văn bản phản hồi, giữ lại câu trả lời sắc bén, ngắn gọn và tích hợp hệ thống nút bấm Gợi Ý 1 Chạm trực quan hỏi tiếp theo.',
+    isLatest: true,
+    highlights: [
+      'Loại bỏ các tiêu đề dẫn chuyện dài dòng trong nội dung văn bản markdown của AI, giúp câu trả lời cực kỳ tinh gọn và chuyên nghiệp.',
+      'Tự động phân tách nội dung và bóc tách các câu hỏi gợi ý thành cụm nút bấm "Gợi Ý 1 Chạm" ngay dưới câu trả lời.',
+      'Bộ câu hỏi gợi ý hành động tự nhiên ("Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?") mở rộng sâu vào các khía cạnh cổ thuật.',
+      'Đồng bộ Mục 19 trong Thuyết minh thuật toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Bộ phân tách `parseMessageContent` tách biệt hoàn toàn nội dung luận giải và danh sách gợi ý 1 chạm.',
+      'Giao diện Interactive 1-Touch Action Chips với tiêu đề thân thiện "Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?".',
+    ],
+    improved: [
+      'Tối ưu hóa trải nghiệm đọc quẻ: Không bị lặp văn bản hay tiêu đề cồng kềnh, tương tác 1 chạm siêu nhanh.',
+    ],
+  },
   {
     version: '2.24.0',
     releaseDate: '2026-08-30',
     codename: 'Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)',
     tagline: 'Tái cấu trúc phản hồi của AI Chatbot theo tiêu chí ngắn gọn, sắc bén, đi thẳng vào trọng tâm câu hỏi, đồng thời tự động đề xuất các câu hỏi dẫn chuyện chuyên môn tương tác 1-nhấp chuột.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Cấu hình System Prompt chuẩn mực 3 phần: 1. Kết Luận Trực Diện (Cát/Hung trong 1-2 câu), 2. Căn Cứ Quẻ Then Chốt (trích xuất 2-3 dữ liệu Dụng Thần cốt lõi), 3. Lời Khuyên Hành Động cụ thể.',
       'Loại bỏ triệt để các câu chào xã giao và giải thích lý thuyết rườm rà, tập trung giải quyết chính xác bài toán của người dùng.',

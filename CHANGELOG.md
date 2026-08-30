@@ -6,6 +6,22 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.24.1]] - 2026-08-30
+### Codename: *Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)*
+
+#### ⚡ Tinh Gọn Văn Bản & Trực Quan Hóa Gợi Ý 1 Chạm (Added & Improved)
+- **Loại Bỏ Tiêu Đề Dẫn Chuyện Rườm Rà Trong Văn Bản Phản Hồi (`/src/services/aiChatService.ts`)**:
+  - Không chèn các tiêu đề như "Dẫn chuyện tiếp theo" hay danh sách text dài dòng vào thân bài luận giải.
+  - Phản hồi của AI tập trung 100% vào việc trả lời dứt khoát câu hỏi của người dùng và đưa ra lời khuyên thiết thực.
+- **Tự Động Bóc Tách & Hiển Thị Nút Bấm Gợi Ý 1 Chạm (`/src/components/AIChatbotModal.tsx`)**:
+  - Áp dụng hàm bóc tách `parseMessageContent` giúp thân bài markdown giữ sạch sẽ tuyệt đối.
+  - Cụm nút bấm tương tác 1 chạm hiển thị dưới chân tin nhắn với câu hỏi dẫn dắt thân thiện: *"Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?"*.
+  - Người dùng có thể nhấp trực tiếp vào bất kỳ nút gợi ý nào để gửi câu hỏi đào sâu ngay lập tức.
+- **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật Mục 19 trong `AlgorithmGuideModal.tsx` giải trình quy chuẩn phản hồi trực diện và gợi ý 1 chạm.
+
+---
+
 ## [[2.24.0]] - 2026-08-30
 ### Codename: *Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)*
 
