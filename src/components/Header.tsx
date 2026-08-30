@@ -46,36 +46,12 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  // Grouped Navigation Structure - Cẩm Nang Tri Thức as Trang Chủ (First)
-  const navGroups = [
-    {
-      groupName: 'Trang Chủ',
-      tabs: [
-        { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Trang Chủ' },
-      ],
-    },
-    {
-      groupName: 'Bàn Quẻ Tam Thức',
-      tabs: [
-        { id: 'kymon-chart', label: 'Kỳ Môn Độn Giáp', icon: '🔮', badge: '9 Cung 3x3' },
-        { id: 'luc-nham', label: 'Đại Lục Nhâm', icon: '🧭', badge: 'Tam Truyền' },
-      ],
-    },
-    {
-      groupName: 'Dự Trắc & Phân Tích',
-      tabs: [
-        { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: '6 Chủ Đề' },
-        { id: 'overview', label: 'Tổng Quan & Luận Cục', icon: '📜', badge: 'Định Cục' },
-        { id: 'compass', label: 'Bát Quái & 9 Cung', icon: '🧭', badge: 'Phong Thủy' },
-      ],
-    },
-    {
-      groupName: 'Lịch & Tiết Khí',
-      tabs: [
-        { id: 'table', label: '24 Tiết Khí Năm', icon: '📅', badge: 'Toàn Niên' },
-        { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Sóc Vọng' },
-      ],
-    },
+  // Streamlined Navigation Tabs: Cẩm Nang Tri Thức -> Điểm Sóc & Âm Lịch -> Dự Trắc Chuyên Sâu -> 24 Tiết Khí Năm
+  const navTabs = [
+    { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Trang Chủ' },
+    { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Thiên Văn' },
+    { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: '6 Chủ Đề' },
+    { id: 'table', label: '24 Tiết Khí Năm', icon: '📅', badge: 'Toàn Niên' },
   ];
 
   // Format date for datetime-local picker
@@ -320,38 +296,31 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         )}
 
-        {/* ROW 2: GROUPED NAVIGATION TABS (Categorized & Modern) */}
+        {/* ROW 2: STREAMLINED NAVIGATION TABS */}
         <nav className="flex items-center space-x-1 sm:space-x-2 pt-1 border-t border-slate-200 dark:border-slate-800/80 overflow-x-auto no-scrollbar">
-          {navGroups.map((group, gIdx) => (
-            <div key={gIdx} className="flex items-center space-x-1 shrink-0">
-              {group.tabs.map((tab) => {
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    id={`nav-tab-${tab.id}`}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                      isActive
-                        ? 'bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/50 shadow-md font-bold'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
-                    }`}
-                  >
-                    <span>{tab.icon}</span>
-                    <span>{tab.label}</span>
-                    {isActive && (
-                      <span className="hidden sm:inline text-[10px] px-1.5 py-0.2 rounded-full bg-amber-200 dark:bg-amber-500/30 text-amber-900 dark:text-amber-200 font-mono font-semibold">
-                        {tab.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-              {gIdx < navGroups.length - 1 && (
-                <span className="h-4 w-px bg-slate-300 dark:bg-slate-800 mx-1 shrink-0" />
-              )}
-            </div>
-          ))}
+          {navTabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                id={`nav-tab-${tab.id}`}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                  isActive
+                    ? 'bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/50 shadow-md font-bold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent'
+                }`}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+                {isActive && (
+                  <span className="hidden sm:inline text-[10px] px-1.5 py-0.2 rounded-full bg-amber-200 dark:bg-amber-500/30 text-amber-900 dark:text-amber-200 font-mono font-semibold">
+                    {tab.badge}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </nav>
       </div>
     </header>

@@ -11,18 +11,38 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.19.0';
+export const APP_VERSION = '2.20.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc';
+export const APP_CODENAME = 'Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.20.0',
+    releaseDate: '2026-08-29',
+    codename: 'Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2',
+    tagline: 'Tinh giản thanh menu thành 4 tab trọng tâm: Cẩm Nang Tri Thức (1), Điểm Sóc & Âm Lịch (2), Dự Trắc Chuyên Sâu (3), 24 Tiết Khí Năm (4); loại bỏ các tab trùng lặp (Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung).',
+    isLatest: true,
+    highlights: [
+      'Tinh giản cấu trúc thanh Menu thành 4 Tab duy nhất: Cẩm Nang Tri Thức → Điểm Sóc & Âm Lịch → Dự Trắc Chuyên Sâu → 24 Tiết Khí Năm.',
+      'Dời tab "Điểm Sóc & Âm Lịch" từ vị trí cuối cùng lên nằm ở vị trí thứ 2 ngay sau Cẩm Nang Tri Thức.',
+      'Loại bỏ 4 tab trùng lặp/dư thừa: Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan & Luận Cục, Bát Quái & 9 Cung (toàn bộ tri thức và giải đoán đã được hợp nhất trọn vẹn trong Cẩm Nang và Dự Trắc).',
+      'Đồng bộ hóa toàn bộ liên kết điều hướng và nút chuyển trang trên giao diện.',
+    ],
+    added: [
+      'Cấu trúc điều hướng 4 Tab trọng tâm, mạch lạc và tối ưu không gian trải nghiệm.',
+    ],
+    improved: [
+      'Lược bỏ hoàn toàn sự phân mảnh và trùng lặp dữ liệu giữa các tab con.',
+      'Nâng cao tính liền mạch khi khảo sát thiên văn âm lịch và luận quẻ.',
+    ],
+  },
   {
     version: '2.19.0',
     releaseDate: '2026-08-29',
     codename: 'Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc',
     tagline: 'Cập nhật nội dung Quy Chuẩn Thiên Văn Định Tháng Âm Lịch theo thuật toán chuẩn Mốc Đông Chí (270°) = Tháng 11 & Vô Trung Khí Pháp; lược bỏ các khối thông tin trùng lặp với bảng danh sách tháng âm lịch.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Chuẩn hóa thẻ "Quy Chuẩn Thiên Văn Định Tháng Âm Lịch & Xác Định Tháng Nhuận": Trình bày trực quan 4 nguyên tắc thiên văn cốt lõi (Mốc cứng Đông Chí = Tháng 11, Đếm số tháng 12/13, Vô Trung Khí Pháp, Lan tỏa số thứ tự tháng).',
       'Lược bỏ các thành phần trùng lặp: Loại bỏ khối Tiết Khí Trong Tháng Này và Hai Thẻ Điểm Sóc Trước/Sau do toàn bộ thông tin này đã được tích hợp đầy đủ, chi tiết trong Bảng Danh Sách 12/13 Tháng Âm Lịch.',

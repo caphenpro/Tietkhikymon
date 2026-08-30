@@ -6,6 +6,24 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.20.0]] - 2026-08-29
+### Codename: *Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2*
+
+#### ✨ Tinh Giản Thanh Điều Hướng & Loại Bỏ Trùng Lặp (Added & Improved)
+- **Cấu Trúc Menu 4 Tab Trọng Tâm**:
+  - Thanh menu chính được tinh giản thành đúng 4 tab theo thứ tự:
+    1. **📚 Cẩm Nang Tri Thức** (Trang Chủ)
+    2. **🌙 Điểm Sóc & Âm Lịch** (Dời từ vị trí cuối cùng lên vị trí thứ 2)
+    3. **🎯 Dự Trắc Chuyên Sâu** (Kỳ Môn 6 chủ đề đời sống)
+    4. **📅 24 Tiết Khí Năm** (Toàn Niên)
+- **Loại Bỏ Các Tab Dư Thừa & Trùng Lặp**:
+  - Bỏ 2 tab *Kỳ Môn Độn Giáp* và *Đại Lục Nhâm* khỏi menu.
+  - Bỏ 2 tab *Tổng Quan & Luận Cục* và *Bát Quái & 9 Cung* do toàn bộ nội dung học thuật và giải đoán đã có trong Cẩm Nang Tri Thức.
+- **Đồng Bộ Hóa Toàn Diện Hệ Thống**:
+  - Cập nhật toàn bộ các nút điều hướng chuyển tab trong `CosmicKnowledgeGuide.tsx`, `LunarNewMoonSection.tsx`, `YearTermsTable.tsx`, và `AlgorithmGuideModal.tsx` (Mục 18).
+
+---
+
 ## [[2.19.0]] - 2026-08-29
 ### Codename: *Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc*
 

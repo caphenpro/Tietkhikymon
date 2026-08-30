@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Header } from './components/Header';
-import { TimeInputControl } from './components/TimeInputControl';
-import { OverviewCard } from './components/OverviewCard';
-import { KyMonDunJiaPanel } from './components/KyMonDunJiaPanel';
-import { NinePalacesCompass } from './components/NinePalacesCompass';
 import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
-import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
-import { LucNhamPanel } from './components/LucNhamPanel';
 import { CosmicKnowledgeGuide } from './components/CosmicKnowledgeGuide';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
@@ -52,11 +46,11 @@ export default function App() {
     return calculateSolarTermsForYear(currentYear);
   }, [currentYear]);
 
-  // Handler to select a term date from the table and jump to overview
+  // Handler to select a term date from the table and jump to moon or table
   const handleSelectTermDate = useCallback((date: Date) => {
     setIsLive(false);
     setCurrentDate(date);
-    setActiveTab('overview');
+    setActiveTab('moon');
   }, []);
 
   const handleExportMarkdown = useCallback((_year: number, _terms: SolarTermEvent[]) => {
@@ -81,7 +75,7 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Tab Content */}
+        {/* Tab 1: Cẩm Nang Tri Thức (Trang Chủ) */}
         {activeTab === 'guide' && (
           <div className="space-y-6">
             <CosmicKnowledgeGuide
@@ -92,73 +86,7 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'overview' && (
-           <div className="space-y-6">
-             <OverviewCard
-               result={result}
-               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-             />
-             <KyMonDunJiaPanel
-               kyMon={result.kyMon}
-               onOpenCompleteBoard={() => setActiveTab('kymon-chart')}
-               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
-             />
-           </div>
-         )}
-
-         {activeTab === 'kymon-chart' && (
-           <div className="space-y-6">
-             <KyMonCompleteBoard
-               currentKyMon={result.kyMon}
-               currentBatTu={result.batTu}
-               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
-               onSwitchToLucNham={() => setActiveTab('luc-nham')}
-             />
-           </div>
-         )}
-
-         {activeTab === 'kymon-prognostication' && (
-           <div className="space-y-6">
-             <KyMonPrognosticationView
-               currentKyMon={result.kyMon}
-               currentBatTu={result.batTu}
-               onBackToBoard={() => setActiveTab('kymon-chart')}
-             />
-           </div>
-         )}
-
-         {activeTab === 'luc-nham' && (
-           <div className="space-y-6">
-             <LucNhamPanel
-               result={result}
-               currentDate={currentDate}
-               onOpenAlgorithmModal={() => setIsGuideOpen(true)}
-               onSwitchToKyMon={() => setActiveTab('kymon-chart')}
-             />
-           </div>
-         )}
-
-         {activeTab === 'compass' && (
-          <div className="space-y-6">
-            <NinePalacesCompass
-              result={result}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {activeTab === 'table' && (
-          <div className="space-y-6">
-            <YearTermsTable
-              initialYear={currentYear}
-              currentTermName={result.currentTerm.name}
-              onSelectTermDate={handleSelectTermDate}
-              onExportMarkdown={handleExportMarkdown}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
+        {/* Tab 2: Điểm Sóc & Âm Lịch (Thiên Văn) */}
         {activeTab === 'moon' && (
           <div className="space-y-6">
             <LunarNewMoonSection
@@ -168,6 +96,30 @@ export default function App() {
               onDateChange={(d) => setCurrentDate(d)}
               isLive={isLive}
               onSetLive={(live) => setIsLive(live)}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
+        {/* Tab 3: Dự Trắc Chuyên Sâu Kỳ Môn */}
+        {activeTab === 'kymon-prognostication' && (
+          <div className="space-y-6">
+            <KyMonPrognosticationView
+              currentKyMon={result.kyMon}
+              currentBatTu={result.batTu}
+              onBackToBoard={() => setActiveTab('guide')}
+            />
+          </div>
+        )}
+
+        {/* Tab 4: 24 Tiết Khí Năm */}
+        {activeTab === 'table' && (
+          <div className="space-y-6">
+            <YearTermsTable
+              initialYear={currentYear}
+              currentTermName={result.currentTerm.name}
+              onSelectTermDate={handleSelectTermDate}
+              onExportMarkdown={handleExportMarkdown}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>

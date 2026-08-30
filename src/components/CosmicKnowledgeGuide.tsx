@@ -868,44 +868,38 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
           {/* Quick Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5 pt-2">
             <button
-              onClick={() => onNavigateTab('kymon-chart')}
-              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all group"
+              onClick={() => onNavigateTab('moon')}
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all group cursor-pointer"
             >
-              <Layers className="w-4 h-4 text-slate-950" />
-              <span>Bàn Kỳ Môn 9 Cung (3x3)</span>
+              <Moon className="w-4 h-4 text-slate-950" />
+              <span>Điểm Sóc & Âm Lịch</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
             </button>
             <button
-              onClick={() => onNavigateTab('luc-nham')}
-              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
+              onClick={() => onNavigateTab('kymon-prognostication')}
+              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all cursor-pointer"
             >
-              <Compass className="w-4 h-4 text-amber-400" />
-              <span>Bàn Đại Lục Nhâm (Tam Truyền)</span>
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span>Dự Trắc Chuyên Sâu</span>
+            </button>
+            <button
+              onClick={() => onNavigateTab('table')}
+              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all cursor-pointer"
+            >
+              <Sun className="w-4 h-4 text-amber-400" />
+              <span>24 Tiết Khí Năm</span>
             </button>
             <button
               onClick={() => setActiveCategory('glossary')}
-              className="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
+              className="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all cursor-pointer"
             >
               <Bookmark className="w-3.5 h-3.5 text-amber-400" />
               <span>Tra Cứu Thuật Ngữ</span>
             </button>
-            <button
-              onClick={() => onNavigateTab('overview')}
-              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
-            >
-              <span>Tổng Quan & Luận Cục</span>
-            </button>
-            <button
-              onClick={() => onNavigateTab('compass')}
-              className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
-            >
-              <Compass className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Bát Quái 9 Cung</span>
-            </button>
             {onOpenAlgorithmModal && (
               <button
                 onClick={onOpenAlgorithmModal}
-                className="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all"
+                className="px-3.5 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-medium text-xs sm:text-sm flex items-center gap-1.5 transition-all cursor-pointer"
               >
                 <BookOpen className="w-3.5 h-3.5 text-amber-400" />
                 <span>Thuyết Minh Thuật Toán</span>
@@ -1033,20 +1027,27 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
       <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
-            <Compass className="w-5 h-5" />
+            <Moon className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="font-bold text-white text-sm">Khám Phá Luận Cục Trực Tiếp</h4>
-            <p className="text-slate-400 text-xs">Xem chi tiết Bàn Kỳ Môn và dự trắc thời gian thực cho thời điểm hiện tại.</p>
+            <h4 className="font-bold text-white text-sm">Khảo Sát Điểm Sóc & Âm Lịch Thiên Văn</h4>
+            <p className="text-slate-400 text-xs">Theo dõi chu kỳ tuần trăng, 4 pha Mặt Trăng và bảng 12/13 tháng âm lịch.</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
-            onClick={() => onNavigateTab('overview')}
-            className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition-all flex items-center justify-center gap-1.5 shadow-md"
+            onClick={() => onNavigateTab('kymon-prognostication')}
+            className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
-            <span>Đến Trang Tổng Quan & Luận Cục</span>
+            <span>Dự Trắc Kỳ Môn</span>
+            <Sparkles className="w-4 h-4 text-amber-400" />
+          </button>
+          <button
+            onClick={() => onNavigateTab('moon')}
+            className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+          >
+            <span>Đến Điểm Sóc & Âm Lịch</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

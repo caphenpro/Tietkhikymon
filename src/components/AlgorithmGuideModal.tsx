@@ -60,6 +60,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'home-guide', title: '15. Cẩm Nang Tri Thức Trang Chủ & Toàn Thư Lục Nhâm', icon: BookOpen },
     { id: 'glossary', title: '16. Từ Điển Thuật Ngữ Kỳ Môn, Lục Nhâm & Thiên Văn', icon: Bookmark },
     { id: 'theme-mode', title: '17. Chế Độ Sáng / Tối (Auto & Custom Theme)', icon: Sun },
+    { id: 'streamlined-nav', title: '18. Tinh Gọn 4 Tab Trọng Tâm (Tránh Trùng Dư Dữ Liệu)', icon: Layers },
   ];
 
   return (
@@ -980,6 +981,62 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                 <span className="text-emerald-400 font-bold">Lưu trữ bền vững (Persistence):</span> Tùy chọn của người dùng được tự động lưu vào <code className="text-amber-300 font-mono">localStorage</code> để duy trì trạng thái yêu thích trong tất cả các phiên làm việc tiếp theo.
+              </div>
+            </div>
+          )}
+
+          {/* Section 18: Streamlined 4-Tab Navigation */}
+          {(activeSection === 'all' || activeSection === 'streamlined-nav') && (
+            <div id="streamlined-nav" className="p-5 rounded-2xl bg-slate-950 border border-emerald-500/30 space-y-4">
+              <h3 className="text-base font-bold text-emerald-300 flex items-center gap-2">
+                <Layers className="w-5 h-5 text-emerald-400" />
+                <span>18. Tinh Gọn 4 Tab Trọng Tâm (Tránh Trùng Dư Dữ Liệu)</span>
+              </h3>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Tại phiên bản <strong>v2.20.0</strong>, hệ thống đã tinh giản toàn bộ thanh menu chính thành <strong>4 Tab trọng tâm duy nhất</strong>, loại bỏ các mục trùng lặp để tối ưu hóa không gian và sự tập trung:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                    <span>📚 1. Cẩm Nang Tri Thức (Trang Chủ)</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Toàn bộ lý thuyết nền tảng, hệ tọa độ 4 chiều, nguyên lý Bát Trạch, Cửu Tinh Lạc Thư, Tam Thức Kỳ Môn & Lục Nhâm, và Từ Điển Thuật Ngữ.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold flex items-center gap-1.5">
+                    <span>🌙 2. Điểm Sóc & Âm Lịch (Thiên Văn)</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Dời lên vị trí thứ 2 cạnh Trang Chủ: Khảo sát chu kỳ tuần trăng, 4 pha Mặt Trăng, Lịch tra cứu nhanh, bảng 12/13 tháng âm lịch và quy tắc định tháng nhuận Vô Trung Khí.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold flex items-center gap-1.5">
+                    <span>🎯 3. Dự Trắc Chuyên Sâu (Kỳ Môn)</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Phân tích chi tiết 6 chủ đề đời sống: Thân Mệnh, Hôn Nhân, Sức Khỏe Bệnh Tật, Tài Vận Kinh Doanh, Công Danh Sự Nghiệp, Kiện Tụng & Tìm Đồ Thất Lạc.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                    <span>📅 4. 24 Tiết Khí Năm (Toàn Niên)</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Bảng tra cứu chính xác đến từng giây thời điểm chuyển tiết của 24 Tiết Khí trong năm, hỗ trợ xuất báo cáo Markdown và CSV.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-cyan-400 font-bold">Lược bỏ các tab dư thừa:</span> Các tab <em>Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung</em> đã được dọn sạch khỏi thanh menu vì toàn bộ nội dung học thuật và diễn giải của chúng đã được hợp nhất trọn vẹn bên trong <strong>Cẩm Nang Tri Thức</strong> và <strong>Dự Trắc Chuyên Sâu</strong>.
               </div>
             </div>
           )}

@@ -272,32 +272,22 @@ export const YearTermsTable: React.FC<YearTermsTableProps> = ({
       {onNavigateTab && (
         <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-xs">
           <button
-            id="btn-table-back-overview"
-            onClick={() => onNavigateTab('overview')}
+            id="btn-table-back-guide"
+            onClick={() => onNavigateTab('guide')}
             className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Về Tổng Quát</span>
+            <span>Về Cẩm Nang Tri Thức</span>
           </button>
 
           <div className="flex flex-wrap items-center gap-2">
             <button
-              id="btn-table-goto-compass"
-              onClick={() => onNavigateTab('compass')}
+              id="btn-table-goto-moon"
+              onClick={() => onNavigateTab('moon')}
               className="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Compass className="w-3.5 h-3.5 text-amber-400" />
-              <span>Bát Quái & 9 Cung</span>
-            </button>
-
-            <button
-              id="btn-table-goto-chart"
-              onClick={() => onNavigateTab('kymon-chart')}
-              className="px-3.5 py-1.5 rounded-lg bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Bàn Kỳ Môn 9 Cung</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <Calendar className="w-3.5 h-3.5 text-amber-400" />
+              <span>Điểm Sóc & Âm Lịch</span>
             </button>
 
             <button
@@ -306,7 +296,7 @@ export const YearTermsTable: React.FC<YearTermsTableProps> = ({
               className="px-3.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center gap-1.5 transition-colors shadow-md cursor-pointer"
             >
               <BookOpen className="w-3.5 h-3.5" />
-              <span>Dự Trắc Kỳ Môn</span>
+              <span>Dự Trắc Chuyên Sâu</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>

@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.19.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.20.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,21 +10,25 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.19.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Chuẩn Hóa Quy Chuẩn Thiên Văn Định Tháng & Tối Giản Nhóm Điểm Sóc*
+### 🚀 **Phiên bản hiện tại: `v2.20.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2*
 
-- 🌙 **Chuẩn Hóa Thẻ Quy Chuẩn Thiên Văn Định Tháng & Tháng Nhuận**:
-  - Trình bày trực quan 4 bước chuẩn tắc: Mốc cứng Đông Chí (270°) = Tháng 11, Đếm số tháng 12/13 giữa 2 lần Đông Chí, Quy tắc Vô Trung Khí xác định tháng nhuận, và Lan tỏa số thứ tự tháng sang hai phía.
-- 🧹 **Lược Bỏ Các Thành Phần Dư Thừa & Trùng Lặp**:
-  - Loại bỏ khối *Tiết Khí Trong Tháng Này* và *Hai Thẻ Điểm Sóc Trước/Sau* vì dữ liệu đã được cung cấp toàn diện và chi tiết trong **Bảng Danh Sách 12/13 Tháng Âm Lịch**.
-- 💫 **Tối Ưu Trải Nghiệm Giao Diện**:
-  - Giao diện nhóm Điểm Sóc & Âm Lịch Thiên Văn đạt sự liền mạch, thoáng đãng và trực quan tối đa.
+- 🧭 **Tinh Gọn Cấu Trúc Thanh Menu 4 Tab**:
+  - Menu được tinh giản thành 4 tab trọng tâm theo đúng thứ tự logic:
+    1. 📚 **Cẩm Nang Tri Thức** (Trang Chủ)
+    2. 🌙 **Điểm Sóc & Âm Lịch** (Dời lên vị trí thứ 2)
+    3. 🎯 **Dự Trắc Chuyên Sâu** (Kỳ Môn 6 chủ đề)
+    4. 📅 **24 Tiết Khí Năm** (Toàn Niên)
+- 🧹 **Loại Bỏ Các Tab Dư Thừa & Trùng Lặp**:
+  - Loại bỏ các tab *Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung* vì toàn bộ tri thức và phương pháp phân tích đã được tích hợp toàn diện trong Cẩm Nang Tri Thức và Dự Trắc Chuyên Sâu.
+- ⚡ **Tối Ưu Trải Nghiệm Điều Hướng**:
+  - Đồng bộ toàn bộ các liên kết, nút bấm chuyển trang và thuyết minh thuật toán (Mục 18).
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.18.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.19.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 
