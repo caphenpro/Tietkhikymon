@@ -6,6 +6,27 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.24.2]] - 2026-08-30
+### Codename: *Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)*
+
+#### 📱 Tối Ưu Giao Diện AI Chatbot Trên Điện Thoại Di Động (Mobile Responsive)
+- **Tái Cấu Trúc Header 2 Tầng Chống Vỡ Chữ (`/src/components/AIChatbotModal.tsx`)**:
+  - Khắc phục triệt để lỗi tiêu đề bị bóp méo thành một cột dọc từng chữ trên màn hình nhỏ.
+  - Tách biệt thanh chọn mô hình AI (Model Selector) xuống hàng thứ 2 trên mobile, đảm bảo tiêu đề và các nút chức năng luôn hiển thị gọn gàng, thanh thoát.
+- **Cố Định Nút Đóng (X) To Rõ Ở Góc Trên Bên Phải**:
+  - Đảm bảo nút đóng `(X)` luôn luôn hiển thị đầy đủ, không bao giờ bị tràn lề hoặc bị che khuất trên mọi kích thước màn hình điện thoại (touch target 34px - 44px).
+
+#### 📅 Khắc Phục Hoàn Toàn Ô Chọn Năm Trong Lịch Điểm Sóc & Bảng Tiết Khí (Fixed & Improved)
+- **Thay Thế Ô Input Năm Bằng Select Dropdown Đầy Đủ 1900-2100 (`/src/components/MiniCalendar.tsx`)**:
+  - Khắc phục lỗi không thể xóa hoặc gõ năm khác trong Lịch Tra Cứu Nhanh của mục Điểm Sóc Âm Lịch.
+  - Tích hợp thẻ chọn năm linh hoạt từ năm 1900 đến 2100 hỗ trợ native wheel picker trên iOS/Android và dropdown mượt mà trên desktop.
+- **Đồng Bộ Bộ Chọn Năm Trong Bảng 24 Tiết Khí (`/src/components/YearTermsTable.tsx`)**:
+  - Nâng cấp bộ chọn năm sang dropdown select từ 1900 đến 2100 kèm các nút Lùi/Tiến năm tiện lợi.
+- **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật Mục 19 trong `AlgorithmGuideModal.tsx` giải trình tối ưu hóa trải nghiệm di động.
+
+---
+
 ## [[2.24.1]] - 2026-08-30
 ### Codename: *Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)*
 

@@ -44,6 +44,11 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
   const [viewYear, setViewYear] = useState<number>(activeVN.year);
   const [viewMonth, setViewMonth] = useState<number>(activeVN.month);
 
+  // Year options range from 1900 to 2100
+  const yearOptions = useMemo(() => {
+    return Array.from({ length: 201 }, (_, i) => 1900 + i);
+  }, []);
+
   // Sync view when active date changes externally
   useEffect(() => {
     setViewYear(activeVN.year);
@@ -253,13 +258,14 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {/* Month Selector */}
           <select
             id="select-cal-month"
             value={viewMonth}
             onChange={(e) => setViewMonth(Number(e.target.value))}
-            className="bg-slate-900 border border-slate-700 text-xs font-semibold text-amber-300 rounded-lg px-2 py-1 focus:outline-none focus:border-amber-500 cursor-pointer"
+            className="bg-slate-900 border border-slate-700 text-xs font-semibold text-amber-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-amber-500 cursor-pointer shadow-inner"
+            title="Chọn tháng"
           >
             {monthNames.map((mName, idx) => (
               <option key={idx} value={idx}>
@@ -269,18 +275,19 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
           </select>
 
           {/* Year Selector */}
-          <input
-            id="input-cal-year"
-            type="number"
+          <select
+            id="select-cal-year"
             value={viewYear}
-            onChange={(e) => {
-              const val = Number(e.target.value);
-              if (val >= 1000 && val <= 3000) {
-                setViewYear(val);
-              }
-            }}
-            className="bg-slate-900 border border-slate-700 text-xs font-mono font-semibold text-amber-300 rounded-lg px-2 py-1 w-20 text-center focus:outline-none focus:border-amber-500 cursor-pointer"
-          />
+            onChange={(e) => setViewYear(Number(e.target.value))}
+            className="bg-slate-900 border border-slate-700 text-xs font-mono font-bold text-amber-300 rounded-lg px-2 py-1.5 focus:outline-none focus:border-amber-500 cursor-pointer shadow-inner"
+            title="Chọn năm"
+          >
+            {yearOptions.map((y) => (
+              <option key={y} value={y}>
+                Năm {y}
+              </option>
+            ))}
+          </select>
         </div>
 
         <button

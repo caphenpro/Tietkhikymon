@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.24.1-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.24.2-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,21 +10,22 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.24.1`** *(Phát hành: 30/08/2026)*
-**Tên mã:** *Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)*
+### 🚀 **Phiên bản hiện tại: `v2.24.2`** *(Phát hành: 30/08/2026)*
+**Tên mã:** *Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)*
 
-- 🎯 **Phản Hồi Trực Diện, Ngắn Gọn & Súc Tích**:
-  - Câu trả lời tập trung 100% vào trọng tâm, loại bỏ hoàn toàn tiêu đề dài dòng hay dẫn chuyện rườm rà.
-  - Cấu trúc 3 phần chuẩn: Kết Luận Trực Diện (1-2 câu) $\rightarrow$ Căn Cứ Quẻ Then Chốt (2-3 Dụng thần) $\rightarrow$ Lời Khuyên Hành Động.
-- 💡 **Gợi Ý 1 Chạm Tương Tác Tự Nhiên (Interactive Action Chips)**:
-  - Tự động hiển thị cụm nút bấm bên dưới câu trả lời: *"Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?"*.
-  - Người dùng có thể nhấn 1 chạm để lập tức đào sâu vào các khía cạnh cổ thuật liên quan (hóa giải phương vị, chọn giờ xuất hành, chiến lược đàm phán Chủ - Khách...).
+- 📱 **Tối Ưu Hoàn Hảo Khung Chat AI Trên Điện Thoại Di Động (Mobile Responsive)**:
+  - Tái cấu trúc Header 2 tầng thông minh: Tiêu đề không còn bị bóp méo hay vỡ thành một cột dọc từng chữ.
+  - Cố định nút đóng `(X)` to rõ ở góc trên bên phải, không bị tràn lề hay che khuất, touch target 34px - 44px chạm đóng cực kỳ mượt mà.
+  - Thanh chọn mô hình AI (Model Selector) được bố trí vừa vặn, độc lập trên mobile.
+- 📅 **Khắc Phục Hoàn Toàn Ô Chọn Năm Trong Lịch Tra Cứu Nhanh & Bảng Tiết Khí**:
+  - Khắc phục lỗi kẹt số khi nhập năm: Thay thế bằng thẻ dropdown select đầy đủ các năm từ 1900 đến 2100 cho phép chọn năm âm lịch / tiết khí tức thì.
+  - Tích hợp các nút lùi/tiến ngày và tháng giúp tra cứu chuyển ngày tiện lợi trên mọi thiết bị.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.24.0`** *(Phát hành: 30/08/2026)*
+### 📦 **Phiên bản trước: `v2.24.1`** *(Phát hành: 30/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

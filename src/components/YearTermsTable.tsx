@@ -85,26 +85,31 @@ export const YearTermsTable: React.FC<YearTermsTableProps> = ({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setYear((y) => y - 1)}
-            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700"
+            onClick={() => setYear((y) => Math.max(1900, y - 1))}
+            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700 cursor-pointer"
             title="Năm trước"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
 
-          <input
-            type="number"
-            min="1900"
-            max="2100"
+          <select
+            id="select-terms-year"
             value={year}
-            onChange={(e) => setYear(parseInt(e.target.value, 10) || year)}
-            className="w-24 px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg text-center font-bold text-amber-400 font-mono text-sm focus:outline-none focus:border-amber-500"
-          />
+            onChange={(e) => setYear(Number(e.target.value))}
+            className="px-3 py-1.5 bg-slate-950 border border-slate-700 rounded-lg font-bold text-amber-400 font-mono text-sm focus:outline-none focus:border-amber-500 cursor-pointer shadow-inner"
+            title="Chọn năm"
+          >
+            {Array.from({ length: 201 }, (_, i) => 1900 + i).map((y) => (
+              <option key={y} value={y} className="bg-slate-900 text-white">
+                Năm {y}
+              </option>
+            ))}
+          </select>
 
           <button
             type="button"
-            onClick={() => setYear((y) => y + 1)}
-            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700"
+            onClick={() => setYear((y) => Math.min(2100, y + 1))}
+            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700 cursor-pointer"
             title="Năm sau"
           >
             <ChevronRight className="w-4 h-4" />

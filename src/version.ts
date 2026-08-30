@@ -11,18 +11,42 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.24.1';
+export const APP_VERSION = '2.24.2';
 export const APP_RELEASE_DATE = '2026-08-30';
-export const APP_CODENAME = 'Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)';
+export const APP_CODENAME = 'Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.24.2',
+    releaseDate: '2026-08-30',
+    codename: 'Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)',
+    tagline: 'Sửa triệt để lỗi vỡ giao diện và mất nút đóng (X) khung chat AI trên điện thoại di động; khắc phục hoàn toàn ô chọn năm trong Lịch Tra Cứu Nhanh và Bảng 24 Tiết Khí với dropdown 1900-2100.',
+    isLatest: true,
+    highlights: [
+      'Tối ưu hoàn hảo giao diện AI Chatbot Modal trên thiết bị di động (Mobile Responsive): Tái cấu trúc Header 2 tầng thông minh, không bị vỡ cột dọc tiêu đề, nút Đóng (X) luôn cố định to rõ ở góc trên bên phải.',
+      'Khắc phục triệt để lỗi kẹt ô chọn năm trong Lịch Tra Cứu Nhanh (MiniCalendar) của mục Điểm Sóc Âm Lịch: Thay thế bằng thẻ dropdown select đầy đủ các năm từ 1900 đến 2100 kèm các nút lùi/tiến ngày và tháng siêu mượt.',
+      'Đồng bộ cải tiến bộ chọn năm trong Bảng 24 Tiết Khí (YearTermsTable) với danh sách chọn năm linh hoạt từ 1900 đến 2100.',
+      'Đồng bộ Mục 19 trong Thuyết minh thuật toán & nguyên lý (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Giao diện Header Mobile chuyên dụng cho AI Chatbot Modal với thanh Model Selector độc lập bên dưới.',
+      'Thẻ select chọn năm thông minh từ năm 1900 đến 2100 cho Lịch Tra Cứu Nhanh (MiniCalendar) và Bảng 24 Tiết Khí.',
+    ],
+    improved: [
+      'Trải nghiệm người dùng trên điện thoại di động: Khung chat AI hiển thị cân đối, thao tác đóng/mở mượt mà, chọn năm âm lịch và tiết khí tức thì.',
+    ],
+    fixed: [
+      'Khắc phục lỗi tiêu đề AI Chatbot bị ngắt từng chữ và nút đóng (X) bị tràn ra ngoài màn hình trên thiết bị di động.',
+      'Khắc phục lỗi ô input năm trong Lịch Tra Cứu Nhanh không thể xóa hoặc gõ năm khác do điều kiện chặn số.',
+    ],
+  },
   {
     version: '2.24.1',
     releaseDate: '2026-08-30',
     codename: 'Tối Ưu AI Chatbot: Trả Lời Trực Diện & Gợi Ý 1 Chạm Tự Nhiên (Direct Answer & 1-Touch Action Chips)',
     tagline: 'Loại bỏ tiêu đề dẫn chuyện rườm rà trong văn bản phản hồi, giữ lại câu trả lời sắc bén, ngắn gọn và tích hợp hệ thống nút bấm Gợi Ý 1 Chạm trực quan hỏi tiếp theo.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Loại bỏ các tiêu đề dẫn chuyện dài dòng trong nội dung văn bản markdown của AI, giúp câu trả lời cực kỳ tinh gọn và chuyên nghiệp.',
       'Tự động phân tách nội dung và bóc tách các câu hỏi gợi ý thành cụm nút bấm "Gợi Ý 1 Chạm" ngay dưới câu trả lời.',

@@ -1055,11 +1055,11 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             <div id="ai-chatbot" className="p-5 rounded-2xl bg-slate-950 border border-purple-500/30 space-y-4">
               <h3 className="text-base font-bold text-purple-300 flex items-center gap-1.5">
                 <Bot className="w-5 h-5 text-purple-400" />
-                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Trả Lời Trực Diện & Gợi Ý 1 Chạm</span>
+                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Trả Lời Trực Diện & Tối Ưu Mobile Responsive</span>
               </h3>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Tại phiên bản <strong>v2.24.1</strong>, hệ thống tối ưu hóa hoàn toàn <strong>AI Đại Sư Luận Giải Cổ Thuật</strong>: Phản hồi <strong>ngắn gọn, sắc bén, đi thẳng vào câu hỏi</strong> mà không có tiêu đề dẫn chuyện rườm rà trong văn bản, đồng thời tự động hiển thị <strong>bộ câu hỏi gợi ý 1 chạm</strong> ("Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?") giúp người dùng tiếp tục đào sâu các khía cạnh liên quan chỉ với 1 cú click.
+                Tại phiên bản <strong>v2.24.2</strong>, hệ thống tối ưu hóa hoàn toàn <strong>AI Đại Sư Luận Giải Cổ Thuật</strong>: Phản hồi <strong>ngắn gọn, sắc bén, đi thẳng vào câu hỏi</strong> mà không có tiêu đề dẫn chuyện rườm rà trong văn bản, hiển thị <strong>bộ câu hỏi gợi ý 1 chạm</strong> ("Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?") và cấu trúc lại <strong>Header Mobile 2 tầng</strong> giúp hiển thị cân đối hoàn hảo trên điện thoại di động với nút đóng (X) luôn nổi bật, dễ chạm.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -1076,10 +1076,10 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
                   <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-400" />
-                    <span>2. Cấu Trúc Trả Lời Trực Diện & Gợi Ý 1 Chạm</span>
+                    <span>2. Trực Diện, Gợi Ý 1 Chạm & Chuẩn Mobile</span>
                   </strong>
                   <p className="text-slate-400">
-                    Nội dung trả lời chỉ gồm 3 phần cô đọng: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu Dụng thần cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và hệ thống nút bấm <strong>Gợi ý 1 chạm</strong> tự động bóc tách dưới chân tin nhắn.
+                    Nội dung trả lời gồm 3 phần cô đọng: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu Dụng thần cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và hệ thống nút bấm <strong>Gợi ý 1 chạm</strong> tự động bóc tách dưới chân tin nhắn, tích hợp mượt mà trên cả máy tính lẫn điện thoại.
                   </p>
                 </div>
               </div>
