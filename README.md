@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.20.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.21.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,25 +10,23 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.20.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2*
+### 🚀 **Phiên bản hiện tại: `v2.21.0`** *(Phát hành: 29/08/2026)*
+**Tên mã:** *Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức*
 
-- 🧭 **Tinh Gọn Cấu Trúc Thanh Menu 4 Tab**:
-  - Menu được tinh giản thành 4 tab trọng tâm theo đúng thứ tự logic:
-    1. 📚 **Cẩm Nang Tri Thức** (Trang Chủ)
-    2. 🌙 **Điểm Sóc & Âm Lịch** (Dời lên vị trí thứ 2)
-    3. 🎯 **Dự Trắc Chuyên Sâu** (Kỳ Môn 6 chủ đề)
-    4. 📅 **24 Tiết Khí Năm** (Toàn Niên)
-- 🧹 **Loại Bỏ Các Tab Dư Thừa & Trùng Lặp**:
-  - Loại bỏ các tab *Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung* vì toàn bộ tri thức và phương pháp phân tích đã được tích hợp toàn diện trong Cẩm Nang Tri Thức và Dự Trắc Chuyên Sâu.
-- ⚡ **Tối Ưu Trải Nghiệm Điều Hướng**:
-  - Đồng bộ toàn bộ các liên kết, nút bấm chuyển trang và thuyết minh thuật toán (Mục 18).
+- 🔮 **Bảo Tồn Toàn Bộ Công Cụ Quẻ Kỳ Môn & Đại Lục Nhâm**:
+  - Giữ lại 100% nội dung và tương tác của **Bàn Kỳ Môn 9 Cung (3x3)** (`KyMonCompleteBoard.tsx`) và **Bàn Đại Lục Nhâm** (`LucNhamPanel.tsx`).
+- 🔗 **Liên Kết Điều Hướng Thông Minh Từ Cẩm Nang Tri Thức**:
+  - Tích hợp các nút chuyển trang nhanh (Quick Action Buttons) tại đầu trang và chân trang của Cẩm Nang Tri Thức.
+  - Bổ sung các thẻ liên kết chuyên biệt trong Mục 6 (Kỳ Môn) và Mục 7 (Lục Nhâm) của Cẩm Nang.
+  - Hỗ trợ các nút quay lại Cẩm Nang, chuyển đổi giữa Kỳ Môn ↔ Lục Nhâm ↔ Dự Trắc Chuyên Sâu mượt mà.
+- 🧭 **Duy Trì Thanh Menu Tinh Gọn 4 Tab**:
+  - Thanh menu chính vẫn được giữ gọn gàng: 1. Cẩm Nang Tri Thức → 2. Điểm Sóc & Âm Lịch → 3. Dự Trắc Chuyên Sâu → 4. 24 Tiết Khí Năm.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.19.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.20.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

@@ -1035,8 +1035,13 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 </div>
               </div>
 
-              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
-                <span className="text-cyan-400 font-bold">Lược bỏ các tab dư thừa:</span> Các tab <em>Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung</em> đã được dọn sạch khỏi thanh menu vì toàn bộ nội dung học thuật và diễn giải của chúng đã được hợp nhất trọn vẹn bên trong <strong>Cẩm Nang Tri Thức</strong> và <strong>Dự Trắc Chuyên Sâu</strong>.
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-1">
+                <p>
+                  <span className="text-cyan-400 font-bold">Lược bỏ các tab dư thừa trên Menu:</span> Các tab <em>Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung</em> đã được dọn sạch khỏi thanh menu chính để giữ thanh điều hướng tinh gọn 4 tab cốt lõi.
+                </p>
+                <p>
+                  <span className="text-amber-300 font-bold">Mối liên kết điều hướng thông minh:</span> Người dùng có thể dễ dàng truy cập trực tiếp <strong>Bàn Kỳ Môn 9 Cung (3x3)</strong> và <strong>Bàn Đại Lục Nhâm</strong> từ các nút bấm hành động nhanh, các thẻ bài học thuật trong <strong>Cẩm Nang Tri Thức</strong> và thanh điều hướng chân trang hai chiều.
+                </p>
               </div>
             </div>
           )}

@@ -41,12 +41,14 @@ interface KyMonPrognosticationViewProps {
   currentKyMon?: KyMonInfo;
   currentBatTu?: BatTuInfo;
   onBackToBoard?: () => void;
+  onNavigateTab?: (tabId: string) => void;
 }
 
 export const KyMonPrognosticationView: React.FC<KyMonPrognosticationViewProps> = ({
   currentKyMon,
   currentBatTu,
   onBackToBoard,
+  onNavigateTab,
 }) => {
   const [activeCategory, setActiveCategory] = useState<
     'overview' | 'destiny' | 'marriage' | 'health' | 'wealth' | 'career' | 'lostItems' | 'lawsuit'
@@ -127,21 +129,43 @@ export const KyMonPrognosticationView: React.FC<KyMonPrognosticationViewProps> =
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
+            {onNavigateTab && (
+              <button
+                id="btn-goto-kymon-chart"
+                onClick={() => onNavigateTab('kymon-chart')}
+                className="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+              >
+                <Layers className="w-4 h-4 text-amber-400" />
+                <span>Bàn Kỳ Môn 9 Cung</span>
+              </button>
+            )}
+
+            {onNavigateTab && (
+              <button
+                id="btn-goto-lucnham"
+                onClick={() => onNavigateTab('luc-nham')}
+                className="px-3.5 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+              >
+                <Compass className="w-4 h-4 text-purple-400" />
+                <span>Bàn Đại Lục Nhâm</span>
+              </button>
+            )}
+
             {onBackToBoard && (
               <button
                 id="btn-back-to-kymon-board"
                 onClick={onBackToBoard}
-                className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
+                className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
               >
-                <Compass className="w-4 h-4 text-amber-400" />
-                <span>Quay Lại Bàn 9 Cung</span>
+                <BookOpen className="w-4 h-4 text-slate-400" />
+                <span>Cẩm Nang Tri Thức</span>
               </button>
             )}
 
             <button
               id="btn-copy-prognostication"
               onClick={handleCopySummary}
-              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md"
+              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? 'Đã Sao Chép' : 'Sao Chép Tổng Quan'}</span>

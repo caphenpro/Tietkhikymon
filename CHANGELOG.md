@@ -6,6 +6,21 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.21.0]] - 2026-08-29
+### Codename: *Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức*
+
+#### ✨ Phục Hồi & Tối Ưu Hóa Liên Kết Điều Hướng (Added & Improved)
+- **Giữ Lại Trọn Vẹn Quẻ Kỳ Môn & Lục Nhâm**:
+  - Bảo tồn 100% component và tính năng tính toán chi tiết của **Bàn Kỳ Môn Độn Giáp 9 Cung (3x3)** (`KyMonCompleteBoard.tsx`) và **Bàn Đại Lục Nhâm Tam Truyền** (`LucNhamPanel.tsx`).
+- **Liên Kết Điều Hướng Trực Tiếp Từ Cẩm Nang Tri Thức (`CosmicKnowledgeGuide.tsx`)**:
+  - Bổ sung các nút truy cập nhanh (Quick Action Buttons) ở đầu trang Cẩm Nang: Bàn Kỳ Môn 9 Cung, Bàn Đại Lục Nhâm, Điểm Sóc & Âm Lịch, Dự Trắc Chuyên Sâu, 24 Tiết Khí.
+  - Bổ sung thẻ điều hướng chuyên biệt trong Mục 6 (Cấu Trúc Tam Bàn Kỳ Môn) và Mục 7 (Cổ Tam Thức Đại Lục Nhâm).
+  - Cung cấp thanh điều hướng chân trang hai chiều, cho phép chuyển đổi tức thì giữa Cẩm Nang, Bàn Kỳ Môn, Bàn Lục Nhâm và Dự Trắc Chuyên Sâu.
+- **Thanh Menu Chính Giữ Nguyên 4 Tab Trọng Tâm**:
+  - Menu ứng dụng giữ vững cấu trúc tinh gọn 4 tab: *Cẩm Nang Tri Thức → Điểm Sóc & Âm Lịch → Dự Trắc Chuyên Sâu → 24 Tiết Khí Năm*.
+
+---
+
 ## [[2.20.0]] - 2026-08-29
 ### Codename: *Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2*
 

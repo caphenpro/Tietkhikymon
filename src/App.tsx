@@ -2,7 +2,9 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Header } from './components/Header';
 import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
+import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
+import { LucNhamPanel } from './components/LucNhamPanel';
 import { CosmicKnowledgeGuide } from './components/CosmicKnowledgeGuide';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
@@ -101,6 +103,32 @@ export default function App() {
           </div>
         )}
 
+        {/* Bàn Kỳ Môn Độn Giáp 9 Cung (Điều hướng từ Cẩm Nang) */}
+        {activeTab === 'kymon-chart' && (
+          <div className="space-y-6">
+            <KyMonCompleteBoard
+              currentKyMon={result.kyMon}
+              currentBatTu={result.batTu}
+              onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
+              onSwitchToLucNham={() => setActiveTab('luc-nham')}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
+        {/* Bàn Đại Lục Nhâm Tam Truyền (Điều hướng từ Cẩm Nang) */}
+        {activeTab === 'luc-nham' && (
+          <div className="space-y-6">
+            <LucNhamPanel
+              result={result}
+              currentDate={currentDate}
+              onOpenAlgorithmModal={() => setIsGuideOpen(true)}
+              onSwitchToKyMon={() => setActiveTab('kymon-chart')}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
         {/* Tab 3: Dự Trắc Chuyên Sâu Kỳ Môn */}
         {activeTab === 'kymon-prognostication' && (
           <div className="space-y-6">
@@ -108,6 +136,7 @@ export default function App() {
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
               onBackToBoard={() => setActiveTab('guide')}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
         )}

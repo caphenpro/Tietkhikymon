@@ -6,6 +6,8 @@ import {
   Clock,
   Compass,
   ArrowRight,
+  ArrowLeft,
+  BookOpen,
   ShieldAlert,
   HelpCircle,
   TrendingUp,
@@ -28,6 +30,7 @@ interface LucNhamPanelProps {
   currentDate: Date;
   onOpenAlgorithmModal?: () => void;
   onSwitchToKyMon?: () => void;
+  onNavigateTab?: (tabId: string) => void;
 }
 
 export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
@@ -35,6 +38,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
   currentDate,
   onOpenAlgorithmModal,
   onSwitchToKyMon,
+  onNavigateTab,
 }) => {
   const [selectedPalaceChi, setSelectedPalaceChi] = useState<string>('Tý');
   const [activeAspect, setActiveAspect] = useState<'all' | 'cautai' | 'honnhan' | 'quanvan' | 'benhtat' | 'kientung' | 'xuathanh'>('all');
@@ -102,12 +106,24 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
     <div className="space-y-6">
       {/* TOP TAB SWITCHER: KỲ MÔN ĐỘN GIÁP vs ĐẠI LỤC NHÂM */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-2.5 sm:p-3.5 rounded-2xl shadow-lg">
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {onNavigateTab && (
+            <button
+              id="btn-lucnham-back-guide"
+              onClick={() => onNavigateTab('guide')}
+              className="px-3 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+              title="Quay lại Cẩm Nang Tri Thức"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Cẩm Nang</span>
+            </button>
+          )}
+
           {onSwitchToKyMon && (
             <button
               id="btn-lucnham-switch-kymon"
               onClick={onSwitchToKyMon}
-              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all"
+              className="px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <span>🔮</span>
               <span>Kỳ Môn Độn Giáp</span>
@@ -116,17 +132,28 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
 
           <button
             id="btn-lucnham-switch-active"
-            className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 ring-2 ring-indigo-400/40"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 ring-2 ring-indigo-400/40"
           >
             <span>🧭</span>
             <span>Đại Lục Nhâm</span>
           </button>
+
+          {onNavigateTab && (
+            <button
+              id="btn-lucnham-goto-prognostication"
+              onClick={() => onNavigateTab('kymon-prognostication')}
+              className="px-3.5 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              <span>Dự Trắc Chuyên Sâu</span>
+            </button>
+          )}
         </div>
 
         {onOpenAlgorithmModal && (
           <button
             onClick={onOpenAlgorithmModal}
-            className="px-3.5 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 self-end sm:self-auto transition-colors"
+            className="px-3.5 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 self-end sm:self-auto transition-colors cursor-pointer"
           >
             <HelpCircle className="w-3.5 h-3.5 text-indigo-400" />
             <span>Thuyết Minh Cửu Tông Môn</span>
@@ -673,6 +700,52 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
                 {chart.prognostications.xuatHanh}
               </p>
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom Navigation Footer */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
+            <BookOpen className="w-4 h-4" />
+          </div>
+          <div>
+            <h4 className="font-bold text-white text-xs sm:text-sm">Khám Phá Cẩm Nang Tri Thức & Kỳ Môn Độn Giáp</h4>
+            <p className="text-slate-400 text-xs">Tra cứu ý nghĩa Tứ Khoa, Tam Truyền, Thần Tướng và đối chiếu với Bàn Kỳ Môn 9 Cung.</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+          {onNavigateTab && (
+            <button
+              onClick={() => onNavigateTab('guide')}
+              className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Cẩm Nang Tri Thức</span>
+            </button>
+          )}
+
+          {onSwitchToKyMon && (
+            <button
+              onClick={onSwitchToKyMon}
+              className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <Layers className="w-3.5 h-3.5 text-amber-400" />
+              <span>Sang Bàn Kỳ Môn 9 Cung</span>
+            </button>
+          )}
+
+          {onNavigateTab && (
+            <button
+              onClick={() => onNavigateTab('kymon-prognostication')}
+              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Dự Trắc Chuyên Sâu</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           )}
         </div>
       </div>

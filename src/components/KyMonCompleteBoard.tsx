@@ -23,6 +23,8 @@ import {
   Eye,
   Flame,
   ArrowRight,
+  ArrowLeft,
+  Moon,
   Heart,
   GraduationCap,
   Search,
@@ -44,6 +46,7 @@ interface KyMonCompleteBoardProps {
   currentBatTu?: BatTuInfo;
   onOpenPrognostication?: () => void;
   onSwitchToLucNham?: () => void;
+  onNavigateTab?: (tabId: string) => void;
 }
 
 // Bố cục ma trận Lạc Thư 3x3 chuẩn Kỳ Môn Độn Giáp:
@@ -61,6 +64,7 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
   currentBatTu,
   onOpenPrognostication,
   onSwitchToLucNham,
+  onNavigateTab,
 }) => {
   // Mode: 'auto' (đồng bộ với thời gian thực / tính toán thiên văn) hoặc 'manual' (tự chọn Cục & Can Chi)
   const [mode, setMode] = useState<'auto' | 'manual'>('auto');
@@ -182,11 +186,23 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
     <div className="space-y-6">
       {/* 1. TOP TAB SWITCHER: KỲ MÔN ĐỘN GIÁP vs ĐẠI LỤC NHÂM */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-2.5 sm:p-3.5 rounded-2xl shadow-lg">
-        {/* Two prominent primary switch buttons */}
-        <div className="flex items-center gap-2">
+        {/* Navigation & switch buttons */}
+        <div className="flex flex-wrap items-center gap-2">
+          {onNavigateTab && (
+            <button
+              id="btn-kymon-back-guide"
+              onClick={() => onNavigateTab('guide')}
+              className="px-3 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+              title="Quay lại Cẩm Nang Tri Thức"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Cẩm Nang</span>
+            </button>
+          )}
+
           <button
             id="btn-switch-kymon-active"
-            className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 ring-2 ring-amber-400/40"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 ring-2 ring-amber-400/40"
           >
             <span>🔮</span>
             <span>Kỳ Môn Độn Giáp</span>
@@ -196,10 +212,21 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
             <button
               id="btn-switch-lucnham"
               onClick={onSwitchToLucNham}
-              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all"
+              className="px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <span>🧭</span>
               <span>Đại Lục Nhâm</span>
+            </button>
+          )}
+
+          {onOpenPrognostication && (
+            <button
+              id="btn-goto-prognostication"
+              onClick={onOpenPrognostication}
+              className="px-3.5 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+              <span>Dự Trắc Chuyên Sâu</span>
             </button>
           )}
         </div>
@@ -668,6 +695,52 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
             </div>
           </div>
         )}
+      </div>
+
+      {/* Bottom Navigation Footer */}
+      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+            <BookOpen className="w-4 h-4" />
+          </div>
+          <div>
+            <h4 className="font-bold text-white text-xs sm:text-sm">Khám Phá Cẩm Nang & Đại Lục Nhâm</h4>
+            <p className="text-slate-400 text-xs">Tra cứu ý nghĩa 9 Sao, 8 Cửa, 8 Thần và đối chiếu với Lục Nhâm Tam Truyền.</p>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+          {onNavigateTab && (
+            <button
+              onClick={() => onNavigateTab('guide')}
+              className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Cẩm Nang Tri Thức</span>
+            </button>
+          )}
+
+          {onSwitchToLucNham && (
+            <button
+              onClick={onSwitchToLucNham}
+              className="flex-1 sm:flex-none px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/30 font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            >
+              <Compass className="w-3.5 h-3.5 text-purple-400" />
+              <span>Sang Đại Lục Nhâm</span>
+            </button>
+          )}
+
+          {onOpenPrognostication && (
+            <button
+              onClick={onOpenPrognostication}
+              className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-slate-950" />
+              <span>Dự Trắc Chuyên Sâu</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

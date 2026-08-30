@@ -11,22 +11,42 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.20.0';
+export const APP_VERSION = '2.21.0';
 export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2';
+export const APP_CODENAME = 'Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
   {
+    version: '2.21.0',
+    releaseDate: '2026-08-29',
+    codename: 'Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức',
+    tagline: 'Duy trì thanh Menu tinh gọn 4 Tab (Cẩm Nang, Điểm Sóc, Dự Trắc, Tiết Khí) đồng thời giữ trọn vẹn nội dung Bàn Kỳ Môn 9 Cung & Bàn Đại Lục Nhâm với hệ thống liên kết điều hướng 2 chiều từ Cẩm Nang Tri Thức.',
+    isLatest: true,
+    highlights: [
+      'Giữ lại trọn vẹn toàn bộ giao diện và công cụ quẻ Bàn Kỳ Môn 9 Cung (3x3) và Bàn Đại Lục Nhâm (Tam Truyền & Tứ Khoa).',
+      'Tích hợp các nút hành động nhanh (Quick Action Buttons) tại đầu trang và chân trang Cẩm Nang Tri Thức để chuyển tức thì sang Bàn Kỳ Môn và Đại Lục Nhâm.',
+      'Bổ sung các thẻ liên kết trực tiếp bên trong Mục 6 (Kỳ Môn Độn Giáp) và Mục 7 (Đại Lục Nhâm) của Cẩm Nang.',
+      'Thiết lập hệ thống điều hướng hai chiều liền mạch (nút Quay Lại Cẩm Nang, Chuyển Sang Lục Nhâm, Chuyển Sang Kỳ Môn, và Mở Dự Trắc Chuyên Sâu) trên mọi màn hình.',
+    ],
+    added: [
+      'Nút chuyển hướng trực tiếp đến Bàn Kỳ Môn 9 Cung và Bàn Đại Lục Nhâm trong Cẩm Nang Tri Thức.',
+      'Thanh điều hướng chân trang đa chiều giữa các công cụ Cổ Tam Thức.',
+    ],
+    improved: [
+      'Đảm bảo thanh Menu chính luôn tinh gọn tối ưu 4 Tab mà người dùng vẫn có thể khám phá chi tiết toàn bộ bàn cờ Lạc Thư và Lục Nhâm bất kỳ lúc nào.',
+    ],
+  },
+  {
     version: '2.20.0',
     releaseDate: '2026-08-29',
     codename: 'Tinh Gọn Menu 4 Tab Trọng Tâm & Dời Điểm Sóc Lên Vị Trí Thứ 2',
-    tagline: 'Tinh giản thanh menu thành 4 tab trọng tâm: Cẩm Nang Tri Thức (1), Điểm Sóc & Âm Lịch (2), Dự Trắc Chuyên Sâu (3), 24 Tiết Khí Năm (4); loại bỏ các tab trùng lặp (Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan Luận Cục, Bát Quái 9 Cung).',
-    isLatest: true,
+    tagline: 'Tinh giản thanh menu thành 4 tab trọng tâm: Cẩm Nang Tri Thức (1), Điểm Sóc & Âm Lịch (2), Dự Trắc Chuyên Sâu (3), 24 Tiết Khí Năm (4); loại bỏ các tab trùng lặp.',
+    isLatest: false,
     highlights: [
       'Tinh giản cấu trúc thanh Menu thành 4 Tab duy nhất: Cẩm Nang Tri Thức → Điểm Sóc & Âm Lịch → Dự Trắc Chuyên Sâu → 24 Tiết Khí Năm.',
       'Dời tab "Điểm Sóc & Âm Lịch" từ vị trí cuối cùng lên nằm ở vị trí thứ 2 ngay sau Cẩm Nang Tri Thức.',
-      'Loại bỏ 4 tab trùng lặp/dư thừa: Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan & Luận Cục, Bát Quái & 9 Cung (toàn bộ tri thức và giải đoán đã được hợp nhất trọn vẹn trong Cẩm Nang và Dự Trắc).',
+      'Loại bỏ 4 tab trùng lặp/dư thừa khỏi menu chính: Kỳ Môn Độn Giáp, Đại Lục Nhâm, Tổng Quan & Luận Cục, Bát Quái & 9 Cung.',
       'Đồng bộ hóa toàn bộ liên kết điều hướng và nút chuyển trang trên giao diện.',
     ],
     added: [
