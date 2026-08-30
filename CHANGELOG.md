@@ -6,6 +6,22 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.22.0]] - 2026-08-30
+### Codename: *Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)*
+
+#### ✨ Tính Năng Mới & Tích Hợp AI (Added & Improved)
+- **Trợ Lý AI Luận Giải Cổ Thuật Toàn Diện (`/src/components/AIChatbotModal.tsx` & `/src/components/AIChatbotFloatingButton.tsx`)**:
+  - Tích hợp cửa sổ chat chuyên sâu với khả năng tương tác trực tiếp với các mô hình AI tiên tiến (Gemini 2.5 Flash, DeepSeek V3 / R1, Claude 3.5 Sonnet, GPT-4o Mini) qua OpenRouter API.
+  - Tự động nạp ngữ cảnh thời gian thực của quẻ: Bát Tự 4 Trụ, 24 Tiết Khí Mặt Trời, Điểm Sóc Âm Lịch, Bàn Kỳ Môn Độn Giáp 9 Cung và Bàn Đại Lục Nhâm Tam Truyền vào System Prompt.
+  - Cung cấp nút bấm nổi (Floating Action Button) và nút hành động trên Header để mở AI Chat từ bất kỳ màn hình nào.
+  - Tích hợp bảng câu hỏi gợi ý nhanh (Quick Prompts) cho 6 chủ đề: Thân Mệnh, Tài Vận, Hôn Nhân, Sức Khỏe, Công Danh, Kỳ Môn & Lục Nhâm.
+- **Backend Proxy An Toàn (`/server.ts` - `/api/chat`)**:
+  - Thiết lập endpoint proxy bảo mật kết nối tới OpenRouter, hỗ trợ cả khóa API mặc định và khóa API cá nhân của người dùng.
+- **Tài Liệu & Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Bổ sung **Mục 19: Trợ Lý AI Luận Giải Cổ Thuật & Khung Tích Hợp OpenRouter** giải thích chi tiết quy trình 5 bước luận giải cổ thức kết hợp AI.
+
+---
+
 ## [[2.21.0]] - 2026-08-29
 ### Codename: *Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức*
 

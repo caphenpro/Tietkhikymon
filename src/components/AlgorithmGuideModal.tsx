@@ -29,6 +29,8 @@ import {
   HelpCircle,
   Award,
   Bookmark,
+  Bot,
+  Cpu,
 } from 'lucide-react';
 import { APP_VERSION } from '../version';
 
@@ -61,6 +63,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'glossary', title: '16. Từ Điển Thuật Ngữ Kỳ Môn, Lục Nhâm & Thiên Văn', icon: Bookmark },
     { id: 'theme-mode', title: '17. Chế Độ Sáng / Tối (Auto & Custom Theme)', icon: Sun },
     { id: 'streamlined-nav', title: '18. Tinh Gọn 4 Tab Trọng Tâm (Tránh Trùng Dư Dữ Liệu)', icon: Layers },
+    { id: 'ai-chatbot', title: '19. Trợ Lý AI Luận Giải Cổ Thuật & OpenRouter', icon: Bot },
   ];
 
   return (
@@ -1042,6 +1045,57 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <p>
                   <span className="text-amber-300 font-bold">Mối liên kết điều hướng thông minh:</span> Người dùng có thể dễ dàng truy cập trực tiếp <strong>Bàn Kỳ Môn 9 Cung (3x3)</strong> và <strong>Bàn Đại Lục Nhâm</strong> từ các nút bấm hành động nhanh, các thẻ bài học thuật trong <strong>Cẩm Nang Tri Thức</strong> và thanh điều hướng chân trang hai chiều.
                 </p>
+              </div>
+            </div>
+          )}
+
+          {/* Section 19: AI Chatbot Metaphysics Advisor & OpenRouter Integration */}
+          {(activeSection === 'all' || activeSection === 'ai-chatbot') && (
+            <div id="ai-chatbot" className="p-5 rounded-2xl bg-slate-950 border border-purple-500/30 space-y-4">
+              <h3 className="text-base font-bold text-purple-300 flex items-center gap-2">
+                <Bot className="w-5 h-5 text-purple-400" />
+                <span>19. Trợ Lý AI Luận Giải Cổ Thuật & Khung Tích Hợp OpenRouter</span>
+              </h3>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Tại phiên bản <strong>v2.21.0</strong>, hệ thống tích hợp <strong>AI Đại Sư Luận Giải Cổ Thuật</strong> toàn diện, kết nối với các mô hình Trí Tuệ Nhân Tạo hàng đầu thông qua OpenRouter API.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold flex items-center gap-1.5">
+                    <Cpu className="w-4 h-4 text-purple-400" />
+                    <span>1. Ngữ Cảnh Thiên Văn & Trận Bàn Tức Thời</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Khi người dùng đặt câu hỏi, hệ thống tự động trích xuất toàn bộ dữ liệu <strong>Bát Tự 4 Trụ (Năm, Tháng, Ngày, Giờ)</strong>, <strong>Tiết Khí Mặt Trời</strong>, <strong>Điểm Sóc Mặt Trăng</strong>, <strong>Kỳ Môn 9 Cung (Thiên bàn, Địa bàn, Bát Môn, Cửu Tinh, Bát Thần, Tuần Không, Mã Tinh)</strong>, cùng <strong>Đại Lục Nhâm (Nguyệt Tướng, Thiên Bàn, Tứ Khóa, Tam Truyền)</strong> và nạp trực tiếp vào System Prompt của AI.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <span>2. Đa Dạng Mô Hình Ngôn Ngữ Tiên Tiến</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Hỗ trợ linh hoạt các mô hình AI tối tân như <em>Google Gemini 2.5 Flash / Flash Lite, DeepSeek V3 / R1 (Suy luận chuyên sâu), Anthropic Claude 3.5 Sonnet, OpenAI GPT-4o Mini</em>. Người dùng có thể sử dụng cổng proxy tích hợp hoặc điền khóa OpenRouter API Key cá nhân của mình.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-2 text-slate-300">
+                <strong className="text-cyan-300 block font-semibold">Quy Trình Luận Giải 5 Bước Chuẩn Mực Cổ Thức Của AI:</strong>
+                <ol className="list-decimal list-inside space-y-1 text-slate-400 text-xs">
+                  <li><strong>Xác định Định Cục & Thời Khắc:</strong> Đánh giá Âm/Dương độn, Tiết Khí đương lệnh, Can Chi tứ trụ và trạng thái Tuần Không/Mã Tinh.</li>
+                  <li><strong>Lập Cục & Xác Định Dụng Thần:</strong> Phân tích Cung tọa Lạc Thư của Dụng Thần (theo câu hỏi việc cụ thể: Thân Mệnh, Tài Vận, Hôn Nhân, Sức Khỏe, Công Danh, Kiện Tụng...).</li>
+                  <li><strong>Khảo sát Tứ Tầng Kỳ Môn:</strong> Phối hợp Thiên Can (Thiên bàn/Địa bàn), Cửu Tinh (Thiên thời), Bát Môn (Nhân hòa), Bát Thần (Thần trợ).</li>
+                  <li><strong>Đối Chiếu Đại Lục Nhâm:</strong> Kiểm tra Can Chi Tứ Khóa và Tam Truyền (Sơ/Trung/Mạt Truyền) để thấy rõ tiến trình Khởi đầu - Diễn biến - Kết cuộc.</li>
+                  <li><strong>Tổng Luận & Lời Khuyên Hành Động:</strong> Đưa ra đánh giá Cát/Hung khách quan kèm phương hướng hành động, phương vị xuất hành và thời điểm thuận lợi.</li>
+                </ol>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Quyền riêng tư & Lưu trữ:</span> Lịch sử trò chuyện và thiết lập API Key được lưu an toàn trong <code className="text-amber-300 font-mono">sessionStorage / localStorage</code> trên trình duyệt của người dùng, không lưu trữ trên bất kỳ máy chủ bên thứ ba nào.
               </div>
             </div>
           )}

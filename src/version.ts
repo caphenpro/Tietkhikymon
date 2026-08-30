@@ -11,18 +11,44 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.21.0';
-export const APP_RELEASE_DATE = '2026-08-29';
-export const APP_CODENAME = 'Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức';
+export const APP_VERSION = '2.22.0';
+export const APP_RELEASE_DATE = '2026-08-30';
+export const APP_CODENAME = 'Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.22.0',
+    releaseDate: '2026-08-30',
+    codename: 'Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)',
+    tagline: 'Tích hợp Trợ Lý AI Luận Giải Cổ Thuật với ngữ cảnh trận bàn tự động (Bát Tự, Kỳ Môn 9 Cung, Đại Lục Nhâm, Điểm Sóc, 24 Tiết Khí) qua OpenRouter API.',
+    isLatest: true,
+    highlights: [
+      'Tích hợp Trợ Lý AI Luận Giải Cổ Thuật thông minh (AIChatbotModal) hỗ trợ giải đáp mọi phương diện đời sống, thuật toán thiên văn và luận đoán quẻ dịch.',
+      'Tự động trích xuất và nạp ngữ cảnh thời gian thực (Bát Tự 4 Trụ, 24 Tiết Khí, Điểm Sóc Âm Lịch, Bàn Kỳ Môn 9 Cung và Bàn Đại Lục Nhâm) vào System Prompt của AI.',
+      'Hỗ trợ đa dạng các mô hình ngôn ngữ lớn (LLMs) tiên tiến: Gemini 2.5 Flash, DeepSeek V3 / R1 (Suy luận chuyên sâu), Claude 3.5 Sonnet, GPT-4o Mini qua OpenRouter API.',
+      'Cung cấp Widget nút bấm nổi (Floating Action Button) và nút bấm trên thanh Header để mở AI Luận Giải tức thì từ bất kỳ màn hình nào.',
+      'Bổ sung bảng gợi ý câu hỏi nhanh (Quick Prompts) cho 6 chủ đề: Thân Mệnh, Tài Vận, Hôn Nhân, Sức Khỏe, Công Danh, Kỳ Môn & Lục Nhâm.',
+      'Lưu trữ lịch sử hội thoại an toàn trong sessionStorage và hỗ trợ tùy biến API Key cá nhân trong localStorage.',
+    ],
+    added: [
+      'Backend proxy endpoint `/api/chat` trong server.ts hỗ trợ giao tiếp OpenRouter an toàn.',
+      'Tầng dịch vụ AI Metaphysics Service (`src/services/aiChatService.ts`) với công cụ tạo System Prompt chuyên sâu.',
+      'Giao diện Chatbot đối thoại đa mô hình (`src/components/AIChatbotModal.tsx`).',
+      'Nút bấm nổi thông minh (`src/components/AIChatbotFloatingButton.tsx`).',
+      'Mục 19 trong Thuyết Minh Thuật Toán (`src/components/AlgorithmGuideModal.tsx`).',
+    ],
+    improved: [
+      'Tối ưu hóa khả năng hiểu và phân tích tương tác ngũ hành, sinh khắc, cát hung giữa các cung Kỳ Môn và tam truyền Lục Nhâm nhờ năng lực suy luận của AI.',
+      'Đảm bảo bảo mật toàn diện cho người dùng khi thực thi qua proxy hoặc khóa API cá nhân.',
+    ],
+  },
   {
     version: '2.21.0',
     releaseDate: '2026-08-29',
     codename: 'Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức',
     tagline: 'Duy trì thanh Menu tinh gọn 4 Tab (Cẩm Nang, Điểm Sóc, Dự Trắc, Tiết Khí) đồng thời giữ trọn vẹn nội dung Bàn Kỳ Môn 9 Cung & Bàn Đại Lục Nhâm với hệ thống liên kết điều hướng 2 chiều từ Cẩm Nang Tri Thức.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Giữ lại trọn vẹn toàn bộ giao diện và công cụ quẻ Bàn Kỳ Môn 9 Cung (3x3) và Bàn Đại Lục Nhâm (Tam Truyền & Tứ Khoa).',
       'Tích hợp các nút hành động nhanh (Quick Action Buttons) tại đầu trang và chân trang Cẩm Nang Tri Thức để chuyển tức thì sang Bàn Kỳ Môn và Đại Lục Nhâm.',

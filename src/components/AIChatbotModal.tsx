@@ -1,0 +1,679 @@
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import Markdown from 'react-markdown';
+import {
+  Sparkles,
+  Send,
+  X,
+  Maximize2,
+  Minimize2,
+  Trash2,
+  Copy,
+  Check,
+  Compass,
+  Layers,
+  ChevronDown,
+  ChevronUp,
+  RefreshCw,
+  Sliders,
+  HelpCircle,
+  Key,
+  Bot,
+  User,
+  AlertCircle,
+  ArrowRight,
+  Shield,
+  BookOpen,
+} from 'lucide-react';
+import { ComprehensiveResult } from '../types';
+import {
+  AI_MODELS,
+  AIModelOption,
+  buildCosmicSystemContext,
+  getMetaphysicsSystemPrompt,
+  sendOpenRouterChatMessage,
+  ChatCompletionRequestMessage,
+  DEFAULT_OPENROUTER_KEY,
+} from '../services/aiChatService';
+import { formatVietnamDateTime } from '../astronomy/solarTerms';
+
+export interface ChatMessageItem {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: string;
+  modelUsed?: string;
+  isError?: boolean;
+}
+
+interface AIChatbotModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  result: ComprehensiveResult;
+  currentDate: Date;
+  initialQuestion?: string;
+  onNavigateTab?: (tabId: string) => void;
+}
+
+const STORAGE_KEY = 'skyfield_ai_chat_history_v1';
+const MODEL_STORAGE_KEY = 'skyfield_ai_selected_model_v1';
+const API_KEY_STORAGE_KEY = 'skyfield_ai_custom_api_key_v1';
+
+export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
+  isOpen,
+  onClose,
+  result,
+  currentDate,
+  initialQuestion,
+  onNavigateTab,
+}) => {
+  // Model state
+  const [selectedModel, setSelectedModel] = useState<string>(() => {
+    return localStorage.getItem(MODEL_STORAGE_KEY) || 'google/gemini-2.5-flash';
+  });
+
+  // Custom API key state
+  const [customApiKey, setCustomApiKey] = useState<string>(() => {
+    return localStorage.getItem(API_KEY_STORAGE_KEY) || '';
+  });
+  const [showKeyConfig, setShowKeyConfig] = useState<boolean>(false);
+
+  // Chat message history state
+  const [messages, setMessages] = useState<ChatMessageItem[]>(() => {
+    try {
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch {
+      // fallback
+    }
+    return [];
+  });
+
+  const [inputPrompt, setInputPrompt] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMaximized, setIsMaximized] = useState<boolean>(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [showContextPreview, setShowContextPreview] = useState<boolean>(false);
+  const [includeAppContext, setIncludeAppContext] = useState<boolean>(true);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Save messages to session storage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } catch {
+      // ignore
+    }
+  }, [messages]);
+
+  // Save selected model
+  useEffect(() => {
+    localStorage.setItem(MODEL_STORAGE_KEY, selectedModel);
+  }, [selectedModel]);
+
+  // Save custom key
+  useEffect(() => {
+    if (customApiKey) {
+      localStorage.setItem(API_KEY_STORAGE_KEY, customApiKey);
+    } else {
+      localStorage.removeItem(API_KEY_STORAGE_KEY);
+    }
+  }, [customApiKey]);
+
+  // Scroll to bottom on new messages
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollToBottom();
+      textareaRef.current?.focus();
+    }
+  }, [isOpen, messages, scrollToBottom]);
+
+  // Handle initial question injection if passed
+  useEffect(() => {
+    if (isOpen && initialQuestion && initialQuestion.trim() !== '') {
+      handleSendMessage(initialQuestion);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, initialQuestion]);
+
+  // Build real-time context summary
+  const contextString = useMemo(() => {
+    return buildCosmicSystemContext(result, currentDate);
+  }, [result, currentDate]);
+
+  const quickPrompts = [
+    {
+      label: '🔮 Luận giải toàn cục Bàn Kỳ Môn hiện tại',
+      prompt:
+        'Xin hãy phân tích và luận giải toàn diện bàn Kỳ Môn Độn Giáp ở thời điểm hiện tại: Đánh giá vị trí Trực Phù, Trực Sử, phương vị Bát Môn cát hung, và cách cục Thập Can khắc ứng nổi bật nhất.',
+    },
+    {
+      label: '🧭 Phân tích Tam Truyền & Tứ Khoa Lục Nhâm',
+      prompt:
+        'Xin hãy phân tích chi tiết bàn Đại Lục Nhâm hiện tại: Luận giải Tứ Khoa, Tam Truyền (Sơ Truyền, Trung Truyền, Mạt Truyền), sự phối hợp của 12 Thần Tướng và định hướng hành sự theo Tông Môn.',
+    },
+    {
+      label: '💼 Dự trắc Sự Nghiệp & Cơ Hội Công Danh',
+      prompt:
+        'Dựa trên bàn Kỳ Môn và Lục Nhâm thời điểm này, xin hãy luận đoán về phương diện Sự Nghiệp, Công Danh, Thi Cử: Cửa Khai Môn và Khởi Truyền đang báo hiệu cơ hội hay thử thách gì?',
+    },
+    {
+      label: '💰 Chiêm đoán Tài Lộc, Đầu Tư & Kinh Doanh',
+      prompt:
+        'Xin hãy chiêm đoán về phương diện Tài Lộc, Kinh Doanh, Ký kết hợp đồng: Phân tích cung vị Sinh Môn, sao Thiên Nhậm và Thần Tướng Thanh Long/Lục Hợp.',
+    },
+    {
+      label: '❤️ Dự trắc Tình Duyên, Gia Đạo & Hòa Hợp',
+      prompt:
+        'Xin hãy giải đoán về phương diện Tình Cảm, Gia Đạo, Hôn Nhân: Xét cung vị Lục Hợp, Ất Can, Canh Can trong Kỳ Môn và Tứ Khoa phối hợp trong Lục Nhâm.',
+    },
+    {
+      label: '🏥 Hỏi về Sức Khỏe, Tật Ách & Hóa Giải',
+      prompt:
+        'Xin hãy phân tích phương diện Sức Khỏe & Tật Ách: Cung Thiên Nhuế, Tử Môn, Bạch Hổ đang ở đâu và phương vị nào có Sinh Khí giúp dưỡng sinh hóa giải?',
+    },
+    {
+      label: '🚪 Tìm Phương Vị Cát Lợi (Sinh, Khai, Hưu) Xuất Hành',
+      prompt:
+        'Xin hãy chỉ ra các phương hướng xuất hành, khai trương, đàm phán đắc cát lợi nhất trong bàn Kỳ Môn này, và hướng nào cần tuyệt đối tránh (Tử Môn, Kinh Môn, Không Vong).',
+    },
+    {
+      label: '🌤️ Giải thích Tiết Khí & Điểm Sóc hôm nay',
+      prompt:
+        'Xin hãy giải thích ý nghĩa thiên văn và trường khí ngũ hành của Tiết Khí hiện tại cùng với chu kỳ Điểm Sóc Âm lịch đang diễn ra.',
+    },
+  ];
+
+  const handleSendMessage = async (promptToSend?: string) => {
+    const text = (promptToSend || inputPrompt).trim();
+    if (!text || isLoading) return;
+
+    const userMessage: ChatMessageItem = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      content: text,
+      timestamp: formatVietnamDateTime(new Date()),
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    if (!promptToSend) {
+      setInputPrompt('');
+    }
+    setIsLoading(true);
+
+    try {
+      // Build conversation payload
+      const systemPrompt = includeAppContext
+        ? getMetaphysicsSystemPrompt(contextString)
+        : 'Bạn là chuyên gia cố vấn Á Đông cổ truyền uyên bác về Kỳ Môn Độn Giáp, Đại Lục Nhâm, 24 Tiết Khí và Bát Tự.';
+
+      const apiMessages: ChatCompletionRequestMessage[] = [
+        {
+          role: 'system',
+          content: systemPrompt,
+        },
+      ];
+
+      // Add last conversation history (up to 8 turns to conserve context)
+      const recentHistory = messages.slice(-8);
+      for (const m of recentHistory) {
+        apiMessages.push({
+          role: m.role === 'user' ? 'user' : 'assistant',
+          content: m.content,
+        });
+      }
+
+      // Add current message
+      apiMessages.push({
+        role: 'user',
+        content: text,
+      });
+
+      const responseText = await sendOpenRouterChatMessage({
+        messages: apiMessages,
+        model: selectedModel,
+        customApiKey: customApiKey.trim() || undefined,
+        temperature: 0.7,
+      });
+
+      const assistantMessage: ChatMessageItem = {
+        id: `assistant-${Date.now()}`,
+        role: 'assistant',
+        content: responseText,
+        timestamp: formatVietnamDateTime(new Date()),
+        modelUsed: AI_MODELS.find((m) => m.id === selectedModel)?.name || selectedModel,
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (err: any) {
+      console.error('Chatbot error:', err);
+      const errorMessage: ChatMessageItem = {
+        id: `assistant-error-${Date.now()}`,
+        role: 'assistant',
+        content: `⚠️ **Không thể kết nối đến mô hình AI:** ${
+          err.message || 'Đã có lỗi xảy ra khi xử lý phản hồi từ OpenRouter API.'
+        }\n\n*Gợi ý:* Hãy kiểm tra lại kết nối mạng hoặc thử đổi mô hình sang **Gemini 2.5 Flash** / cung cấp OpenRouter API Key cá nhân trong phần cài đặt bên dưới.`,
+        timestamp: formatVietnamDateTime(new Date()),
+        isError: true,
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const handleCopyMessage = (id: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleClearHistory = () => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử cuộc trò chuyện này?')) {
+      setMessages([]);
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      id="ai-chatbot-modal-overlay"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn"
+    >
+      <div
+        id="ai-chatbot-window"
+        className={`bg-slate-900 border border-amber-500/40 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${
+          isMaximized
+            ? 'w-full h-full max-w-none rounded-none'
+            : 'w-full max-w-4xl h-[92vh] max-h-[850px]'
+        }`}
+      >
+        {/* TOP BAR */}
+        <div className="bg-slate-950/90 border-b border-slate-800 p-3 sm:p-4 flex items-center justify-between gap-3 shrink-0">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-cyan-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-inner shrink-0 relative">
+              <Bot className="w-5 h-5 text-amber-400" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse border-2 border-slate-950"></span>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-white text-sm sm:text-base flex items-center gap-1.5 font-sans">
+                  <span>AI Đại Sư Luận Giải Cổ Thuật</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/40 font-mono">
+                    OpenRouter AI
+                  </span>
+                </h3>
+              </div>
+              <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>Tự động đồng bộ Bàn Kỳ Môn 9 Cung, Lục Nhâm & 24 Tiết Khí thực</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {/* Model Selector */}
+            <div className="relative">
+              <select
+                id="select-ai-model"
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="bg-slate-800 hover:bg-slate-700/80 text-amber-300 text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-amber-500/30 focus:outline-none focus:border-amber-400 cursor-pointer pr-6 appearance-none shadow-xs"
+                title="Chọn mô hình AI suy luận"
+              >
+                {AI_MODELS.map((model) => (
+                  <option key={model.id} value={model.id} className="bg-slate-900 text-white">
+                    {model.name} {model.recommended ? '⭐ (Khuyên Dùng)' : model.isPro ? '💎' : ''}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-3.5 h-3.5 text-amber-400 absolute right-2 top-2.5 pointer-events-none" />
+            </div>
+
+            {/* Custom Key Toggle */}
+            <button
+              id="btn-toggle-key-config"
+              onClick={() => setShowKeyConfig((prev) => !prev)}
+              className={`p-2 rounded-xl border text-xs transition-all cursor-pointer ${
+                showKeyConfig || customApiKey
+                  ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold'
+                  : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'
+              }`}
+              title="Cấu hình API Key OpenRouter"
+            >
+              <Key className="w-4 h-4" />
+            </button>
+
+            {/* Maximize / Minimize Button */}
+            <button
+              id="btn-toggle-maximize"
+              onClick={() => setIsMaximized((prev) => !prev)}
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs transition-all cursor-pointer hidden sm:flex items-center justify-center"
+              title={isMaximized ? 'Thu nhỏ' : 'Mở toàn màn hình'}
+            >
+              {isMaximized ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            </button>
+
+            {/* Close Button */}
+            <button
+              id="btn-close-ai-chat"
+              onClick={onClose}
+              className="p-2 rounded-xl bg-slate-800 hover:bg-rose-900/40 text-slate-300 hover:text-rose-300 border border-slate-700 hover:border-rose-500/40 text-xs transition-all cursor-pointer"
+              title="Đóng cửa sổ"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* CUSTOM API KEY SETTINGS BANNER (IF OPEN) */}
+        {showKeyConfig && (
+          <div className="bg-slate-950 border-b border-amber-500/30 p-3 sm:p-4 text-xs animate-fadeIn space-y-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-amber-300 font-semibold">
+                <Shield className="w-4 h-4 text-amber-400" />
+                <span>Thiết lập OpenRouter API Key cá nhân (Tùy chọn):</span>
+              </div>
+              <span className="text-[11px] text-slate-400">
+                Mặc định đã tích hợp sẵn API Key hệ thống cho bạn sử dụng trực tiếp.
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                id="input-custom-api-key"
+                type="password"
+                value={customApiKey}
+                onChange={(e) => setCustomApiKey(e.target.value)}
+                placeholder="Nhập API Key OpenRouter của bạn (sk-or-v1-...)"
+                className="flex-1 bg-slate-900 border border-slate-700 focus:border-amber-400 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-slate-500 font-mono focus:outline-none"
+              />
+              {customApiKey && (
+                <button
+                  type="button"
+                  onClick={() => setCustomApiKey('')}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs"
+                >
+                  Xóa Key
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowKeyConfig(false)}
+                className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400"
+              >
+                Xong
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ACTIVE COSMIC CONTEXT CHIP BAR */}
+        <div className="bg-slate-950/60 border-b border-slate-800/80 px-3 sm:px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+          <div className="flex flex-wrap items-center gap-1.5 text-slate-300">
+            <span className="text-amber-400 font-bold">Dữ liệu nạp:</span>
+            <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 font-mono">
+              {result.batTu.hourCanChi} • {result.batTu.dayCanChi} • {result.batTu.monthCanChi} • {result.batTu.yearCanChi}
+            </span>
+            <span className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-300 font-medium">
+              {result.currentTerm.name} • {result.kyMon.cucResultText}
+            </span>
+            <span className="px-2 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-300 font-medium hidden sm:inline">
+              Âm lịch: {result.newMoon.lunarDay}/{result.newMoon.lunarMonth}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <label className="flex items-center gap-1.5 cursor-pointer text-slate-400 hover:text-slate-200">
+              <input
+                type="checkbox"
+                checked={includeAppContext}
+                onChange={(e) => setIncludeAppContext(e.target.checked)}
+                className="rounded border-slate-700 text-amber-500 focus:ring-0 cursor-pointer"
+              />
+              <span>Đính kèm bàn quẻ</span>
+            </label>
+
+            <button
+              onClick={() => setShowContextPreview((prev) => !prev)}
+              className="text-amber-400 hover:text-amber-300 text-[11px] underline flex items-center gap-0.5 cursor-pointer"
+            >
+              <span>{showContextPreview ? 'Ẩn xem trước' : 'Xem trước ngữ cảnh'}</span>
+              {showContextPreview ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+            </button>
+          </div>
+        </div>
+
+        {/* CONTEXT PREVIEW COLLAPSIBLE */}
+        {showContextPreview && (
+          <div className="bg-slate-950 p-3 border-b border-slate-800 max-h-48 overflow-y-auto font-mono text-[10px] text-slate-400 whitespace-pre-wrap leading-relaxed animate-fadeIn">
+            {contextString}
+          </div>
+        )}
+
+        {/* CHAT MESSAGES BODY */}
+        <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-4 bg-slate-900/60">
+          {messages.length === 0 ? (
+            <div className="py-6 sm:py-8 flex flex-col items-center justify-center text-center max-w-2xl mx-auto space-y-6 animate-fadeIn">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-cyan-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-xl">
+                <Sparkles className="w-8 h-8 text-amber-400 animate-pulse" />
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-lg sm:text-xl font-bold text-white font-sans">
+                  Chào mừng bạn đến với AI Luận Đoán Cổ Tam Thức
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Tôi đã nạp đầy đủ dữ liệu thời điểm chiêm quẻ hiện tại: <strong>{result.batTu.hourCanChi}</strong> ngày{' '}
+                  <strong>{result.batTu.dayCanChi}</strong>, Tiết khí <strong>{result.currentTerm.name}</strong> ({result.kyMon.cucResultText}), cùng toàn bộ bố cục 9 Cung Kỳ Môn và Tam Truyền Tứ Khoa Lục Nhâm. Hãy chọn câu hỏi gợi ý bên dưới hoặc đặt câu hỏi tự do!
+                </p>
+              </div>
+
+              {/* Quick Prompt Cards */}
+              <div className="w-full space-y-2 text-left">
+                <div className="flex items-center gap-1.5 text-xs text-amber-400 font-semibold">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Gợi ý câu hỏi phân tích nhanh:</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {quickPrompts.map((q, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleSendMessage(q.prompt)}
+                      className="p-2.5 rounded-xl bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 text-left transition-all group flex items-start justify-between gap-2 cursor-pointer"
+                    >
+                      <span className="text-xs font-medium text-slate-200 group-hover:text-amber-300">
+                        {q.label}
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-400 shrink-0 mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+              >
+                {msg.role === 'assistant' && (
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-cyan-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 mt-1 shadow-sm">
+                    <Bot className="w-4 h-4" />
+                  </div>
+                )}
+
+                <div
+                  className={`max-w-[85%] sm:max-w-[78%] rounded-2xl p-3.5 sm:p-4 text-xs sm:text-sm leading-relaxed shadow-md relative group ${
+                    msg.role === 'user'
+                      ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-slate-950 font-medium rounded-tr-none'
+                      : msg.isError
+                      ? 'bg-rose-950/40 border border-rose-500/40 text-rose-200 rounded-tl-none'
+                      : 'bg-slate-950 border border-slate-800 text-slate-200 rounded-tl-none shadow-lg'
+                  }`}
+                >
+                  {/* Top Bar for Assistant Message: Model & Copy */}
+                  {msg.role === 'assistant' && (
+                    <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-800/80 text-[10px] text-slate-400">
+                      <span className="flex items-center gap-1 font-mono text-amber-400 font-semibold">
+                        <Sparkles className="w-3 h-3 text-amber-400" />
+                        <span>{msg.modelUsed || 'AI Master'}</span>
+                      </span>
+
+                      <div className="flex items-center gap-2">
+                        <span>{msg.timestamp}</span>
+                        <button
+                          onClick={() => handleCopyMessage(msg.id, msg.content)}
+                          className="hover:text-white p-1 rounded hover:bg-slate-800 transition-colors flex items-center gap-1 cursor-pointer"
+                          title="Sao chép nội dung"
+                        >
+                          {copiedId === msg.id ? (
+                            <>
+                              <Check className="w-3 h-3 text-emerald-400" />
+                              <span className="text-emerald-400">Đã chép</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3 h-3" />
+                              <span>Chép</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Message Content with React-Markdown */}
+                  {msg.role === 'user' ? (
+                    <div className="whitespace-pre-wrap font-sans">{msg.content}</div>
+                  ) : (
+                    <div className="prose prose-invert prose-xs sm:prose-sm max-w-none text-slate-200 space-y-2 [&>h3]:text-amber-300 [&>h3]:font-bold [&>h3]:text-sm [&>h4]:text-cyan-300 [&>h4]:font-bold [&>h4]:text-xs [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>blockquote]:border-l-2 [&>blockquote]:border-amber-500/50 [&>blockquote]:pl-3 [&>blockquote]:italic [&>table]:w-full [&>table]:border-collapse [&>table]:text-xs [&>table_th]:border [&>table_th]:border-slate-700 [&>table_th]:p-1.5 [&>table_th]:bg-slate-900 [&>table_td]:border [&>table_td]:border-slate-800 [&>table_td]:p-1.5 [&>p>strong]:text-amber-300">
+                      <Markdown>{msg.content}</Markdown>
+                    </div>
+                  )}
+
+                  {msg.role === 'user' && (
+                    <div className="text-[10px] text-amber-950/80 pt-1 text-right font-mono">
+                      {msg.timestamp}
+                    </div>
+                  )}
+                </div>
+
+                {msg.role === 'user' && (
+                  <div className="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold shrink-0 mt-1 shadow-sm">
+                    <User className="w-4 h-4" />
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+
+          {/* Loading Indicator */}
+          {isLoading && (
+            <div className="flex gap-3 justify-start animate-fadeIn">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500/20 via-purple-500/20 to-cyan-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 mt-1">
+                <Bot className="w-4 h-4 animate-bounce" />
+              </div>
+              <div className="bg-slate-950 border border-slate-800 rounded-2xl rounded-tl-none p-4 text-xs text-slate-400 flex items-center gap-3 shadow-md">
+                <div className="flex items-center space-x-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse [animation-delay:0.2s]"></span>
+                  <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse [animation-delay:0.4s]"></span>
+                </div>
+                <span>Đang tra cứu cổ thư, tính toán Tam Bàn & tổng hợp luận giải...</span>
+              </div>
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* FOOTER INPUT AREA */}
+        <div className="bg-slate-950 border-t border-slate-800 p-3 sm:p-4 space-y-2.5 shrink-0">
+          {/* Quick suggestions pills when in chat */}
+          {messages.length > 0 && (
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+              <span className="text-[10px] text-amber-400 font-bold whitespace-nowrap">Hỏi tiếp:</span>
+              {quickPrompts.slice(0, 5).map((q, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSendMessage(q.prompt)}
+                  disabled={isLoading}
+                  className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-amber-300 border border-slate-800 text-[11px] whitespace-nowrap transition-colors cursor-pointer disabled:opacity-50"
+                >
+                  {q.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Text Input Row */}
+          <div className="flex items-end gap-2">
+            <div className="flex-1 bg-slate-900 border border-slate-700 focus-within:border-amber-400 rounded-2xl p-2 transition-colors relative shadow-inner">
+              <textarea
+                ref={textareaRef}
+                id="input-ai-prompt"
+                rows={2}
+                value={inputPrompt}
+                onChange={(e) => setInputPrompt(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Nhập câu hỏi chiêm quẻ, phân tích sự nghiệp, tài lộc, tình cảm, xuất hành... (Nhấn Enter để gửi)"
+                disabled={isLoading}
+                className="w-full bg-transparent text-white text-xs sm:text-sm placeholder:text-slate-500 focus:outline-none resize-none no-scrollbar leading-relaxed"
+              />
+
+              <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1 border-t border-slate-800/80">
+                <span>Shift + Enter để xuống dòng</span>
+                <span className="font-mono text-slate-400">
+                  {inputPrompt.length > 0 ? `${inputPrompt.length} ký tự` : 'OpenRouter Engine'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-1.5 shrink-0">
+              <button
+                id="btn-send-ai-message"
+                onClick={() => handleSendMessage()}
+                disabled={isLoading || !inputPrompt.trim()}
+                className="w-11 h-11 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold flex items-center justify-center shadow-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                title="Gửi câu hỏi"
+              >
+                {isLoading ? (
+                  <RefreshCw className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+              </button>
+
+              {messages.length > 0 && (
+                <button
+                  id="btn-clear-ai-history"
+                  onClick={handleClearHistory}
+                  className="w-11 h-8 rounded-xl bg-slate-900 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 border border-slate-800 hover:border-rose-500/40 flex items-center justify-center transition-all cursor-pointer"
+                  title="Xóa lịch sử trò chuyện"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

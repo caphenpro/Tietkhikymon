@@ -9,6 +9,8 @@ import { CosmicKnowledgeGuide } from './components/CosmicKnowledgeGuide';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
+import { AIChatbotModal } from './components/AIChatbotModal';
+import { AIChatbotFloatingButton } from './components/AIChatbotFloatingButton';
 import { calculateComprehensiveResult, calculateSolarTermsForYear } from './astronomy/calculator';
 import { SolarTermEvent } from './types';
 import { APP_VERSION, APP_RELEASE_DATE } from './version';
@@ -22,6 +24,8 @@ export default function App() {
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
   const [isChangelogOpen, setIsChangelogOpen] = useState<boolean>(false);
+  const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
+  const [aiChatInitialQuestion, setAiChatInitialQuestion] = useState<string>('');
 
   // Live timer effect
   useEffect(() => {
@@ -59,6 +63,13 @@ export default function App() {
     setIsExportOpen(true);
   }, []);
 
+  const handleOpenAIChat = useCallback((question?: string) => {
+    if (question) {
+      setAiChatInitialQuestion(question);
+    }
+    setIsAIChatOpen(true);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-800 dark:selection:text-amber-200 relative transition-colors duration-200">
       {/* Header */}
@@ -69,6 +80,7 @@ export default function App() {
         onOpenGuide={() => setIsGuideOpen(true)}
         onOpenExport={() => setIsExportOpen(true)}
         onOpenChangelog={() => setIsChangelogOpen(true)}
+        onOpenAIChat={() => handleOpenAIChat()}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         result={result}
@@ -84,6 +96,7 @@ export default function App() {
               result={result}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
               onOpenAlgorithmModal={() => setIsGuideOpen(true)}
+              onOpenAIChat={handleOpenAIChat}
             />
           </div>
         )}
@@ -211,6 +224,27 @@ export default function App() {
       <ChangelogModal
         isOpen={isChangelogOpen}
         onClose={() => setIsChangelogOpen(false)}
+      />
+
+      {/* AI Chatbot Metaphysics Advisor Modal & Floating Trigger Widget */}
+      <AIChatbotFloatingButton
+        onClick={() => handleOpenAIChat()}
+        isOpen={isAIChatOpen}
+      />
+
+      <AIChatbotModal
+        isOpen={isAIChatOpen}
+        onClose={() => {
+          setIsAIChatOpen(false);
+          setAiChatInitialQuestion('');
+        }}
+        result={result}
+        currentDate={currentDate}
+        initialQuestion={aiChatInitialQuestion}
+        onNavigateTab={(tabId) => {
+          setActiveTab(tabId);
+          setIsAIChatOpen(false);
+        }}
       />
     </div>
   );

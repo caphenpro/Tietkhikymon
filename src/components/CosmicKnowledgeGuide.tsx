@@ -35,12 +35,14 @@ interface CosmicKnowledgeGuideProps {
   result?: ComprehensiveResult;
   onNavigateTab: (tabId: string) => void;
   onOpenAlgorithmModal?: () => void;
+  onOpenAIChat?: (question?: string) => void;
 }
 
 export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
   result,
   onNavigateTab,
-  onOpenAlgorithmModal
+  onOpenAlgorithmModal,
+  onOpenAIChat,
 }) => {
   const [activeCategory, setActiveCategory] = useState<
     'all' | 'unified' | 'battrach' | 'cuutinh' | 'tietkhi' | 'diemsoc' | 'kymon' | 'lucnham' | 'ungdung' | 'glossary'
@@ -950,6 +952,15 @@ export const CosmicKnowledgeGuide: React.FC<CosmicKnowledgeGuideProps> = ({
               <Bookmark className="w-3.5 h-3.5 text-amber-400" />
               <span>Từ Điển Thuật Ngữ</span>
             </button>
+            {onOpenAIChat && (
+              <button
+                onClick={() => onOpenAIChat()}
+                className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-500/20 to-amber-500/20 hover:from-purple-500/30 hover:to-amber-500/30 text-amber-200 border border-amber-400/50 font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-md transition-all group cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                <span>AI Luận Giải Cổ Thuật</span>
+              </button>
+            )}
             {onOpenAlgorithmModal && (
               <button
                 onClick={onOpenAlgorithmModal}

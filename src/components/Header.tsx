@@ -26,6 +26,7 @@ interface HeaderProps {
   onOpenGuide: () => void;
   onOpenExport: () => void;
   onOpenChangelog?: () => void;
+  onOpenAIChat?: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
   result?: ComprehensiveResult;
@@ -39,6 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGuide,
   onOpenExport,
   onOpenChangelog,
+  onOpenAIChat,
   activeTab,
   setActiveTab,
   result,
@@ -129,6 +131,16 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Mobile Actions Hamburger/Trigger */}
             <div className="flex items-center gap-1.5 sm:hidden">
               <ThemeSwitcher compact={true} />
+              {onOpenAIChat && (
+                <button
+                  id="btn-header-mobile-ai-chat"
+                  onClick={onOpenAIChat}
+                  className="p-1.5 rounded-lg bg-gradient-to-r from-amber-500/20 to-purple-500/20 border border-amber-500/50 text-amber-600 dark:text-amber-300"
+                  title="Hỏi AI Luận Giải"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+                </button>
+              )}
               <button
                 onClick={onToggleLive}
                 className={`p-1.5 rounded-lg border text-xs ${
@@ -227,15 +239,28 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
 
-          {/* Action Buttons: ThemeSwitcher, Thuyết Minh, Báo Cáo */}
+          {/* Action Buttons: ThemeSwitcher, Thuyết Minh, Báo Cáo, AI Luận Giải */}
           <div className="hidden sm:flex items-center gap-1.5 text-xs shrink-0">
             {/* Light / Dark / System Theme Switcher */}
             <ThemeSwitcher />
 
+            {onOpenAIChat && (
+              <button
+                id="btn-header-open-ai-chat"
+                onClick={onOpenAIChat}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-cyan-500/20 hover:from-amber-500/30 hover:via-purple-500/30 hover:to-cyan-500/30 text-amber-800 dark:text-amber-300 border border-amber-500/40 rounded-xl transition-all shadow-xs font-semibold group cursor-pointer"
+                title="Hỏi AI Đại Sư Luận Giải Cổ Thuật"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform" />
+                <span className="hidden md:inline">AI Luận Giải</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              </button>
+            )}
+
             <button
               id="btn-open-guide"
               onClick={onOpenGuide}
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-lg transition-colors shadow-xs"
+              className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-xl transition-colors shadow-xs cursor-pointer"
               title="Thuyết minh nguyên lý thuật toán cổ truyền"
             >
               <HelpCircle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
@@ -245,7 +270,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="btn-open-export"
               onClick={onOpenExport}
-              className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-lg transition-colors shadow-xs"
+              className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-xl transition-colors shadow-xs cursor-pointer"
               title="Xuất báo cáo quẻ Markdown"
             >
               <Download className="w-3.5 h-3.5" />

@@ -20,6 +20,65 @@ async function startServer() {
     });
   });
 
+  // OpenRouter AI Chat Proxy Endpoint
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const {
+        messages,
+        model = "google/gemini-2.5-flash",
+        temperature = 0.7,
+        max_tokens = 2500,
+        apiKey: customApiKey,
+      } = req.body;
+
+      if (!messages || !Array.isArray(messages)) {
+        return res.status(400).json({ error: "messages array is required" });
+      }
+
+      const activeApiKey =
+        customApiKey?.trim() ||
+        process.env.OPENROUTER_API_KEY?.trim();
+
+      if (!activeApiKey) {
+        return res.status(401).json({
+          error: "Vui lòng nhập OpenRouter API Key của bạn trong phần Cài đặt của AI Chatbot hoặc cấu hình biến môi trường OPENROUTER_API_KEY.",
+        });
+      }
+
+      const openRouterResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${activeApiKey}`,
+          "HTTP-Referer": "https://tietkhi-kymon.vn",
+          "X-Title": "Tiet Khi Ky Mon Luc Nham AI Master",
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature,
+          max_tokens: Number(max_tokens) || 2500,
+        }),
+      });
+
+      if (!openRouterResponse.ok) {
+        const errorText = await openRouterResponse.text();
+        console.error("OpenRouter API error:", openRouterResponse.status, errorText);
+        return res.status(openRouterResponse.status).json({
+          error: `OpenRouter error (${openRouterResponse.status}): ${errorText}`,
+        });
+      }
+
+      const data = await openRouterResponse.json();
+      return res.json(data);
+    } catch (err: any) {
+      console.error("Server /api/chat error:", err);
+      return res.status(500).json({
+        error: err.message || "Internal server error occurred while connecting to AI",
+      });
+    }
+  });
+
   // Vite development middleware vs Static Production serving
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

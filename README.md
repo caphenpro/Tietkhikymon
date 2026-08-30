@@ -1,32 +1,33 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.21.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.22.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.21.0`** *(Phát hành: 29/08/2026)*
-**Tên mã:** *Phục Hồi Điều Hướng Bàn Kỳ Môn & Đại Lục Nhâm Từ Cẩm Nang Tri Thức*
+### 🚀 **Phiên bản hiện tại: `v2.22.0`** *(Phát hành: 30/08/2026)*
+**Tên mã:** *Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)*
 
-- 🔮 **Bảo Tồn Toàn Bộ Công Cụ Quẻ Kỳ Môn & Đại Lục Nhâm**:
-  - Giữ lại 100% nội dung và tương tác của **Bàn Kỳ Môn 9 Cung (3x3)** (`KyMonCompleteBoard.tsx`) và **Bàn Đại Lục Nhâm** (`LucNhamPanel.tsx`).
-- 🔗 **Liên Kết Điều Hướng Thông Minh Từ Cẩm Nang Tri Thức**:
-  - Tích hợp các nút chuyển trang nhanh (Quick Action Buttons) tại đầu trang và chân trang của Cẩm Nang Tri Thức.
-  - Bổ sung các thẻ liên kết chuyên biệt trong Mục 6 (Kỳ Môn) và Mục 7 (Lục Nhâm) của Cẩm Nang.
-  - Hỗ trợ các nút quay lại Cẩm Nang, chuyển đổi giữa Kỳ Môn ↔ Lục Nhâm ↔ Dự Trắc Chuyên Sâu mượt mà.
-- 🧭 **Duy Trì Thanh Menu Tinh Gọn 4 Tab**:
-  - Thanh menu chính vẫn được giữ gọn gàng: 1. Cẩm Nang Tri Thức → 2. Điểm Sóc & Âm Lịch → 3. Dự Trắc Chuyên Sâu → 4. 24 Tiết Khí Năm.
+- 🤖 **Trợ Lý AI Luận Giải Cổ Thuật Chuyên Sâu**:
+  - Tích hợp cửa sổ chat đối thoại thông minh (`AIChatbotModal`), hỗ trợ tương tác với các LLM hàng đầu thế giới (Gemini 2.5 Flash, DeepSeek V3 / R1, Claude 3.5 Sonnet, GPT-4o Mini) qua OpenRouter.
+  - Tự động nạp ngữ cảnh trận bàn thời gian thực (Bát Tự, 24 Tiết Khí, Điểm Sóc, Kỳ Môn 9 Cung và Lục Nhâm Tam Truyền) vào System Prompt.
+  - Widget nút bấm nổi (Floating Action Button) và nút hành động trên thanh Header hỗ trợ mở AI Luận Giải từ mọi vị trí.
+  - Gợi ý câu hỏi nhanh (Quick Prompts) cho 6 chủ đề: Thân Mệnh, Tài Vận, Hôn Nhân, Sức Khỏe, Công Danh, Kỳ Môn & Lục Nhâm.
+- 🛡️ **Backend Proxy An Toàn (`/api/chat`)**:
+  - Bảo mật kết nối OpenRouter, bảo vệ khóa API và hỗ trợ người dùng dùng API Key riêng.
+- 📖 **Thuyết Minh Thuật Toán Toàn Cảnh (Mục 19)**:
+  - Bổ sung quy trình 5 bước luận giải cổ thức kết hợp AI trong Modal Thuyết Minh Thuật Toán.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.20.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.21.0`** *(Phát hành: 29/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 
