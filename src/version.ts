@@ -11,18 +11,41 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.23.0';
+export const APP_VERSION = '2.24.0';
 export const APP_RELEASE_DATE = '2026-08-30';
-export const APP_CODENAME = 'Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)';
+export const APP_CODENAME = 'Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.24.0',
+    releaseDate: '2026-08-30',
+    codename: 'Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)',
+    tagline: 'Tái cấu trúc phản hồi của AI Chatbot theo tiêu chí ngắn gọn, sắc bén, đi thẳng vào trọng tâm câu hỏi, đồng thời tự động đề xuất các câu hỏi dẫn chuyện chuyên môn tương tác 1-nhấp chuột.',
+    isLatest: true,
+    highlights: [
+      'Cấu hình System Prompt chuẩn mực 3 phần: 1. Kết Luận Trực Diện (Cát/Hung trong 1-2 câu), 2. Căn Cứ Quẻ Then Chốt (trích xuất 2-3 dữ liệu Dụng Thần cốt lõi), 3. Lời Khuyên Hành Động cụ thể.',
+      'Loại bỏ triệt để các câu chào xã giao và giải thích lý thuyết rườm rà, tập trung giải quyết chính xác bài toán của người dùng.',
+      'Tự động bổ sung mục "Gợi ý mở rộng chuyên môn & Dẫn chuyện tiếp theo" ở cuối mỗi câu trả lời, liên kết sang các khía cạnh chuyên sâu (Pháp lý Cảnh Môn, Tiến độ Tam Truyền, Thế trận Chủ/Khách, Phong thủy thực địa).',
+      'Tính năng Interactive Follow-Up Chips: Bóc tách gợi ý dẫn chuyện thành các nút bấm hành động ngay trong tin nhắn của AI, cho phép người dùng đào sâu vấn đề chỉ với một cú nhấp.',
+      'Cập nhật bộ câu hỏi mẫu nhanh (Quick Prompts) định hướng thẳng vào kết quả chiêm đoán và giải pháp thực thi.',
+      'Đồng bộ Mục 19 trong Thuyết minh thuật toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Trình trích xuất gợi ý dẫn chuyện `extractFollowUpSuggestions` tự động nhận diện danh sách câu hỏi mở rộng.',
+      'Giao diện Interactive Follow-up Action Chips trong khung tin nhắn trợ lý AI.',
+    ],
+    improved: [
+      'Tối ưu hóa độ dài phản hồi AI (~150-300 từ) giúp người dùng nắm bắt thông tin quẻ ngay lập tức.',
+      'Tăng tính liền mạch và dẫn dắt tư duy người dùng đi sâu vào các khía cạnh chuyên môn của Cổ Tam Thức.',
+    ],
+  },
   {
     version: '2.23.0',
     releaseDate: '2026-08-30',
     codename: 'Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)',
     tagline: 'Ra mắt tính năng Onboarding Tour 7 bước tương tác trực quan cho người dùng mới, giải thích tường tận cách đọc bàn Kỳ Môn 9 Cung (Tam Bàn, Bát Thần, Cửu Tinh, Bát Môn, Thập Can) và cách khai thác các công cụ chính.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tự động kích hoạt Tour Hướng Dẫn Trải Nghiệm Nhanh (Onboarding Tour) 7 bước khi người dùng truy cập lần đầu.',
       'Sơ đồ giải phẫu Cung Kỳ Môn trực quan: Thần Bàn (Bát Thần), Thiên Bàn (Cửu Tinh), Nhân Bàn (Bát Môn), Địa Bàn Can Khắc Ứng, Tuần Không và Mã Tinh.',

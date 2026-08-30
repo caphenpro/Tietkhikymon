@@ -1055,11 +1055,11 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             <div id="ai-chatbot" className="p-5 rounded-2xl bg-slate-950 border border-purple-500/30 space-y-4">
               <h3 className="text-base font-bold text-purple-300 flex items-center gap-2">
                 <Bot className="w-5 h-5 text-purple-400" />
-                <span>19. Trợ Lý AI Luận Giải Cổ Thuật & Khung Tích Hợp OpenRouter</span>
+                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Trả Lời Trực Diện & Dẫn Chuyện Chuyên Môn</span>
               </h3>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Tại phiên bản <strong>v2.22.1</strong>, hệ thống tích hợp <strong>AI Đại Sư Luận Giải Cổ Thuật</strong> toàn diện, kết nối với các mô hình Trí Tuệ Nhân Tạo hàng đầu thông qua OpenRouter API với giao diện cấu hình API Key trực quan ngay tại đầu cửa sổ đối thoại.
+                Tại phiên bản <strong>v2.24.0</strong>, hệ thống nâng cấp toàn diện <strong>AI Đại Sư Luận Giải Cổ Thuật</strong>: Tối ưu hóa phản hồi <strong>ngắn gọn, sắc bén, đi thẳng vào trọng tâm câu hỏi</strong>, đồng thời tự động đề xuất <strong>gợi ý dẫn chuyện mở rộng chuyên môn tương tác 1-nhấp chuột</strong> (Interactive Follow-up Chips).
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -1076,22 +1076,21 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
                   <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-400" />
-                    <span>2. Đa Dạng Mô Hình Ngôn Ngữ Tiên Tiến</span>
+                    <span>2. Cấu Trúc Trả Lời 3 Phần Ngắn Gọn & Dẫn Chuyện Mở Rộng</span>
                   </strong>
                   <p className="text-slate-400">
-                    Hỗ trợ linh hoạt các mô hình AI tối tân như <em>Google Gemini 2.5 Flash / Flash Lite, DeepSeek V3 / R1 (Suy luận chuyên sâu), Anthropic Claude 3.5 Sonnet, OpenAI GPT-4o Mini</em>. Người dùng có thể sử dụng cổng proxy tích hợp hoặc điền khóa OpenRouter API Key cá nhân của mình.
+                    AI không giải thích rườm rà hay mở bài sáo rỗng. Cấu trúc chuẩn gồm: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu cung vị/tinh/môn cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và 🔮 <strong>Dẫn chuyện mở rộng chuyên môn</strong> (pháp lý, tiến độ, phong thủy).
                   </p>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs space-y-2 text-slate-300">
-                <strong className="text-cyan-300 block font-semibold">Quy Trình Luận Giải 5 Bước Chuẩn Mực Cổ Thức Của AI:</strong>
+                <strong className="text-cyan-300 block font-semibold">Quy Chuẩn Luận Đoán Ngắn Gọn & Khám Phá Chuyên Môn Sâu:</strong>
                 <ol className="list-decimal list-inside space-y-1 text-slate-400 text-xs">
-                  <li><strong>Xác định Định Cục & Thời Khắc:</strong> Đánh giá Âm/Dương độn, Tiết Khí đương lệnh, Can Chi tứ trụ và trạng thái Tuần Không/Mã Tinh.</li>
-                  <li><strong>Lập Cục & Xác Định Dụng Thần:</strong> Phân tích Cung tọa Lạc Thư của Dụng Thần (theo câu hỏi việc cụ thể: Thân Mệnh, Tài Vận, Hôn Nhân, Sức Khỏe, Công Danh, Kiện Tụng...).</li>
-                  <li><strong>Khảo sát Tứ Tầng Kỳ Môn:</strong> Phối hợp Thiên Can (Thiên bàn/Địa bàn), Cửu Tinh (Thiên thời), Bát Môn (Nhân hòa), Bát Thần (Thần trợ).</li>
-                  <li><strong>Đối Chiếu Đại Lục Nhâm:</strong> Kiểm tra Can Chi Tứ Khóa và Tam Truyền (Sơ/Trung/Mạt Truyền) để thấy rõ tiến trình Khởi đầu - Diễn biến - Kết cuộc.</li>
-                  <li><strong>Tổng Luận & Lời Khuyên Hành Động:</strong> Đưa ra đánh giá Cát/Hung khách quan kèm phương hướng hành động, phương vị xuất hành và thời điểm thuận lợi.</li>
+                  <li><strong>Phán Đoán Trực Diện & Dứt Khoát:</strong> Trả lời thẳng vào câu hỏi (Có/Không, Cát/Hung, Nên/Không nên), tiết kiệm thời gian cho người tra cứu.</li>
+                  <li><strong>Trích Xuất Dụng Thần Then Chốt:</strong> Chỉ phân tích đúng Cung Dụng Thần tương ứng với việc hỏi (Tài lộc: Sinh Môn, Sự nghiệp: Khai Môn/Trực Phù, Đàm phán: Chủ/Khách, Sức khỏe: Thiên Nhuế/Tử Môn).</li>
+                  <li><strong>Định Hướng Hành Động Cụ Thể:</strong> Nêu rõ phương vị cát lợi, giờ xuất hành và sách lược hành động.</li>
+                  <li><strong>Dẫn Chuyện Chuyên Môn 1-Nhấp:</strong> Tự động bóc tách các câu hỏi mở rộng sang nút bấm trực quan để người dùng khám phá sâu hơn các khía cạnh liên đới chỉ với một cú nhấp chuột.</li>
                 </ol>
               </div>
 

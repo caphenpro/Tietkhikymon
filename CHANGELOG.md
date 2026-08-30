@@ -6,6 +6,26 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.24.0]] - 2026-08-30
+### Codename: *Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)*
+
+#### ⚡ Tối Ưu Phản Hồi Ngắn Gọn & Dẫn Chuyện Chuyên Môn (Added & Improved)
+- **Tái Cấu Trúc System Prompt Cho Phản Hồi Trực Diện (`/src/services/aiChatService.ts`)**:
+  - Loại bỏ hoàn toàn các đoạn mở đầu rườm rà hay lý thuyết dài dòng; câu trả lời tập trung ngay vào trọng tâm trong khoảng 150 - 300 từ.
+  - Áp dụng cấu trúc 3 phần chuẩn mực:
+    1. 🎯 **Kết Luận Trực Diện:** Trả lời dứt khoát Cát/Hung, Đạt/Không Đạt, Thuận/Nghịch cho vấn đề hỏi trong 1-2 câu.
+    2. 🔍 **Căn Cứ Quẻ Then Chốt:** Chỉ trích xuất 2-3 dữ liệu cốt lõi nhất từ bàn quẻ (Cung Dụng Thần, Bát Môn, Cửu Tinh, Bát Thần, Can khắc ứng, hoặc Tam Truyền Lục Nhâm).
+    3. 💡 **Lời Khuyên Hành Động:** Nêu rõ phương hướng, thời điểm thuận lợi và sách lược làm Chủ hay Khách.
+- **Tính Năng Dẫn Chuyện & Gợi Ý Mở Rộng Chuyên Môn Tiếp Theo**:
+  - Mỗi câu trả lời của AI luôn tự động đề xuất 2-3 câu hỏi mở rộng dẫn dắt sang các khía cạnh chuyên môn liên đới (pháp lý Cảnh Môn, tiến độ Lục Nhâm Tam Truyền, thế trận đàm phán Chủ/Khách, phong thủy thực địa).
+  - Tích hợp trình trích xuất thông minh `extractFollowUpSuggestions` và giao diện **Interactive Follow-Up Chips** (`/src/components/AIChatbotModal.tsx`) cho phép người dùng click 1 chạm để hỏi ngay.
+- **Cập Nhật Bộ Câu Hỏi Mẫu Nhanh (Quick Prompts)**:
+  - Tối ưu hóa các câu hỏi nhanh thành các câu lệnh chiêm đoán súc tích, gắn liền với các tình huống thực tiễn đời sống.
+- **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật **Mục 19** trong `AlgorithmGuideModal.tsx` giải trình đầy đủ nguyên lý phản hồi trực diện và khám phá chuyên môn sâu.
+
+---
+
 ## [[2.23.0]] - 2026-08-30
 ### Codename: *Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)*
 

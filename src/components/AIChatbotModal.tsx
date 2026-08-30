@@ -164,46 +164,84 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
     return buildCosmicSystemContext(result, currentDate);
   }, [result, currentDate]);
 
+  // Helper to extract follow-up suggestions from AI response text
+  const extractFollowUpSuggestions = (content: string): string[] => {
+    const suggestions: string[] = [];
+    const lines = content.split('\n');
+    let inSuggestionSection = false;
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (
+        trimmed.includes('Gợi ý mở rộng chuyên môn') ||
+        trimmed.includes('Dẫn chuyện tiếp theo') ||
+        trimmed.includes('Gợi ý mở rộng')
+      ) {
+        inSuggestionSection = true;
+        continue;
+      }
+
+      if (inSuggestionSection) {
+        if (trimmed.startsWith('-') || trimmed.startsWith('*') || /^\d+\./.test(trimmed)) {
+          let cleaned = trimmed
+            .replace(/^[-*•\d.]+\s*/, '')
+            .replace(/^[➡️👉🔹🔸🔮✨]+\s*/, '')
+            .replace(/^\[.*?\]:\s*/, '')
+            .trim();
+          // Remove bold markdown wrap if entire line is wrapped
+          cleaned = cleaned.replace(/^\*\*(.*?)\*\*$/, '$1').trim();
+          if (cleaned.length > 5 && !cleaned.startsWith('#')) {
+            suggestions.push(cleaned);
+          }
+        } else if (trimmed.startsWith('#') || trimmed.startsWith('---')) {
+          inSuggestionSection = false;
+        }
+      }
+    }
+
+    return suggestions.slice(0, 3);
+  };
+
   const quickPrompts = [
     {
-      label: '🔮 Luận giải toàn cục Bàn Kỳ Môn hiện tại',
+      label: '🔮 Luận Cát/Hung toàn cục Bàn Kỳ Môn hiện tại',
       prompt:
-        'Xin hãy phân tích và luận giải toàn diện bàn Kỳ Môn Độn Giáp ở thời điểm hiện tại: Đánh giá vị trí Trực Phù, Trực Sử, phương vị Bát Môn cát hung, và cách cục Thập Can khắc ứng nổi bật nhất.',
+        'Xin đánh giá ngắn gọn Cát/Hung toàn cục Bàn Kỳ Môn thời điểm này: Trọng tâm Cung Trực Phù, Trực Sử và cách cục nổi bật nhất?',
     },
     {
-      label: '🧭 Phân tích Tam Truyền & Tứ Khoa Lục Nhâm',
+      label: '🧭 Tam Truyền Lục Nhâm: Khởi đầu, Quá trình & Kết cục',
       prompt:
-        'Xin hãy phân tích chi tiết bàn Đại Lục Nhâm hiện tại: Luận giải Tứ Khoa, Tam Truyền (Sơ Truyền, Trung Truyền, Mạt Truyền), sự phối hợp của 12 Thần Tướng và định hướng hành sự theo Tông Môn.',
+        'Xin phân tích súc tích Tam Truyền & Tứ Khoa Lục Nhâm hiện tại: Sự việc sẽ khởi phát ra sao, diễn biến thế nào và kết cục cát hay hung?',
     },
     {
-      label: '💼 Dự trắc Sự Nghiệp & Cơ Hội Công Danh',
+      label: '💼 Công Danh & Sự Nghiệp (Khai Môn & Trực Phù)',
       prompt:
-        'Dựa trên bàn Kỳ Môn và Lục Nhâm thời điểm này, xin hãy luận đoán về phương diện Sự Nghiệp, Công Danh, Thi Cử: Cửa Khai Môn và Khởi Truyền đang báo hiệu cơ hội hay thử thách gì?',
+        'Xin chiêm đoán ngắn gọn về Công Danh, Sự Nghiệp, Thi cử thời điểm này: Cung Khai Môn và Trực Phù báo hiệu cơ hội hay thử thách gì?',
     },
     {
-      label: '💰 Chiêm đoán Tài Lộc, Đầu Tư & Kinh Doanh',
+      label: '💰 Tài Lộc, Đầu Tư & Ký Kết Hợp Đồng (Sinh Môn)',
       prompt:
-        'Xin hãy chiêm đoán về phương diện Tài Lộc, Kinh Doanh, Ký kết hợp đồng: Phân tích cung vị Sinh Môn, sao Thiên Nhậm và Thần Tướng Thanh Long/Lục Hợp.',
+        'Xin luận đoán ngắn gọn về Tài Lộc, Đầu Tư, Hợp Đồng: Cung Sinh Môn và Thần Tướng tài lộc đang ở thế sinh hay khắc?',
     },
     {
-      label: '❤️ Dự trắc Tình Duyên, Gia Đạo & Hòa Hợp',
+      label: '⚔️ Sách Lược Chủ - Khách: Nên Chủ Động Hay Chờ Đón?',
       prompt:
-        'Xin hãy giải đoán về phương diện Tình Cảm, Gia Đạo, Hôn Nhân: Xét cung vị Lục Hợp, Ất Can, Canh Can trong Kỳ Môn và Tứ Khoa phối hợp trong Lục Nhâm.',
+        'Dựa trên Can Ngày/Giờ và Thiên/Địa Bàn Kỳ Môn hiện tại, trong đàm phán hoặc hành động tôi nên làm Khách (chủ động tiến) hay làm Chủ (tĩnh chờ đón)?',
     },
     {
-      label: '🏥 Hỏi về Sức Khỏe, Tật Ách & Hóa Giải',
+      label: '❤️ Tình Cảm, Gia Đạo & Hòa Hợp (Cung Lục Hợp)',
       prompt:
-        'Xin hãy phân tích phương diện Sức Khỏe & Tật Ách: Cung Thiên Nhuế, Tử Môn, Bạch Hổ đang ở đâu và phương vị nào có Sinh Khí giúp dưỡng sinh hóa giải?',
+        'Xin phân tích ngắn gọn về Tình Duyên, Gia Đạo lúc này: Cung Lục Hợp và Can tương phối có hòa hợp không?',
     },
     {
-      label: '🚪 Tìm Phương Vị Cát Lợi (Sinh, Khai, Hưu) Xuất Hành',
+      label: '🏥 Sức Khỏe, Tạng Phủ & Phương Vị Dưỡng Sinh',
       prompt:
-        'Xin hãy chỉ ra các phương hướng xuất hành, khai trương, đàm phán đắc cát lợi nhất trong bàn Kỳ Môn này, và hướng nào cần tuyệt đối tránh (Tử Môn, Kinh Môn, Không Vong).',
+        'Xin tra cứu Cung Thiên Nhuế, Tử Môn và chỉ dẫn phương vị nạp Sinh Khí tốt nhất để bồi bổ sức khỏe lúc này?',
     },
     {
-      label: '🌤️ Giải thích Tiết Khí & Điểm Sóc hôm nay',
+      label: '🚪 Phương Vị Cát Lợi (Sinh, Khai, Hưu) Xuất Hành',
       prompt:
-        'Xin hãy giải thích ý nghĩa thiên văn và trường khí ngũ hành của Tiết Khí hiện tại cùng với chu kỳ Điểm Sóc Âm lịch đang diễn ra.',
+        'Xin chỉ ra 2 phương vị đắc cát lợi nhất để xuất hành/giao dịch trong giờ này và phương vị nào cần tuyệt đối tránh?',
     },
   ];
 
@@ -751,8 +789,38 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
                   {msg.role === 'user' ? (
                     <div className="whitespace-pre-wrap font-sans">{msg.content}</div>
                   ) : (
-                    <div className="prose prose-invert prose-xs sm:prose-sm max-w-none text-slate-200 space-y-2 [&>h3]:text-amber-300 [&>h3]:font-bold [&>h3]:text-sm [&>h4]:text-cyan-300 [&>h4]:font-bold [&>h4]:text-xs [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>blockquote]:border-l-2 [&>blockquote]:border-amber-500/50 [&>blockquote]:pl-3 [&>blockquote]:italic [&>table]:w-full [&>table]:border-collapse [&>table]:text-xs [&>table_th]:border [&>table_th]:border-slate-700 [&>table_th]:p-1.5 [&>table_th]:bg-slate-900 [&>table_td]:border [&>table_td]:border-slate-800 [&>table_td]:p-1.5 [&>p>strong]:text-amber-300">
-                      <Markdown>{msg.content}</Markdown>
+                    <div className="space-y-3">
+                      <div className="prose prose-invert prose-xs sm:prose-sm max-w-none text-slate-200 space-y-2 [&>h3]:text-amber-300 [&>h3]:font-bold [&>h3]:text-sm [&>h4]:text-cyan-300 [&>h4]:font-bold [&>h4]:text-xs [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>blockquote]:border-l-2 [&>blockquote]:border-amber-500/50 [&>blockquote]:pl-3 [&>blockquote]:italic [&>table]:w-full [&>table]:border-collapse [&>table]:text-xs [&>table_th]:border [&>table_th]:border-slate-700 [&>table_th]:p-1.5 [&>table_th]:bg-slate-900 [&>table_td]:border [&>table_td]:border-slate-800 [&>table_td]:p-1.5 [&>p>strong]:text-amber-300">
+                        <Markdown>{msg.content}</Markdown>
+                      </div>
+
+                      {/* Interactive Follow-Up Chips */}
+                      {!msg.isError && (() => {
+                        const suggestions = extractFollowUpSuggestions(msg.content);
+                        if (suggestions.length === 0) return null;
+                        return (
+                          <div className="mt-3 pt-2.5 border-t border-slate-800/80 space-y-1.5 animate-fadeIn">
+                            <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-400">
+                              <Sparkles className="w-3 h-3 text-amber-400" />
+                              <span>Dẫn chuyện & mở rộng chuyên môn (Nhấp để hỏi ngay):</span>
+                            </div>
+                            <div className="flex flex-col gap-1.5">
+                              {suggestions.map((sug, sIdx) => (
+                                <button
+                                  key={sIdx}
+                                  type="button"
+                                  onClick={() => handleSendMessage(sug)}
+                                  disabled={isLoading}
+                                  className="text-left text-xs text-slate-300 hover:text-amber-200 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-500/40 rounded-xl p-2 transition-all flex items-start justify-between gap-2 group cursor-pointer disabled:opacity-50 shadow-sm"
+                                >
+                                  <span className="leading-snug">➡️ {sug}</span>
+                                  <ArrowRight className="w-3.5 h-3.5 text-amber-400/60 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0 mt-0.5" />
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
                   )}
 

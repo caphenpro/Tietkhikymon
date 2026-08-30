@@ -1,31 +1,30 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.23.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.24.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Trực Diện & Dẫn Chuyện Chuyên Môn Sâu)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.23.0`** *(Phát hành: 30/08/2026)*
-**Tên mã:** *Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)*
+### 🚀 **Phiên bản hiện tại: `v2.24.0`** *(Phát hành: 30/08/2026)*
+**Tên mã:** *Tối Ưu AI Chatbot: Phản Hồi Trực Diện & Dẫn Chuyện Chuyên Môn Sâu (Concise & Deep Narrative AI)*
 
-- 🧭 **Tour Hướng Dẫn Trải Nghiệm Nhanh 7 Bước (Onboarding Tour)**:
-  - Tự động kích hoạt khi người dùng lần đầu truy cập hệ thống nhằm hướng dẫn tổng quan và cách đọc quẻ.
-  - Sơ đồ giải phẫu Cung Kỳ Môn 9 Cung trực quan: Bát Thần (Tầng Thần), Cửu Tinh (Tầng Thiên), Bát Môn (Tầng Nhân), Thiên/Địa Can (Tầng Địa), Tuần Không và Mã Tinh.
-  - Hướng dẫn nguyên lý quyết đoán Chủ - Khách & Cung Trực Phù - Trực Sử định hình sách lược đàm phán, hành động.
-  - Hướng dẫn thanh công cụ thiên văn thời gian thực (Live), bộ chọn thời điểm chiêm quẻ tùy chỉnh (Time Picker) và chế độ lập quẻ thủ công.
-  - Giới thiệu 6 chủ đề Dự trắc chuyên sâu, Đại Lục Nhâm Tam Thức và Trợ lý AI Luận Giải Cổ Thuật.
-  - Hỗ trợ phím tắt điều hướng bàn phím (Trái / Phải, ESC) và nút "Tour Hướng Dẫn" trên thanh Header / Footer mở lại tour bất kỳ lúc nào.
+- 🎯 **Phản Hồi Trực Diện, Ngắn Gọn & Không Dài Dòng**:
+  - Chuẩn hóa cấu trúc câu trả lời 3 phần súc tích (~150 - 300 từ): Kết Luận Trực Diện (Cát/Hung 1-2 câu) $\rightarrow$ Căn Cứ Quẻ Then Chốt (2-3 Dụng Thần) $\rightarrow$ Lời Khuyên Hành Động.
+  - Loại bỏ hoàn toàn các câu chào rườm rà hay lý thuyết dài dòng.
+- 🔮 **Dẫn Chuyện Chuyên Môn Sâu & Interactive Follow-Up Chips**:
+  - Tự động gợi ý 2-3 hướng đào sâu chuyên môn (pháp lý Cung Cảnh Môn, tiến độ Lục Nhâm Tam Truyền, thế trận Chủ/Khách, hóa giải phương vị).
+  - Tích hợp các nút bấm 1-nhấp chuột ngay trong tin nhắn AI để tiếp tục đào sâu chuyên môn tức thì.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.22.1`** *(Phát hành: 30/08/2026)*
+### 📦 **Phiên bản trước: `v2.23.0`** *(Phát hành: 30/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 
