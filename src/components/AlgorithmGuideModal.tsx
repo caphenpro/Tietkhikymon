@@ -64,6 +64,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'theme-mode', title: '17. Chế Độ Sáng / Tối (Auto & Custom Theme)', icon: Sun },
     { id: 'streamlined-nav', title: '18. Tinh Gọn 4 Tab Trọng Tâm (Tránh Trùng Dư Dữ Liệu)', icon: Layers },
     { id: 'ai-chatbot', title: '19. Trợ Lý AI Luận Giải Cổ Thuật & OpenRouter', icon: Bot },
+    { id: 'onboarding-tour', title: '20. Hướng Dẫn Trải Nghiệm Nhanh & Đọc Bàn Kỳ Môn (Onboarding Tour)', icon: Compass },
   ];
 
   return (
@@ -1096,6 +1097,66 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                 <span className="text-amber-400 font-bold">Quyền riêng tư & Lưu trữ:</span> Lịch sử trò chuyện và thiết lập API Key được lưu an toàn trong <code className="text-amber-300 font-mono">sessionStorage / localStorage</code> trên trình duyệt của người dùng, không lưu trữ trên bất kỳ máy chủ bên thứ ba nào.
+              </div>
+            </div>
+          )}
+
+          {/* Section 20: Onboarding Tour & First-Visit Experience */}
+          {(activeSection === 'all' || activeSection === 'onboarding-tour') && (
+            <div id="onboarding-tour" className="p-5 rounded-2xl bg-slate-950 border border-amber-500/40 space-y-4">
+              <h3 className="text-base font-bold text-amber-300 flex items-center gap-2">
+                <Compass className="w-5 h-5 text-amber-400" />
+                <span>20. Quy Trình Trải Nghiệm Nhanh & Đọc Bàn Kỳ Môn (Onboarding Tour)</span>
+              </h3>
+
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Nhằm giúp người dùng mới nắm bắt nhanh chóng và làm chủ hệ thống Cổ Tam Thức kết hợp Thiên văn học, phiên bản <strong>v2.23.0</strong> bổ sung <strong>Tour Hướng Dẫn Trải Nghiệm Nhanh (Onboarding Tour)</strong> tự động kích hoạt khi truy cập lần đầu.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                    <Layers className="w-4 h-4 text-amber-400" />
+                    <span>1. Cấu Trúc Bàn Kỳ Môn 9 Cung (Tam Bàn)</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Giải thích trực quan cấu trúc 4 tầng trong từng Cung: <strong>Bát Thần</strong> (Thần trợ), <strong>Cửu Tinh</strong> (Thiên thời), <strong>Bát Môn</strong> (Nhân hòa) và <strong>Thiên/Địa Can</strong> (Địa thế & Khắc ứng), kết hợp <strong>Tuần Không (〇)</strong> và <strong>Mã Tinh (🐎)</strong>.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold flex items-center gap-1.5">
+                    <Zap className="w-4 h-4 text-cyan-400" />
+                    <span>2. Nguyên Lý Chủ - Khách Quyết Đoán</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Chỉ dẫn lựa chọn thế trận hành động: Khi nào nên làm <strong>Khách (Động - Đi trước)</strong> theo Can Giờ & Thiên Bàn, khi nào nên làm <strong>Chủ (Tĩnh - Đón sau)</strong> theo Can Ngày & Địa Bàn.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                    <Clock className="w-4 h-4 text-emerald-400" />
+                    <span>3. Quản Lý Thời Gian & Chiêm Quẻ Tùy Chọn</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Hướng dẫn bật/tắt chế độ Live thời gian thực và mở bộ chọn ngày giờ (Time Picker) để định cục cho các sự kiện trong quá khứ hoặc tương lai.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold flex items-center gap-1.5">
+                    <Bot className="w-4 h-4 text-purple-400" />
+                    <span>4. Khai Thác AI Chatbot & Dự Trắc Chuyên Sâu</span>
+                  </strong>
+                  <p className="text-slate-400">
+                    Chỉ dẫn nhập API Key OpenRouter và ứng dụng AI đối thoại thông minh trên 6 lĩnh vực đời sống (Thân Mệnh, Tài Vận, Tình Duyên, Công Danh, Sức Khỏe, Đàm Phán).
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Kích hoạt lại Tour bất kỳ lúc nào:</span> Người dùng có thể nhấn nút <strong className="text-amber-300">"Tour Hướng Dẫn"</strong> trên thanh Header hoặc chân trang (Footer) để xem lại toàn bộ tiến trình bất cứ khi nào cần.
               </div>
             </div>
           )}

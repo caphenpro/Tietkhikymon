@@ -27,6 +27,7 @@ interface HeaderProps {
   onOpenExport: () => void;
   onOpenChangelog?: () => void;
   onOpenAIChat?: () => void;
+  onOpenOnboardingTour?: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
   result?: ComprehensiveResult;
@@ -41,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenExport,
   onOpenChangelog,
   onOpenAIChat,
+  onOpenOnboardingTour,
   activeTab,
   setActiveTab,
   result,
@@ -131,6 +133,16 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Mobile Actions Hamburger/Trigger */}
             <div className="flex items-center gap-1.5 sm:hidden">
               <ThemeSwitcher compact={true} />
+              {onOpenOnboardingTour && (
+                <button
+                  id="btn-header-mobile-tour"
+                  onClick={onOpenOnboardingTour}
+                  className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-300"
+                  title="Tour Hướng Dẫn Nhanh"
+                >
+                  <Compass className="w-4 h-4 text-amber-500" />
+                </button>
+              )}
               {onOpenAIChat && (
                 <button
                   id="btn-header-mobile-ai-chat"
@@ -254,6 +266,18 @@ export const Header: React.FC<HeaderProps> = ({
                 <Sparkles className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform" />
                 <span className="hidden md:inline">AI Luận Giải</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              </button>
+            )}
+
+            {onOpenOnboardingTour && (
+              <button
+                id="btn-open-onboarding-tour"
+                onClick={onOpenOnboardingTour}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 rounded-xl transition-all shadow-xs font-semibold cursor-pointer group"
+                title="Mở Tour hướng dẫn nhanh cho người mới (Onboarding)"
+              >
+                <Compass className="w-3.5 h-3.5 text-amber-500 group-hover:rotate-45 transition-transform" />
+                <span className="hidden md:inline">Tour Hướng Dẫn</span>
               </button>
             )}
 

@@ -11,18 +11,44 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.22.1';
+export const APP_VERSION = '2.23.0';
 export const APP_RELEASE_DATE = '2026-08-30';
-export const APP_CODENAME = 'Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot';
+export const APP_CODENAME = 'Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.23.0',
+    releaseDate: '2026-08-30',
+    codename: 'Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)',
+    tagline: 'Ra mắt tính năng Onboarding Tour 7 bước tương tác trực quan cho người dùng mới, giải thích tường tận cách đọc bàn Kỳ Môn 9 Cung (Tam Bàn, Bát Thần, Cửu Tinh, Bát Môn, Thập Can) và cách khai thác các công cụ chính.',
+    isLatest: true,
+    highlights: [
+      'Tự động kích hoạt Tour Hướng Dẫn Trải Nghiệm Nhanh (Onboarding Tour) 7 bước khi người dùng truy cập lần đầu.',
+      'Sơ đồ giải phẫu Cung Kỳ Môn trực quan: Thần Bàn (Bát Thần), Thiên Bàn (Cửu Tinh), Nhân Bàn (Bát Môn), Địa Bàn Can Khắc Ứng, Tuần Không và Mã Tinh.',
+      'Hướng dẫn nguyên lý quyết đoán Chủ - Khách & Cung Trực Phù - Trực Sử giúp định hình chiến lược đàm phán, hành động.',
+      'Giải thích thanh công cụ trạng thái thiên văn thời gian thực (Live vs Time Picker), chế độ tự chọn Cục chiêm quẻ.',
+      'Giới thiệu hệ thống Dự trắc 6 chủ đề đời sống, Đại Lục Nhâm Tam Thức và Trợ lý AI Luận Giải Cổ Thuật.',
+      'Hỗ trợ điều hướng bàn phím (Phím mũi tên Trái / Phải, phím ESC), thanh tiến trình sinh động và lưu trạng thái đã xem vào localStorage.',
+      'Nút "Tour Hướng Dẫn" chuyên dụng trên thanh Header và chân trang giúp xem lại toàn bộ cẩm nang bất cứ lúc nào.',
+    ],
+    added: [
+      'Thành phần `OnboardingTourModal` (`src/components/OnboardingTourModal.tsx`) với 7 bước hướng dẫn sinh động, minh họa đồ họa sắc nét.',
+      'Nút kích hoạt Tour trên thanh điều hướng Header (`#btn-open-onboarding-tour`, `#btn-header-mobile-tour`) và chân trang Footer.',
+      'Mục thuyết minh Mục 20 trong `AlgorithmGuideModal.tsx` giải trình chi tiết quy trình Onboarding và kiến trúc đọc quẻ.',
+      'Bộ nhớ cục bộ `kymon_has_completed_onboarding_tour_v2` lưu trạng thái người dùng.',
+    ],
+    improved: [
+      'Nâng cao tối đa tính thân thiện cho người dùng mới khi tiếp cận Cổ Tam Thức và Kỳ Môn Độn Giáp.',
+      'Tối ưu khả năng tương tác phím và chuyển đổi chế độ xem nhanh chóng.',
+    ],
+  },
   {
     version: '2.22.1',
     releaseDate: '2026-08-30',
     codename: 'Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot',
     tagline: 'Hiển thị vị trí nhập OpenRouter API Key rõ ràng, dễ nhận thấy nhất ngay trước khi sử dụng Chatbot AI với thẻ hướng dẫn 3 bước trực quan và liên kết lấy Key miễn phí.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung thẻ thiết lập OpenRouter API Key nổi bật và trực quan ngay trên cùng cửa sổ AI Chatbot trước khi bắt đầu trò chuyện.',
       'Cung cấp huy hiệu trạng thái API Key trên thanh tiêu đề (Top Bar) với hiệu ứng nhấp nháy thu hút sự chú ý khi chưa nhập Key.',

@@ -6,6 +6,27 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.23.0]] - 2026-08-30
+### Codename: *Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)*
+
+#### ✨ Tính Năng Mới & Trải Nghiệm Khởi Động (Added & Improved)
+- **Tour Hướng Dẫn Trải Nghiệm Nhanh 7 Bước Tương Tác (`/src/components/OnboardingTourModal.tsx`)**:
+  - Tự động kích hoạt khi người dùng lần đầu truy cập ứng dụng (lưu trạng thái vào `localStorage` qua khóa `kymon_has_completed_onboarding_tour_v2`).
+  - **Bước 1: Chào Mừng & Hợp Nhất Vũ Trụ 4 Chiều**: Tổng quan sự kết hợp giữa Thiên văn hiện đại (VSOP87, ELP2000) và Cổ Tam Thức (Kỳ Môn, Lục Nhâm, Thái Ất).
+  - **Bước 2: Thanh Thông Tin Thời Gian Thực**: Giải thích Tứ Trụ, Tiết Khí, Cục Số, chế độ Live và bộ chọn thời điểm chiêm quẻ tùy chỉnh (Time Picker).
+  - **Bước 3: Sơ Đồ Giải Phẫu Cung Kỳ Môn 9 Cung**: Hướng dẫn chi tiết cách đọc 4 tầng năng lượng (Bát Thần, Cửu Tinh, Bát Môn, Thiên/Địa Can), Tuần Không và Mã Tinh.
+  - **Bước 4: Nguyên Lý Chủ - Khách & Cung Trực Phù - Trực Sử**: Hướng dẫn định hình chiến lược đàm phán, hành động (làm Khách chủ động đi trước vs làm Chủ tĩnh phòng thủ).
+  - **Bước 5: Dự Trắc Chuyên Sâu 6 Chủ Đề**: Giới thiệu phân tích Thân Mệnh, Tài Vận, Tình Duyên, Công Danh, Sức Khỏe, Đàm Phán.
+  - **Bước 6: Đại Lục Nhâm Tam Thức & Bảng 24 Tiết Khí**: Giải thích Nguyệt Tướng, Tam Truyền - Tứ Khóa và bảng tra cứu thiên văn toàn niên.
+  - **Bước 7: Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng**: Chỉ dẫn sử dụng chatbot AI kết nối OpenRouter giải đoán theo ngữ cảnh thực.
+- **Tương Tác Linh Hoạt & Đa Nền Tảng**:
+  - Hỗ trợ phím mũi tên Trái / Phải để chuyển bước, phím ESC để thoát, thanh tiến trình hiển thị tỷ lệ hoàn thành.
+  - Bổ sung nút **"Tour Hướng Dẫn"** trên thanh Header (desktop & mobile) và chân trang (Footer) giúp người dùng mở lại tour bất cứ lúc nào.
+- **Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Bổ sung **Mục 20: Quy Trình Trải Nghiệm Nhanh & Đọc Bàn Kỳ Môn (Onboarding Tour)** đồng bộ thuyết minh toàn cảnh.
+
+---
+
 ## [[2.22.1]] - 2026-08-30
 ### Codename: *Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot*
 

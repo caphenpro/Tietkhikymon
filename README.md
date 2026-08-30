@@ -1,33 +1,31 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.22.1-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.23.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.22.1`** *(Phát hành: 30/08/2026)*
-**Tên mã:** *Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot*
+### 🚀 **Phiên bản hiện tại: `v2.23.0`** *(Phát hành: 30/08/2026)*
+**Tên mã:** *Trải Nghiệm Khởi Động & Tour Hướng Dẫn Đọc Bàn Kỳ Môn Toàn Diện (Interactive Onboarding Tour)*
 
-- 🔑 **Thẻ Thiết Lập OpenRouter API Key Trực Quan & Rõ Ràng**:
-  - Bố trí thẻ cấu hình API Key nổi bật ngay đầu giao diện Chatbot, hiển thị rõ ràng trước khi người dùng gửi câu hỏi.
-  - Hướng dẫn 3 bước ngắn gọn cùng nút bấm mở trực tiếp [OpenRouter.ai/keys](https://openrouter.ai/keys) để lấy key miễn phí trong 30 giây.
-  - Nút ẩn/hiện mã khóa bảo mật, lưu & kích hoạt nhanh, nút xóa key và thông báo lưu thành công.
-- ⚡ **Huy Hiệu Trạng Thái Trên Top Bar & Cảnh Báo Thông Minh**:
-  - Huy hiệu trạng thái trên thanh tiêu đề (`[🔑 Nhập API Key]` nhấp nháy thu hút sự chú ý khi chưa có key).
-  - Tự động mở và focus ô nhập key khi người dùng chọn câu hỏi nhanh hoặc bấm gửi mà chưa cấu hình key.
-- 🔒 **Bảo Mật Cục Bộ 100%**:
-  - Khóa API lưu hoàn toàn trong `localStorage` trên trình duyệt người dùng, an toàn tuyệt đối.
+- 🧭 **Tour Hướng Dẫn Trải Nghiệm Nhanh 7 Bước (Onboarding Tour)**:
+  - Tự động kích hoạt khi người dùng lần đầu truy cập hệ thống nhằm hướng dẫn tổng quan và cách đọc quẻ.
+  - Sơ đồ giải phẫu Cung Kỳ Môn 9 Cung trực quan: Bát Thần (Tầng Thần), Cửu Tinh (Tầng Thiên), Bát Môn (Tầng Nhân), Thiên/Địa Can (Tầng Địa), Tuần Không và Mã Tinh.
+  - Hướng dẫn nguyên lý quyết đoán Chủ - Khách & Cung Trực Phù - Trực Sử định hình sách lược đàm phán, hành động.
+  - Hướng dẫn thanh công cụ thiên văn thời gian thực (Live), bộ chọn thời điểm chiêm quẻ tùy chỉnh (Time Picker) và chế độ lập quẻ thủ công.
+  - Giới thiệu 6 chủ đề Dự trắc chuyên sâu, Đại Lục Nhâm Tam Thức và Trợ lý AI Luận Giải Cổ Thuật.
+  - Hỗ trợ phím tắt điều hướng bàn phím (Trái / Phải, ESC) và nút "Tour Hướng Dẫn" trên thanh Header / Footer mở lại tour bất kỳ lúc nào.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.22.0`** *(Phát hành: 30/08/2026)*
+### 📦 **Phiên bản trước: `v2.22.1`** *(Phát hành: 30/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

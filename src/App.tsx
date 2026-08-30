@@ -11,6 +11,7 @@ import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
 import { AIChatbotModal } from './components/AIChatbotModal';
 import { AIChatbotFloatingButton } from './components/AIChatbotFloatingButton';
+import { OnboardingTourModal, ONBOARDING_STORAGE_KEY } from './components/OnboardingTourModal';
 import { calculateComprehensiveResult, calculateSolarTermsForYear } from './astronomy/calculator';
 import { SolarTermEvent } from './types';
 import { APP_VERSION, APP_RELEASE_DATE } from './version';
@@ -26,6 +27,10 @@ export default function App() {
   const [isChangelogOpen, setIsChangelogOpen] = useState<boolean>(false);
   const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
   const [aiChatInitialQuestion, setAiChatInitialQuestion] = useState<string>('');
+  const [isOnboardingTourOpen, setIsOnboardingTourOpen] = useState<boolean>(() => {
+    // Open by default if first time user
+    return !localStorage.getItem(ONBOARDING_STORAGE_KEY);
+  });
 
   // Live timer effect
   useEffect(() => {
@@ -81,6 +86,7 @@ export default function App() {
         onOpenExport={() => setIsExportOpen(true)}
         onOpenChangelog={() => setIsChangelogOpen(true)}
         onOpenAIChat={() => handleOpenAIChat()}
+        onOpenOnboardingTour={() => setIsOnboardingTourOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         result={result}
@@ -184,8 +190,15 @@ export default function App() {
           </div>
           <div className="flex items-center gap-3">
             <button
+              onClick={() => setIsOnboardingTourOpen(true)}
+              className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors text-amber-600 dark:text-amber-400 font-semibold flex items-center gap-1"
+            >
+              <span>Tour hướng dẫn</span>
+            </button>
+            <span>•</span>
+            <button
               onClick={() => setIsChangelogOpen(true)}
-              className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors text-amber-600 dark:text-amber-400/90 font-medium"
+              className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors text-slate-600 dark:text-slate-400 font-medium"
             >
               Nhật ký cập nhật
             </button>
@@ -208,6 +221,23 @@ export default function App() {
       </footer>
 
       {/* Modals */}
+      <OnboardingTourModal
+        isOpen={isOnboardingTourOpen}
+        onClose={() => setIsOnboardingTourOpen(false)}
+        onNavigateTab={(tabId) => {
+          setActiveTab(tabId);
+          setIsOnboardingTourOpen(false);
+        }}
+        onOpenAIChat={() => {
+          setIsOnboardingTourOpen(false);
+          setIsAIChatOpen(true);
+        }}
+        onOpenAlgorithmModal={() => {
+          setIsOnboardingTourOpen(false);
+          setIsGuideOpen(true);
+        }}
+      />
+
       <AlgorithmGuideModal
         isOpen={isGuideOpen}
         onClose={() => setIsGuideOpen(false)}
