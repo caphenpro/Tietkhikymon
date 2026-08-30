@@ -11,18 +11,43 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.22.0';
+export const APP_VERSION = '2.22.1';
 export const APP_RELEASE_DATE = '2026-08-30';
-export const APP_CODENAME = 'Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)';
+export const APP_CODENAME = 'Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.22.1',
+    releaseDate: '2026-08-30',
+    codename: 'Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot',
+    tagline: 'Hiển thị vị trí nhập OpenRouter API Key rõ ràng, dễ nhận thấy nhất ngay trước khi sử dụng Chatbot AI với thẻ hướng dẫn 3 bước trực quan và liên kết lấy Key miễn phí.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung thẻ thiết lập OpenRouter API Key nổi bật và trực quan ngay trên cùng cửa sổ AI Chatbot trước khi bắt đầu trò chuyện.',
+      'Cung cấp huy hiệu trạng thái API Key trên thanh tiêu đề (Top Bar) với hiệu ứng nhấp nháy thu hút sự chú ý khi chưa nhập Key.',
+      'Tích hợp hướng dẫn 3 bước lấy Key nhanh chóng cùng nút liên kết trực tiếp đến trang tạo API Key miễn phí của OpenRouter.ai.',
+      'Bổ sung nút ẩn/hiện mã khóa (Eye/EyeOff), nút lưu & kích hoạt nhanh, nút xóa key và thông báo lưu thành công.',
+      'Tự động mở và làm nổi bật ô nhập API Key khi người dùng nhấn vào các câu hỏi gợi ý hoặc bấm gửi tin nhắn mà chưa cấu hình Key.',
+      'Cam kết bảo mật 100% với việc lưu trữ khóa API cục bộ trên trình duyệt (localStorage), không lưu trữ vào kho mã nguồn git.',
+    ],
+    added: [
+      'Thẻ thiết lập OpenRouter API Key chuyên dụng (`openrouter-api-key-setup-card`) trong `src/components/AIChatbotModal.tsx`.',
+      'Huy hiệu và nút trạng thái API Key động trên thanh tiêu đề của Chatbot.',
+      'Nút chuyển đổi ẩn/hiện mật khẩu và cơ chế tự động focus vào ô nhập key khi cần.',
+      'Thông báo nhắc nhở nhập key trực tiếp tại màn hình chào đón (Welcome Screen).',
+    ],
+    improved: [
+      'Nâng cao trải nghiệm người dùng, giúp người sử dụng dễ dàng nhận biết và cung cấp API Key để trò chuyện với AI mà không gặp khó khăn.',
+      'Thông báo lỗi và phản hồi tức thì khi thao tác với các mô hình suy luận cổ thuật.',
+    ],
+  },
   {
     version: '2.22.0',
     releaseDate: '2026-08-30',
     codename: 'Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)',
     tagline: 'Tích hợp Trợ Lý AI Luận Giải Cổ Thuật với ngữ cảnh trận bàn tự động (Bát Tự, Kỳ Môn 9 Cung, Đại Lục Nhâm, Điểm Sóc, 24 Tiết Khí) qua OpenRouter API.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tích hợp Trợ Lý AI Luận Giải Cổ Thuật thông minh (AIChatbotModal) hỗ trợ giải đáp mọi phương diện đời sống, thuật toán thiên văn và luận đoán quẻ dịch.',
       'Tự động trích xuất và nạp ngữ cảnh thời gian thực (Bát Tự 4 Trụ, 24 Tiết Khí, Điểm Sóc Âm Lịch, Bàn Kỳ Môn 9 Cung và Bàn Đại Lục Nhâm) vào System Prompt của AI.',

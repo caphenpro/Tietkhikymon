@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.22.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.22.1-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,24 +10,24 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.22.0`** *(Phát hành: 30/08/2026)*
-**Tên mã:** *Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)*
+### 🚀 **Phiên bản hiện tại: `v2.22.1`** *(Phát hành: 30/08/2026)*
+**Tên mã:** *Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot*
 
-- 🤖 **Trợ Lý AI Luận Giải Cổ Thuật Chuyên Sâu**:
-  - Tích hợp cửa sổ chat đối thoại thông minh (`AIChatbotModal`), hỗ trợ tương tác với các LLM hàng đầu thế giới (Gemini 2.5 Flash, DeepSeek V3 / R1, Claude 3.5 Sonnet, GPT-4o Mini) qua OpenRouter.
-  - Tự động nạp ngữ cảnh trận bàn thời gian thực (Bát Tự, 24 Tiết Khí, Điểm Sóc, Kỳ Môn 9 Cung và Lục Nhâm Tam Truyền) vào System Prompt.
-  - Widget nút bấm nổi (Floating Action Button) và nút hành động trên thanh Header hỗ trợ mở AI Luận Giải từ mọi vị trí.
-  - Gợi ý câu hỏi nhanh (Quick Prompts) cho 6 chủ đề: Thân Mệnh, Tài Vận, Hôn Nhân, Sức Khỏe, Công Danh, Kỳ Môn & Lục Nhâm.
-- 🛡️ **Backend Proxy An Toàn (`/api/chat`)**:
-  - Bảo mật kết nối OpenRouter, bảo vệ khóa API và hỗ trợ người dùng dùng API Key riêng.
-- 📖 **Thuyết Minh Thuật Toán Toàn Cảnh (Mục 19)**:
-  - Bổ sung quy trình 5 bước luận giải cổ thức kết hợp AI trong Modal Thuyết Minh Thuật Toán.
+- 🔑 **Thẻ Thiết Lập OpenRouter API Key Trực Quan & Rõ Ràng**:
+  - Bố trí thẻ cấu hình API Key nổi bật ngay đầu giao diện Chatbot, hiển thị rõ ràng trước khi người dùng gửi câu hỏi.
+  - Hướng dẫn 3 bước ngắn gọn cùng nút bấm mở trực tiếp [OpenRouter.ai/keys](https://openrouter.ai/keys) để lấy key miễn phí trong 30 giây.
+  - Nút ẩn/hiện mã khóa bảo mật, lưu & kích hoạt nhanh, nút xóa key và thông báo lưu thành công.
+- ⚡ **Huy Hiệu Trạng Thái Trên Top Bar & Cảnh Báo Thông Minh**:
+  - Huy hiệu trạng thái trên thanh tiêu đề (`[🔑 Nhập API Key]` nhấp nháy thu hút sự chú ý khi chưa có key).
+  - Tự động mở và focus ô nhập key khi người dùng chọn câu hỏi nhanh hoặc bấm gửi mà chưa cấu hình key.
+- 🔒 **Bảo Mật Cục Bộ 100%**:
+  - Khóa API lưu hoàn toàn trong `localStorage` trên trình duyệt người dùng, an toàn tuyệt đối.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.21.0`** *(Phát hành: 29/08/2026)*
+### 📦 **Phiên bản trước: `v2.22.0`** *(Phát hành: 30/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

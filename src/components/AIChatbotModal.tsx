@@ -23,6 +23,11 @@ import {
   ArrowRight,
   Shield,
   BookOpen,
+  Eye,
+  EyeOff,
+  ExternalLink,
+  CheckCircle2,
+  Lock,
 } from 'lucide-react';
 import { ComprehensiveResult } from '../types';
 import {
@@ -75,7 +80,18 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
   const [customApiKey, setCustomApiKey] = useState<string>(() => {
     return localStorage.getItem(API_KEY_STORAGE_KEY) || '';
   });
-  const [showKeyConfig, setShowKeyConfig] = useState<boolean>(false);
+  const [tempApiKeyInput, setTempApiKeyInput] = useState<string>(() => {
+    return localStorage.getItem(API_KEY_STORAGE_KEY) || '';
+  });
+  const [showKeyConfig, setShowKeyConfig] = useState<boolean>(() => {
+    // If user has not set an API key yet, open the config by default to make it immediately obvious
+    return !localStorage.getItem(API_KEY_STORAGE_KEY);
+  });
+  const [showKeyPassword, setShowKeyPassword] = useState<boolean>(false);
+  const [keySavedToast, setKeySavedToast] = useState<boolean>(false);
+  const [keyRequiredNotice, setKeyRequiredNotice] = useState<boolean>(false);
+
+  const apiKeyInputRef = useRef<HTMLInputElement>(null);
 
   // Chat message history state
   const [messages, setMessages] = useState<ChatMessageItem[]>(() => {
@@ -191,9 +207,42 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
     },
   ];
 
+  const handleSaveApiKey = () => {
+    const cleanKey = tempApiKeyInput.trim();
+    if (!cleanKey) {
+      alert('Vui lòng nhập chuỗi API Key hợp lệ (bắt đầu bằng sk-or-v1-...)');
+      return;
+    }
+    setCustomApiKey(cleanKey);
+    localStorage.setItem(API_KEY_STORAGE_KEY, cleanKey);
+    setKeyRequiredNotice(false);
+    setKeySavedToast(true);
+    setTimeout(() => {
+      setKeySavedToast(false);
+      setShowKeyConfig(false);
+    }, 1500);
+  };
+
+  const handleClearApiKey = () => {
+    setCustomApiKey('');
+    setTempApiKeyInput('');
+    localStorage.removeItem(API_KEY_STORAGE_KEY);
+    setShowKeyConfig(true);
+  };
+
   const handleSendMessage = async (promptToSend?: string) => {
     const text = (promptToSend || inputPrompt).trim();
     if (!text || isLoading) return;
+
+    // Check if API key is provided
+    if (!customApiKey.trim()) {
+      setKeyRequiredNotice(true);
+      setShowKeyConfig(true);
+      setTimeout(() => {
+        apiKeyInputRef.current?.focus();
+      }, 100);
+      return;
+    }
 
     const userMessage: ChatMessageItem = {
       id: `user-${Date.now()}`,
@@ -346,18 +395,29 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
               <ChevronDown className="w-3.5 h-3.5 text-amber-400 absolute right-2 top-2.5 pointer-events-none" />
             </div>
 
-            {/* Custom Key Toggle */}
+            {/* API Key Status & Config Button */}
             <button
               id="btn-toggle-key-config"
-              onClick={() => setShowKeyConfig((prev) => !prev)}
-              className={`p-2 rounded-xl border text-xs transition-all cursor-pointer ${
-                showKeyConfig || customApiKey
-                  ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold'
-                  : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700'
+              onClick={() => {
+                setShowKeyConfig((prev) => !prev);
+                setKeyRequiredNotice(false);
+              }}
+              className={`px-3 py-1.5 rounded-xl border text-xs transition-all cursor-pointer flex items-center gap-1.5 shadow-sm ${
+                customApiKey
+                  ? 'bg-emerald-500/15 hover:bg-emerald-500/25 border-emerald-500/40 text-emerald-300 font-medium'
+                  : 'bg-amber-500/20 hover:bg-amber-500/30 border-amber-400 text-amber-200 font-bold animate-pulse'
               }`}
-              title="Cấu hình API Key OpenRouter"
+              title="Cấu hình API Key OpenRouter để kết nối AI"
             >
-              <Key className="w-4 h-4" />
+              <Key className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">
+                {customApiKey ? 'API Key: Đã lưu' : '🔑 Nhập API Key'}
+              </span>
+              {customApiKey ? (
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              ) : (
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+              )}
             </button>
 
             {/* Maximize / Minimize Button */}
@@ -382,43 +442,151 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
           </div>
         </div>
 
-        {/* CUSTOM API KEY SETTINGS BANNER (IF OPEN) */}
-        {showKeyConfig && (
-          <div className="bg-slate-950 border-b border-amber-500/30 p-3 sm:p-4 text-xs animate-fadeIn space-y-2">
+        {/* PROMINENT OPENROUTER API KEY SETUP CARD (SHOWN WHEN NO KEY OR WHEN EXPANDED) */}
+        {(showKeyConfig || !customApiKey || keyRequiredNotice) && (
+          <div
+            id="openrouter-api-key-setup-card"
+            className={`border-b p-3.5 sm:p-4 text-xs animate-fadeIn transition-all space-y-3 ${
+              keyRequiredNotice
+                ? 'bg-amber-950/70 border-amber-400'
+                : !customApiKey
+                ? 'bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-amber-500/50 shadow-inner'
+                : 'bg-slate-950 border-emerald-500/40'
+            }`}
+          >
+            {/* Card Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-amber-300 font-semibold">
-                <Shield className="w-4 h-4 text-amber-400" />
-                <span>Thiết lập OpenRouter API Key cá nhân (Tùy chọn):</span>
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
+                  <Key className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-amber-300 text-sm flex items-center gap-2">
+                    <span>Thiết Lập Khóa OpenRouter API Key</span>
+                    {!customApiKey && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wider">
+                        Bắt buộc
+                      </span>
+                    )}
+                  </h4>
+                  <p className="text-[11px] text-slate-300">
+                    Cung cấp API Key OpenRouter để kết nối các mô hình AI (Gemini 2.5, DeepSeek, Claude, GPT).
+                  </p>
+                </div>
               </div>
-              <span className="text-[11px] text-slate-400">
-                Mặc định đã tích hợp sẵn API Key hệ thống cho bạn sử dụng trực tiếp.
-              </span>
+
+              {/* Get Key Link Button */}
+              <a
+                href="https://openrouter.ai/keys"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow-md transition-all shrink-0 cursor-pointer"
+              >
+                <span>Lấy API Key Miễn Phí Tại OpenRouter.ai</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
-            <div className="flex items-center gap-2">
-              <input
-                id="input-custom-api-key"
-                type="password"
-                value={customApiKey}
-                onChange={(e) => setCustomApiKey(e.target.value)}
-                placeholder="Nhập API Key OpenRouter của bạn (sk-or-v1-...)"
-                className="flex-1 bg-slate-900 border border-slate-700 focus:border-amber-400 rounded-xl px-3 py-1.5 text-xs text-white placeholder:text-slate-500 font-mono focus:outline-none"
-              />
-              {customApiKey && (
+
+            {/* Quick 3-Step Instruction */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 py-1 text-[11px] text-slate-300">
+              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2 flex items-start gap-2">
+                <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                  1
+                </span>
+                <span>Truy cập <strong>openrouter.ai/keys</strong> và đăng nhập miễn phí.</span>
+              </div>
+              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2 flex items-start gap-2">
+                <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                  2
+                </span>
+                <span>Bấm <strong>Create Key</strong> & sao chép mã khóa dạng <code>sk-or-v1-...</code></span>
+              </div>
+              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2 flex items-start gap-2">
+                <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                  3
+                </span>
+                <span>Dán vào ô bên dưới rồi bấm <strong>Lưu & Kích Hoạt</strong>.</span>
+              </div>
+            </div>
+
+            {/* Input Row */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <div className="relative flex-1">
+                <input
+                  ref={apiKeyInputRef}
+                  id="input-custom-api-key"
+                  type={showKeyPassword ? 'text' : 'password'}
+                  value={tempApiKeyInput}
+                  onChange={(e) => setTempApiKeyInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleSaveApiKey();
+                    }
+                  }}
+                  placeholder="Dán API Key OpenRouter của bạn tại đây (sk-or-v1-...)"
+                  className="w-full bg-slate-900 border border-amber-500/40 focus:border-amber-400 rounded-xl pl-3 pr-10 py-2 text-xs text-white placeholder:text-slate-500 font-mono focus:outline-none shadow-inner"
+                />
                 <button
                   type="button"
-                  onClick={() => setCustomApiKey('')}
-                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs"
+                  onClick={() => setShowKeyPassword((prev) => !prev)}
+                  className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-200 cursor-pointer"
+                  title={showKeyPassword ? 'Ẩn khóa' : 'Hiện khóa'}
                 >
-                  Xóa Key
+                  {showKeyPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
-              )}
-              <button
-                type="button"
-                onClick={() => setShowKeyConfig(false)}
-                className="px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400"
-              >
-                Xong
-              </button>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  id="btn-save-api-key"
+                  onClick={handleSaveApiKey}
+                  className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-slate-950" />
+                  <span>Lưu & Kích Hoạt</span>
+                </button>
+
+                {customApiKey && (
+                  <button
+                    type="button"
+                    onClick={handleClearApiKey}
+                    className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-rose-900/40 text-slate-300 hover:text-rose-300 border border-slate-700 text-xs transition-colors cursor-pointer"
+                  >
+                    Xóa Key
+                  </button>
+                )}
+
+                {customApiKey && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowKeyConfig(false);
+                      setKeyRequiredNotice(false);
+                    }}
+                    className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition-colors cursor-pointer"
+                  >
+                    Đóng
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Saved Toast */}
+            {keySavedToast && (
+              <div className="flex items-center gap-2 text-emerald-400 text-xs font-semibold animate-fadeIn">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span>Đã lưu API Key thành công! Bạn có thể bắt đầu trò chuyện ngay bây giờ.</span>
+              </div>
+            )}
+
+            {/* Security Guarantee */}
+            <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
+              <Lock className="w-3.5 h-3.5 text-emerald-400" />
+              <span>
+                <strong>Bảo mật:</strong> Khóa API của bạn được lưu an toàn 100% trên trình duyệt (localStorage), không lưu trữ trên máy chủ hoặc mã nguồn git.
+              </span>
             </div>
           </div>
         )}
@@ -486,6 +654,27 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
 
               {/* Quick Prompt Cards */}
               <div className="w-full space-y-2 text-left">
+                {!customApiKey && (
+                  <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center justify-between gap-2 animate-fadeIn">
+                    <div className="flex items-center gap-2">
+                      <Key className="w-4 h-4 text-amber-400 shrink-0" />
+                      <span>
+                        <strong>Lưu ý:</strong> Vui lòng nhập API Key OpenRouter ở bảng trên để bắt đầu luận đoán quẻ với AI.
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowKeyConfig(true);
+                        apiKeyInputRef.current?.focus();
+                      }}
+                      className="px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 shrink-0 cursor-pointer"
+                    >
+                      Nhập Key Ngay
+                    </button>
+                  </div>
+                )}
+
                 <div className="flex items-center gap-1.5 text-xs text-amber-400 font-semibold">
                   <BookOpen className="w-3.5 h-3.5" />
                   <span>Gợi ý câu hỏi phân tích nhanh:</span>

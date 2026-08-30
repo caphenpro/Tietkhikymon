@@ -1058,7 +1058,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
               </h3>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Tại phiên bản <strong>v2.21.0</strong>, hệ thống tích hợp <strong>AI Đại Sư Luận Giải Cổ Thuật</strong> toàn diện, kết nối với các mô hình Trí Tuệ Nhân Tạo hàng đầu thông qua OpenRouter API.
+                Tại phiên bản <strong>v2.22.1</strong>, hệ thống tích hợp <strong>AI Đại Sư Luận Giải Cổ Thuật</strong> toàn diện, kết nối với các mô hình Trí Tuệ Nhân Tạo hàng đầu thông qua OpenRouter API với giao diện cấu hình API Key trực quan ngay tại đầu cửa sổ đối thoại.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">

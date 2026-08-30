@@ -6,6 +6,23 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.22.1]] - 2026-08-30
+### Codename: *Tối Ưu Giao Diện & Vị Trí Cung Cấp OpenRouter API Key Trực Quan Cho AI Chatbot*
+
+#### ✨ Trải Nghiệm Người Dùng & Quản Lý API Key (Added & Improved)
+- **Thẻ Thiết Lập OpenRouter API Key Nổi Bật Trực Quan (`/src/components/AIChatbotModal.tsx`)**:
+  - Đặt thẻ cấu hình OpenRouter API Key ở vị trí dễ nhận biết nhất ngay đầu giao diện Chatbot, hiển thị rõ ràng trước khi người dùng bắt đầu cuộc trò chuyện.
+  - Tích hợp thẻ hướng dẫn 3 bước dễ hiểu cùng nút liên kết trực tiếp mở trang [OpenRouter.ai/keys](https://openrouter.ai/keys) để lấy API Key miễn phí sau 30 giây.
+  - Cung cấp nút chuyển đổi ẩn/hiện mã khóa (Eye/EyeOff), nút "Lưu & Kích Hoạt", nút "Xóa Key" và thông báo lưu thành công trực quan.
+- **Huy Hiệu Trạng Thái API Key Trên Thanh Tiêu Đề (Top Bar)**:
+  - Hiển thị nút trạng thái API Key rõ ràng (`[🔑 Cần Nhập API Key]` kèm hiệu ứng viền sáng nhấp nháy khi chưa có key; `[🔑 API Key: Đã lưu]` khi đã cấu hình).
+- **Cơ Chế Nhắc Nhở & Focus Tự Động (Auto-Focus & Prompt Guard)**:
+  - Khi người dùng bấm vào các câu hỏi gợi ý nhanh hoặc gửi tin nhắn mà chưa cấu hình key, hệ thống tự động mở thẻ thiết lập API Key và focus con trỏ vào ô nhập key kèm nhắc nhở lịch sự.
+- **Đảm Bảo An Toàn Tuyệt Đối**:
+  - Khóa API được lưu trữ cục bộ 100% trong `localStorage` trên trình duyệt người dùng, hoàn toàn không bị đẩy lên kho mã nguồn Git hay lưu lại ở máy chủ.
+
+---
+
 ## [[2.22.0]] - 2026-08-30
 ### Codename: *Tích Hợp Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (OpenRouter Multi-Model Metaphysics Advisor)*
 
