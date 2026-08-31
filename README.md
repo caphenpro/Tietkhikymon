@@ -1,31 +1,32 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.24.2-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.24.3-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Trực Diện & Gợi Ý 1 Chạm Tương Tác)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Tự Động Luân Chuyển Mô Hình & Gợi Ý 1 Chạm Tương Tác)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.24.2`** *(Phát hành: 30/08/2026)*
-**Tên mã:** *Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)*
+### 🚀 **Phiên bản hiện tại: `v2.24.3`** *(Phát hành: 31/08/2026)*
+**Tên mã:** *Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)*
 
+- ✨ **Tự Động Chọn & Luân Chuyển Mô Hình AI Khi Hết Dung Lượng (Auto Fallback)**:
+  - Thiết lập chế độ mặc định **"✨ Tự Động (Auto Fallback)"**: Hệ thống tự động ưu tiên mô hình tối ưu nhất và tự động chuyển đổi sang các mô hình dự phòng khi gặp sự cố hết dung lượng/quota (429), hết credit (402) hoặc máy chủ quá tải (503).
+  - Chuỗi dự phòng thông minh đa tầng: `Gemini 2.5 Flash ➔ Gemini 2.5 Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7 Sonnet`.
+  - Hiển thị minh bạch mô hình AI thực tế đã sinh phản hồi (kèm biểu tượng `✨ Tự động` hoặc `⚡ Dự phòng`).
 - 📱 **Tối Ưu Hoàn Hảo Khung Chat AI Trên Điện Thoại Di Động (Mobile Responsive)**:
-  - Tái cấu trúc Header 2 tầng thông minh: Tiêu đề không còn bị bóp méo hay vỡ thành một cột dọc từng chữ.
-  - Cố định nút đóng `(X)` to rõ ở góc trên bên phải, không bị tràn lề hay che khuất, touch target 34px - 44px chạm đóng cực kỳ mượt mà.
-  - Thanh chọn mô hình AI (Model Selector) được bố trí vừa vặn, độc lập trên mobile.
-- 📅 **Khắc Phục Hoàn Toàn Ô Chọn Năm Trong Lịch Tra Cứu Nhanh & Bảng Tiết Khí**:
-  - Khắc phục lỗi kẹt số khi nhập năm: Thay thế bằng thẻ dropdown select đầy đủ các năm từ 1900 đến 2100 cho phép chọn năm âm lịch / tiết khí tức thì.
-  - Tích hợp các nút lùi/tiến ngày và tháng giúp tra cứu chuyển ngày tiện lợi trên mọi thiết bị.
+  - Header 2 tầng chống vỡ chữ, nút đóng `(X)` cố định góc trên bên phải, chạm đóng mượt mà.
+- 📅 **Lịch Tra Cứu Nhanh & Bảng Tiết Khí**:
+  - Thẻ chọn năm dropdown 1900–2100 chọn năm âm lịch / tiết khí tức thì.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.24.1`** *(Phát hành: 30/08/2026)*
+### 📦 **Phiên bản trước: `v2.24.2`** *(Phát hành: 30/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

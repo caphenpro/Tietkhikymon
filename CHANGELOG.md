@@ -6,6 +6,21 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.24.3]] - 2026-08-31
+### Codename: *Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)*
+
+#### ✨ Tự Động Chọn & Luân Chuyển Mô Hình AI Khi Hết Dung Lượng (Auto Fallback)
+- **Tích Hợp Chế Độ Mặc Định "✨ Tự Động (Auto Fallback)" (`/src/components/AIChatbotModal.tsx` & `/src/services/aiChatService.ts`)**:
+  - Người dùng không cần phải tự thao tác chuyển đổi mô hình thủ công.
+  - Khi một mô hình bất kỳ gặp sự cố hết dung lượng, vượt quá giới hạn tốc độ (rate limit/quota 429), hết credit (402) hoặc máy chủ quá tải (503), hệ thống tự động và mượt mà thử nghiệm các mô hình kế tiếp trong chuỗi dự phòng thông minh: `Gemini 2.5 Flash ➔ Gemini 2.5 Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7 Sonnet`.
+- **Kiến Trúc Dự Phòng Đa Tầng (Dual-Layer Fallback Architecture) (`/server.ts` & `/src/services/aiChatService.ts`)**:
+  - Tích hợp vòng lặp luân chuyển dự phòng trên cả Express Proxy server `/api/chat` lẫn kênh gọi trực tiếp OpenRouter fallback từ client.
+  - Phản hồi metadata `model_used`, `fallback_occurred` và `auto_routed` giúp hiển thị rõ ràng mô hình AI đã hoàn thành phản hồi.
+- **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật Mục 19 trong `AlgorithmGuideModal.tsx` giải trình cơ chế tự động luân chuyển mô hình AI.
+
+---
+
 ## [[2.24.2]] - 2026-08-30
 ### Codename: *Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)*
 

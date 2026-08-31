@@ -1055,11 +1055,11 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             <div id="ai-chatbot" className="p-5 rounded-2xl bg-slate-950 border border-purple-500/30 space-y-4">
               <h3 className="text-base font-bold text-purple-300 flex items-center gap-1.5">
                 <Bot className="w-5 h-5 text-purple-400" />
-                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Trả Lời Trực Diện & Tối Ưu Mobile Responsive</span>
+                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Tự Động Luân Chuyển Mô Hình (Auto Fallback) & Tối Ưu Mobile</span>
               </h3>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Tại phiên bản <strong>v2.24.2</strong>, hệ thống tối ưu hóa hoàn toàn <strong>AI Đại Sư Luận Giải Cổ Thuật</strong>: Phản hồi <strong>ngắn gọn, sắc bén, đi thẳng vào câu hỏi</strong> mà không có tiêu đề dẫn chuyện rườm rà trong văn bản, hiển thị <strong>bộ câu hỏi gợi ý 1 chạm</strong> ("Bạn muốn biết gì thêm hoặc muốn làm gì tiếp theo?") và cấu trúc lại <strong>Header Mobile 2 tầng</strong> giúp hiển thị cân đối hoàn hảo trên điện thoại di động với nút đóng (X) luôn nổi bật, dễ chạm.
+                Tại phiên bản <strong>v2.24.3</strong>, hệ thống bổ sung cơ chế <strong>✨ Tự Động Luân Chuyển & Dự Phòng Mô Hình AI (Smart Auto-Fallback Routing)</strong>: Người dùng không cần tự chọn mô hình thủ công. Khi một mô hình bất kỳ đạt giới hạn dung lượng, hết quota (429), hết credit (402) hoặc quá tải (503), hệ thống tự động và liền mạch chuyển tiếp sang các mô hình dự phòng kế tiếp trong chuỗi (*Gemini 2.5 Flash ➔ Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7*) mà không gián đoạn trải nghiệm.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -1076,10 +1076,10 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
                   <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-amber-400" />
-                    <span>2. Trực Diện, Gợi Ý 1 Chạm & Chuẩn Mobile</span>
+                    <span>2. Tự Động Dự Phòng & Gợi Ý 1 Chạm</span>
                   </strong>
                   <p className="text-slate-400">
-                    Nội dung trả lời gồm 3 phần cô đọng: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu Dụng thần cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và hệ thống nút bấm <strong>Gợi ý 1 chạm</strong> tự động bóc tách dưới chân tin nhắn, tích hợp mượt mà trên cả máy tính lẫn điện thoại.
+                    Hệ thống tự động chuyển mô hình thông minh khi hết dung lượng, câu trả lời gồm 3 phần cô đọng: 🎯 <strong>Kết luận trực diện</strong> (Cát/Hung trong 1-2 câu), 🔍 <strong>Căn cứ quẻ then chốt</strong> (2-3 dữ liệu Dụng thần cốt lõi), 💡 <strong>Lời khuyên hành sự</strong> và cụm nút bấm <strong>Gợi ý 1 chạm</strong> tự động bóc tách dưới chân tin nhắn.
                   </p>
                 </div>
               </div>

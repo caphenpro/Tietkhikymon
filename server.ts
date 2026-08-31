@@ -20,12 +20,12 @@ async function startServer() {
     });
   });
 
-  // OpenRouter AI Chat Proxy Endpoint
+  // OpenRouter AI Chat Proxy Endpoint with Multi-Model Fallback
   app.post("/api/chat", async (req, res) => {
     try {
       const {
         messages,
-        model = "google/gemini-2.5-flash",
+        model = "auto",
         temperature = 0.7,
         max_tokens = 2500,
         apiKey: customApiKey,
@@ -45,32 +45,99 @@ async function startServer() {
         });
       }
 
-      const openRouterResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${activeApiKey}`,
-          "HTTP-Referer": "https://tietkhi-kymon.vn",
-          "X-Title": "Tiet Khi Ky Mon Luc Nham AI Master",
-        },
-        body: JSON.stringify({
-          model,
-          messages,
-          temperature,
-          max_tokens: Number(max_tokens) || 2500,
-        }),
-      });
+      // Priority list of models for auto routing and fallback
+      const DEFAULT_FALLBACK_CHAIN = [
+        "google/gemini-2.5-flash",
+        "google/gemini-2.5-flash-lite",
+        "deepseek/deepseek-chat",
+        "openai/gpt-4o-mini",
+        "deepseek/deepseek-r1",
+        "anthropic/claude-3.7-sonnet",
+      ];
 
-      if (!openRouterResponse.ok) {
-        const errorText = await openRouterResponse.text();
-        console.error("OpenRouter API error:", openRouterResponse.status, errorText);
-        return res.status(openRouterResponse.status).json({
-          error: `OpenRouter error (${openRouterResponse.status}): ${errorText}`,
+      // Build model trial list
+      let modelsToTry: string[] = [];
+      if (model === "auto" || !model) {
+        modelsToTry = [...DEFAULT_FALLBACK_CHAIN];
+      } else {
+        // If a specific model was requested, try it first, then fallback to other models
+        modelsToTry = [model, ...DEFAULT_FALLBACK_CHAIN.filter((m) => m !== model)];
+      }
+
+      let lastError: any = null;
+      let successfulResponseData: any = null;
+      let usedModelName: string = modelsToTry[0];
+      let fallbackTriggered = false;
+
+      for (let i = 0; i < modelsToTry.length; i++) {
+        const currentModel = modelsToTry[i];
+        try {
+          const openRouterResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${activeApiKey}`,
+              "HTTP-Referer": "https://tietkhi-kymon.vn",
+              "X-Title": "Tiet Khi Ky Mon Luc Nham AI Master",
+            },
+            body: JSON.stringify({
+              model: currentModel,
+              models: model === "auto" ? DEFAULT_FALLBACK_CHAIN : undefined,
+              messages,
+              temperature,
+              max_tokens: Number(max_tokens) || 2500,
+            }),
+          });
+
+          if (openRouterResponse.ok) {
+            const data = await openRouterResponse.json();
+            if (data.choices?.[0]?.message?.content) {
+              successfulResponseData = data;
+              usedModelName = data.model || currentModel;
+              fallbackTriggered = i > 0;
+              break;
+            }
+          }
+
+          // If not ok, inspect status (429 rate limit, 402 credits, 503 capacity/overload, 404 model not found)
+          const errorText = await openRouterResponse.text();
+          console.warn(`Model ${currentModel} failed (${openRouterResponse.status}): ${errorText.slice(0, 150)}`);
+          lastError = {
+            status: openRouterResponse.status,
+            text: errorText,
+            model: currentModel,
+          };
+
+          // If auth error (401), don't loop through all models as key is invalid
+          if (openRouterResponse.status === 401) {
+            return res.status(401).json({
+              error: "OpenRouter API Key không hợp lệ hoặc đã hết hạn. Vui lòng kiểm tra lại API Key.",
+            });
+          }
+        } catch (err: any) {
+          console.warn(`Error attempting model ${currentModel}:`, err.message);
+          lastError = {
+            status: 500,
+            text: err.message,
+            model: currentModel,
+          };
+        }
+      }
+
+      if (successfulResponseData) {
+        return res.json({
+          ...successfulResponseData,
+          model_used: usedModelName,
+          fallback_occurred: fallbackTriggered,
+          auto_routed: model === "auto",
         });
       }
 
-      const data = await openRouterResponse.json();
-      return res.json(data);
+      // If all models failed
+      console.error("All fallback models failed:", lastError);
+      return res.status(lastError?.status || 500).json({
+        error: `Tất cả các mô hình AI dự phòng đều gặp sự cố hoặc hết dung lượng (${lastError?.status || 500}): ${lastError?.text || "Unknown error"}`,
+      });
     } catch (err: any) {
       console.error("Server /api/chat error:", err);
       return res.status(500).json({

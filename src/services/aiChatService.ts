@@ -10,15 +10,34 @@ export interface AIModelOption {
   description: string;
   isPro?: boolean;
   recommended?: boolean;
+  isAuto?: boolean;
 }
 
+export const AUTO_MODEL_ID = 'auto';
+
+export const FALLBACK_MODEL_CHAIN = [
+  'google/gemini-2.5-flash',
+  'google/gemini-2.5-flash-lite',
+  'deepseek/deepseek-chat',
+  'openai/gpt-4o-mini',
+  'deepseek/deepseek-r1',
+  'anthropic/claude-3.7-sonnet',
+];
+
 export const AI_MODELS: AIModelOption[] = [
+  {
+    id: 'auto',
+    name: '✨ Tự Động (Auto Fallback)',
+    provider: 'Hệ Thống',
+    description: 'Tự động luân chuyển mô hình tối ưu; tự động chuyển mô hình dự phòng khi hết dung lượng/quota',
+    recommended: true,
+    isAuto: true,
+  },
   {
     id: 'google/gemini-2.5-flash',
     name: 'Gemini 2.5 Flash',
     provider: 'Google',
     description: 'Phản hồi cực nhanh, chính xác, tối ưu hóa cho tra cứu & diễn giải bảng số',
-    recommended: true,
   },
   {
     id: 'google/gemini-2.5-flash-lite',
@@ -33,6 +52,12 @@ export const AI_MODELS: AIModelOption[] = [
     description: 'Mô hình toàn năng mạnh mẽ, am hiểu sâu sắc văn hóa và triết học phương Đông',
   },
   {
+    id: 'openai/gpt-4o-mini',
+    name: 'GPT-4o Mini',
+    provider: 'OpenAI',
+    description: 'Cân bằng tốc độ, tóm tắt ý chính và giải đáp câu hỏi tổng quát',
+  },
+  {
     id: 'deepseek/deepseek-r1',
     name: 'DeepSeek R1 (Suy Luận)',
     provider: 'DeepSeek',
@@ -43,12 +68,6 @@ export const AI_MODELS: AIModelOption[] = [
     name: 'Claude 3.7 Sonnet',
     provider: 'Anthropic',
     description: 'Văn phong mạch lạc, học thuật, phân tích nhân sự & triết lý uyển chuyển',
-  },
-  {
-    id: 'openai/gpt-4o-mini',
-    name: 'GPT-4o Mini',
-    provider: 'OpenAI',
-    description: 'Cân bằng tốc độ, tóm tắt ý chính và giải đáp câu hỏi tổng quát',
   },
 ];
 
@@ -212,6 +231,26 @@ export interface SendChatMessageParams {
   maxTokens?: number;
 }
 
+export interface ChatServiceResult {
+  reply: string;
+  modelUsed: string;
+  modelName: string;
+  fallbackOccurred?: boolean;
+  autoRouted?: boolean;
+}
+
+export function getModelDisplayName(modelId: string): string {
+  const found = AI_MODELS.find((m) => m.id === modelId);
+  if (found && !found.isAuto) return found.name;
+  if (modelId.includes('gemini-2.5-flash-lite')) return 'Gemini 2.5 Flash Lite';
+  if (modelId.includes('gemini-2.5-flash')) return 'Gemini 2.5 Flash';
+  if (modelId.includes('deepseek-chat') || modelId.includes('deepseek-v3')) return 'DeepSeek V3';
+  if (modelId.includes('deepseek-r1')) return 'DeepSeek R1 (Suy Luận)';
+  if (modelId.includes('claude-3.7-sonnet')) return 'Claude 3.7 Sonnet';
+  if (modelId.includes('gpt-4o-mini')) return 'GPT-4o Mini';
+  return modelId;
+}
+
 /**
  * Format OpenRouter error message cleanly for users
  */
@@ -231,12 +270,12 @@ function parseOpenRouterError(status: number, rawText: string): string {
 }
 
 /**
- * Gửi tin nhắn đến API Chat (thông qua server Express proxy hoặc fallback direct)
+ * Gửi tin nhắn đến API Chat với cơ chế tự động luân chuyển & dự phòng giữa các mô hình
  */
-export async function sendOpenRouterChatMessage(params: SendChatMessageParams): Promise<string> {
+export async function sendOpenRouterChatMessage(params: SendChatMessageParams): Promise<ChatServiceResult> {
   const {
     messages,
-    model = 'google/gemini-2.5-flash',
+    model = 'auto',
     customApiKey,
     temperature = 0.7,
     maxTokens = 2500,
@@ -244,7 +283,7 @@ export async function sendOpenRouterChatMessage(params: SendChatMessageParams): 
 
   const apiKeyToUse = customApiKey?.trim() || DEFAULT_OPENROUTER_KEY;
 
-  // 1. Thử gọi qua endpoint Express proxy nội bộ trước (/api/chat)
+  // 1. Thử gọi qua endpoint Express proxy nội bộ trước (/api/chat) có tích hợp multi-model fallback
   try {
     const proxyResponse = await fetch('/api/chat', {
       method: 'POST',
@@ -263,11 +302,19 @@ export async function sendOpenRouterChatMessage(params: SendChatMessageParams): 
     if (proxyResponse.ok) {
       const data = await proxyResponse.json();
       const reply = data.choices?.[0]?.message?.content;
-      if (reply) return reply;
+      if (reply) {
+        const rawModelUsed = data.model_used || data.model || model;
+        return {
+          reply,
+          modelUsed: rawModelUsed,
+          modelName: getModelDisplayName(rawModelUsed),
+          fallbackOccurred: Boolean(data.fallback_occurred),
+          autoRouted: Boolean(data.auto_routed || model === 'auto'),
+        };
+      }
     } else {
       const errJson = await proxyResponse.json().catch(() => null);
       if (errJson?.error) {
-        // If it's a known auth or config error from server, pass it along
         if (proxyResponse.status === 401 && !apiKeyToUse) {
           throw new Error(errJson.error);
         }
@@ -275,46 +322,76 @@ export async function sendOpenRouterChatMessage(params: SendChatMessageParams): 
       console.warn('Proxy /api/chat non-ok status:', proxyResponse.status);
     }
   } catch (proxyError: any) {
-    if (proxyError?.message && proxyError.message.includes('Vui lòng nhập OpenRouter API Key')) {
+    if (proxyError?.message && (proxyError.message.includes('Vui lòng nhập OpenRouter API Key') || proxyError.message.includes('không hợp lệ'))) {
       throw proxyError;
     }
-    console.warn('Proxy /api/chat error, attempting direct client fetch fallback...', proxyError);
+    console.warn('Proxy /api/chat error, attempting direct client fetch fallback chain...', proxyError);
   }
 
-  // 2. Fallback trực tiếp tới OpenRouter API từ client (nếu có API Key)
+  // 2. Fallback trực tiếp tới OpenRouter API từ client qua chuỗi mô hình dự phòng
   if (!apiKeyToUse) {
     throw new Error(
       'Vui lòng nhập OpenRouter API Key của bạn trong phần Cài đặt (biểu tượng bánh răng) hoặc cấu hình OPENROUTER_API_KEY để trò chuyện với AI.'
     );
   }
 
-  const directResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKeyToUse}`,
-      'HTTP-Referer': 'https://tietkhi-kymon.vn',
-      'X-Title': 'Tiet Khi Ky Mon Luc Nham AI Master',
-    },
-    body: JSON.stringify({
-      model,
-      messages,
-      temperature,
-      max_tokens: maxTokens,
-    }),
-  });
+  const modelsToTry = model === 'auto'
+    ? [...FALLBACK_MODEL_CHAIN]
+    : [model, ...FALLBACK_MODEL_CHAIN.filter((m) => m !== model)];
 
-  if (!directResponse.ok) {
-    const errorText = await directResponse.text();
-    const formattedError = parseOpenRouterError(directResponse.status, errorText);
-    throw new Error(formattedError);
+  let lastErrorText = '';
+  let lastStatus = 500;
+
+  for (let i = 0; i < modelsToTry.length; i++) {
+    const currentModel = modelsToTry[i];
+    try {
+      const directResponse = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKeyToUse}`,
+          'HTTP-Referer': 'https://tietkhi-kymon.vn',
+          'X-Title': 'Tiet Khi Ky Mon Luc Nham AI Master',
+        },
+        body: JSON.stringify({
+          model: currentModel,
+          models: model === 'auto' ? FALLBACK_MODEL_CHAIN : undefined,
+          messages,
+          temperature,
+          max_tokens: maxTokens,
+        }),
+      });
+
+      if (directResponse.ok) {
+        const data = await directResponse.json();
+        const reply = data.choices?.[0]?.message?.content;
+        if (reply) {
+          const used = data.model || currentModel;
+          return {
+            reply,
+            modelUsed: used,
+            modelName: getModelDisplayName(used),
+            fallbackOccurred: i > 0,
+            autoRouted: model === 'auto',
+          };
+        }
+      }
+
+      lastStatus = directResponse.status;
+      lastErrorText = await directResponse.text();
+      console.warn(`Direct call to ${currentModel} failed (${lastStatus}):`, lastErrorText.slice(0, 100));
+
+      if (lastStatus === 401) {
+        throw new Error('OpenRouter API Key không hợp lệ hoặc đã hết hạn.');
+      }
+    } catch (err: any) {
+      if (err.message?.includes('không hợp lệ')) {
+        throw err;
+      }
+      lastErrorText = err.message || 'Lỗi mạng khi kết nối mô hình';
+    }
   }
 
-  const data = await directResponse.json();
-  const reply = data.choices?.[0]?.message?.content;
-  if (!reply) {
-    throw new Error('AI không trả về nội dung hợp lệ. Vui lòng thử lại.');
-  }
-
-  return reply;
+  const formattedError = parseOpenRouterError(lastStatus, lastErrorText);
+  throw new Error(`Tất cả mô hình AI đều hết dung lượng hoặc gặp sự cố: ${formattedError}`);
 }

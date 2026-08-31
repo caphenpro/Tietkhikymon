@@ -47,6 +47,7 @@ export interface ChatMessageItem {
   content: string;
   timestamp: string;
   modelUsed?: string;
+  fallbackOccurred?: boolean;
   isError?: boolean;
 }
 
@@ -71,9 +72,13 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
   initialQuestion,
   onNavigateTab,
 }) => {
-  // Model state
+  // Model state - default to 'auto' for intelligent fallback routing
   const [selectedModel, setSelectedModel] = useState<string>(() => {
-    return localStorage.getItem(MODEL_STORAGE_KEY) || 'google/gemini-2.5-flash';
+    const saved = localStorage.getItem(MODEL_STORAGE_KEY);
+    if (saved && AI_MODELS.some((m) => m.id === saved)) {
+      return saved;
+    }
+    return 'auto';
   });
 
   // Custom API key state
@@ -337,19 +342,29 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
         content: text,
       });
 
-      const responseText = await sendOpenRouterChatMessage({
+      const chatResult = await sendOpenRouterChatMessage({
         messages: apiMessages,
         model: selectedModel,
         customApiKey: customApiKey.trim() || undefined,
         temperature: 0.7,
       });
 
+      let displayModelName = chatResult.modelName;
+      if (chatResult.autoRouted) {
+        displayModelName = chatResult.fallbackOccurred
+          ? `⚡ Tự động: ${chatResult.modelName} (Đã chuyển dự phòng)`
+          : `✨ Tự động: ${chatResult.modelName}`;
+      } else if (chatResult.fallbackOccurred) {
+        displayModelName = `⚡ ${chatResult.modelName} (Dự phòng)`;
+      }
+
       const assistantMessage: ChatMessageItem = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
-        content: responseText,
+        content: chatResult.reply,
         timestamp: formatVietnamDateTime(new Date()),
-        modelUsed: AI_MODELS.find((m) => m.id === selectedModel)?.name || selectedModel,
+        modelUsed: displayModelName,
+        fallbackOccurred: chatResult.fallbackOccurred,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -360,7 +375,7 @@ export const AIChatbotModal: React.FC<AIChatbotModalProps> = ({
         role: 'assistant',
         content: `⚠️ **Không thể kết nối đến mô hình AI:** ${
           err.message || 'Đã có lỗi xảy ra khi xử lý phản hồi từ OpenRouter API.'
-        }\n\n*Gợi ý:* Hãy kiểm tra lại kết nối mạng hoặc thử đổi mô hình sang **Gemini 2.5 Flash** / cung cấp OpenRouter API Key cá nhân trong phần cài đặt bên dưới.`,
+        }\n\n*Gợi ý:* Hãy kiểm tra lại kết nối mạng hoặc cung cấp OpenRouter API Key cá nhân trong phần cài đặt bên dưới. Chế độ **Tự Động (Auto Fallback)** sẽ tự động thử các mô hình khả dụng khác nhau.`,
         timestamp: formatVietnamDateTime(new Date()),
         isError: true,
       };

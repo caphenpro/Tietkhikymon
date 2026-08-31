@@ -11,18 +11,41 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.24.2';
-export const APP_RELEASE_DATE = '2026-08-30';
-export const APP_CODENAME = 'Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)';
+export const APP_VERSION = '2.24.3';
+export const APP_RELEASE_DATE = '2026-08-31';
+export const APP_CODENAME = 'Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.24.3',
+    releaseDate: '2026-08-31',
+    codename: 'Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)',
+    tagline: 'Tự động chọn và luân chuyển mô hình AI tối ưu (Gemini 2.5 Flash, Flash Lite, DeepSeek V3, GPT-4o Mini, DeepSeek R1, Claude 3.7) khi một mô hình hết dung lượng, quota hoặc quá tải.',
+    isLatest: true,
+    highlights: [
+      'Chế độ "✨ Tự Động (Auto Fallback)" thông minh làm mặc định: Hệ thống tự động ưu tiên mô hình tối ưu nhất và tự động chuyển sang các mô hình dự phòng kế tiếp nếu gặp lỗi 429 (hết quota/rate limit), 402 (hết credits) hay 503 (quá tải).',
+      'Định tuyến kép (Dual-Layer Fallback Architecture): Hỗ trợ cơ chế dự phòng đa tầng trên cả Endpoint Express Server Proxy (/api/chat) lẫn Direct Client Call qua OpenRouter models API.',
+      'Hiển thị minh bạch mô hình đang xử lý: Khung chat phản hồi rõ ràng mô hình AI đã hoàn thành luận giải (kèm biểu tượng ⚡/✨ khi đã tự động chuyển tiếp dự phòng mượt mà).',
+      'Đồng bộ cập nhật Mục 19 trong Thuyết minh thuật toán & nguyên lý (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Tùy chọn "✨ Tự Động (Auto Fallback)" làm chế độ mặc định trong danh sách chọn mô hình AI.',
+      'Chuỗi dự phòng đa mô hình: Gemini 2.5 Flash ➔ Gemini 2.5 Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7 Sonnet.',
+    ],
+    improved: [
+      'Trải nghiệm người dùng liền mạch 100%: Người dùng không cần phải tự thao tác chuyển đổi mô hình thủ công khi một mô hình AI bất kỳ bị nghẽn mạng hoặc hết dung lượng.',
+    ],
+    fixed: [
+      'Khắc phục tình trạng gián đoạn câu trả lời hoặc báo lỗi khi mô hình AI được chọn đạt ngưỡng giới hạn tốc độ (rate limit / capacity).',
+    ],
+  },
   {
     version: '2.24.2',
     releaseDate: '2026-08-30',
     codename: 'Tối Ưu Mobile AI Chatbot & Hoàn Thiện Tra Cứu Lịch Điểm Sóc (Mobile AI Chat Responsive & Enhanced Solar-Lunar Year Selector)',
     tagline: 'Sửa triệt để lỗi vỡ giao diện và mất nút đóng (X) khung chat AI trên điện thoại di động; khắc phục hoàn toàn ô chọn năm trong Lịch Tra Cứu Nhanh và Bảng 24 Tiết Khí với dropdown 1900-2100.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Tối ưu hoàn hảo giao diện AI Chatbot Modal trên thiết bị di động (Mobile Responsive): Tái cấu trúc Header 2 tầng thông minh, không bị vỡ cột dọc tiêu đề, nút Đóng (X) luôn cố định to rõ ở góc trên bên phải.',
       'Khắc phục triệt để lỗi kẹt ô chọn năm trong Lịch Tra Cứu Nhanh (MiniCalendar) của mục Điểm Sóc Âm Lịch: Thay thế bằng thẻ dropdown select đầy đủ các năm từ 1900 đến 2100 kèm các nút lùi/tiến ngày và tháng siêu mượt.',
