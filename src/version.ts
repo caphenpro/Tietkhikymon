@@ -11,18 +11,42 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.25.0';
+export const APP_VERSION = '2.26.0';
 export const APP_RELEASE_DATE = '2026-09-01';
-export const APP_CODENAME = 'Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)';
+export const APP_CODENAME = 'Chuyên Mục Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & Chuẩn Hóa Ngày Giờ Hoàng Đạo, 12 Trực (Hiệp Kỷ Date Selection & Almanac Precision)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.26.0',
+    releaseDate: '2026-09-01',
+    codename: 'Chuyên Mục Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & Chuẩn Hóa Ngày Giờ Hoàng Đạo, 12 Trực (Hiệp Kỷ Date Selection & Almanac Precision)',
+    tagline: 'Xây dựng chuyên mục Trạch Cát tuyển trạch ngày lành theo Khâm Định Hiệp Kỷ Biện Phương Thư (Tứ Khố Toàn Thư) và chuẩn hóa chính xác 100% Ngày Hoàng Đạo, Giờ Hoàng Đạo, 12 Trực và Bách Thần Sát trong Lịch Ngày Chi Tiết.',
+    isLatest: true,
+    highlights: [
+      'Chuyên mục Trạch Cát Toàn Thư (TrachCatView.tsx): Khám phá hệ thống tuyển trạch ngày giờ hoàng triều do đại học sĩ Mai Cốc Thành chủ biên thời Càn Long.',
+      'Công cụ Tuyển Trạch Dụng Sự Thông Minh: Tìm ngày đẹp nhất trong tháng cho 9+ nhóm việc trọng đại (Cưới hỏi, Động thổ, Khai trương, Giao dịch/Ký hợp đồng, Xuất hành, Nhậm chức, Cúng tế, Chữa bệnh, An táng) dựa trên 6 bậc biện chứng cát hung.',
+      'Chuẩn hóa chính xác Ngày & Giờ Hoàng Đạo theo Hiệp Kỷ: Đối chiếu bảng lập thành Quyển 7 & 9, xác định chính xác tinh danh (Thanh Long, Minh Đường, Kim Quỹ, Bảo Quang, Ngọc Đường, Tư Mệnh...) cho từng giờ và ngày.',
+      'Chuẩn hóa thuật toán 12 Trực Kiến - Trừ: Xác định chính xác vị trí Trực dựa theo Nguyệt Kiến của từng tháng âm lịch và Chi ngày.',
+      'Hệ thống Bách Thần Sát: Phân tích đầy đủ Cát thần (Thiên Đức, Nguyệt Đức, Thiên Đức Hợp, Nguyệt Đức Hợp, Thiên Xá, Thiên Ân, Thiên Nguyện, Âm Dương Bất Tương, Tam Hợp, Lục Hợp...) và Hung thần (Tuế Phá, Nguyệt Phá, Kiếp Sát, Tai Sát, Nguyệt Sát, Tứ Phế, Ngũ Hư, Vãng Vong...).',
+      'Giờ Quý Đăng Thiên Môn & Tứ Đại Cát Thời: Tra cứu giờ tối thiện trong ngày theo 12 trung khí và nhật can, kèm cảnh báo giờ Ngũ Bất Ngộ và Triệt Lộ Không Vong.',
+      'Đồng bộ cập nhật Mục 22 trong Thuyết minh thuật toán (AlgorithmGuideModal.tsx) và thêm tab "Trạch Cát Hiệp Kỷ" trên thanh Header.',
+    ],
+    added: [
+      'Mô-đun `trachCatEngine.ts` với đầy đủ công thức, bảng tra cứu và 6 bậc biện chứng cát hung của Khâm Định Hiệp Kỷ Biện Phương Thư.',
+      'Thành phần `TrachCatView.tsx` với 4 tab: Tìm Ngày Đẹp Theo Việc, Biện Chứng Cát Hung Ngày, Giờ Hoàng Đạo & Quý Đăng Thiên Môn, Cẩm Nang 13 Quyển.',
+    ],
+    improved: [
+      'Tích hợp bảng Thần sát, Việc Nên Làm (Nghi) & Việc Kỵ vào `DailyCalendarView.tsx` (Lịch Ngày Chi Tiết).',
+      'Đồng bộ chuyển đổi 1 chạm giữa Lịch Block Ngày và Chuyên mục Trạch Cát.',
+    ],
+  },
   {
     version: '2.25.0',
     releaseDate: '2026-09-01',
     codename: 'Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)',
     tagline: 'Mở trang giao diện lịch block ngày truyền thống chuyên sâu khi chọn bất kỳ ngày nào trong bảng lịch tra cứu nhanh điểm sóc âm lịch.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Giao diện Lịch Ngày Chi Tiết (Lịch Block Truyền Thống Việt Nam): Thiết kế chuẩn khối lịch đỏ son thượng lưu kết hợp nền hoàng đạo cổ kính.',
       'Đầy đủ thông tin thiên văn & cổ học: Ngày Dương, Thứ trong tuần, Ngày & Tháng Âm lịch, Can Chi Năm - Tháng - Ngày - Giờ, Tiết khí thiên văn chính xác, Ngày Hoàng Đạo / Hắc Đạo kèm tinh danh (Thanh Long, Minh Đường, Kim Quỹ...).',

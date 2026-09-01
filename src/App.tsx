@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
 import { DailyCalendarView } from './components/DailyCalendarView';
+import { TrachCatView } from './components/TrachCatView';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
 import { LucNhamPanel } from './components/LucNhamPanel';
@@ -133,6 +134,20 @@ export default function App() {
                 setCurrentDate(d);
               }}
               onClose={() => setActiveTab('moon')}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
+        {/* Tab Chuyên Mục Trạch Cát Hiệp Kỷ Biện Phương Thư */}
+        {activeTab === 'trach-cat' && (
+          <div className="space-y-6">
+            <TrachCatView
+              currentDate={currentDate}
+              onDateChange={(d) => {
+                setIsLive(false);
+                setCurrentDate(d);
+              }}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>

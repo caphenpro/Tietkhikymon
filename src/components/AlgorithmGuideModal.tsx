@@ -66,6 +66,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'ai-chatbot', title: '19. Trợ Lý AI Luận Giải Cổ Thuật & OpenRouter', icon: Bot },
     { id: 'onboarding-tour', title: '20. Hướng Dẫn Trải Nghiệm Nhanh & Đọc Bàn Kỳ Môn (Onboarding Tour)', icon: Compass },
     { id: 'daily-almanac', title: '21. Lịch Vạn Niên Block & 6 Giờ Hoàng Đạo Cát Lợi', icon: Calendar },
+    { id: 'trach-cat-hiep-ky', title: '22. Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & 6 Bậc Biện Chứng Cát Hung', icon: Shield },
   ];
 
   return (
@@ -1207,6 +1208,56 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                 <span className="text-amber-400 font-bold">Truy cập tức thì:</span> Chọn bất kỳ ngày nào trên bảng <strong>Lịch Tra Cứu Nhanh</strong> trong nhóm Điểm Sóc Âm Lịch, hoặc chuyển trực tiếp sang tab <strong className="text-amber-300">"Lịch Ngày Chi Tiết"</strong> trên thanh Header.
+              </div>
+            </div>
+          )}
+
+          {/* 22. TRẠCH CÁT HIỆP KỶ BIỆN PHƯƠNG THƯ */}
+          {(activeSection === 'all' || activeSection === 'trach-cat-hiep-ky') && (
+            <div id="section-trach-cat-hiep-ky" className="space-y-4 p-5 rounded-2xl bg-slate-950/60 border border-slate-800/80">
+              <div className="flex items-center gap-2.5 pb-3 border-b border-slate-800">
+                <Shield className="w-5 h-5 text-amber-400" />
+                <h4 className="text-sm sm:text-base font-bold text-white uppercase tracking-wide">
+                  22. Trạch Cát Toàn Thư "Khâm Định Hiệp Kỷ Biện Phương Thư" & 6 Bậc Biện Chứng Cát Hung
+                </h4>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <strong>Khâm Định Hiệp Kỷ Biện Phương Thư</strong> (gồm 36 quyển, phân thành 13 mục trong Khâm Định Tứ Khố Toàn Thư) do đại học sĩ, thiên văn gia <strong>Mai Cốc Thành</strong> chủ biên thời vua Càn Long. Đây là bộ bách khoa toàn thư chính thống và chuẩn mực nhất về thuật tuyển trạch ngày giờ, loại bỏ triệt để các ngụy thư, tà thuyết dân gian.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold">1. Nguyên Tắc 6 Bậc Biện Chứng Cát Hung</strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Theo Quyển 10 (Nghi Kỵ): Không có ngày nào thuần túy đại cát hoặc thuần túy đại hung mà luôn có cát thần lẫn hung thần. Sách phân làm 6 bậc: (1) Cát đủ thắng hung; (2) Cát đủ chống hung ngộ Đức; (3) Cát không chống nổi hung ngộ Đức; (4) Hung thắng cát ngộ Đức; (5) Hung gặp hung; (6) Hung chồng đại hung (Đại kỵ trăm sự).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold">2. Bách Thần Sát (Cát Tinh & Hung Sát)</strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Hệ thống Cát thần (Thiên Đức, Nguyệt Đức, Thiên Đức Hợp, Nguyệt Đức Hợp, Thiên Xá, Thiên Ân, Thiên Nguyện, Âm Dương Bất Tương, Tam Hợp, Lục Hợp...) cùng các Hung sát (Tuế Phá, Nguyệt Phá, Kiếp Sát, Tai Sát, Nguyệt Sát, Tứ Phế, Ngũ Hư, Vãng Vong...).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold">3. Giờ Quý Đăng Thiên Môn (720 Khóa Tối Thiện)</strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Quyển 7 & 9 lập thành: Giờ Quý Đăng Thiên Môn là thời khắc sáu cát thần (Thanh Long, Lục Hợp, Thái Thường, Thái Âm, Thiên Hậu, Quý Nhân) đều đắc địa, sáu hung thần tiềm phục tàng sát, khởi sự trăm điều đều thuận.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-rose-500/30 space-y-1.5">
+                  <strong className="text-rose-300 block font-bold">4. Dụng Sự Tuyển Trạch 60/67 Việc Dân Dụng</strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Nguyên lý <em>"Lấy việc làm kinh, lấy thần làm vĩ"</em>: Mỗi công việc (Cưới hỏi, Động thổ, Khai trương, Xuất hành, Nhập trạch, Ký hợp đồng, An táng...) đều có bộ quy tắc riêng về Trực cát, Thần cát cần có và Hung sát bắt buộc phải tránh.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Truy cập chuyên mục:</span> Mở tab <strong className="text-amber-300">"Trạch Cát Hiệp Kỷ"</strong> trên thanh Header hoặc nhấn nút <strong>"Trạch Cát Toàn Thư"</strong> trong trang Lịch Ngày Chi Tiết.
               </div>
             </div>
           )}

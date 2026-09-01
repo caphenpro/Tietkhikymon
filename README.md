@@ -1,34 +1,33 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.25.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.26.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Trang Lịch Ngày Vạn Niên Block Truyền Thống**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Tự Động Luân Chuyển Mô Hình Ngầm 100% & Gợi Ý 1 Chạm Tương Tác)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Trang Lịch Ngày Vạn Niên Block Truyền Thống**, **Chuyên Mục Trạch Cát Toàn Thư "Khâm Định Hiệp Kỷ Biện Phương Thư"**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng**, **Tour Hướng Dẫn Nhanh**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.25.0`** *(Phát hành: 01/09/2026)*
-**Tên mã:** *Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)*
+### 🚀 **Phiên bản hiện tại: `v2.26.0`** *(Phát hành: 01/09/2026)*
+**Tên mã:** *Chuyên Mục Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & Chuẩn Hóa Ngày Giờ Hoàng Đạo, 12 Trực (Hiệp Kỷ Date Selection & Almanac Precision)*
 
-- 📅 **Trang Lịch Ngày Vạn Niên Block Chi Tiết (Daily Block Almanac View)**:
-  - Thiết kế chuẩn khối lịch block truyền thống Việt Nam: Khối trên đỏ son sang trọng hiển thị ngày dương khổng lồ, thứ trong tuần, sự kiện lịch sử & danh ngôn triết lý.
-  - Khối dưới nền giấy hoàng đạo cổ kính hiển thị con giáp, ngày âm lịch, tháng âm lịch, Can Chi 4 Trụ, tiết khí thiên văn và ngày Hoàng Đạo/Hắc Đạo kèm Tinh Danh chuẩn xác.
-  - Bảng 6 Giờ Hoàng Đạo trong ngày liệt kê rõ ràng Can Chi và khoảng thời gian cát lợi.
-  - Tra cứu 12 Trực ngày, 28 Nhị thập bát tú và hướng xuất hành đón Hỷ Thần, Tài Thần, Hạc Thần.
-- ⚡ **Tương Tác Chọn Ngày & Điều Hướng 1 Chạm**:
-  - Khi nhấp vào bất kỳ ngày nào trong bảng lịch tra cứu nhanh (MiniCalendar) của nhóm Điểm Sóc Âm Lịch, hệ thống tự động mở ngay trang Lịch Ngày Chi Tiết tương ứng.
-  - Hỗ trợ thanh chọn nhanh Ngày - Tháng - Năm (1900..2100) + nút "Xem", lật ngày Hôm qua / Hôm nay / Ngày mai và phím tắt sang Lập Bàn Kỳ Môn / Điểm Sóc.
+- 🏛️ **Chuyên Mục Trạch Cát Toàn Thư (Trạch Cát Hiệp Kỷ)**:
+  - Xây dựng hệ thống tuyển trạch ngày giờ theo *Khâm Định Hiệp Kỷ Biện Phương Thư* (Tứ Khố Toàn Thư do đại học sĩ Mai Cốc Thành chủ biên thời Càn Long).
+  - Tìm ngày cát lợi trong tháng theo 9+ nhóm dụng sự lớn (Cưới hỏi, Động thổ, Khai trương, Giao dịch/Hợp đồng, Xuất hành, Nhậm chức, Cúng tế, Chữa bệnh, An táng) với 6 bậc biện chứng cát hung.
+  - Phân tích chi tiết Bách Thần Sát (Cát thần: Thiên Đức, Nguyệt Đức, Thiên Xá...; Hung sát: Tuế Phá, Nguyệt Phá, Kiếp Sát, Tứ Phế...).
+  - Tra cứu Giờ Quý Đăng Thiên Môn (720 khóa tối thiện), Giờ Hoàng Đạo chuẩn hóa cùng cảnh báo Giờ Ngũ Bất Ngộ & Triệt Lộ Không Vong.
+- 📅 **Chuẩn Hóa Chính Xác Lịch Ngày Chi Tiết**:
+  - Tích hợp bảng lập thành Quyển 7 & 9 Hiệp Kỷ: Ngày Hoàng Đạo, Giờ Hoàng Đạo, 12 Trực và Bách Thần Sát chính xác tuyệt đối.
 - 📚 **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
-  - Cập nhật Mục 20 trong `AlgorithmGuideModal.tsx` giải trình thuật toán Lịch Vạn Niên Block và 6 Giờ Hoàng Đạo.
+  - Cập nhật Mục 22 trong `AlgorithmGuideModal.tsx` giải trình 6 bậc biện chứng cát hung và thuật trạch cát hoàng triều.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.24.4`** *(Phát hành: 31/08/2026)*
+### 📦 **Phiên bản trước: `v2.25.0`** *(Phát hành: 01/09/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

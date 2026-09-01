@@ -50,11 +50,12 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  // Streamlined Navigation Tabs: Cẩm Nang Tri Thức -> Điểm Sóc & Âm Lịch -> Lịch Ngày Chi Tiết -> Dự Trắc Chuyên Sâu -> 24 Tiết Khí Năm
+  // Navigation Tabs: Cẩm Nang Tri Thức -> Điểm Sóc & Âm Lịch -> Lịch Ngày Chi Tiết -> Trạch Cát Hiệp Kỷ -> Dự Trắc Chuyên Sâu -> 24 Tiết Khí Năm
   const navTabs = [
     { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Trang Chủ' },
     { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Thiên Văn' },
     { id: 'daily-calendar', label: 'Lịch Ngày Chi Tiết', icon: '📅', badge: 'Lịch Block' },
+    { id: 'trach-cat', label: 'Trạch Cát Hiệp Kỷ', icon: '🏛️', badge: 'Tứ Khố Toàn Thư' },
     { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: '6 Chủ Đề' },
     { id: 'table', label: '24 Tiết Khí Năm', icon: '🗓️', badge: 'Toàn Niên' },
   ];

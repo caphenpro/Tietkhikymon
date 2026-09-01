@@ -1,6 +1,21 @@
-import { CAN, CHI, getLocalComponents, tinhCanChiNgay, tinhCanChiGio } from './canChi';
+import { CAN, CHI, getLocalComponents, tinhCanChiNgay } from './canChi';
 import { getAstronomicalLunarDate } from './lunarCalendar';
 import { calculateComprehensiveResult } from './calculator';
+import {
+  HOANG_HAC_12_STARS,
+  getHoangDaoDayStar,
+  getHourHoangHacStar,
+  calculateTrucDay,
+  calculateDayThanSat,
+  getQuyDangThienMon,
+  getGioNguBatNgo,
+  getGioTrietLoKhongVong,
+  DungSuCategory,
+  DUNG_SU_60_CATEGORIES,
+  evaluateDungSuSuitability,
+  ThanSatItem,
+  TrucInfo,
+} from './trachCatEngine';
 
 export interface HoangDaoHour {
   chi: string;
@@ -8,6 +23,7 @@ export interface HoangDaoHour {
   timeRange: string;
   isHoangDao: boolean;
   starName: string;
+  starType: string;
   index: number;
 }
 
@@ -24,17 +40,18 @@ export interface DailyAlmanacInfo {
   lunarMonth: number;
   lunarYear: number;
   isLeapMonth: boolean;
-  lunarMonthText: string; // THÁNG GIÊNG, THÁNG HAI, ..., THÁNG BẢY
+  lunarMonthText: string; // THÁNG GIÊNG, THÁNG HAI, ..., THÁNG CHẠP
   lunarYearCanChi: string;
   lunarMonthCanChi: string;
   lunarDayCanChi: string;
   canNgay: string;
   chiNgay: string;
   
-  // Hoang Dao / Hac Dao
+  // Hoang Dao / Hac Dao Day (Hiệp Kỷ Biện Phương Thư)
   isHoangDaoDay: boolean;
   hoangDaoDayText: string; // "Ngày Hoàng đạo" | "Ngày Hắc đạo"
   hoangDaoStarName: string; // Thanh Long, Minh Đường, Kim Quỹ...
+  hoangDaoStarMeaning: string;
   
   // Hoang Dao Hours (6 hours)
   hoangDaoHours: HoangDaoHour[];
@@ -45,8 +62,23 @@ export interface DailyAlmanacInfo {
   currentHourCanChi: string;
   currentSolarTermName: string;
   
+  // Hiệp Kỷ Biện Phương Thư Trạch Cát Systems
+  truc: TrucInfo;
+  catThan: ThanSatItem[];
+  hungThan: ThanSatItem[];
+  trachCatScore: number;
+  trachCatRank: string;
+  
+  // Good & Bad actions for the day (Nghi & Kỵ)
+  viecNenLam: string[];
+  viecKiengKy: string[];
+  
+  // Quý Đăng Thiên Môn, Ngũ Bất Ngộ, Triệt Lộ Không Vong
+  quyDangThienMon: { dayHour: string; nightHour: string };
+  gioNguBatNgo: string;
+  gioTrietLoKhongVong: string;
+  
   // Traditional Almanac Extras
-  truc: { name: string; category: string; description: string };
   nhiThapBatTu: { name: string; animal: string; element: string; nature: 'Cát' | 'Hung' | 'Bình'; description: string };
   xuatHanh: { hyThan: string; taiThan: string; hacThan: string };
   
@@ -57,22 +89,6 @@ export interface DailyAlmanacInfo {
   // Animal Zodiac Symbol
   zodiacAnimal: string;
 }
-
-// 12 Stars of Hoang Dao / Hac Dao cycle
-const THANH_LONG_STARS = [
-  { name: 'Thanh Long', isHoangDao: true },
-  { name: 'Minh Đường', isHoangDao: true },
-  { name: 'Thiên Hình', isHoangDao: false },
-  { name: 'Chu Tước', isHoangDao: false },
-  { name: 'Kim Quỹ', isHoangDao: true },
-  { name: 'Thiên Đức', isHoangDao: true }, // Bảo Quang
-  { name: 'Bạch Hổ', isHoangDao: false },
-  { name: 'Ngọc Đường', isHoangDao: true },
-  { name: 'Thiên Lao', isHoangDao: false },
-  { name: 'Huyền Vũ', isHoangDao: false },
-  { name: 'Tư Mệnh', isHoangDao: true },
-  { name: 'Câu Trận', isHoangDao: false },
-];
 
 // Hour Ranges for the 12 Chi
 export const CHI_HOUR_RANGES: Record<string, string> = {
@@ -89,22 +105,6 @@ export const CHI_HOUR_RANGES: Record<string, string> = {
   Tuất: '19h-21h',
   Hợi: '21h-23h',
 };
-
-// 12 Trực names
-const TRUC_LIST = [
-  { name: 'Kiến', category: 'Cát', description: 'Khởi đầu, xuất hành, giá thú, động thổ thuận lợi.' },
-  { name: 'Trừ', category: 'Cát', description: 'Tẩy uế, giải trừ hung ách, chữa bệnh, dọn dẹp nhà cửa.' },
-  { name: 'Mãn', category: 'Cát', description: 'Cầu tài, khai trương, nhập trạch, may áo mới trọn vẹn.' },
-  { name: 'Bình', category: 'Bình', description: 'Bình ổn, an định, tu bổ, xây đắp đường sá, hòa giải.' },
-  { name: 'Định', category: 'Cát', description: 'Định ước, ký kết hợp đồng, lập giao kèo, cưới hỏi bền vững.' },
-  { name: 'Chấp', category: 'Cát', description: 'Bắt tay làm việc, gieo trồng, bắt trộm, khởi công.' },
-  { name: 'Phá', category: 'Hung', description: 'Phá vỡ, dỡ nhà, phá dỡ công trình cũ, tránh cưới hỏi việc lớn.' },
-  { name: 'Nguy', category: 'Hung', description: 'Cẩn trọng đi xa, trèo cao, thuyền bè sông nước, phòng ngừa tai nạn.' },
-  { name: 'Thành', category: 'Đại Cát', description: 'Mọi việc đại thành, nhập học, khai trương, cưới hỏi, thăng quan.' },
-  { name: 'Thâu', category: 'Cát', description: 'Thu hoạch, gom tài sản, thu nợ, mua sắm tài sản, tích lũy.' },
-  { name: 'Khai', category: 'Cát', description: 'Khai trương, mở tiệm, kết hôn, nhập học, xuất hành hanh thông.' },
-  { name: 'Bế', category: 'Hung', description: 'Đắp đê, ngăn nước, bế tắc, tránh mở mang việc lớn.' },
-];
 
 // 28 Nhị Thập Bát Tú
 const NHI_THAP_BAT_TU = [
@@ -209,35 +209,13 @@ const DAY_OF_WEEK_NAMES = [
 const DAY_OF_WEEK_SHORTS = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
 
 /**
- * Tính 6 Giờ Hoàng Đạo trong ngày dựa theo Chi Ngày
+ * Tính 6 Giờ Hoàng Đạo trong ngày chuẩn xác theo Hiệp Kỷ Biện Phương Thư (Quyển 7 & Quyển 9)
  */
 export function calculateHoangDaoHours(canNgay: string, chiNgay: string): {
   hoangDaoHours: HoangDaoHour[];
   allHours: HoangDaoHour[];
 } {
-  const chiNgayIdx = CHI.indexOf(chiNgay);
   const canNgayIdx = CAN.indexOf(canNgay);
-
-  // Standard 6 pairs of Day Chi for starting Thanh Long:
-  // Tý (0), Ngọ (6) -> [Tý, Sửu, Thìn, Tị, Mùi, Tuất] (indices: 0, 1, 4, 5, 7, 10)
-  // Sửu (1), Mùi (7) -> [Dần, Mão, Tị, Thân, Tuất, Hợi] (indices: 2, 3, 5, 8, 10, 11)
-  // Dần (2), Thân (8) -> [Tý, Sửu, Thìn, Tị, Mùi, Tuất] (indices: 0, 1, 4, 5, 7, 10)
-  // Mão (3), Dậu (9) -> [Tý, Dần, Mão, Ngọ, Mùi, Dậu] (indices: 0, 2, 3, 6, 7, 9)
-  // Thìn (4), Tuất (10) -> [Dần, Thìn, Tị, Thân, Dậu, Hợi] (indices: 2, 4, 5, 8, 9, 11)
-  // Tị (5), Hợi (11) -> [Sửu, Thìn, Ngọ, Mùi, Tuất, Hợi] (indices: 1, 4, 6, 7, 10, 11)
-
-  const hoangDaoIndicesByPair: Record<number, number[]> = {
-    0: [0, 1, 4, 5, 7, 10], // Tý, Ngọ
-    1: [2, 3, 5, 8, 10, 11], // Sửu, Mùi
-    2: [0, 1, 4, 5, 7, 10], // Dần, Thân (Tý, Sửu, Thìn, Tị, Mùi, Tuất)
-    3: [0, 2, 3, 6, 7, 9],  // Mão, Dậu
-    4: [2, 4, 5, 8, 9, 11], // Thìn, Tuất
-    5: [1, 4, 6, 7, 10, 11], // Tị, Hợi
-  };
-
-  const pairKey = chiNgayIdx % 6;
-  const hoangDaoIndices = hoangDaoIndicesByPair[pairKey] || [0, 1, 4, 5, 7, 10];
-
   const canGioBase = (canNgayIdx % 5) * 2;
 
   const allHours: HoangDaoHour[] = [];
@@ -246,15 +224,17 @@ export function calculateHoangDaoHours(canNgay: string, chiNgay: string): {
     const currentChi = CHI[i];
     const canGioIdx = (canGioBase + i) % 10;
     const currentCanChi = `${CAN[canGioIdx]} ${currentChi}`;
-    const isHD = hoangDaoIndices.includes(i);
-    const star = THANH_LONG_STARS[i % 12];
+    
+    // Tra cứu sao Hoàng Hắc Đạo cho giờ theo Chi Ngày
+    const star = getHourHoangHacStar(chiNgay, currentChi);
 
     allHours.push({
       chi: currentChi,
       canChi: currentCanChi,
       timeRange: CHI_HOUR_RANGES[currentChi] || '',
-      isHoangDao: isHD,
-      starName: isHD ? (star.name || 'Hoàng Đạo') : 'Hắc Đạo',
+      isHoangDao: star.isHoangDao,
+      starName: star.name,
+      starType: star.type,
       index: i,
     });
   }
@@ -262,44 +242,6 @@ export function calculateHoangDaoHours(canNgay: string, chiNgay: string): {
   const hoangDaoHours = allHours.filter((h) => h.isHoangDao);
 
   return { hoangDaoHours, allHours };
-}
-
-/**
- * Tính Ngày Hoàng Đạo / Hắc Đạo theo Tháng Âm Lịch & Chi Ngày
- */
-export function calculateHoangDaoDay(lunarMonth: number, chiNgay: string): {
-  isHoangDao: boolean;
-  label: string;
-  starName: string;
-} {
-  const chiNgayIdx = CHI.indexOf(chiNgay);
-
-  // Month starts Thanh Long at:
-  // Tháng 1 (Dần), Tháng 7 (Thân): Thanh Long tại Tý (0)
-  // Tháng 2 (Mão), Tháng 8 (Dậu): Thanh Long tại Dần (2)
-  // Tháng 3 (Thìn), Tháng 9 (Tuất): Thanh Long tại Thìn (4)
-  // Tháng 4 (Tị), Tháng 10 (Hợi): Thanh Long tại Ngọ (6)
-  // Tháng 5 (Ngọ), Tháng 11 (Tý): Thanh Long tại Thân (8)
-  // Tháng 6 (Mùi), Tháng 12 (Sửu): Thanh Long tại Tuất (10)
-  
-  const startChiByMonth: Record<number, number> = {
-    1: 0, 7: 0,
-    2: 2, 8: 2,
-    3: 4, 9: 4,
-    4: 6, 10: 6,
-    5: 8, 11: 8,
-    6: 10, 12: 10,
-  };
-
-  const startChi = startChiByMonth[lunarMonth] ?? 0;
-  const starOffset = (chiNgayIdx - startChi + 12) % 12;
-  const star = THANH_LONG_STARS[starOffset];
-
-  return {
-    isHoangDao: star.isHoangDao,
-    label: star.isHoangDao ? 'Ngày Hoàng đạo' : 'Ngày Hắc đạo',
-    starName: star.name,
-  };
 }
 
 /**
@@ -354,6 +296,7 @@ export function getXuatHanhHuong(canNgay: string): { hyThan: string; taiThan: st
 
 /**
  * Tính toàn bộ thông tin Lịch Vạn Niên / Lịch Block Ngày cho một ngày bất kỳ
+ * Đối chiếu chuẩn xác theo Hiệp Kỷ Biện Phương Thư
  */
 export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
   const local = getLocalComponents(date);
@@ -371,15 +314,61 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
   const canNgay = CAN[dayIdx % 10];
   const chiNgay = CHI[dayIdx % 12];
 
-  // Hoang Dao Day
-  const hoangDaoDay = calculateHoangDaoDay(lunar.lunarMonth, chiNgay);
+  // Mùa khí tiết (Xuân, Hạ, Thu, Đông)
+  const month = local.month;
+  let solarSeason: 'Xuân' | 'Hạ' | 'Thu' | 'Đông' = 'Xuân';
+  if (month >= 3 && month <= 5) solarSeason = 'Xuân';
+  else if (month >= 6 && month <= 8) solarSeason = 'Hạ';
+  else if (month >= 9 && month <= 11) solarSeason = 'Thu';
+  else solarSeason = 'Đông';
 
-  // Hoang Dao Hours
+  // 1. Ngày Hoàng Đạo / Hắc Đạo theo Hiệp Kỷ Biện Phương Thư (Quyển 7)
+  const hoangDaoDayStar = getHoangDaoDayStar(lunar.lunarMonth, chiNgay);
+
+  // 2. 6 Giờ Hoàng Đạo chuẩn xác (Quyển 7 & 9)
   const { hoangDaoHours, allHours } = calculateHoangDaoHours(canNgay, chiNgay);
 
-  // 12 Trực
-  const trucOffset = (dayIdx + lunar.lunarMonth) % 12;
-  const truc = TRUC_LIST[trucOffset] || TRUC_LIST[0];
+  // 3. 12 Trực Kiến - Trừ chuẩn xác (Quyển 4 & 9)
+  const truc = calculateTrucDay(lunar.lunarMonth, chiNgay);
+
+  // 4. Bách Thần Sát (Cát Thần & Hung Thần)
+  const { catThan, hungThan, score: trachCatScore, rankLevel: trachCatRank } = calculateDayThanSat(
+    lunar.lunarMonth,
+    canNgay,
+    chiNgay,
+    solarSeason
+  );
+
+  // 5. Quý Đăng Thiên Môn, Ngũ Bất Ngộ, Triệt Lộ Không Vong
+  const quyDangThienMon = getQuyDangThienMon(comprehensive.currentTerm.name, canNgay);
+  const gioNguBatNgo = getGioNguBatNgo(canNgay);
+  const gioTrietLoKhongVong = getGioTrietLoKhongVong(canNgay);
+
+  // 6. Tổng hợp Việc Nên Làm (Nghi) & Việc Kiêng Kỵ (Kỵ)
+  const viecNenLamSet = new Set<string>();
+  const viecKiengKySet = new Set<string>();
+
+  // Từ Trực
+  truc.goodFor.forEach((g) => viecNenLamSet.add(g));
+  truc.badFor.forEach((b) => viecKiengKySet.add(b));
+
+  // Từ Dụng sự categories
+  DUNG_SU_60_CATEGORIES.forEach((cat) => {
+    const evalResult = evaluateDungSuSuitability(cat, {
+      truc,
+      isHoangDao: hoangDaoDayStar.isHoangDao,
+      catThan,
+      hungThan,
+    });
+    if (evalResult.isRecommended) {
+      viecNenLamSet.add(cat.name);
+    } else if (evalResult.verdict === 'Nên Tránh (Kỵ)') {
+      viecKiengKySet.add(cat.name);
+    }
+  });
+
+  const viecNenLam = Array.from(viecNenLamSet).slice(0, 6);
+  const viecKiengKy = Array.from(viecKiengKySet).slice(0, 6);
 
   // 28 Tú
   const daysDiff = Math.floor(date.getTime() / (24 * 3600 * 1000));
@@ -427,15 +416,25 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
     lunarDayCanChi: dayCanChi,
     canNgay,
     chiNgay,
-    isHoangDaoDay: hoangDaoDay.isHoangDao,
-    hoangDaoDayText: hoangDaoDay.label,
-    hoangDaoStarName: hoangDaoDay.starName,
+    isHoangDaoDay: hoangDaoDayStar.isHoangDao,
+    hoangDaoDayText: hoangDaoDayStar.isHoangDao ? 'Ngày Hoàng đạo' : 'Ngày Hắc đạo',
+    hoangDaoStarName: hoangDaoDayStar.name,
+    hoangDaoStarMeaning: hoangDaoDayStar.meaning,
     hoangDaoHours,
     allHours,
     currentTimeFormatted: `${hh}:${mm}:${ss}`,
     currentHourCanChi: comprehensive.batTu.hourCanChi,
     currentSolarTermName: comprehensive.currentTerm.name,
     truc,
+    catThan,
+    hungThan,
+    trachCatScore,
+    trachCatRank,
+    viecNenLam,
+    viecKiengKy,
+    quyDangThienMon,
+    gioNguBatNgo,
+    gioTrietLoKhongVong,
     nhiThapBatTu,
     xuatHanh,
     historicalEvent,

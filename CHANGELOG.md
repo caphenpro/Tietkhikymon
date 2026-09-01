@@ -6,6 +6,28 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.26.0]] - 2026-09-01
+### Codename: *Chuyên Mục Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & Chuẩn Hóa Ngày Giờ Hoàng Đạo, 12 Trực (Hiệp Kỷ Date Selection & Almanac Precision)*
+
+#### 🏛️ Xây Dựng Chuyên Mục Trạch Cát Toàn Thư Theo Khâm Định Hiệp Kỷ Biện Phương Thư
+- **Chuyên Mục Trạch Cát Chuyên Sâu (`/src/components/TrachCatView.tsx` & `/src/astronomy/trachCatEngine.ts`)**:
+  - Xây dựng chuyên mục Trạch Cát toàn thư dựa trên bộ sách hoàng triều *Khâm Định Hiệp Kỷ Biện Phương Thư* (gồm 36 quyển trong Tứ Khố Toàn Thư do đại học sĩ Mai Cốc Thành chủ biên thời vua Càn Long).
+  - Tích hợp 4 tab chuyên sâu:
+    1. **Tìm Ngày Đẹp Theo Việc**: Lựa chọn 9+ nhóm việc trọng đại (Cưới hỏi, Động thổ, Khai trương, Giao dịch/Ký hợp đồng, Xuất hành, Nhậm chức, Cúng tế, Chữa bệnh, An táng) để tự động quét cả tháng và xếp hạng các ngày cát lợi nhất dựa trên 6 bậc biện chứng cát hung.
+    2. **Biện Chứng Cát Hung Ngày**: Phân tích chi tiết Thần Sát (Cát Tinh, Hung Thần), 12 Trực, 28 Tú, Việc nên làm (Nghi) và Việc kỵ của ngày đang chọn.
+    3. **Giờ Hoàng Đạo & Quý Đăng Thiên Môn**: Tra cứu 6 giờ Hoàng Đạo (kèm tinh danh), Giờ Quý Đăng Thiên Môn (720 khóa tối thiện), đồng thời cảnh báo giờ Ngũ Bất Ngộ và Triệt Lộ Không Vong.
+    4. **Cẩm Nang 13 Mục Hiệp Kỷ**: Tóm lược nguyên lý 13 mục kinh điển (Bản Nguyên, Nghĩa Lệ, Lập Thành, Biện Oa...).
+- **Chuẩn Hóa Chính Xác Ngày & Giờ Hoàng Đạo, 12 Trực**:
+  - Thay thế thuật toán gần đúng bằng bảng lập thành chính xác từ Quyển 7 & 9 của Hiệp Kỷ Biện Phương Thư.
+  - Ngày Hoàng Đạo đối chiếu vị trí bắt đầu theo từng tháng âm lịch; Giờ Hoàng Đạo tính chính xác theo can/chi ngày.
+  - 12 Trực (Kiến, Trừ, Mãn, Bình, Định, Chấp, Phá, Nguy, Thành, Thâu, Khai, Bế) khởi chính xác từ Chi của tháng (Nguyệt Kiến).
+- **Tích Hợp Vào Lịch Ngày Chi Tiết (`/src/components/DailyCalendarView.tsx`)**:
+  - Bổ sung khối Thần Sát, Việc Nên Làm và Việc Nên Tránh, nút chuyển tiếp 1 chạm tới chuyên mục Trạch Cát Toàn Thư.
+- **Cập Nhật Mục 22 Trong Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Thuyết minh chi tiết 6 bậc biện chứng cát hung, bách thần sát và phương pháp tuyển trạch ngày giờ.
+
+---
+
 ## [[2.25.0]] - 2026-09-01
 ### Codename: *Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)*
 
