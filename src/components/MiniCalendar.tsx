@@ -14,6 +14,7 @@ interface MiniCalendarProps {
   onDateChange: (date: Date) => void;
   isLive?: boolean;
   onSetLive?: (live: boolean) => void;
+  onOpenDailyCalendar?: (date: Date) => void;
 }
 
 export const MiniCalendar: React.FC<MiniCalendarProps> = ({
@@ -21,6 +22,7 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
   onDateChange,
   isLive,
   onSetLive,
+  onOpenDailyCalendar,
 }) => {
   // Convert date to Vietnam timezone (UTC+7) components
   const getVNComponents = (d: Date) => {
@@ -87,6 +89,7 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
     const newDate = new Date(utcMillis);
     onSetLive?.(false);
     onDateChange(newDate);
+    onOpenDailyCalendar?.(newDate);
   };
 
   const handleStepDay = (days: number) => {
@@ -360,8 +363,8 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
         })}
       </div>
 
-      {/* Footer Info / Selected Date Detail */}
-      <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+      {/* Footer Info / Selected Date Detail + Open Daily Calendar View Button */}
+      <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-amber-400 shadow-sm" />
           <span>Đang chọn:</span>
@@ -370,11 +373,26 @@ export const MiniCalendar: React.FC<MiniCalendarProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 font-mono text-slate-400">
-          <Clock className="w-3 h-3 text-slate-500" />
-          <span>
-            {String(activeVN.hours).padStart(2, '0')}:{String(activeVN.minutes).padStart(2, '0')}:{String(activeVN.seconds).padStart(2, '0')}
-          </span>
+        <div className="flex items-center gap-2">
+          {onOpenDailyCalendar && (
+            <button
+              id="btn-open-daily-almanac-from-cal"
+              type="button"
+              onClick={() => onOpenDailyCalendar(currentDate)}
+              className="px-2 py-1 bg-red-600/20 hover:bg-red-600/30 text-red-300 font-semibold rounded-lg border border-red-500/40 text-[11px] transition-colors cursor-pointer flex items-center gap-1 shadow-xs"
+              title="Mở giao diện Lịch Ngày / Lịch Block Chi Tiết"
+            >
+              <Sparkles className="w-3 h-3 text-red-400" />
+              <span>Xem Lịch Ngày</span>
+            </button>
+          )}
+
+          <div className="flex items-center gap-1 font-mono text-slate-400">
+            <Clock className="w-3 h-3 text-slate-500" />
+            <span>
+              {String(activeVN.hours).padStart(2, '0')}:{String(activeVN.minutes).padStart(2, '0')}:{String(activeVN.seconds).padStart(2, '0')}
+            </span>
+          </div>
         </div>
       </div>
     </div>

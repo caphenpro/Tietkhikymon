@@ -116,16 +116,31 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
                 </div>
               </div>
 
-              <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl text-left md:text-right shrink-0">
-                <div className="text-[11px] uppercase text-slate-400 font-semibold tracking-wider">
-                  Hôm nay Âm Lịch (UTC+7)
+              <div className="bg-slate-950 border border-slate-800 p-4 rounded-xl text-left md:text-right shrink-0 flex flex-col items-start md:items-end justify-between gap-2">
+                <div>
+                  <div className="text-[11px] uppercase text-slate-400 font-semibold tracking-wider">
+                    Hôm nay Âm Lịch (UTC+7)
+                  </div>
+                  <div className="text-xl sm:text-2xl font-bold text-cyan-300 font-mono mt-0.5">
+                    Ngày {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay}
+                  </div>
+                  <div className="text-xs font-mono text-slate-300 mt-0.5">
+                    {newMoon.fullMonthDisplay} • Năm {newMoon.lunarYearCanChi}
+                  </div>
                 </div>
-                <div className="text-xl sm:text-2xl font-bold text-cyan-300 font-mono mt-0.5">
-                  Ngày {newMoon.lunarDay < 10 ? `Mùng ${newMoon.lunarDay}` : newMoon.lunarDay}
-                </div>
-                <div className="text-xs font-mono text-slate-300 mt-0.5">
-                  {newMoon.fullMonthDisplay} • Năm {newMoon.lunarYearCanChi}
-                </div>
+
+                {onNavigateTab && (
+                  <button
+                    id="btn-open-daily-almanac-from-lunar-banner"
+                    type="button"
+                    onClick={() => onNavigateTab('daily-calendar')}
+                    className="px-3 py-1 bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/40 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs mt-1"
+                    title="Mở giao diện Lịch Ngày / Lịch Vạn Niên Block Chi Tiết"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-red-400" />
+                    <span>Xem Lịch Ngày Chi Tiết</span>
+                  </button>
+                )}
               </div>
             </div>
 
@@ -140,8 +155,19 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
                   </div>
                 </div>
               </div>
-              <div className="text-xs text-slate-400 font-mono">
-                {newMoon.lunarDay} / {newMoon.totalMonthDays} ngày ({percentComplete}% tuần trăng)
+              <div className="flex items-center gap-3">
+                <div className="text-xs text-slate-400 font-mono">
+                  {newMoon.lunarDay} / {newMoon.totalMonthDays} ngày ({percentComplete}% tuần trăng)
+                </div>
+                {onNavigateTab && (
+                  <button
+                    onClick={() => onNavigateTab('daily-calendar')}
+                    className="text-xs font-bold text-amber-400 hover:text-amber-300 underline underline-offset-2 flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Lịch Block</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </button>
+                )}
               </div>
             </div>
 
@@ -197,6 +223,10 @@ export const LunarNewMoonSection: React.FC<LunarNewMoonSectionProps> = ({
             onDateChange={onDateChange}
             isLive={isLive}
             onSetLive={onSetLive}
+            onOpenDailyCalendar={(date) => {
+              onDateChange(date);
+              onNavigateTab?.('daily-calendar');
+            }}
           />
         </div>
       </div>

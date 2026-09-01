@@ -1,32 +1,34 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.24.4-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.25.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Tự Động Luân Chuyển Mô Hình Ngầm 100% & Gợi Ý 1 Chạm Tương Tác)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Trang Lịch Ngày Vạn Niên Block Truyền Thống**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư (Thiên/Địa Bàn, Tứ Khoa, Tam Truyền Cửu Tông Môn, 12 Thần Tướng)**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng (Tự Động Luân Chuyển Mô Hình Ngầm 100% & Gợi Ý 1 Chạm Tương Tác)**, **Tour Hướng Dẫn Nhanh (Onboarding Tour 7 Bước)**, **Đánh Giá Cát/Hung Thời Không Thang 5 Sao**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.24.4`** *(Phát hành: 31/08/2026)*
-**Tên mã:** *Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)*
+### 🚀 **Phiên bản hiện tại: `v2.25.0`** *(Phát hành: 01/09/2026)*
+**Tên mã:** *Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)*
 
-- ✨ **Tự Động Luân Chuyển Mô Hình AI Ngầm 100% (Seamless Background Fallback)**:
-  - Khắc phục triệt để lỗi OpenRouter `"models array must have 3 items or fewer"`, thực hiện luân chuyển ngầm tuần tự thông minh qua chuỗi: `Gemini 2.5 Flash ➔ Gemini 2.5 Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7`.
-  - Loại bỏ hoàn toàn thanh dropdown chọn mô hình thủ công ở Header, giúp giao diện tối giản, thanh lịch và không gian thoáng đãng.
-  - Hiển thị trực tiếp và rõ ràng mô hình AI đang phục vụ trên từng tin nhắn phản hồi của AI Master.
-- 📱 **Tối Ưu Hoàn Hảo Khung Chat AI Trên Điện Thoại Di Động (Mobile Responsive)**:
-  - Header 1 dòng thoáng gọn, nút đóng `(X)` to rõ cố định góc trên bên phải.
-- 📅 **Lịch Tra Cứu Nhanh & Bảng Tiết Khí**:
-  - Thẻ chọn năm dropdown 1900–2100 chọn năm âm lịch / tiết khí tức thì.
+- 📅 **Trang Lịch Ngày Vạn Niên Block Chi Tiết (Daily Block Almanac View)**:
+  - Thiết kế chuẩn khối lịch block truyền thống Việt Nam: Khối trên đỏ son sang trọng hiển thị ngày dương khổng lồ, thứ trong tuần, sự kiện lịch sử & danh ngôn triết lý.
+  - Khối dưới nền giấy hoàng đạo cổ kính hiển thị con giáp, ngày âm lịch, tháng âm lịch, Can Chi 4 Trụ, tiết khí thiên văn và ngày Hoàng Đạo/Hắc Đạo kèm Tinh Danh chuẩn xác.
+  - Bảng 6 Giờ Hoàng Đạo trong ngày liệt kê rõ ràng Can Chi và khoảng thời gian cát lợi.
+  - Tra cứu 12 Trực ngày, 28 Nhị thập bát tú và hướng xuất hành đón Hỷ Thần, Tài Thần, Hạc Thần.
+- ⚡ **Tương Tác Chọn Ngày & Điều Hướng 1 Chạm**:
+  - Khi nhấp vào bất kỳ ngày nào trong bảng lịch tra cứu nhanh (MiniCalendar) của nhóm Điểm Sóc Âm Lịch, hệ thống tự động mở ngay trang Lịch Ngày Chi Tiết tương ứng.
+  - Hỗ trợ thanh chọn nhanh Ngày - Tháng - Năm (1900..2100) + nút "Xem", lật ngày Hôm qua / Hôm nay / Ngày mai và phím tắt sang Lập Bàn Kỳ Môn / Điểm Sóc.
+- 📚 **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật Mục 20 trong `AlgorithmGuideModal.tsx` giải trình thuật toán Lịch Vạn Niên Block và 6 Giờ Hoàng Đạo.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.24.3`** *(Phát hành: 31/08/2026)*
+### 📦 **Phiên bản trước: `v2.24.4`** *(Phát hành: 31/08/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

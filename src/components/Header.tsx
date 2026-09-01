@@ -50,12 +50,13 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  // Streamlined Navigation Tabs: Cẩm Nang Tri Thức -> Điểm Sóc & Âm Lịch -> Dự Trắc Chuyên Sâu -> 24 Tiết Khí Năm
+  // Streamlined Navigation Tabs: Cẩm Nang Tri Thức -> Điểm Sóc & Âm Lịch -> Lịch Ngày Chi Tiết -> Dự Trắc Chuyên Sâu -> 24 Tiết Khí Năm
   const navTabs = [
     { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Trang Chủ' },
     { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Thiên Văn' },
+    { id: 'daily-calendar', label: 'Lịch Ngày Chi Tiết', icon: '📅', badge: 'Lịch Block' },
     { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: '6 Chủ Đề' },
-    { id: 'table', label: '24 Tiết Khí Năm', icon: '📅', badge: 'Toàn Niên' },
+    { id: 'table', label: '24 Tiết Khí Năm', icon: '🗓️', badge: 'Toàn Niên' },
   ];
 
   // Format date for datetime-local picker

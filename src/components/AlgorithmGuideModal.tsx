@@ -65,6 +65,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'streamlined-nav', title: '18. Tinh Gọn 4 Tab Trọng Tâm (Tránh Trùng Dư Dữ Liệu)', icon: Layers },
     { id: 'ai-chatbot', title: '19. Trợ Lý AI Luận Giải Cổ Thuật & OpenRouter', icon: Bot },
     { id: 'onboarding-tour', title: '20. Hướng Dẫn Trải Nghiệm Nhanh & Đọc Bàn Kỳ Môn (Onboarding Tour)', icon: Compass },
+    { id: 'daily-almanac', title: '21. Lịch Vạn Niên Block & 6 Giờ Hoàng Đạo Cát Lợi', icon: Calendar },
   ];
 
   return (
@@ -1156,6 +1157,56 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                 <span className="text-amber-400 font-bold">Kích hoạt lại Tour bất kỳ lúc nào:</span> Người dùng có thể nhấn nút <strong className="text-amber-300">"Tour Hướng Dẫn"</strong> trên thanh Header hoặc chân trang (Footer) để xem lại toàn bộ tiến trình bất cứ khi nào cần.
+              </div>
+            </div>
+          )}
+
+          {/* TAB 21: LỊCH VẠN NIÊN BLOCK & 6 GIỜ HOÀNG ĐẠO */}
+          {(activeSection === 'all' || activeSection === 'daily-almanac') && (
+            <div id="daily-almanac" className="p-5 rounded-2xl bg-slate-950 border border-red-500/40 space-y-4">
+              <h3 className="text-base font-bold text-red-400 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-red-400" />
+                <span>21. Nguyên Lý Lịch Vạn Niên Block, 6 Giờ Hoàng Đạo & Cổ Học Phong Thủy</span>
+              </h3>
+
+              <div className="p-4 rounded-xl bg-red-950/20 border border-red-500/30 text-xs text-slate-300 space-y-2">
+                <p className="leading-relaxed">
+                  <strong className="text-red-300">Giao diện Lịch Block Truyền Thống Việt Nam:</strong> Được thiết kế mô phỏng chân thực cuốn Lịch Block treo tường thượng lưu. Khối trên mang sắc đỏ son thịnh vượng thể hiện ngày Dương lịch, thứ trong tuần, sự kiện kỷ niệm lịch sử cùng danh ngôn triết lý. Khối dưới mang nền giấy hoàng đạo cổ kính thuyết minh tường tận Âm lịch, Can Chi 4 Trụ và các yếu tố phong thủy cát hung.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold">1. Thuật Toán 6 Giờ Hoàng Đạo Theo Chi Ngày</strong>
+                  <p className="text-slate-400">
+                    Dựa theo vòng 12 Tinh Tú (Thanh Long, Minh Đường, Thiên Hình, Chu Tước, Kim Quỹ, Thiên Đức, Bạch Hổ, Ngọc Đường, Thiên Lao, Huyền Vũ, Tư Mệnh, Câu Trận). Mỗi ngày cố định luôn có 6 giờ Hoàng Đạo (cát) và 6 giờ Hắc Đạo (hung) phân bổ theo Chi Ngày.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold">2. 12 Trực Khởi Khí & Cát Hung Nhật Lệnh</strong>
+                  <p className="text-slate-400">
+                    Vòng 12 Trực (Kiến, Trừ, Mãn, Bình, Định, Chấp, Phá, Nguy, Thành, Thâu, Khai, Bế) luân chuyển theo tháng và chi ngày để nhận định thời điểm tốt lành cho khởi công, xuất hành, đàm phán hay nhập trạch.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold">3. Nhị Thập Bát Tú & Khí Tiết Vũ Trụ</strong>
+                  <p className="text-slate-400">
+                    28 chòm sao thiên văn cổ đại (Giác, Cang, Đê, Phòng, Tâm, Vĩ, Cơ...) chia theo 4 phương Thanh Long, Huyền Vũ, Bạch Hổ, Chu Tước, phản ánh biến động trường khí vi mô trong ngày.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold">4. Hướng Xuất Hành (Hỷ Thần, Tài Thần, Hạc Thần)</strong>
+                  <p className="text-slate-400">
+                    Tính toán theo Can của ngày để định hướng nghênh đón cát khí, tài lộc khi bước chân ra khỏi cửa thực hiện các công việc trọng đại.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Truy cập tức thì:</span> Chọn bất kỳ ngày nào trên bảng <strong>Lịch Tra Cứu Nhanh</strong> trong nhóm Điểm Sóc Âm Lịch, hoặc chuyển trực tiếp sang tab <strong className="text-amber-300">"Lịch Ngày Chi Tiết"</strong> trên thanh Header.
               </div>
             </div>
           )}

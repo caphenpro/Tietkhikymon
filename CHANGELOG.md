@@ -6,6 +6,30 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.25.0]] - 2026-09-01
+### Codename: *Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)*
+
+#### 📅 Bổ Sung Giao Diện Trang Riêng Chuyên Về Lịch Ngày Chi Tiết
+- **Thiết Kế Khối Lịch Block Truyền Thống Việt Nam (`/src/components/DailyCalendarView.tsx` & `/src/astronomy/dailyAlmanac.ts`)**:
+  - Tích hợp chuẩn phong cách Lịch Block thượng lưu với khối trên đỏ son sang trọng hiển thị Tháng Dương Lịch, Năm Dương Lịch, Số Ngày Dương khổng lồ, Thứ trong tuần cùng Sự kiện lịch sử kỷ niệm và Danh ngôn triết lý nhân sinh.
+  - Khối dưới nền giấy hoàng đạo cổ kính hiển thị Con Giáp, Ngày Âm Lịch, Tháng Âm Lịch (kèm hiển thị Nhuận), Ngày Hoàng Đạo / Hắc Đạo với Tinh Danh chuẩn xác (Thanh Long, Minh Đường, Kim Quỹ, Thiên Đức, Ngọc Đường, Tư Mệnh...).
+  - Can Chi 4 Trụ đầy đủ: Năm Can Chi, Tháng Can Chi, Ngày Can Chi, Giờ Cục Bộ & Giờ Can Chi, Tiết khí thiên văn tại thời điểm tra cứu.
+- **Bảng 6 Giờ Hoàng Đạo Cát Lợi Trong Ngày**:
+  - Tra cứu và liệt kê chính xác 6 giờ Hoàng Đạo theo Chi Ngày kèm Can Chi từng giờ và khoảng thời gian (ví dụ: `Nhâm Tý (23h-1h)`, `Quý Sửu (1h-3h)`...).
+- **Phong Thủy Cổ Học Toàn Diện: 12 Trực, 28 Nhị Thập Bát Tú & Hướng Xuất Hành**:
+  - Xác định chuẩn Trực ngày (Kiến, Trừ, Mãn, Bình, Định, Chấp, Phá, Nguy, Thành, Thâu, Khai, Bế) và ý nghĩa cát hung.
+  - Tra cứu 28 sao Nhị Thập Bát Tú (Giác, Cang, Đê, Phòng, Tâm...) cùng Hướng xuất hành Hỷ Thần, Tài Thần, Hạc Thần.
+- **Tương Tác & Điều Hướng Thông Minh**:
+  - Thanh chọn nhanh Ngày (1..31), Tháng (1..12), Năm (1900..2100) + nút "Xem".
+  - Nút lật trang trái/phải `<` `>` chuyển ngày tức thì; nút bước nhảy tháng `<` `>` ở phần tiêu đề; nút chuyển nhanh Hôm qua / Hôm nay / Ngày mai.
+  - Phím tắt chuyển nhanh sang Lập Bàn Kỳ Môn Giờ Này hoặc Xem Điểm Sóc Âm Lịch.
+- **Liên Kết Tự Động Từ Bảng Lịch Tra Cứu Nhanh (`/src/components/MiniCalendar.tsx` & `/src/components/LunarNewMoonSection.tsx`)**:
+  - Khi người dùng nhấp vào bất kỳ ô ngày nào trong MiniCalendar của nhóm Điểm Sóc Âm Lịch, hệ thống tự động mở giao diện trang Lịch Ngày Chi Tiết tương ứng.
+- **Cập Nhật Mục 20 Thuyết Minh Thuật Toán**:
+  - Cập nhật đồng bộ trong `AlgorithmGuideModal.tsx` giải trình thuật toán Lịch Vạn Niên Block và 6 Giờ Hoàng Đạo.
+
+---
+
 ## [[2.24.4]] - 2026-08-31
 ### Codename: *Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)*
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Header } from './components/Header';
 import { YearTermsTable } from './components/YearTermsTable';
 import { LunarNewMoonSection } from './components/LunarNewMoonSection';
+import { DailyCalendarView } from './components/DailyCalendarView';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
 import { LucNhamPanel } from './components/LucNhamPanel';
@@ -117,6 +118,21 @@ export default function App() {
               onDateChange={(d) => setCurrentDate(d)}
               isLive={isLive}
               onSetLive={(live) => setIsLive(live)}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
+        {/* Tab Lịch Ngày Chi Tiết / Lịch Block Truyền Thống */}
+        {activeTab === 'daily-calendar' && (
+          <div className="space-y-6">
+            <DailyCalendarView
+              currentDate={currentDate}
+              onDateChange={(d) => {
+                setIsLive(false);
+                setCurrentDate(d);
+              }}
+              onClose={() => setActiveTab('moon')}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>

@@ -11,18 +11,42 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.24.4';
-export const APP_RELEASE_DATE = '2026-08-31';
-export const APP_CODENAME = 'Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)';
+export const APP_VERSION = '2.25.0';
+export const APP_RELEASE_DATE = '2026-09-01';
+export const APP_CODENAME = 'Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.25.0',
+    releaseDate: '2026-09-01',
+    codename: 'Bổ Sung Trang Lịch Ngày Vạn Niên Block Chi Tiết & Tra Cứu Điểm Sóc Nhanh (Dedicated Daily Block Almanac & New Moon Navigator)',
+    tagline: 'Mở trang giao diện lịch block ngày truyền thống chuyên sâu khi chọn bất kỳ ngày nào trong bảng lịch tra cứu nhanh điểm sóc âm lịch.',
+    isLatest: true,
+    highlights: [
+      'Giao diện Lịch Ngày Chi Tiết (Lịch Block Truyền Thống Việt Nam): Thiết kế chuẩn khối lịch đỏ son thượng lưu kết hợp nền hoàng đạo cổ kính.',
+      'Đầy đủ thông tin thiên văn & cổ học: Ngày Dương, Thứ trong tuần, Ngày & Tháng Âm lịch, Can Chi Năm - Tháng - Ngày - Giờ, Tiết khí thiên văn chính xác, Ngày Hoàng Đạo / Hắc Đạo kèm tinh danh (Thanh Long, Minh Đường, Kim Quỹ...).',
+      'Bảng 6 Giờ Hoàng Đạo trong ngày: Liệt kê chi tiết 6 khung giờ cát lợi kèm Can Chi và khoảng giờ cụ thể.',
+      'Phong thủy Trực & Tú & Xuất Hành: Hiển thị 12 Trực ngày, 28 Nhị thập bát tú, Hướng xuất hành đón Hỷ Thần, Tài Thần, Hạc Thần.',
+      'Sự kiện lịch sử & Danh ngôn triết lý: Tích hợp sự kiện lịch sử kỷ niệm theo ngày và danh ngôn truyền cảm hứng.',
+      'Tương tác điều hướng thông minh: Thanh chọn nhanh Ngày - Tháng - Năm (1900..2100) + nút "Xem", bước nhảy tháng `<` `>` và lật ngày Hôm qua / Hôm nay / Ngày mai tiện lợi.',
+      'Liên kết trực tiếp: Dễ dàng chuyển tiếp 1 chạm sang Lập Bàn Kỳ Môn Giờ Này hoặc Xem Điểm Sóc Âm Lịch.',
+    ],
+    added: [
+      'Thành phần `DailyCalendarView.tsx` và mô-đun tính toán `dailyAlmanac.ts` cung cấp toàn diện tri thức Lịch Vạn Niên Block.',
+      'Tab điều hướng `Lịch Ngày Chi Tiết` trên thanh Header và liên kết mở tự động từ bảng MiniCalendar trong nhóm Điểm Sóc Âm Lịch.',
+    ],
+    improved: [
+      'Tối ưu hóa bảng lịch tra cứu nhanh (MiniCalendar): Hỗ trợ nhấp vào ô ngày để mở ngay trang lịch block chuyên sâu.',
+      'Giao diện tương thích hoàn hảo trên cả điện thoại di động và máy tính bảng/máy tính bàn.',
+    ],
+  },
   {
     version: '2.24.4',
     releaseDate: '2026-08-31',
     codename: 'Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)',
     tagline: 'Tự động luân chuyển mô hình AI ngầm 100%, khắc phục triệt để lỗi giới hạn mảng OpenRouter, loại bỏ dropdown thủ công và hiển thị rõ ràng mô hình phục vụ trong từng câu trả lời.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Khắc phục triệt để lỗi OpenRouter "models array must have 3 items or fewer": Xử lý chuỗi luân chuyển dự phòng tuần tự thông minh giữa các mô hình (Gemini 2.5 Flash, Gemini 2.5 Flash Lite, DeepSeek V3, GPT-4o Mini, DeepSeek R1, Claude 3.7).',
       'Tự động hóa hoàn toàn (100% Seamless Background Routing): Người dùng không cần phải chọn mô hình thủ công, hệ thống tự động xử lý và điều phối ngầm.',
