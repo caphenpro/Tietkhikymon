@@ -1055,11 +1055,11 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
             <div id="ai-chatbot" className="p-5 rounded-2xl bg-slate-950 border border-purple-500/30 space-y-4">
               <h3 className="text-base font-bold text-purple-300 flex items-center gap-1.5">
                 <Bot className="w-5 h-5 text-purple-400" />
-                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Tự Động Luân Chuyển Mô Hình (Auto Fallback) & Tối Ưu Mobile</span>
+                <span>19. Trợ Lý AI Luận Giải Cổ Thuật, Tự Động Luân Chuyển Mô Hình Ngầm 100% & Tối Giản Giao Diện</span>
               </h3>
 
               <p className="text-xs text-slate-300 leading-relaxed">
-                Tại phiên bản <strong>v2.24.3</strong>, hệ thống bổ sung cơ chế <strong>✨ Tự Động Luân Chuyển & Dự Phòng Mô Hình AI (Smart Auto-Fallback Routing)</strong>: Người dùng không cần tự chọn mô hình thủ công. Khi một mô hình bất kỳ đạt giới hạn dung lượng, hết quota (429), hết credit (402) hoặc quá tải (503), hệ thống tự động và liền mạch chuyển tiếp sang các mô hình dự phòng kế tiếp trong chuỗi (*Gemini 2.5 Flash ➔ Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7*) mà không gián đoạn trải nghiệm.
+                Tại phiên bản <strong>v2.24.4</strong>, hệ thống nâng cấp toàn diện cơ chế <strong>✨ Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Ngầm (Seamless Background AI Routing)</strong>: Loại bỏ hoàn toàn thanh dropdown chọn mô hình thủ công ở Header, hệ thống tự động xử lý và điều phối ngầm qua chuỗi mô hình tối ưu (*Gemini 2.5 Flash ➔ Gemini 2.5 Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7*). Mỗi câu trả lời đều được gắn nhãn minh bạch mô hình AI thực tế đã hoàn thành luận giải.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">

@@ -11,18 +11,42 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.24.3';
+export const APP_VERSION = '2.24.4';
 export const APP_RELEASE_DATE = '2026-08-31';
-export const APP_CODENAME = 'Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)';
+export const APP_CODENAME = 'Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.24.4',
+    releaseDate: '2026-08-31',
+    codename: 'Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)',
+    tagline: 'Tự động luân chuyển mô hình AI ngầm 100%, khắc phục triệt để lỗi giới hạn mảng OpenRouter, loại bỏ dropdown thủ công và hiển thị rõ ràng mô hình phục vụ trong từng câu trả lời.',
+    isLatest: true,
+    highlights: [
+      'Khắc phục triệt để lỗi OpenRouter "models array must have 3 items or fewer": Xử lý chuỗi luân chuyển dự phòng tuần tự thông minh giữa các mô hình (Gemini 2.5 Flash, Gemini 2.5 Flash Lite, DeepSeek V3, GPT-4o Mini, DeepSeek R1, Claude 3.7).',
+      'Tự động hóa hoàn toàn (100% Seamless Background Routing): Người dùng không cần phải chọn mô hình thủ công, hệ thống tự động xử lý và điều phối ngầm.',
+      'Giao diện Chat tối giản & tinh tế: Loại bỏ hoàn toàn thanh dropdown chọn mô hình thủ công rườm rà ở Header, giúp Header thoáng đãng và tối ưu trải nghiệm trên mọi thiết bị.',
+      'Hiển thị minh bạch mô hình phục vụ: Mỗi câu trả lời của AI đều gắn nhãn rõ ràng mô hình AI đã hoàn thành luận giải (kèm biểu tượng ✨/⚡ khi có luân chuyển ngầm).',
+      'Đồng bộ cập nhật Mục 19 trong Thuyết minh thuật toán & nguyên lý (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Huy hiệu hiển thị mô hình AI phục vụ rõ ràng trên đầu mỗi bong bóng tin nhắn của AI Master.',
+    ],
+    improved: [
+      'Header khung chat gọn nhẹ, thoáng đãng, không còn thanh dropdown rườm rà.',
+      'Thuật toán fallback ngầm luân chuyển tức thì qua các mô hình chất lượng cao khi gặp sự cố 429, 402 hoặc 503.',
+    ],
+    fixed: [
+      'Sửa lỗi OpenRouter API trả về thông báo lỗi "models array must have 3 items or fewer" khi ở chế độ Tự Động.',
+    ],
+  },
   {
     version: '2.24.3',
     releaseDate: '2026-08-31',
     codename: 'Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)',
     tagline: 'Tự động chọn và luân chuyển mô hình AI tối ưu (Gemini 2.5 Flash, Flash Lite, DeepSeek V3, GPT-4o Mini, DeepSeek R1, Claude 3.7) khi một mô hình hết dung lượng, quota hoặc quá tải.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Chế độ "✨ Tự Động (Auto Fallback)" thông minh làm mặc định: Hệ thống tự động ưu tiên mô hình tối ưu nhất và tự động chuyển sang các mô hình dự phòng kế tiếp nếu gặp lỗi 429 (hết quota/rate limit), 402 (hết credits) hay 503 (quá tải).',
       'Định tuyến kép (Dual-Layer Fallback Architecture): Hỗ trợ cơ chế dự phòng đa tầng trên cả Endpoint Express Server Proxy (/api/chat) lẫn Direct Client Call qua OpenRouter models API.',

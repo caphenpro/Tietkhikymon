@@ -240,15 +240,16 @@ export interface ChatServiceResult {
 }
 
 export function getModelDisplayName(modelId: string): string {
+  if (!modelId) return 'AI Master';
+  if (modelId.includes('gemini-2.5-flash-lite')) return 'Gemini 2.5 Flash Lite';
+  if (modelId.includes('gemini-2.5-flash') || modelId.includes('gemini')) return 'Gemini 2.5 Flash';
+  if (modelId.includes('deepseek-chat') || modelId.includes('deepseek-v3') || modelId.includes('deepseek/deepseek')) return 'DeepSeek V3';
+  if (modelId.includes('deepseek-r1') || modelId.includes('r1')) return 'DeepSeek R1 (Suy Luận)';
+  if (modelId.includes('claude-3.7-sonnet') || modelId.includes('claude')) return 'Claude 3.7 Sonnet';
+  if (modelId.includes('gpt-4o-mini') || modelId.includes('gpt-4o') || modelId.includes('openai')) return 'GPT-4o Mini';
   const found = AI_MODELS.find((m) => m.id === modelId);
   if (found && !found.isAuto) return found.name;
-  if (modelId.includes('gemini-2.5-flash-lite')) return 'Gemini 2.5 Flash Lite';
-  if (modelId.includes('gemini-2.5-flash')) return 'Gemini 2.5 Flash';
-  if (modelId.includes('deepseek-chat') || modelId.includes('deepseek-v3')) return 'DeepSeek V3';
-  if (modelId.includes('deepseek-r1')) return 'DeepSeek R1 (Suy Luận)';
-  if (modelId.includes('claude-3.7-sonnet')) return 'Claude 3.7 Sonnet';
-  if (modelId.includes('gpt-4o-mini')) return 'GPT-4o Mini';
-  return modelId;
+  return modelId.split('/').pop() || modelId;
 }
 
 /**
@@ -355,7 +356,6 @@ export async function sendOpenRouterChatMessage(params: SendChatMessageParams): 
         },
         body: JSON.stringify({
           model: currentModel,
-          models: model === 'auto' ? FALLBACK_MODEL_CHAIN : undefined,
           messages,
           temperature,
           max_tokens: maxTokens,

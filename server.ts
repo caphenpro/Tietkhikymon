@@ -82,7 +82,6 @@ async function startServer() {
             },
             body: JSON.stringify({
               model: currentModel,
-              models: model === "auto" ? DEFAULT_FALLBACK_CHAIN : undefined,
               messages,
               temperature,
               max_tokens: Number(max_tokens) || 2500,

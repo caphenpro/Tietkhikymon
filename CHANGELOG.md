@@ -6,6 +6,22 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.24.4]] - 2026-08-31
+### Codename: *Hoàn Thiện Tự Động Luân Chuyển Mô Hình AI Ngầm & Tối Giản Giao Diện Chat (Seamless Background AI Routing & Streamlined Chat UI)*
+
+#### ✨ Tự Động Luân Chuyển Mô Hình AI Ngầm 100% & Tối Giản Giao Diện Chat
+- **Khắc Phục Lỗi Giới Hạn Mảng OpenRouter (`/server.ts` & `/src/services/aiChatService.ts`)**:
+  - Sửa lỗi OpenRouter API báo lỗi `'models' array must have 3 items or fewer` bằng cách xử lý vòng lặp luân chuyển tuần tự chuẩn xác trên từng mô hình (`Gemini 2.5 Flash ➔ Gemini 2.5 Flash Lite ➔ DeepSeek V3 ➔ GPT-4o Mini ➔ DeepSeek R1 ➔ Claude 3.7 Sonnet`).
+- **Tự Động Hóa 100% Không Cần Thao Tác Thủ Công (`/src/components/AIChatbotModal.tsx`)**:
+  - Loại bỏ hoàn toàn dropdown chọn mô hình thủ công rườm rà ở Header trên cả máy tính lẫn điện thoại di động.
+  - Header trở nên tinh tế, thoáng đãng, chỉ tập trung vào thông tin đại sư, trạng thái kết nối API Key và nút đóng cửa sổ to rõ.
+- **Hiển Thị Minh Bạch Mô Hình AI Đang Phục Vụ**:
+  - Gắn nhãn badge mô hình thực tế đã xử lý câu trả lời ngay phía trên từng tin nhắn phản hồi của AI (ví dụ: `AI Master` + `✨ Gemini 2.5 Flash` hoặc `⚡ DeepSeek V3 (Đã chuyển tiếp tự động)`).
+- **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật Mục 19 trong `AlgorithmGuideModal.tsx`.
+
+---
+
 ## [[2.24.3]] - 2026-08-31
 ### Codename: *Tự Động Luân Chuyển & Dự Phòng Mô Hình AI Thông Minh (Smart Auto-Fallback Multi-Model Routing)*
 
