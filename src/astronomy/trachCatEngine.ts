@@ -12,7 +12,6 @@
 
 import { CAN, CHI, getLocalComponents, tinhCanChiNgay } from './canChi';
 import { getAstronomicalLunarDate } from './lunarCalendar';
-import { calculateComprehensiveResult } from './calculator';
 
 // ==========================================
 // 1. 12 TINH TÚ HOÀNG ĐẠO / HẮC ĐẠO

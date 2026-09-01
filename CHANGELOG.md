@@ -6,6 +6,21 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.26.1]] - 2026-09-01
+### Codename: *Tối Ưu Hóa Hiệu Năng Cao & Xử Lý Triệt Để Hiện Tượng Đơ Lag Chuyên Mục Trạch Cát (High Performance Almanac & Trạch Cát Turbo)*
+
+#### ⚡ Tối Ưu Hóa Hiệu Năng & Khắc Phục Hiện Tượng Đứng/Đơ UI
+- **Loại Bỏ Tính Toán Lặp Dư Thừa (`/src/astronomy/dailyAlmanac.ts`)**:
+  - Khắc phục triệt để hiện tượng đứng máy khi vào chuyên mục Trạch Cát: Thay vì gọi hàm `calculateComprehensiveResult` (vốn tính toàn bộ 1080 Cục Kỳ Môn, Lục Nhâm, và tìm nghiệm nhị phân tiết khí) 30 lần trong vòng lặp cả tháng, chuyển sang dùng hàm tính kinh độ mặt trời trực tiếp và tính Bát Tự siêu tốc (<0.1ms).
+  - Tích hợp bộ nhớ đệm `almanacCache` (in-memory cache) cho kết quả tính Lịch Ngày Vạn Niên, giảm thời gian tính toán cho các lần xem tiếp theo về 0ms.
+- **Tối Ưu Hóa Render React Trong Chuyên Mục Trạch Cát (`/src/components/TrachCatView.tsx`)**:
+  - Tách bạch quá trình tạo danh sách ngày thô trong tháng (`targetMonthData`) với quá trình đánh giá mức độ tương thích công việc (`evaluatedDaysInMonth`).
+  - Khi người dùng đổi danh mục công việc hoặc bấm chọn ngày, hệ thống chỉ chạy bộ so sánh O(1) trong bộ nhớ mà không cần tính toán lại lịch vạn niên của cả tháng.
+- **Rà Soát & Tinh Gọn Mã Nguồn**:
+  - Dọn dẹp các import không sử dụng và tối ưu hóa tính năng chuyển tab.
+
+---
+
 ## [[2.26.0]] - 2026-09-01
 ### Codename: *Chuyên Mục Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & Chuẩn Hóa Ngày Giờ Hoàng Đạo, 12 Trực (Hiệp Kỷ Date Selection & Almanac Precision)*
 

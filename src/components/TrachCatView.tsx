@@ -63,8 +63,8 @@ export const TrachCatView: React.FC<TrachCatViewProps> = ({
     return DUNG_SU_60_CATEGORIES.find((c) => c.id === selectedCategoryId) || DUNG_SU_60_CATEGORIES[0];
   }, [selectedCategoryId]);
 
-  // List of evaluated days for the current or next month
-  const evaluatedDaysInMonth = useMemo(() => {
+  // Base days in the selected target month
+  const targetMonthData = useMemo(() => {
     const vn = new Date(currentDate.getTime() + 7 * 3600 * 1000);
     const y = vn.getUTCFullYear();
     const m = vn.getUTCMonth() + searchMonthOffset; // 0..11 + offset
@@ -73,28 +73,40 @@ export const TrachCatView: React.FC<TrachCatViewProps> = ({
     const targetMonth = targetDate.getUTCMonth();
     const daysInTargetMonth = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate();
 
-    const list = [];
+    const days = [];
     for (let d = 1; d <= daysInTargetMonth; d++) {
       const dayDate = new Date(Date.UTC(targetYear, targetMonth, d, 12, 0, 0) - 7 * 3600 * 1000);
       const dayAlmanac = calculateDailyAlmanac(dayDate);
-      const suitability = evaluateDungSuSuitability(selectedCategory, {
-        truc: dayAlmanac.truc,
-        isHoangDao: dayAlmanac.isHoangDaoDay,
-        catThan: dayAlmanac.catThan,
-        hungThan: dayAlmanac.hungThan,
-      });
-
-      list.push({
+      days.push({
         date: dayDate,
         dayNumber: d,
         almanac: dayAlmanac,
-        suitability,
       });
     }
 
-    // Sort: Recommended and high score first
-    return list;
-  }, [currentDate, searchMonthOffset, selectedCategory]);
+    return {
+      targetYear,
+      targetMonth: targetMonth + 1,
+      days,
+    };
+  }, [currentDate.getFullYear(), currentDate.getMonth(), searchMonthOffset]);
+
+  // Evaluated list for selected category (pure in-memory O(1) comparison per day)
+  const evaluatedDaysInMonth = useMemo(() => {
+    return targetMonthData.days.map((item) => {
+      const suitability = evaluateDungSuSuitability(selectedCategory, {
+        truc: item.almanac.truc,
+        isHoangDao: item.almanac.isHoangDaoDay,
+        catThan: item.almanac.catThan,
+        hungThan: item.almanac.hungThan,
+      });
+
+      return {
+        ...item,
+        suitability,
+      };
+    });
+  }, [targetMonthData, selectedCategory]);
 
   return (
     <div id="trach-cat-main-view" className="w-full max-w-7xl mx-auto space-y-6 font-sans pb-16">

@@ -1,6 +1,7 @@
-import { CAN, CHI, getLocalComponents, tinhCanChiNgay } from './canChi';
+import { CAN, CHI, getLocalComponents, tinhCanChiNgay, tinhBatTu } from './canChi';
 import { getAstronomicalLunarDate } from './lunarCalendar';
-import { calculateComprehensiveResult } from './calculator';
+import { getSunEclipticLongitude } from './sunMoon';
+import { SOLAR_TERMS } from './solarTerms';
 import {
   HOANG_HAC_12_STARS,
   getHoangDaoDayStar,
@@ -294,13 +295,28 @@ export function getXuatHanhHuong(canNgay: string): { hyThan: string; taiThan: st
   };
 }
 
+const almanacCache = new Map<string, DailyAlmanacInfo>();
+
 /**
  * Tính toàn bộ thông tin Lịch Vạn Niên / Lịch Block Ngày cho một ngày bất kỳ
- * Đối chiếu chuẩn xác theo Hiệp Kỷ Biện Phương Thư
+ * Đối chiếu chuẩn xác theo Hiệp Kỷ Biện Phương Thư (Tối ưu hóa hiệu năng cao)
  */
 export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
   const local = getLocalComponents(date);
-  const comprehensive = calculateComprehensiveResult(date);
+  const cacheKey = `${local.year}-${local.month}-${local.day}-${local.hour}`;
+  const cached = almanacCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  // Fast solar longitude & solar term
+  const lonNow = getSunEclipticLongitude(date);
+  const targetDegree = Math.floor(lonNow / 15) * 15;
+  const termInfo = SOLAR_TERMS.find((t) => t.degree === targetDegree) || SOLAR_TERMS[0];
+  const currentSolarTermName = termInfo.name;
+
+  // Fast Bát Tự calculation
+  const batTu = tinhBatTu(date, lonNow);
   const lunar = getAstronomicalLunarDate(date);
   
   // Day of week
@@ -340,7 +356,7 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
   );
 
   // 5. Quý Đăng Thiên Môn, Ngũ Bất Ngộ, Triệt Lộ Không Vong
-  const quyDangThienMon = getQuyDangThienMon(comprehensive.currentTerm.name, canNgay);
+  const quyDangThienMon = getQuyDangThienMon(currentSolarTermName, canNgay);
   const gioNguBatNgo = getGioNguBatNgo(canNgay);
   const gioTrietLoKhongVong = getGioTrietLoKhongVong(canNgay);
 
@@ -399,7 +415,7 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
 
   const lunarMonthText = (lunar.isLeapMonth ? 'THÁNG ' : '') + (LUNAR_MONTH_NAMES_TEXT[lunar.lunarMonth] || `THÁNG ${lunar.lunarMonth}`) + (lunar.isLeapMonth ? ' (NHUẬN)' : '');
 
-  return {
+  const result: DailyAlmanacInfo = {
     solarDate: date,
     solarDay: local.day,
     solarMonth: local.month,
@@ -412,7 +428,7 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
     isLeapMonth: lunar.isLeapMonth,
     lunarMonthText,
     lunarYearCanChi: lunar.lunarYearCanChi,
-    lunarMonthCanChi: comprehensive.batTu.monthCanChi,
+    lunarMonthCanChi: batTu.monthCanChi,
     lunarDayCanChi: dayCanChi,
     canNgay,
     chiNgay,
@@ -423,8 +439,8 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
     hoangDaoHours,
     allHours,
     currentTimeFormatted: `${hh}:${mm}:${ss}`,
-    currentHourCanChi: comprehensive.batTu.hourCanChi,
-    currentSolarTermName: comprehensive.currentTerm.name,
+    currentHourCanChi: batTu.hourCanChi,
+    currentSolarTermName: currentSolarTermName,
     truc,
     catThan,
     hungThan,
@@ -441,4 +457,7 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
     quote,
     zodiacAnimal,
   };
+
+  almanacCache.set(cacheKey, result);
+  return result;
 }

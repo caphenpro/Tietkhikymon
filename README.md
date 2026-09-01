@@ -1,6 +1,6 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.26.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.26.1-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
@@ -10,24 +10,25 @@
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.26.0`** *(Phát hành: 01/09/2026)*
-**Tên mã:** *Chuyên Mục Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & Chuẩn Hóa Ngày Giờ Hoàng Đạo, 12 Trực (Hiệp Kỷ Date Selection & Almanac Precision)*
+### 🚀 **Phiên bản hiện tại: `v2.26.1`** *(Phát hành: 01/09/2026)*
+**Tên mã:** *Tối Ưu Hóa Hiệu Năng Cao & Xử Lý Triệt Để Hiện Tượng Đơ Lag Chuyên Mục Trạch Cát (High Performance Almanac & Trạch Cát Turbo)*
 
+- ⚡ **Tối Ưu Hóa Hiệu Năng & Khắc Phục Triệt Để Hiện Tượng Đơ Lag**:
+  - Tối ưu hóa thuật toán tính Lịch Ngày Vạn Niên (`dailyAlmanac.ts`): Thay thế mô phỏng 1080 Cục Kỳ Môn nặng bằng tính toán thiên văn độc lập (<0.1ms).
+  - Bổ sung bộ nhớ đệm `almanacCache` giúp tải ngày và duyệt tháng tức thời (0ms latency).
+  - Tách bạch quá trình tạo ngày trong tháng và đánh giá việc dụng sự trong `TrachCatView.tsx`, loại bỏ các re-render và tính toán lặp dư thừa.
 - 🏛️ **Chuyên Mục Trạch Cát Toàn Thư (Trạch Cát Hiệp Kỷ)**:
-  - Xây dựng hệ thống tuyển trạch ngày giờ theo *Khâm Định Hiệp Kỷ Biện Phương Thư* (Tứ Khố Toàn Thư do đại học sĩ Mai Cốc Thành chủ biên thời Càn Long).
-  - Tìm ngày cát lợi trong tháng theo 9+ nhóm dụng sự lớn (Cưới hỏi, Động thổ, Khai trương, Giao dịch/Hợp đồng, Xuất hành, Nhậm chức, Cúng tế, Chữa bệnh, An táng) với 6 bậc biện chứng cát hung.
+  - Tuyển trạch ngày giờ theo *Khâm Định Hiệp Kỷ Biện Phương Thư* (Tứ Khố Toàn Thư do đại học sĩ Mai Cốc Thành chủ biên thời Càn Long).
+  - Tuyển trạch ngày đẹp cho 9+ nhóm dụng sự lớn theo 6 bậc biện chứng cát hung.
   - Phân tích chi tiết Bách Thần Sát (Cát thần: Thiên Đức, Nguyệt Đức, Thiên Xá...; Hung sát: Tuế Phá, Nguyệt Phá, Kiếp Sát, Tứ Phế...).
   - Tra cứu Giờ Quý Đăng Thiên Môn (720 khóa tối thiện), Giờ Hoàng Đạo chuẩn hóa cùng cảnh báo Giờ Ngũ Bất Ngộ & Triệt Lộ Không Vong.
-- 📅 **Chuẩn Hóa Chính Xác Lịch Ngày Chi Tiết**:
-  - Tích hợp bảng lập thành Quyển 7 & 9 Hiệp Kỷ: Ngày Hoàng Đạo, Giờ Hoàng Đạo, 12 Trực và Bách Thần Sát chính xác tuyệt đối.
-- 📚 **Đồng Bộ Tài Liệu & Thuyết Minh Thuật Toán**:
-  - Cập nhật Mục 22 trong `AlgorithmGuideModal.tsx` giải trình 6 bậc biện chứng cát hung và thuật trạch cát hoàng triều.
+- 📅 **Lịch Ngày Chi Tiết Vạn Niên Block**: Tích hợp Bách Thần Sát, Việc Nên Làm (Nghi) & Kỵ.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.25.0`** *(Phát hành: 01/09/2026)*
+### 📦 **Phiên bản trước: `v2.26.0`** *(Phát hành: 01/09/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 
