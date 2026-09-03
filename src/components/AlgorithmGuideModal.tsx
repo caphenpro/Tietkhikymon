@@ -67,6 +67,8 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'onboarding-tour', title: '20. Hướng Dẫn Trải Nghiệm Nhanh & Đọc Bàn Kỳ Môn (Onboarding Tour)', icon: Compass },
     { id: 'daily-almanac', title: '21. Lịch Vạn Niên Block & 6 Giờ Hoàng Đạo Cát Lợi', icon: Calendar },
     { id: 'trach-cat-hiep-ky', title: '22. Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & 6 Bậc Biện Chứng Cát Hung', icon: Shield },
+    { id: 'kymon-energy-trends', title: '23. Biểu Đồ Thống Kê Năng Lượng 9 Cung & Xu Hướng Cục (Recharts)', icon: Zap },
+    { id: 'combined-prognostication', title: '24. Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)', icon: Sparkles },
   ];
 
   return (
@@ -1258,6 +1260,136 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                 <span className="text-amber-400 font-bold">Truy cập chuyên mục:</span> Mở tab <strong className="text-amber-300">"Trạch Cát Hiệp Kỷ"</strong> trên thanh Header hoặc nhấn nút <strong>"Trạch Cát Toàn Thư"</strong> trong trang Lịch Ngày Chi Tiết.
+              </div>
+            </div>
+          )}
+
+          {/* Section 23: Biểu Đồ Thống Kê Năng Lượng 9 Cung & Xu Hướng Cục (Recharts) */}
+          {(activeSection === 'all' || activeSection === 'kymon-energy-trends') && (
+            <div className="space-y-4 p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/15 flex items-center justify-center text-amber-400 shrink-0">
+                  <Zap className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white">23. Biểu Đồ Thống Kê Năng Lượng 9 Cung & Xu Hướng Cục (Recharts Analytics)</h4>
+                  <p className="text-xs text-slate-400">Phân tích động học trường năng lượng Kỳ Môn theo trục thời gian 12 Canh Giờ và 30 Ngày</p>
+                </div>
+              </div>
+
+              <p className="text-slate-300 leading-relaxed text-sm">
+                Để người dùng không chỉ xem một lát cắt tĩnh của thời điểm hiện tại mà còn nắm bắt được <strong>dòng chảy năng lượng biến thiên của vũ trụ</strong> theo thời gian, hệ thống tích hợp bộ công cụ trực quan hóa hiện đại bằng thư viện <strong>Recharts</strong> với 4 góc nhìn phân tích sâu:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                    <span>📈 1. Xu Hướng Năng Lượng 12 Canh Giờ Trong Ngày</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Sử dụng <strong>AreaChart & LineChart</strong> với hiệu ứng gradient mượt mà, tính toán điểm số cát hung (0-100) cho toàn bộ 12 giờ Canh Chi (Tý đến Hợi). Cho phép lọc theo từng Cung (Khảm, Ly, Càn, Đoài, Khôn, Tốn, Chấn, Cấn) hoặc xem đường trung bình toàn Cục để tìm thời khắc hành động đỉnh cao (Golden Window).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold flex items-center gap-1.5">
+                    <span>🧭 2. Biểu Đồ Radar Đa Chiều Ma Trận 9 Cung</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Trình diễn phân bố năng lượng 9 Cung dưới dạng <strong>RadarChart</strong> đa giác bát quái (chuẩn vòng Lạc Thư: Khảm 1 → Cấn 8 → Chấn 3 → Tốn 4 → Ly 9 → Khôn 2 → Đoài 7 → Càn 6 → Trung 5), giúp nhìn rõ ngay phương vị vượng khí và phương vị suy thoái.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                    <span>📅 3. Xu Hướng Biến Thiên Cục 30 Ngày Trong Tháng</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Đồ thị đường tiến trình 30 ngày cho phép hoạch định chiến lược dài hạn, quan sát sự chuyển giao giữa các Tiết khí, giai đoạn Thượng/Trung/Hạ Nguyên và chu kỳ Âm/Dương Độn.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold flex items-center gap-1.5">
+                    <span>⚡ 4. Cân Bằng Ngũ Hành Năng Lượng Cục</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Biểu đồ cột phân bổ tỷ trọng Kim, Mộc, Thủy, Hỏa, Thổ trong Cục số hiện tại, tổng hòa từ ngũ hành của Cung, Sao, Cửa và Can để đánh giá mức độ hài hòa sinh khắc.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Trải nghiệm tương tác:</span> Trong Bàn Kỳ Môn Độn Giáp, chọn tab <strong className="text-amber-300">"Biểu Đồ Xu Hướng"</strong> hoặc <strong className="text-amber-300">"Toàn Diện"</strong>, sau đó nhấp vào bất kỳ điểm mốc giờ/ngày nào trên biểu đồ để tức thì đồng bộ Bàn Cờ 9 Cung sang thời khắc đó.
+              </div>
+            </div>
+          )}
+
+          {/* Section 24: Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) */}
+          {(activeSection === 'all' || activeSection === 'combined-prognostication') && (
+            <div className="space-y-4 p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500/20 to-purple-500/20 flex items-center justify-center text-amber-400 shrink-0">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white">24. Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)</h4>
+                  <p className="text-xs text-slate-400">Tích hợp đỉnh cao hai đại kỳ thư chiêm bốc cổ truyền thành một hệ thống tư vấn hành động thống nhất</p>
+                </div>
+              </div>
+
+              <p className="text-slate-300 leading-relaxed text-sm">
+                Nhằm giúp người dùng nhận được lời tư vấn hành động chuẩn xác nhất mà không bị rời rạc giữa hai trường phái, hệ thống tái cấu trúc toàn diện phân hệ <strong>Dự Trắc Chuyên Sâu</strong> thành 4 khối chức năng:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-1.5">
+                  <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                    <span>🧭 1. Dự Trắc Theo Kỳ Môn Độn Giáp</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    • <strong>Đoán định thời điểm:</strong> Đưa ra phán từ cát hung hiện thời dựa trên Cục số, Bát Môn Trực Sử, Cửu Tinh Trực Phù và các Cách Cục đặc biệt.<br />
+                    • <strong>Cát hung các hướng:</strong> Quét trọn vẹn 8 hướng (9 Cung Bát Quái), đánh giá điểm số, xác định Cửa cát (Khai, Hưu, Sinh), Cửa hung (Tử, Kinh, Thương), Ngôi sao và Bát thần trên từng phương vị.<br />
+                    • <strong>Phù hợp làm gì:</strong> Định hướng rõ ràng việc gì nên triển khai (cầu tài, khai trương, đàm phán, trị bệnh, xuất hành) hay nên ẩn nhẫn.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-1.5">
+                  <strong className="text-purple-300 block font-bold flex items-center gap-1.5">
+                    <span>🔮 2. Dự Trắc Theo Đại Lục Nhâm (3 Giai Đoạn)</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    • <strong>Sơ Truyền (Phát Đoan):</strong> Dự đoán khởi đầu của sự việc, duyên cớ phát sinh ban đầu, yếu tố kích hoạt thuận hay nghịch.<br />
+                    • <strong>Trung Truyền (Di Dời):</strong> Dự đoán quá trình tiến triển, những biến cố trung gian, trợ lực hoặc trở ngại phát sinh.<br />
+                    • <strong>Mạt Truyền (Quy Túc):</strong> Dự đoán kết quả sau cùng, hậu vận viên mãn hay dây dưa, lợi hay hại.<br />
+                    • <strong>Luận giải 6 sự vụ:</strong> Cầu tài, Hôn nhân, Quan vận, Bệnh tật, Kiện tụng, Đi xa.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-1.5">
+                  <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                    <span>🌟 3. Tổng Hợp Song Thức (Thời Khắc Này Nên & Không Nên Làm Gì)</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Hội tụ tri thức Không Gian (Kỳ Môn) và Thời Gian (Lục Nhâm) để trả lời trực tiếp cho người dùng:<br />
+                    • <strong>NÊN LÀM GÌ:</strong> Danh mục các hành động đắc khí, cát lành.<br />
+                    • <strong>KHÔNG NÊN LÀM GÌ:</strong> Các việc tối kỵ cần tránh để không hao tài chuốc vạ.<br />
+                    • <strong>HƯỚNG THUẬN LỢI & BẤT LỢI:</strong> Bảng phân loại phương vị rõ ràng.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-1.5">
+                  <strong className="text-cyan-300 block font-bold flex items-center gap-1.5">
+                    <span>⚡ 4. Tư Vấn Phương Án Tốt Nhất (Master Strategy)</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Xây dựng kế hoạch hành động tối ưu kết hợp nhịp nhàng giữa tọa độ phương vị xuất hành/ngồi làm việc (đón Cát phương Kỳ Môn) và trình tự triển khai theo 3 giai đoạn của Lục Nhâm (bước 1 chuẩn bị, bước 2 điều chỉnh, bước 3 thu hoạch).
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Truy cập chuyên mục:</span> Mở tab <strong className="text-amber-300">"Dự Trắc Chuyên Sâu"</strong> trên thanh Header hoặc nhấn nút <strong>"Dự Trắc Song Thức"</strong> trong giao diện Bàn Kỳ Môn / Lục Nhâm.
               </div>
             </div>
           )}

@@ -157,6 +157,11 @@ export default function App() {
         {activeTab === 'kymon-chart' && (
           <div className="space-y-6">
             <KyMonCompleteBoard
+              currentDate={currentDate}
+              onDateChange={(d) => {
+                setIsLive(false);
+                setCurrentDate(d);
+              }}
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
               onOpenPrognostication={() => setActiveTab('kymon-prognostication')}
@@ -179,10 +184,12 @@ export default function App() {
           </div>
         )}
 
-        {/* Tab 3: Dự Trắc Chuyên Sâu Kỳ Môn */}
+        {/* Tab 3: Dự Trắc Chuyên Sâu Song Thức (Kỳ Môn & Đại Lục Nhâm) */}
         {activeTab === 'kymon-prognostication' && (
           <div className="space-y-6">
             <KyMonPrognosticationView
+              currentDate={currentDate}
+              solarLongitude={result.solarLongitude}
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
               onBackToBoard={() => setActiveTab('guide')}

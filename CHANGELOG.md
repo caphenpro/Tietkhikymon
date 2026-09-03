@@ -6,6 +6,48 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.28.0]] - 2026-09-02
+### Codename: *Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)*
+
+#### 🌟 Tái Thiết Phân Hệ Dự Trắc Chuyên Sâu Thành Hệ Thống Song Thức Đỉnh Cao
+- **Mô-Đun Tổng Hợp Song Thức (`/src/astronomy/prognosticationCombined.ts`)**:
+  - Tích hợp động cơ phân tích kết hợp giữa **Kỳ Môn Độn Giáp** (đoán định thời điểm & cát hung 8 hướng không gian) và **Đại Lục Nhâm** (đoán định tiến trình thời gian qua 3 giai đoạn Tam Truyền).
+  - Tự động đánh giá định lượng điểm số cát hung kết hợp (0 - 100) và phán từ toàn cục.
+  - Xây dựng ma trận phân tích cát hung 8 hướng (9 Cung Lạc Thư), xác định rõ ràng hướng cát phương thuận lợi và hung phương bất lợi kèm điểm số, Cửa, Sao, Thần và lời khuyên.
+  - Phân tích chi tiết 3 giai đoạn của Lục Nhâm: Sơ Truyền (Phát Đoan / Khởi đầu), Trung Truyền (Di Dời / Diễn biến), Mạt Truyền (Quy Túc / Kết quả).
+  - Trích xuất danh mục hành động hành xử rõ ràng: **THỜI KHẮC NÀY NÊN LÀM GÌ?**, **THỜI KHẮC NÀY KHÔNG NÊN LÀM GÌ?**, và **TƯ VẤN PHƯƠNG ÁN TỐT NHẤT (Master Action Plan)**.
+- **Giao Diện Dự Trắc Chuyên Sâu Tái Cấu Trúc (`/src/components/KyMonPrognosticationView.tsx`)**:
+  - Thiết kế 4 tab trực quan chuyên nghiệp:
+    1. **🌟 1. Tổng Hợp Song Thức (Nên & Không Nên Làm)**: Cung cấp điểm số năng lượng thời khắc, phán từ khái quát, danh mục NÊN LÀM, danh mục KHÔNG NÊN LÀM, bản đồ cát hung 8 hướng và tư vấn phương án tối ưu.
+    2. **🧭 2. Dự Trắc Kỳ Môn (Cát Hung Thời Điểm & 8 Hướng)**: Phán đoán thời điểm hiển thị cát hung thế nào, thời điểm này phù hợp làm gì, cách cục đặc biệt và bảng đánh giá chi tiết 8 hướng.
+    3. **🔮 3. Dự Trắc Lục Nhâm (3 Giai Đoạn Tam Truyền)**: Hiển thị 3 card tương tác đại diện cho 3 giai đoạn diễn tiến sự việc kèm theo Tông Môn Khóa Thể và luận giải 6 sự vụ.
+    4. **📖 4. Tra Cứu Việc Đời Cổ Bản (6 Chủ Đề)**: Bảo toàn toàn bộ tri thức cổ truyền của Kỳ Môn (Hôn nhân, Y học, Cầu tài, Công danh, Mất của, Kiện tụng, Thân Mệnh, Tam Bàn).
+  - Bổ sung nút sao chép toàn văn bản dự trắc một chạm để dễ dàng lưu trữ hoặc gửi tư vấn.
+- **Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Thêm Mục 24 thuyết minh chi tiết cấu trúc hệ thống Dự Trắc Song Thức.
+
+---
+
+## [[2.27.0]] - 2026-09-01
+### Codename: *Biểu Đồ Thống Kê Năng Lượng 9 Cung & Xu Hướng Cục Kỳ Môn Recharts (Ky Mon Energy Trends Analytics)*
+
+#### 📊 Tích Hợp Biểu Đồ Thống Kê Động Học Recharts Vào Kỳ Môn Độn Giáp
+- **Mô-Đun Phân Tích Timeline & Biến Thiên Năng Lượng (`/src/astronomy/kymonEnergyTimeline.ts`)**:
+  - Xây dựng mô-đun phân tích dữ liệu 12 Canh Giờ và 30 Ngày liên tiếp, tính toán điểm số năng lượng định lượng (0 - 100) cho từng Cung và toàn Cục.
+  - Tổng hợp dữ liệu Radar 9 Cung theo cấu trúc Lạc Thư chuẩn và phân bổ tỷ trọng Ngũ Hành.
+- **Thành Phần Trực Quan Hóa Đa Chiều (`/src/components/KyMonEnergyTrendsChart.tsx`)**:
+  - **Biểu đồ Xu Hướng 12 Giờ (AreaChart & LineChart)**: Cho phép xem đường trung bình toàn Cục hoặc lọc riêng từng Cung để tìm khung giờ vàng (Golden Window).
+  - **Biểu đồ Radar Đa Chiều 9 Cung (RadarChart)**: Quan sát phân bố vượng suy của 9 phương vị bát quái.
+  - **Biểu đồ Tiến Trình 30 Ngày**: Hoạch định chiến lược dài hạn theo chu kỳ Tiết Khí và Âm/Dương Độn.
+  - **Biểu đồ Ngũ Hành Cục (BarChart)**: Đánh giá độ cân bằng sinh khắc giữa Kim, Mộc, Thủy, Hỏa, Thổ.
+- **Tương Tác Đồng Bộ Hai Chiều & Chế Độ Xem Linh Hoạt (`/src/components/KyMonCompleteBoard.tsx`)**:
+  - Thêm bộ chọn chế độ xem: **Toàn Diện** (Song song Bàn 9 Cung & Biểu Đồ), **Bàn 9 Cung**, hoặc **Biểu Đồ Xu Hướng**.
+  - Nhấp vào bất kỳ mốc giờ hoặc ngày nào trên biểu đồ để tức thì đồng bộ thời gian và cập nhật Bàn Kỳ Môn.
+- **Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Thêm Mục 23 thuyết minh chi tiết nguyên lý biểu đồ thống kê năng lượng Kỳ Môn.
+
+---
+
 ## [[2.26.1]] - 2026-09-01
 ### Codename: *Tối Ưu Hóa Hiệu Năng Cao & Xử Lý Triệt Để Hiện Tượng Đơ Lag Chuyên Mục Trạch Cát (High Performance Almanac & Trạch Cát Turbo)*
 

@@ -11,18 +11,72 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.26.1';
-export const APP_RELEASE_DATE = '2026-09-01';
-export const APP_CODENAME = 'Tối Ưu Hóa Hiệu Năng Cao & Xử Lý Triệt Để Hiện Tượng Đơ Lag Chuyên Mục Trạch Cát (High Performance Almanac & Trạch Cát Turbo)';
+export const APP_VERSION = '2.28.0';
+export const APP_RELEASE_DATE = '2026-09-02';
+export const APP_CODENAME = 'Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.28.0',
+    releaseDate: '2026-09-02',
+    codename: 'Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)',
+    tagline: 'Tái thiết phân hệ Dự Trắc Chuyên Sâu thành hệ thống dự trắc song thức đỉnh cao: Kỳ Môn Độn Giáp (đoán định thời điểm & cát hung 8 hướng) kết hợp Đại Lục Nhâm (tiến trình 3 giai đoạn Tam Truyền) và tổng hợp tư vấn NÊN/KHÔNG NÊN LÀM cùng phương án tối ưu.',
+    isLatest: true,
+    highlights: [
+      'Dự trắc theo Kỳ Môn Độn Giáp: Đưa ra lời dự đoán chuẩn xác thời điểm đang hiển thị Cát Hung thế nào (điểm số 0-100, phán từ, Bát Môn Trực Sử, Cửu Tinh Trực Phù, Cách Cục đặc biệt), Cát Hung của tất cả 8 hướng phương vị và thời điểm này phù hợp làm gì.',
+      'Dự trắc theo Đại Lục Nhâm (3 Giai Đoạn Tam Truyền): Phân tích tiến trình sự việc qua 3 mắt xích thời gian: Sơ Truyền (Khởi đầu/Phát đoan), Trung Truyền (Diễn biến/Di dời), Mạt Truyền (Kết quả/Quy túc), cùng luận giải 6 lĩnh vực nhân sinh.',
+      'Tổng hợp Song Thức Đỉnh Cao: Hội tụ tri thức Không Gian (Kỳ Môn) và Thời Gian (Lục Nhâm) để trả lời dứt khoát 3 câu hỏi lớn: "Thời khắc này NÊN LÀM GÌ?", "Thời khắc này KHÔNG NÊN LÀM GÌ?", và "HƯỚNG NÀO THUẬN LỢI, HƯỚNG NÀO BẤT LỢI?".',
+      'Tư Vấn Phương Án Tốt Nhất (Master Strategy): Thiết lập chiến lược phối hợp hành động giữa phương vị xuất hành đón cát khí Kỳ Môn và lộ trình 3 bước chuẩn bị - ứng biến - thu hoạch của Lục Nhâm.',
+      'Bảo tồn trọn vẹn 6 Chủ đề Cổ bản (Bí Kíp Toàn Thư): Hôn nhân, Y học trị bệnh, Cầu tài giao dịch, Thi cử công danh, Mất của tìm vật, Kiện tụng cùng Thân Mệnh và Tam Bàn Chủ Khách.',
+      'Cập nhật Mục 24 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Mô-đun tổng hợp song thức `/src/astronomy/prognosticationCombined.ts`.',
+      'Giao diện tái cấu trúc hoàn toàn `/src/components/KyMonPrognosticationView.tsx` với 4 tab chuyên sâu.',
+      'Tính năng sao chép toàn văn bản dự trắc chuyên sâu song thức một chạm.',
+    ],
+    improved: [
+      'Trải nghiệm người dùng trong phân hệ Dự Trắc Chuyên Sâu trở nên thực chiến, rõ ràng, cung cấp hành động cụ thể thay vì lý thuyết trừu tượng.',
+    ],
+    fixed: [
+      'Đồng bộ hoàn hảo giữa dữ liệu Thiên văn Bát Tự, Nguyệt Tướng Lục Nhâm và Bàn Kỳ Môn 9 Cung.',
+    ],
+  },
+  {
+    version: '2.27.0',
+    releaseDate: '2026-09-01',
+    codename: 'Biểu Đồ Thống Kê Năng Lượng 9 Cung & Xu Hướng Cục Kỳ Môn Recharts (Ky Mon Energy Trends Analytics)',
+    tagline: 'Tích hợp bộ biểu đồ thống kê trực quan hóa Recharts động học giúp theo dõi xu hướng năng lượng các Cung và sự biến đổi Cục Kỳ Môn theo 12 Canh Giờ và 30 Ngày.',
+    isLatest: false,
+    highlights: [
+      'Tích hợp thư viện Recharts vào Kỳ Môn Độn Giáp: Cung cấp góc nhìn phân tích động học trực quan thay vì chỉ xem một thời điểm tĩnh.',
+      'Biểu đồ Xu Hướng Năng Lượng 12 Canh Giờ (AreaChart & LineChart): Đánh giá điểm số cát hung (0-100) xuyên suốt 12 giờ Canh Chi (Tý đến Hợi) với bộ lọc xem từng Cung hoặc đường trung bình toàn Cục.',
+      'Biểu đồ Radar Đa Chiều 9 Cung Lạc Thư (RadarChart): Trình diễn trực quan mức độ vượng suy của 9 phương vị bát quái (Khảm 1, Cấn 8, Chấn 3, Tốn 4, Ly 9, Khôn 2, Đoài 7, Càn 6, Trung 5).',
+      'Biểu đồ Xu Hướng Biến Thiên Cục 30 Ngày: Theo dõi đồ thị năng lượng toàn tháng để hoạch định chiến lược dài hạn theo chu kỳ Tiết Khí và Âm/Dương Độn.',
+      'Biểu đồ Phân Bổ Ngũ Hành Năng Lượng Cục (BarChart): Thống kê tỷ trọng ngũ hành Kim, Mộc, Thủy, Hỏa, Thổ tổng hòa từ Cung, Sao, Cửa và Can.',
+      'Tương tác đồng bộ hai chiều (Interactive Time Sync): Nhấp vào bất kỳ điểm mốc giờ/ngày nào trên biểu đồ để tự động chuyển Bàn 9 Cung sang thời điểm đó.',
+      'Chế độ xem linh hoạt trong Bàn Kỳ Môn: Chuyển đổi giữa 3 chế độ "Toàn Diện" (Song song Bàn 9 Cung & Biểu Đồ), "Bàn 9 Cung", và "Biểu Đồ Xu Hướng".',
+      'Cập nhật Mục 23 trong Thuyết minh thuật toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Mô-đun phân tích timeline `/src/astronomy/kymonEnergyTimeline.ts`.',
+      'Thành phần biểu đồ `/src/components/KyMonEnergyTrendsChart.tsx` sử dụng Recharts.',
+      'Bộ chọn chế độ hiển thị Toàn Diện / Bàn 9 Cung / Biểu Đồ Xu Hướng trong `KyMonCompleteBoard.tsx`.',
+    ],
+    improved: [
+      'Trải nghiệm quan sát và phân tích Cát Hung Kỳ Môn Độn Giáp nâng lên tầm cao mới với khả năng so sánh định lượng trực quan.',
+    ],
+    fixed: [
+      'Đồng bộ trơn tru giữa việc chọn giờ trên biểu đồ và cập nhật thời gian thực của ứng dụng.',
+    ],
+  },
   {
     version: '2.26.1',
     releaseDate: '2026-09-01',
     codename: 'Tối Ưu Hóa Hiệu Năng Cao & Xử Lý Triệt Để Hiện Tượng Đơ Lag Chuyên Mục Trạch Cát (High Performance Almanac & Trạch Cát Turbo)',
     tagline: 'Tái cấu trúc và tối ưu hóa toàn diện thuật toán Lịch Vạn Niên & Trạch Cát, loại bỏ tính toán lặp dư thừa, tăng tốc độ xử lý hơn 100x và giải quyết triệt để hiện tượng đứng/đơ hình khi tra cứu Trạch Cát.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Khắc phục triệt để hiện tượng đứng/đơ khi mở tab Trạch Cát: Thay thế việc gọi toàn bộ mô phỏng 1080 Cục Kỳ Môn/Lục Nhâm trong vòng lặp 30 ngày bằng hàm tính thiên văn độc lập siêu tốc (<0.1ms).',
       'Cơ chế Cache Thông Minh (In-memory Almanac Cache): Tự động lưu trữ kết quả tính toán ngày/giờ đã tra cứu, giúp chuyển đổi qua lại giữa các ngày, tháng và danh mục công việc đạt độ trễ 0ms (tức thời).',

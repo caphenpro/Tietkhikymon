@@ -33,15 +33,20 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
+  Activity,
+  TrendingUp,
 } from 'lucide-react';
 import { CAN, CHI } from '../astronomy/canChi';
 import { buildCompleteKyMonChart, CompleteKyMonChart, PalaceData, PALACE_RING_CW } from '../astronomy/kymonChart';
 import { evaluateKyMonTimeMoment } from '../astronomy/kymonEvaluation';
 import { TimeEvaluationCard } from './TimeEvaluationCard';
 import { PalaceDetailModal } from './PalaceDetailModal';
+import { KyMonEnergyTrendsChart } from './KyMonEnergyTrendsChart';
 import { KyMonInfo, BatTuInfo } from '../types';
 
 interface KyMonCompleteBoardProps {
+  currentDate?: Date;
+  onDateChange?: (date: Date) => void;
   currentKyMon?: KyMonInfo;
   currentBatTu?: BatTuInfo;
   onOpenPrognostication?: () => void;
@@ -60,6 +65,8 @@ const LAC_THU_GRID: number[][] = [
 ];
 
 export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
+  currentDate = new Date(),
+  onDateChange,
   currentKyMon,
   currentBatTu,
   onOpenPrognostication,
@@ -68,6 +75,9 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
 }) => {
   // Mode: 'auto' (đồng bộ với thời gian thực / tính toán thiên văn) hoặc 'manual' (tự chọn Cục & Can Chi)
   const [mode, setMode] = useState<'auto' | 'manual'>('auto');
+
+  // Display View: 'both' | 'matrix_only' | 'chart_only'
+  const [viewTab, setViewTab] = useState<'matrix' | 'trends' | 'both'>('both');
 
   // Manual configuration state
   const [manualIsDuongDon, setManualIsDuongDon] = useState<boolean>(true);
@@ -231,32 +241,75 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
           )}
         </div>
 
-        {/* Mode Switcher: Auto Astronomical vs Manual Custom */}
-        <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800 self-end sm:self-auto">
-          <button
-            id="btn-mode-auto"
-            onClick={() => setMode('auto')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-              mode === 'auto'
-                ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Zap className="w-3.5 h-3.5" />
-            <span>Đồng Bộ Thiên Văn</span>
-          </button>
-          <button
-            id="btn-mode-manual"
-            onClick={() => setMode('manual')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-              mode === 'manual'
-                ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
-                : 'text-slate-400 hover:text-white'
-            }`}
-          >
-            <Sliders className="w-3.5 h-3.5" />
-            <span>Tự Chọn Cục Số</span>
-          </button>
+        {/* Mode & View Switcher */}
+        <div className="flex flex-wrap items-center gap-2 self-end sm:self-auto">
+          {/* View Tab Selector: Matrix vs Trends vs Both */}
+          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+            <button
+              onClick={() => setViewTab('both')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                viewTab === 'both'
+                  ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Hiển thị song song Ma Trận 9 Cung và Biểu Đồ Xu Hướng"
+            >
+              <Layers className="w-3.5 h-3.5" />
+              <span>Toàn Diện</span>
+            </button>
+            <button
+              onClick={() => setViewTab('matrix')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                viewTab === 'matrix'
+                  ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Chỉ hiển thị Ma Trận 9 Cung Lạc Thư"
+            >
+              <Compass className="w-3.5 h-3.5" />
+              <span>Bàn 9 Cung</span>
+            </button>
+            <button
+              onClick={() => setViewTab('trends')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                viewTab === 'trends'
+                  ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+              title="Chỉ hiển thị Biểu Đồ Thống Kê Năng Lượng & Xu Hướng Cục"
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Biểu Đồ Xu Hướng</span>
+            </button>
+          </div>
+
+          {/* Mode Switcher: Auto Astronomical vs Manual Custom */}
+          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+            <button
+              id="btn-mode-auto"
+              onClick={() => setMode('auto')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                mode === 'auto'
+                  ? 'bg-cyan-500 text-slate-950 shadow-md font-bold'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Zap className="w-3.5 h-3.5" />
+              <span>Thiên Văn</span>
+            </button>
+            <button
+              id="btn-mode-manual"
+              onClick={() => setMode('manual')}
+              className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                mode === 'manual'
+                  ? 'bg-cyan-500 text-slate-950 shadow-md font-bold'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Sliders className="w-3.5 h-3.5" />
+              <span>Tự Chọn</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -431,6 +484,7 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
       />
 
       {/* 4. MAIN WORKSPACE: BÀN CỜ 9 CUNG KỲ MÔN (LƯỚI GRID 3X3 LẠC THƯ) */}
+      {(viewTab === 'matrix' || viewTab === 'both') && (
       <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-7 shadow-2xl space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
@@ -600,6 +654,22 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
           </span>
         </div>
       </div>
+      )}
+
+      {/* 5. VISUAL ENERGY TRENDS CHART (RECHARTS INTEGRATION) */}
+      {(viewTab === 'trends' || viewTab === 'both') && (
+        <div className="animate-fadeIn">
+          <KyMonEnergyTrendsChart
+            currentDate={currentDate}
+            onSelectTime={(time) => {
+              if (onDateChange) {
+                onDateChange(time);
+              }
+            }}
+            onSelectPalace={(pNum) => handleCellClick(pNum)}
+          />
+        </div>
+      )}
 
       {/* 5. MODAL CHI TIẾT CUNG (CLICK-TO-MODAL / DRAWER) */}
       <PalaceDetailModal

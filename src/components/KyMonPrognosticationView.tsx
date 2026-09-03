@@ -22,22 +22,38 @@ import {
   Info,
   Calendar,
   Clock,
-  Printer,
   Copy,
   Check,
   DoorOpen,
   Star,
+  AlertCircle,
+  TrendingUp,
+  Navigation,
+  Award,
+  ShieldAlert,
+  Sliders,
+  CheckCircle,
+  HelpCircle,
+  Eye,
 } from 'lucide-react';
 import { CompleteKyMonChart, buildCompleteKyMonChart } from '../astronomy/kymonChart';
-import { KyMonInfo, BatTuInfo } from '../types';
+import { buildLucNhamChart, LucNhamChart } from '../astronomy/lucNham';
+import {
+  generateCombinedPrognostication,
+  CombinedPrognosticationResult,
+  DirectionAnalysis,
+} from '../astronomy/prognosticationCombined';
 import {
   generateComprehensivePrognostication,
   THIEN_NHUE_DISEASE_MAP,
   LOST_ITEMS_MAP,
-  evaluateElementRelation,
 } from '../astronomy/kymonPrognostication';
+import { getLocalComponents } from '../astronomy/canChi';
+import { KyMonInfo, BatTuInfo } from '../types';
 
 interface KyMonPrognosticationViewProps {
+  currentDate?: Date;
+  solarLongitude?: number;
   currentKyMon?: KyMonInfo;
   currentBatTu?: BatTuInfo;
   onBackToBoard?: () => void;
@@ -45,19 +61,31 @@ interface KyMonPrognosticationViewProps {
 }
 
 export const KyMonPrognosticationView: React.FC<KyMonPrognosticationViewProps> = ({
+  currentDate = new Date(),
+  solarLongitude = 0,
   currentKyMon,
   currentBatTu,
   onBackToBoard,
   onNavigateTab,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<
+  // 3 Tab chính theo yêu cầu: 'synthesis' (Tổng hợp 2 môn), 'kymon' (Kỳ Môn Độn Giáp), 'lucnham' (Đại Lục Nhâm 3 giai đoạn)
+  // Và 1 tab bổ trợ: 'classical' (6 Chủ đề cổ bản Kỳ Môn)
+  const [activeMainTab, setActiveMainTab] = useState<'synthesis' | 'kymon' | 'lucnham' | 'classical'>('synthesis');
+
+  // Sub tab cho mục Cổ Bản (Classical Topics)
+  const [activeClassicalTopic, setActiveClassicalTopic] = useState<
     'overview' | 'destiny' | 'marriage' | 'health' | 'wealth' | 'career' | 'lostItems' | 'lawsuit'
-  >('overview');
+  >('marriage');
+
+  // Bộ lọc hướng trong Kỳ Môn
+  const [directionFilter, setDirectionFilter] = useState<'all' | 'good' | 'bad'>('all');
 
   const [copied, setCopied] = useState<boolean>(false);
 
-  // Chart data from current KyMon & BatTu
-  const chart: CompleteKyMonChart = useMemo(() => {
+  const localTime = useMemo(() => getLocalComponents(currentDate), [currentDate]);
+
+  // 1. Chart Kỳ Môn Độn Giáp
+  const chartKyMon: CompleteKyMonChart = useMemo(() => {
     const isDuong = currentKyMon ? currentKyMon.isDuongDon : true;
     const cucNum = currentKyMon ? currentKyMon.cucNumber : 1;
 
@@ -79,840 +107,1155 @@ export const KyMonPrognosticationView: React.FC<KyMonPrognosticationViewProps> =
       }
     }
 
-    return buildCompleteKyMonChart(
-      isDuong,
-      cucNum,
-      dCan,
-      dChi,
-      hCan,
-      hChi
-    );
+    return buildCompleteKyMonChart(isDuong, cucNum, dCan, dChi, hCan, hChi);
   }, [currentKyMon, currentBatTu]);
 
-  const pData = useMemo(() => generateComprehensivePrognostication(chart), [chart]);
+  // 2. Chart Đại Lục Nhâm
+  const chartLucNham: LucNhamChart = useMemo(() => {
+    const dayCanChi = currentBatTu?.dayCanChi || `${chartKyMon.dayCanChi}`;
+    const hourCanChi = currentBatTu?.hourCanChi || `${chartKyMon.hourCanChi}`;
+    return buildLucNhamChart(solarLongitude, dayCanChi, hourCanChi, localTime.hour);
+  }, [solarLongitude, currentBatTu, chartKyMon, localTime.hour]);
 
+  // 3. Phân tích kết hợp Kỳ Môn & Lục Nhâm
+  const combined: CombinedPrognosticationResult = useMemo(() => {
+    return generateCombinedPrognostication(chartKyMon, chartLucNham);
+  }, [chartKyMon, chartLucNham]);
+
+  // 4. Dữ liệu chuyên đề cổ bản Kỳ Môn
+  const pData = useMemo(() => generateComprehensivePrognostication(chartKyMon), [chartKyMon]);
+
+  // Xử lý sao chép văn bản dự trắc
   const handleCopySummary = () => {
-    const text = `DỰ TRẮC KỲ MÔN ĐỘN GIÁP TOÀN THƯ (Quẻ ${chart.cucName} - Giờ ${chart.hourCanChi})
-- Ngày/Giờ: ${chart.dayCanChi} / ${chart.hourCanChi}
-- Tuần thủ: ${chart.tuanThuGiap} (${chart.tuanThuCan})
-- Trực Phù: ${chart.trucPhuStar} (Cung ${chart.trucPhuNewPalace})
-- Trực Sử: ${chart.trucSuDoor} (Cung ${chart.trucSuNewPalace})
-- Tuần Không: ${chart.tuanKhongChi.join(', ')} | Dịch Mã: ${chart.dichMaChi}
+    const text = `=== BẢN DỰ TRẮC CHUYÊN SÂU SONG THỨC (KỲ MÔN & ĐẠI LỤC NHÂM) ===
+Thời Điểm: ${chartKyMon.dayCanChi} (Ngày) • ${chartKyMon.hourCanChi} (Giờ)
+- Kỳ Môn Độn Giáp: Quẻ ${chartKyMon.cucName} (Trực Phù: ${chartKyMon.trucPhuStar} - Trực Sử: ${chartKyMon.trucSuDoor})
+- Đại Lục Nhâm: ${chartLucNham.tongMonName} (Nguyệt Tướng: ${chartLucNham.nguyetTuongName} - ${chartLucNham.quyNhanType})
+
+1. ĐÁNH GIÁ THỜI ĐIỂM:
+- Điểm Cát Hung Tổng Hợp: ${combined.overallScore}/100 (${combined.overallLevel}) - ${combined.overallStars}★
+- Phán Từ: ${combined.overallVerdict}
+
+2. NÊN LÀM GÌ:
+${combined.synthesis.whatToDo.map((item, idx) => `${idx + 1}. [${item.badge}] ${item.title}: ${item.description}`).join('\n')}
+
+3. KHÔNG NÊN LÀM GÌ:
+${combined.synthesis.whatNotToDo.map((item, idx) => `${idx + 1}. [${item.badge}] ${item.title}: ${item.description}`).join('\n')}
+
+4. CÁT HUNG CÁC HƯỚNG (8 HƯỚNG):
+- Hướng Thuận Lợi (Cát Phương): ${combined.synthesis.favorableDirections.map((d) => `${d.direction} (${d.palaceName}: ${d.score}đ - Cửa ${d.door})`).join(', ') || 'Chưa có hướng vượt trội'}
+- Hướng Bất Lợi (Hung Phương): ${combined.synthesis.unfavorableDirections.map((d) => `${d.direction} (${d.palaceName}: ${d.score}đ - Cửa ${d.door})`).join(', ') || 'Không có hung sát lớn'}
+
+5. TIẾN TRÌNH 3 GIAI ĐOẠN (LỤC NHÂM TAM TRUYỀN):
+- Sơ Truyền (Khởi Đầu): ${combined.lucNham.stages.soTruyen.chi} (${combined.lucNham.stages.soTruyen.lucThan} - ${combined.lucNham.stages.soTruyen.thienTuong}) -> ${combined.lucNham.stages.soTruyen.detailedForecast}
+- Trung Truyền (Diễn Biến): ${combined.lucNham.stages.trungTruyen.chi} (${combined.lucNham.stages.trungTruyen.lucThan} - ${combined.lucNham.stages.trungTruyen.thienTuong}) -> ${combined.lucNham.stages.trungTruyen.detailedForecast}
+- Mạt Truyền (Kết Quả): ${combined.lucNham.stages.matTruyen.chi} (${combined.lucNham.stages.matTruyen.lucThan} - ${combined.lucNham.stages.matTruyen.thienTuong}) -> ${combined.lucNham.stages.matTruyen.detailedForecast}
+
+6. TƯ VẤN PHƯƠNG ÁN TỐT NHẤT:
+${combined.synthesis.optimalActionPlan.masterRecommendation}
 `;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Helper render sao
+  const renderStars = (stars: number) => {
+    return (
+      <div className="flex items-center gap-1">
+        {[1, 2, 3, 4, 5].map((i) => {
+          const filled = i <= Math.floor(stars);
+          const half = !filled && i === Math.ceil(stars) && stars % 1 >= 0.3;
+          return (
+            <span
+              key={i}
+              className={`text-base ${
+                filled
+                  ? 'text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]'
+                  : half
+                  ? 'text-amber-300/80'
+                  : 'text-slate-700'
+              }`}
+            >
+              ★
+            </span>
+          );
+        })}
+        <span className="text-xs font-mono font-bold text-amber-300 ml-1.5">{stars.toFixed(1)}/5.0</span>
+      </div>
+    );
+  };
+
+  // Lọc hướng trong Kỳ Môn
+  const filteredDirections = useMemo(() => {
+    if (directionFilter === 'good') {
+      return combined.kyMon.allDirections.filter((d) => d.score >= 55);
+    }
+    if (directionFilter === 'bad') {
+      return combined.kyMon.allDirections.filter((d) => d.score < 55);
+    }
+    return combined.kyMon.allDirections;
+  }, [combined.kyMon.allDirections, directionFilter]);
+
   return (
-    <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/30 shadow-2xl space-y-4">
+    <div className="space-y-6 animate-fadeIn">
+      {/* HEADER BANNER TỔNG QUAN THỜI KHÔNG */}
+      <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/30 shadow-2xl space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="flex items-start gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-inner shrink-0">
-              <BookOpen className="w-6 h-6" />
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/25 to-purple-500/25 border border-amber-500/40 flex items-center justify-center text-amber-400 shadow-inner shrink-0">
+              <Compass className="w-7 h-7 animate-pulse" />
             </div>
             <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Toàn Thư Dự Trắc Bàn Kỳ Môn Độn Giáp
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  Dự Trắc Chuyên Sâu Song Thức
                 </h2>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                  {chart.cucName}
+                <span className="px-3 py-0.5 rounded-full text-xs font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                  Kỳ Môn & Đại Lục Nhâm
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                  {chartKyMon.cucName}
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Hệ thống chiêm đoán cát hung toàn diện bám sát nguyên bản <strong>Kỳ Môn Độn Giáp Bí Kíp Toàn Thư</strong>
+              <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl leading-relaxed">
+                Hệ thống hội tụ <strong>Kỳ Môn Độn Giáp</strong> (Đoán định Cát Hung thời điểm & 8 Phương vị không gian) và <strong>Đại Lục Nhâm</strong> (Đoán định Tiến trình 3 giai đoạn Tam Truyền: Khởi đầu - Diễn biến - Kết quả).
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Action buttons */}
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
             {onNavigateTab && (
               <button
-                id="btn-goto-kymon-chart"
+                id="btn-prognostication-to-kymon"
                 onClick={() => onNavigateTab('kymon-chart')}
-                className="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                className="px-3.5 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/35 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                title="Mở Bàn Kỳ Môn 9 Cung đầy đủ"
               >
                 <Layers className="w-4 h-4 text-amber-400" />
-                <span>Bàn Kỳ Môn 9 Cung</span>
+                <span>Bàn Kỳ Môn</span>
               </button>
             )}
 
             {onNavigateTab && (
               <button
-                id="btn-goto-lucnham"
+                id="btn-prognostication-to-lucnham"
                 onClick={() => onNavigateTab('luc-nham')}
-                className="px-3.5 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                className="px-3.5 py-2 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-500/35 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                title="Mở Bàn Đại Lục Nhâm đầy đủ"
               >
                 <Compass className="w-4 h-4 text-purple-400" />
-                <span>Bàn Đại Lục Nhâm</span>
-              </button>
-            )}
-
-            {onBackToBoard && (
-              <button
-                id="btn-back-to-kymon-board"
-                onClick={onBackToBoard}
-                className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
-              >
-                <BookOpen className="w-4 h-4 text-slate-400" />
-                <span>Cẩm Nang Tri Thức</span>
+                <span>Bàn Lục Nhâm</span>
               </button>
             )}
 
             <button
-              id="btn-copy-prognostication"
+              id="btn-copy-combined-prognostication"
               onClick={handleCopySummary}
-              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition-all shadow-lg cursor-pointer hover:scale-102 active:scale-98"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              <span>{copied ? 'Đã Sao Chép' : 'Sao Chép Tổng Quan'}</span>
+              <span>{copied ? 'Đã Sao Chép Toàn Bộ' : 'Sao Chép Dự Trắc'}</span>
             </button>
           </div>
         </div>
 
-        {/* Quick Parameters Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 pt-2 border-t border-slate-800 text-xs font-mono">
-          <div className="p-2 rounded-xl bg-slate-950/80 border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-sans">Can Chi Giờ:</span>
-            <span className="font-bold text-amber-300">{chart.hourCanChi}</span>
+        {/* Thông số cốt lõi thời không */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 pt-3 border-t border-slate-800 text-xs font-mono">
+          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block font-sans">Thời Gian (Can Chi):</span>
+            <span className="font-bold text-amber-300">{chartKyMon.dayCanChi} • {chartKyMon.hourCanChi}</span>
           </div>
-          <div className="p-2 rounded-xl bg-slate-950/80 border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-sans">Can Chi Ngày:</span>
-            <span className="font-bold text-white">{chart.dayCanChi}</span>
-          </div>
-          <div className="p-2 rounded-xl bg-slate-950/80 border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-sans">Tuần Thủ (Độn):</span>
-            <span className="font-bold text-cyan-300">{chart.tuanThuGiap} ({chart.tuanThuCan})</span>
-          </div>
-          <div className="p-2 rounded-xl bg-slate-950/80 border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-sans">Sao Trực Phù:</span>
-            <span className="font-bold text-amber-400">{chart.trucPhuStar} (C.{chart.trucPhuNewPalace})</span>
-          </div>
-          <div className="p-2 rounded-xl bg-slate-950/80 border border-slate-800">
-            <span className="text-[10px] text-slate-400 block font-sans">Cửa Trực Sử:</span>
-            <span className="font-bold text-emerald-300">{chart.trucSuDoor} (C.{chart.trucSuNewPalace})</span>
-          </div>
-          <div className="p-2 rounded-xl bg-slate-950/80 border border-slate-800">
+          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
             <span className="text-[10px] text-slate-400 block font-sans">Tuần Không / Mã:</span>
-            <span className="font-bold text-rose-300">{chart.tuanKhongChi.join(', ')} / {chart.dichMaChi}</span>
+            <span className="font-bold text-rose-300">{chartKyMon.tuanKhongChi.join(', ')} / {chartKyMon.dichMaChi}</span>
+          </div>
+          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block font-sans">Trực Phù (Kỳ Môn):</span>
+            <span className="font-bold text-cyan-300">{chartKyMon.trucPhuStar} (C.{chartKyMon.trucPhuNewPalace})</span>
+          </div>
+          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block font-sans">Trực Sử (Kỳ Môn):</span>
+            <span className="font-bold text-emerald-300">{chartKyMon.trucSuDoor} (C.{chartKyMon.trucSuNewPalace})</span>
+          </div>
+          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block font-sans">Tông Môn (Lục Nhâm):</span>
+            <span className="font-bold text-purple-300 truncate block" title={chartLucNham.tongMonName}>{chartLucNham.tongMonName}</span>
+          </div>
+          <div className="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800">
+            <span className="text-[10px] text-slate-400 block font-sans">Nguyệt Tướng:</span>
+            <span className="font-bold text-amber-400">{chartLucNham.nguyetTuongName} ({chartLucNham.quyNhanType.split(' ')[0]})</span>
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs for Prognostication Categories */}
-      <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900 border border-slate-800 overflow-x-auto no-scrollbar shadow-lg">
+      {/* HỆ THỐNG TAB ĐIỀU HƯỚNG CHÍNH */}
+      <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 overflow-x-auto no-scrollbar shadow-lg">
         {[
-          { id: 'overview', label: 'Tam Bàn & Chủ Khách', icon: Layers },
-          { id: 'destiny', label: 'Thân Mệnh (Sang Hèn)', icon: User },
-          { id: 'marriage', label: '1. Hôn Nhân & Vợ Chồng', icon: Heart },
-          { id: 'health', label: '2. Y Học & Trị Bệnh', icon: HeartPulse },
-          { id: 'wealth', label: '3. Cầu Tài & Giao Dịch', icon: Coins },
-          { id: 'career', label: '4. Thi Cử & Công Danh', icon: GraduationCap },
-          { id: 'lostItems', label: '5. Mất Vật & Kẻ Trộm', icon: Search },
-          { id: 'lawsuit', label: '6. Kiện Tụng & Tranh Chấp', icon: Scale },
+          {
+            id: 'synthesis',
+            label: '🌟 1. TỔNG HỢP SONG THỨC (NÊN & KHÔNG NÊN LÀM)',
+            badge: 'Tư Vấn Tối Ưu',
+            icon: Sparkles,
+          },
+          {
+            id: 'kymon',
+            label: '🧭 2. DỰ TRẮC KỲ MÔN (CÁT HUNG THỜI ĐIỂM & 8 HƯỚNG)',
+            badge: 'Không Gian 8 Hướng',
+            icon: Layers,
+          },
+          {
+            id: 'lucnham',
+            label: '🔮 3. DỰ TRẮC LỤC NHÂM (3 GIAI ĐOẠN TAM TRUYỀN)',
+            badge: 'Tiến Trình Thời Gian',
+            icon: Compass,
+          },
+          {
+            id: 'classical',
+            label: '📖 4. TRA CỨU VIỆC ĐỜI CỔ BẢN (6 CHỦ ĐỀ)',
+            badge: 'Bí Kíp Toàn Thư',
+            icon: BookOpen,
+          },
         ].map((tab) => {
           const Icon = tab.icon;
-          const isActive = activeCategory === tab.id;
+          const isActive = activeMainTab === tab.id;
           return (
             <button
               key={tab.id}
-              id={`tab-prognostication-${tab.id}`}
-              onClick={() => setActiveCategory(tab.id as any)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap transition-all ${
+              id={`tab-prognostication-main-${tab.id}`}
+              onClick={() => setActiveMainTab(tab.id as any)}
+              className={`px-4 py-3 rounded-xl text-xs font-bold flex items-center gap-2.5 whitespace-nowrap transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md scale-100'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-md scale-100 font-black'
+                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/80'
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-slate-950' : 'text-amber-400'}`} />
+              <Icon className={`w-4 h-4 ${isActive ? 'text-slate-950' : 'text-amber-400'}`} />
               <span>{tab.label}</span>
+              <span
+                className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold ${
+                  isActive ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-slate-400'
+                }`}
+              >
+                {tab.badge}
+              </span>
             </button>
           );
         })}
       </div>
 
-      {/* CATEGORY 1: TAM BÀN & CHỦ KHÁCH */}
-      {activeCategory === 'overview' && (
+      {/* ========================================================================= */}
+      {/* PHẦN 1: TỔNG HỢP SONG THỨC (NÊN LÀM GÌ, KHÔNG NÊN LÀM GÌ, HƯỚNG CÁT HUNG) */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'synthesis' && (
         <div className="space-y-6 animate-fadeIn">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* TAM BÀN CÁT HUNG */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-slate-800">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold">
-                  <Layers className="w-4 h-4" />
+          {/* Card Điểm Cát Hung Thời Khắc Tổng Hòa */}
+          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-400" />
+                  <h3 className="text-lg font-black text-white">
+                    Đánh Giá Năng Lượng Thời Khắc Hiện Tại
+                  </h3>
+                  <span
+                    className={`px-3 py-0.5 rounded-full text-xs font-bold font-mono ${
+                      combined.overallLevel === 'Đại Cát'
+                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        : combined.overallLevel === 'Tiểu Cát'
+                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+                        : combined.overallLevel === 'Tiểu Hung'
+                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                        : combined.overallLevel === 'Đại Hung'
+                        ? 'bg-red-500/25 text-red-400 border border-red-500/50'
+                        : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                    }`}
+                  >
+                    {combined.overallLevel}
+                  </span>
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-white">Quy Luật Tam Bàn Trong Luận Đoán Cát Hung</h3>
-                  <span className="text-xs text-slate-400">Cấu trúc Thiên (9 Sao) - Nhân (8 Cửa) - Địa (9 Cung)</span>
-                </div>
+                <p className="text-xs text-slate-400">
+                  Tổng hợp điểm số định lượng và luận giải phong thủy từ Kỳ Môn Độn Giáp ({combined.kyMon.score}đ) và Đại Lục Nhâm ({combined.lucNham.score}đ)
+                </p>
               </div>
 
-              <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="text-amber-400 font-bold flex items-center gap-1">
-                    <Star className="w-3.5 h-3.5" /> 1. Xem Cát Hung Chung (Thiên Thời):
-                  </span>
-                  <p>
-                    Đầu tiên xem nặng về <strong>9 Sao (Thiên Bàn)</strong>, vì Sao đại diện cho Thiên thời và cái cát hung đã được trời định sẵn.
-                  </p>
-                  <p className="text-slate-400 italic">
-                    • Nguyên tắc: <strong>Sao (Tinh) khắc Môn thì cát</strong>, <strong>Môn khắc Sao thì hung</strong>.
-                  </p>
+              <div className="flex items-center gap-4 bg-slate-950/80 p-3 rounded-2xl border border-slate-800 shrink-0">
+                <div className="text-right">
+                  <span className="text-[10px] text-slate-400 block uppercase font-mono">Điểm Số Thời Không</span>
+                  <div className="text-2xl font-black font-mono text-amber-400">
+                    {combined.overallScore}
+                    <span className="text-xs text-slate-500">/100</span>
+                  </div>
                 </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="text-emerald-400 font-bold flex items-center gap-1">
-                    <DoorOpen className="w-3.5 h-3.5" /> 2. Xem Đi Xa, Di Chuyển Hoặc Ẩn Lánh (Nhân Sự):
-                  </span>
-                  <p>
-                    Xem nặng về <strong>8 Cửa (Nhân Bàn)</strong>, vì 8 Cửa là Nhân bàn, thể hiện sự chủ động chọn lựa hay hành động của con người để tự chiêm lấy cát hung.
-                  </p>
-                  <p className="text-slate-400 italic">
-                    • Nguyên tắc: <strong>Môn khắc Cung thì cát</strong>, <strong>Cung khắc Môn thì hung</strong> (do Cung khắc Môn sẽ làm thương tổn con người nên hung).
-                  </p>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                  <span className="text-cyan-400 font-bold flex items-center gap-1">
-                    <Compass className="w-3.5 h-3.5" /> 3. Xem Xây Dựng, Chôn Cất, Dời Đổi (Địa Lợi):
-                  </span>
-                  <p>
-                    Xem nặng về <strong>9 Cung (Địa Bàn)</strong>, vì mọi sự dời đổi, kiến tạo đều khởi đầu từ đất đai.
-                  </p>
-                  <p className="text-slate-400 italic">
-                    • Nguyên tắc: <strong>Môn và Cung tương sinh thì đều cát</strong>, <strong>tương khắc thì đều hung</strong>.
-                  </p>
-                </div>
+                <div className="h-8 w-px bg-slate-800"></div>
+                {renderStars(combined.overallStars)}
               </div>
             </div>
 
-            {/* CHỦ - KHÁCH CHIÊM NGHIỆM */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-slate-800">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold">
-                  <Users className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-white">Quy Tắc Phân Định Chủ - Khách Trong Chiêm Nghiệm</h3>
-                  <span className="text-xs text-slate-400">Xác định ngôi vị ai được lợi, ai bị hao tổn khi giao sự</span>
-                </div>
-              </div>
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 space-y-1.5">
+              <strong className="text-sm font-bold text-amber-300 flex items-center gap-2">
+                <span>⚡ Phán Từ Khái Quát:</span>
+                <span>{combined.overallVerdict}</span>
+              </strong>
+              <p className="text-xs leading-relaxed text-slate-300">
+                {combined.overallTagline}
+              </p>
+            </div>
+          </div>
 
-              <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
-                <div className="p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 space-y-1.5">
-                  <span className="text-cyan-300 font-bold block">1. Phân Định Ngôi Vị:</span>
-                  <p>
-                    • <strong>Nếu ta chủ động đi tìm người khác:</strong> Ta là <span className="text-amber-300 font-bold">Khách</span> (lấy Sao trên Thiên bàn đại diện), người khác là <span className="text-emerald-300 font-bold">Chủ</span> (lấy Sao dưới Địa bàn đại diện).
-                  </p>
-                  <p>
-                    • <strong>Nếu người khác chủ động tìm đến ta:</strong> Người đó là <span className="text-amber-300 font-bold">Khách</span> (Sao Thiên bàn), ta là <span className="text-emerald-300 font-bold">Chủ</span> (Sao Địa bàn).
-                  </p>
-                </div>
-
-                <div className="space-y-2 pt-1">
-                  <span className="text-amber-400 font-bold block">2. Đánh Giá Sinh Khắc Tổn - Ích:</span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-                    <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <strong className="text-emerald-400 block mb-0.5">Khách sinh Chủ (Thiên $\rightarrow$ Địa):</strong>
-                      <span className="text-slate-300">Ít hao tốn, mang lại lợi ích lớn cho Chủ.</span>
-                    </div>
-                    <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <strong className="text-amber-400 block mb-0.5">Chủ sinh Khách (Địa $\rightarrow$ Thiên):</strong>
-                      <span className="text-slate-300">Hao tán, chậm trễ, có lợi cho phía Khách.</span>
-                    </div>
-                    <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <strong className="text-rose-400 block mb-0.5">Khách khắc Chủ (Thiên $\times$ Địa):</strong>
-                      <span className="text-slate-300">Tổn thất thuộc về Chủ, mưu sự bất lợi.</span>
-                    </div>
-                    <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800">
-                      <strong className="text-purple-400 block mb-0.5">Chủ khắc Khách (Địa $\times$ Thiên):</strong>
-                      <span className="text-slate-300">Tổn thất thuộc về Khách, mưu sự tự bại tự hòa.</span>
-                    </div>
+          {/* GRID: THỜI KHẮC NÀY NÊN LÀM GÌ & KHÔNG NÊN LÀM GÌ */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* CỘT NÊN LÀM GÌ */}
+            <div className="p-6 rounded-3xl bg-slate-900 border border-emerald-500/30 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                    <CheckCircle2 className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white">Thời Khắc Này NÊN LÀM GÌ?</h3>
+                    <span className="text-xs text-slate-400">Các hành động đắc khí, đón nhận cát lộc và thành công</span>
                   </div>
                 </div>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 font-mono">
+                  {combined.synthesis.whatToDo.length} Khuyến Nghị
+                </span>
+              </div>
 
-                <div className="p-2.5 rounded-xl bg-amber-950/20 border border-amber-500/30 text-amber-200/90 italic font-serif">
-                  * Ghi chú ngày Âm/Dương: Ngày Âm thì sao Thiên bàn là Ta, ngày Dương thì sao Địa bàn là Ta; nếu tỷ hòa nhau thì không có tổn ích gì.
+              <div className="space-y-3">
+                {combined.synthesis.whatToDo.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-2xl bg-slate-950/80 border border-emerald-500/20 hover:border-emerald-500/40 transition-all space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <strong className="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        {item.title}
+                      </strong>
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-800 shrink-0 font-mono">
+                        {item.badge}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed pl-3.5">
+                      {item.description}
+                    </p>
+                    <span className="text-[10px] text-slate-400 block pl-3.5 italic font-mono">
+                      Lĩnh vực: {item.category}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CỘT KHÔNG NÊN LÀM GÌ */}
+            <div className="p-6 rounded-3xl bg-slate-900 border border-rose-500/30 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">
+                    <AlertTriangle className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-white">Thời Khắc Này KHÔNG NÊN LÀM GÌ?</h3>
+                    <span className="text-xs text-slate-400">Những việc tối kỵ cần tránh để không chuốc họa, hao tài</span>
+                  </div>
                 </div>
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/20 text-rose-300 font-mono">
+                  {combined.synthesis.whatNotToDo.length} Cảnh Báo
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {combined.synthesis.whatNotToDo.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-2xl bg-slate-950/80 border border-rose-500/20 hover:border-rose-500/40 transition-all space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <strong className="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+                        {item.title}
+                      </strong>
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800 shrink-0 font-mono">
+                        {item.badge}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed pl-3.5">
+                      {item.description}
+                    </p>
+                    <span className="text-[10px] text-slate-400 block pl-3.5 italic font-mono">
+                      Cảnh báo: {item.category}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* CATEGORY 2: DỰ TRẮC THÂN MỆNH (NHÂN SINH QUÝ TIỆN) */}
-      {activeCategory === 'destiny' && (
-        <div className="space-y-6 animate-fadeIn">
-          {/* Lục Thân Mapping */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-            <div className="flex items-center gap-2.5 pb-3 border-b border-slate-800">
-              <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold">
-                <User className="w-4 h-4" />
+          {/* HƯỚNG NÀO THUẬN LỢI & HƯỚNG NÀO KHÔNG THUẬN LỢI */}
+          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-5 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div className="space-y-1">
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <Navigation className="w-5 h-5 text-amber-400" />
+                  <span>Cát Hung 8 Hướng: Hướng Nào Thuận Lợi & Hướng Nào Bất Lợi?</span>
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Xác định phương vị cát tường (đón sinh khí, cầu tài, đàm phán) và phương vị hung hiểm (cần tránh xuất hành, động thổ)
+                </p>
+              </div>
+
+              {/* Toggle Tab Hướng */}
+              <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+                <button
+                  onClick={() => setDirectionFilter('all')}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                    directionFilter === 'all'
+                      ? 'bg-amber-500 text-slate-950'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Tất Cả 8 Hướng
+                </button>
+                <button
+                  onClick={() => setDirectionFilter('good')}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                    directionFilter === 'good'
+                      ? 'bg-emerald-500 text-slate-950'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Hướng Cát ({combined.synthesis.favorableDirections.length})
+                </button>
+                <button
+                  onClick={() => setDirectionFilter('bad')}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${
+                    directionFilter === 'bad'
+                      ? 'bg-rose-500 text-slate-950'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Hướng Hung ({combined.synthesis.unfavorableDirections.length})
+                </button>
+              </div>
+            </div>
+
+            {/* Grid 8 hướng */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {filteredDirections.map((dir) => {
+                const isGood = dir.score >= 60;
+                const isBad = dir.score <= 45;
+                return (
+                  <div
+                    key={dir.palaceNum}
+                    className={`p-4 rounded-2xl border transition-all space-y-2.5 ${
+                      isGood
+                        ? 'bg-emerald-950/20 border-emerald-500/40 hover:border-emerald-400 shadow-md'
+                        : isBad
+                        ? 'bg-rose-950/20 border-rose-500/40 hover:border-rose-400 shadow-md'
+                        : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <strong className="text-sm font-bold text-white flex items-center gap-1.5">
+                          <span>{dir.direction}</span>
+                          <span className="text-xs font-mono font-normal text-slate-400">({dir.palaceName})</span>
+                        </strong>
+                        <span className="text-[10px] text-slate-400 block font-mono">
+                          Môn: {dir.door} • Thần: {dir.god}
+                        </span>
+                      </div>
+
+                      <div className="text-right">
+                        <span
+                          className={`text-xs font-mono font-bold px-2 py-0.5 rounded-full ${
+                            isGood
+                              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                              : isBad
+                              ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                              : 'bg-slate-800 text-slate-300 border border-slate-700'
+                          }`}
+                        >
+                          {dir.score}đ • {dir.level}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 text-[11px] text-slate-300 space-y-1">
+                      <div className="text-slate-400">
+                        <strong className="text-slate-300">Phối hợp:</strong> Sao {dir.star} | Can: {dir.stemCombo}
+                      </div>
+                      <p className="text-slate-300 leading-relaxed">
+                        {dir.reason}
+                      </p>
+                    </div>
+
+                    <div className="text-[11px] leading-relaxed pt-1">
+                      <strong className={`${isGood ? 'text-emerald-400' : isBad ? 'text-rose-400' : 'text-amber-400'}`}>
+                        Lời khuyên:
+                      </strong>{' '}
+                      <span className="text-slate-400">{dir.advice}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* TƯ VẤN PHƯƠNG ÁN TỐT NHẤT (MASTER ACTION PLAN) */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-amber-950/30 via-slate-900 to-purple-950/30 border border-amber-500/40 space-y-4 shadow-2xl">
+            <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-bold shrink-0">
+                <Award className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Hệ Thống Lục Thân Đại Diện Trong Thân Mệnh</h3>
-                <span className="text-xs text-slate-400">Chiêm Nhân Sinh Quý Tiện theo nguyên lý Kỳ Môn Độn Giáp</span>
+                <h3 className="text-base sm:text-lg font-black text-white">
+                  Tư Vấn Phương Án Tốt Nhất (Chiến Lược Hành Động Tối Ưu)
+                </h3>
+                <span className="text-xs text-slate-400">
+                  Tổng hòa giữa Không Gian Kỳ Môn và Tiến Trình 3 Giai Đoạn Đại Lục Nhâm
+                </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-slate-400 text-[11px] block font-mono">1. Can Năm (Niên Can):</span>
-                <span className="font-bold text-amber-300 text-sm block">Phụ Mẫu (Cha Mẹ)</span>
-                <p className="text-slate-400 text-[11px]">Chủ về tổ nghiệp, sự bảo bọc của cha mẹ thuở ấu thơ.</p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-slate-400 text-[11px] block font-mono">2. Can Tháng (Nguyệt Can):</span>
-                <span className="font-bold text-cyan-300 text-sm block">Huynh Đệ (Anh Em)</span>
-                <p className="text-slate-400 text-[11px]">Chủ về tình nghĩa anh em, bè bạn đồng trang lứa.</p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-slate-400 text-[11px] block font-mono">3. Can Ngày (Nhật Can):</span>
-                <span className="font-bold text-emerald-300 text-sm block">Bản Thân Ta (Bản Thân)</span>
-                <p className="text-slate-400 text-[11px]">Đóng tại Cung {pData.dayPalace.palaceNum} ({pData.dayPalace.palaceName}) - Tọa chủ mệnh.</p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
-                <span className="text-slate-400 text-[11px] block font-mono">4. Can Giờ (Thời Can):</span>
-                <span className="font-bold text-rose-300 text-sm block">Con Nhỏ (Tử Tức / Nhi)</span>
-                <p className="text-slate-400 text-[11px]">Đóng tại Cung {pData.hourPalace.palaceNum} ({pData.hourPalace.palaceName}) - Chủ hậu vận.</p>
-              </div>
-            </div>
-
-            {/* Vợ Chồng */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-pink-400 font-bold block mb-1">Thê Thiếp (Vợ):</span>
-                <p className="text-slate-300">
-                  Lấy Kỳ Ất (Vợ cả) tại Cung {pData.atPalace.palaceNum} ({pData.atPalace.palaceName}) và Kỳ Đinh (Vợ lẽ/Người yêu) tại Cung {pData.dinhPalace.palaceNum} ({pData.dinhPalace.palaceName}).
+            <div className="space-y-4 text-xs sm:text-sm text-slate-200 leading-relaxed">
+              <div className="p-4 rounded-2xl bg-slate-950/80 border border-amber-500/30 space-y-2">
+                <h4 className="font-bold text-amber-300 flex items-center gap-2">
+                  <Flame className="w-4 h-4 text-amber-400" />
+                  <span>Kế Hoạch Hành Động Toàn Diện (Master Strategy):</span>
+                </h4>
+                <p className="text-slate-300 leading-relaxed">
+                  {combined.synthesis.optimalActionPlan.masterRecommendation}
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-cyan-400 font-bold block mb-1">Chồng:</span>
-                <p className="text-slate-300">
-                  Lấy Canh làm chồng, tọa tại Cung {pData.canhPalace.palaceNum} ({pData.canhPalace.palaceName}) để định vị cát hung không sai lệch.
-                </p>
-              </div>
-            </div>
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-slate-950/80 border border-cyan-500/30 space-y-2">
+                  <h5 className="font-bold text-cyan-300 flex items-center gap-2">
+                    <Navigation className="w-4 h-4 text-cyan-400" />
+                    <span>Chiến Thuật Không Gian (Kỳ Môn):</span>
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    {combined.synthesis.optimalActionPlan.spatialTactics}
+                  </p>
+                </div>
 
-          {/* NGUYÊN LÝ VINH KHÔ, SANG HÈN & TỔ NGHIỆP */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3.5 shadow-xl text-xs">
-              <h4 className="text-sm font-bold text-amber-300 flex items-center gap-1.5 pb-2 border-b border-slate-800">
-                <Sparkles className="w-4 h-4" /> Nguyên Lý Luận Đoán Vinh Khô & Sang Hèn
-              </h4>
-              <div className="space-y-2 text-slate-300">
-                <p>
-                  • <strong>Vinh hiển, giàu sang:</strong> Xem xét sự mạnh yếu (cường nhược) của các cung lục thân. Nếu các cung này rơi vào trạng thái <em>Vượng tướng và đắc Kỳ (Tam Kỳ Ất, Bính, Đinh nâng đỡ)</em> thì cuộc đời vừa phú quý, vừa sang trọng.
-                </p>
-                <p>
-                  • <strong>Bần tiện, khó khăn:</strong> Nếu các cung mệnh rơi vào các trạng thái <em>Tử, Tù, Mộ, Tuyệt</em> thì cuộc đời chịu cảnh khốn khổ, hèn kém. Nếu can yếu thì phần gốc quả phương diện đó mong manh.
-                </p>
-                <p>
-                  • <strong>Cô - Hư & Tuổi Trẻ - Hậu Vận:</strong>
-                  <span className="block pl-3 text-slate-400 mt-1">
-                    - Ngày gặp Cô, giờ gặp Hư (<em>Nhật Trực Cô thời trực Hư</em>): Tuổi trẻ không nơi nương tựa, cô độc.
-                  </span>
-                  <span className="block pl-3 text-slate-400">
-                    - Giờ gặp Cô, ngày gặp Hư (<em>Thời lạc Cô nhật lạc Hư</em>): Về già chịu cảnh góa bụa, đơn độc.
-                  </span>
-                </p>
+                <div className="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-2">
+                  <h5 className="font-bold text-purple-300 flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-purple-400" />
+                    <span>Chiến Thuật Thời Khắc & Tiến Trình (Lục Nhâm):</span>
+                  </h5>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Khởi sự cần chuẩn bị kỹ lưỡng vì Sơ Truyền mang tính quyết định. Quá trình triển khai theo dõi sát Trung Truyền để điều chỉnh, và chủ động khép lại khi đạt được kết quả ở Mạt Truyền.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-3.5 shadow-xl text-xs">
-              <h4 className="text-sm font-bold text-emerald-300 flex items-center gap-1.5 pb-2 border-b border-slate-800">
-                <Coins className="w-4 h-4" /> Tổ Nghiệp & Ly Hương (Sinh Môn)
-              </h4>
-              <div className="space-y-2 text-slate-300">
-                <p>
-                  • <strong>Sinh môn đại diện cho sản nghiệp, ruộng vườn:</strong> Đang đóng tại Cung {pData.sinhMonPalace.palaceNum} ({pData.sinhMonPalace.palaceName}).
-                </p>
-                <p>
-                  - Nếu Sinh môn đắc Kỳ thì giàu có như Thạch Sùng.
-                </p>
-                <p>
-                  - Nếu Sinh môn gặp Thái Bạch (Canh) bị xung hãm thì chủ nhân phải xa tổ ly hương làm khách.
-                </p>
-                <p>
-                  - Nếu Sinh môn bị cung xung khắc thì ruộng vườn tiên tổ bị bán sạch trơn.
-                </p>
-                <p>
-                  - <em>Nội - Ngoại Cung:</em> Nếu Sinh môn ở ngoại cung mà thân (Nhật can) ở nội cung thì rời tổ ra ngoài mà phát phú. Thân ở ngoài mà Sinh môn ở trong thì cha mẹ để lại của nhưng bản thân vất vả gánh vác.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Ý NGHĨA CỬU TINH & BÁT MÔN TRONG THÂN MỆNH */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-            <h4 className="text-sm font-bold text-white flex items-center gap-2 pb-2 border-b border-slate-800">
-              <BookOpen className="w-4 h-4 text-amber-400" />
-              Ý Nghĩa Cửu Tinh & Bát Môn Trong Thân Mệnh (Phẩm Chất & Vận Số)
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <strong className="text-amber-300 block mb-1">Thiên Phụ (Văn Tinh):</strong>
-                <p className="text-slate-300">Vượng tướng đắc Kỳ Môn là bậc văn minh, đỗ đạt vườn Hàn. Thất thời làm thầy tu, thợ vẽ bon chen.</p>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <strong className="text-amber-300 block mb-1">Thiên Xung (Võ Tinh):</strong>
-                <p className="text-slate-300">Vượng tướng đắc Kỳ Nghi thì oai chấn biên cương, võ nghiệp hiển hách. Bối thời thì trôi dạt sông hồ thuyền ngựa.</p>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <strong className="text-amber-300 block mb-1">Thiên Cầm (Trung Tôn):</strong>
-                <p className="text-slate-300">Đóng trung cung, đắc Kỳ Môn là bậc trăm quan đầu sỏ, cực kỳ cao quý quyền uy.</p>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <strong className="text-amber-300 block mb-1">Thiên Tâm (Trụ Cột):</strong>
-                <p className="text-slate-300">Đắc địa là tài hoa, cột trụ đất nước, y thuật cao minh. Gặp Không Mộ rơi vào hàng cửu lưu thuật số.</p>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <strong className="text-amber-300 block mb-1">Thiên Nhậm (Điền Sản):</strong>
-                <p className="text-slate-300">Đắc địa thì ruộng vườn xe ngựa giàu sang phú túc. Bị khắc là nông phu cày cuốc khó nhọc.</p>
-              </div>
-              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                <strong className="text-amber-300 block mb-1">Thiên Bồng (Dũng Mãnh):</strong>
-                <p className="text-slate-300">Được thời lệnh làm mãnh tướng trấn thủ biên cương. Thất địa chỉ là quân lính quèn hoặc phường giặc cướp.</p>
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-400 flex items-start gap-2.5">
+                <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <span>
+                  <strong>Nguyên tắc cổ nhân:</strong> <em>"Thiên thời bất như Địa lợi, Địa lợi bất như Nhân hòa"</em>. Kỳ Môn cho ta phương vị và thời điểm, Lục Nhâm chỉ ra tiến trình nhân sự. Khi biết người biết ta, thuận theo lẽ trời, trăm sự ắt đạt được cát khánh.
+                </span>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* CATEGORY 3: HÔN NHÂN & VỢ CHỒNG */}
-      {activeCategory === 'marriage' && (
-        <div className="space-y-6 animate-fadeIn text-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Vị trí trên bàn cờ */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
+      {/* ========================================================================= */}
+      {/* PHẦN 2: DỰ TRẮC THEO KỲ MÔN ĐỘN GIÁP (CÁT HUNG THỜI ĐIỂM & 8 HƯỚNG)       */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'kymon' && (
+        <div className="space-y-6 animate-fadeIn">
+          {/* LỜI DỰ ĐOÁN THỜI ĐIỂM ĐANG HIỂN THỊ */}
+          <div className="p-6 rounded-3xl bg-slate-900 border border-amber-500/30 space-y-4 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <Layers className="w-5 h-5 text-amber-400" />
+                  <h3 className="text-lg font-bold text-white">
+                    Lời Dự Đoán Thời Điểm Đang Hiển Thị (Kỳ Môn Độn Giáp)
+                  </h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                    {chartKyMon.cucName}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Chiêm nghiệm cát hung toàn cục dựa trên Trực Phù, Trực Sử, Bát Môn và Thập Can Khắc Ứng
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono font-bold px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-amber-300">
+                  Điểm Cát Hung: {combined.kyMon.score}/100 ({combined.kyMon.level})
+                </span>
+              </div>
+            </div>
+
+            {/* Khối nhận định tổng quát */}
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+              <h4 className="text-sm font-bold text-amber-300 flex items-center gap-2">
+                <Star className="w-4 h-4 text-amber-400" />
+                <span>Nhận Định Cát Hung Toàn Cục:</span>
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                {combined.kyMon.verdict}
+              </p>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                {combined.kyMon.directionSummary}
+              </p>
+            </div>
+
+            {/* Các việc PHÙ HỢP LÀM GÌ & KHÔNG PHÙ HỢP trong Kỳ Môn */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-2">
+                <strong className="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>Thời Điểm Này Phù Hợp Làm Gì?</span>
+                </strong>
+                <ul className="space-y-1.5 text-xs text-slate-300 list-disc list-inside">
+                  {combined.kyMon.suitableActivities.map((act, i) => (
+                    <li key={i} className="leading-relaxed">{act}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/30 space-y-2">
+                <strong className="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-rose-400" />
+                  <span>Thời Điểm Này KHÔNG Phù Hợp Làm Gì?</span>
+                </strong>
+                <ul className="space-y-1.5 text-xs text-slate-300 list-disc list-inside">
+                  {combined.kyMon.unsuitableActivities.map((act, i) => (
+                    <li key={i} className="leading-relaxed">{act}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Cách cục đặc biệt */}
+            {chartKyMon.specialFormations.length > 0 && (
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-amber-500/30 space-y-1.5">
+                <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Cách Cục Đặc Biệt Của Bàn Kỳ Môn Hiện Tại ({chartKyMon.specialFormations.length}):</span>
+                </span>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {chartKyMon.specialFormations.map((f, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-200 border border-amber-500/30"
+                    >
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* CÁT HUNG CHI TIẾT TẤT CẢ CÁC HƯỚNG (8 HƯỚNG CUNG) */}
+          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div>
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <Navigation className="w-5 h-5 text-amber-400" />
+                  <span>Bảng Đánh Giá Cát Hung Chi Tiết 8 Hướng (9 Cung Bát Quái)</span>
+                </h3>
+                <span className="text-xs text-slate-400">
+                  Chi tiết Cửa Môn, Ngôi Sao, Thần Sát và Thập Can Khắc Ứng trên từng phương vị
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {combined.kyMon.allDirections.map((d) => (
+                <div
+                  key={d.palaceNum}
+                  className="p-4 rounded-2xl bg-slate-950 border border-slate-800 hover:border-amber-500/40 transition-all space-y-2"
+                >
+                  <div className="flex items-center justify-between">
+                    <strong className="text-sm font-bold text-white flex items-center gap-1">
+                      <span>{d.direction}</span>
+                      <span className="text-xs font-normal text-slate-400">({d.palaceName})</span>
+                    </strong>
+                    <span
+                      className={`text-[10px] font-bold font-mono px-2 py-0.5 rounded-md ${
+                        d.score >= 60
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                          : d.score <= 45
+                          ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                          : 'bg-slate-800 text-slate-300 border border-slate-700'
+                      }`}
+                    >
+                      {d.score}đ • {d.level}
+                    </span>
+                  </div>
+
+                  <div className="text-xs space-y-1 text-slate-300 font-mono">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Cửa Môn:</span>
+                      <span className="font-bold text-amber-300">{d.door}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Cửu Tinh:</span>
+                      <span className="text-cyan-300">{d.star}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Bát Thần:</span>
+                      <span className="text-purple-300">{d.god}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Thiên/Địa Can:</span>
+                      <span className="text-emerald-300 truncate max-w-[130px]">{d.stemCombo}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] text-slate-400 leading-relaxed border-t border-slate-900 pt-2">
+                    {d.reason}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* PHẦN 3: DỰ TRẮC THEO ĐẠI LỤC NHÂM (QUÁ TRÌNH 3 GIAI ĐOẠN TAM TRUYỀN)       */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'lucnham' && (
+        <div className="space-y-6 animate-fadeIn">
+          {/* BANNER TỔNG QUAN LỤC NHÂM */}
+          <div className="p-6 rounded-3xl bg-slate-900 border border-purple-500/30 space-y-4 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <Compass className="w-5 h-5 text-purple-400" />
+                  <h3 className="text-lg font-bold text-white">
+                    Dự Trắc Đại Lục Nhâm: Quá Trình 3 Giai Đoạn (Tam Truyền)
+                  </h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                    {chartLucNham.tongMonName}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Đại Lục Nhâm chuyên đoán định diễn tiến nhân sự qua 3 mắt xích thời gian: Sơ Truyền (Khởi đầu) $\rightarrow$ Trung Truyền (Diễn biến) $\rightarrow$ Mạt Truyền (Kết quả)
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-mono font-bold px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-purple-300">
+                  Điểm Cát Hung: {combined.lucNham.score}/100 ({combined.lucNham.level})
+                </span>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
+              <h4 className="text-sm font-bold text-purple-300 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-purple-400" />
+                <span>Luận Đoán Thể Thức (Tông Môn):</span>
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                {combined.lucNham.overallProcessAnalysis}
+              </p>
+            </div>
+          </div>
+
+          {/* QUÁ TRÌNH 3 GIAI ĐOẠN CHI TIẾT (TAM TRUYỀN) */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* GIAI ĐOẠN 1: SƠ TRUYỀN */}
+            <div className="p-6 rounded-3xl bg-slate-900 border border-amber-500/30 space-y-4 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-full pointer-events-none"></div>
+              
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-sm">
+                    1
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">SƠ TRUYỀN (Khởi Đầu)</h4>
+                    <span className="text-[10px] text-slate-400">Phát Đoan • Duyên Cớ Ban Đầu</span>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                  {combined.lucNham.stages.soTruyen.chi}
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1 font-mono">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Thần Tướng:</span>
+                  <span className="text-amber-300 font-bold">{combined.lucNham.stages.soTruyen.thienTuong}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Lục Thân:</span>
+                  <span className="text-cyan-300">{combined.lucNham.stages.soTruyen.lucThan}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Ngũ Hành:</span>
+                  <span className="text-emerald-300">{combined.lucNham.stages.soTruyen.nguHanh}</span>
+                </div>
+                {combined.lucNham.stages.soTruyen.isTuanKhong && (
+                  <div className="text-rose-400 font-bold text-[10px]">
+                    * Phạm Tuần Không (Hư đoan, chưa thực chất)
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <strong className="text-amber-300 block">Lời Dự Đoán Giai Đoạn 1:</strong>
+                <p className="bg-slate-950/60 p-3 rounded-xl border border-slate-850">
+                  {combined.lucNham.stages.soTruyen.detailedForecast}
+                </p>
+              </div>
+            </div>
+
+            {/* GIAI ĐOẠN 2: TRUNG TRUYỀN */}
+            <div className="p-6 rounded-3xl bg-slate-900 border border-cyan-500/30 space-y-4 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-bl-full pointer-events-none"></div>
+
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-sm">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">TRUNG TRUYỀN (Diễn Biến)</h4>
+                    <span className="text-[10px] text-slate-400">Di Dời • Tiến Trình Thực Hiện</span>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                  {combined.lucNham.stages.trungTruyen.chi}
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1 font-mono">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Thần Tướng:</span>
+                  <span className="text-cyan-300 font-bold">{combined.lucNham.stages.trungTruyen.thienTuong}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Lục Thân:</span>
+                  <span className="text-purple-300">{combined.lucNham.stages.trungTruyen.lucThan}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Ngũ Hành:</span>
+                  <span className="text-emerald-300">{combined.lucNham.stages.trungTruyen.nguHanh}</span>
+                </div>
+                {combined.lucNham.stages.trungTruyen.isTuanKhong && (
+                  <div className="text-rose-400 font-bold text-[10px]">
+                    * Phạm Tuần Không (Dễ đứt đoạn giữa chừng)
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <strong className="text-cyan-300 block">Lời Dự Đoán Giai Đoạn 2:</strong>
+                <p className="bg-slate-950/60 p-3 rounded-xl border border-slate-850">
+                  {combined.lucNham.stages.trungTruyen.detailedForecast}
+                </p>
+              </div>
+            </div>
+
+            {/* GIAI ĐOẠN 3: MẠT TRUYỀN */}
+            <div className="p-6 rounded-3xl bg-slate-900 border border-purple-500/30 space-y-4 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/5 rounded-bl-full pointer-events-none"></div>
+
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold text-sm">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white">MẠT TRUYỀN (Kết Quả)</h4>
+                    <span className="text-[10px] text-slate-400">Quy Túc • Chung Cuộc Về Sau</span>
+                  </div>
+                </div>
+                <span className="px-2 py-0.5 rounded-full text-xs font-mono font-bold bg-purple-500/10 text-purple-300 border border-purple-500/30">
+                  {combined.lucNham.stages.matTruyen.chi}
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs space-y-1 font-mono">
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Thần Tướng:</span>
+                  <span className="text-purple-300 font-bold">{combined.lucNham.stages.matTruyen.thienTuong}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Lục Thân:</span>
+                  <span className="text-amber-300">{combined.lucNham.stages.matTruyen.lucThan}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-500">Ngũ Hành:</span>
+                  <span className="text-emerald-300">{combined.lucNham.stages.matTruyen.nguHanh}</span>
+                </div>
+                {combined.lucNham.stages.matTruyen.isTuanKhong && (
+                  <div className="text-rose-400 font-bold text-[10px]">
+                    * Phạm Tuần Không (Kết quả hư ảo, quy về không)
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-1.5 text-xs text-slate-300 leading-relaxed">
+                <strong className="text-purple-300 block">Lời Dự Đoán Giai Đoạn 3:</strong>
+                <p className="bg-slate-950/60 p-3 rounded-xl border border-slate-850">
+                  {combined.lucNham.stages.matTruyen.detailedForecast}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* DỰ TRẮC 6 LĨNH VỰC SỰ VỤ CỦA LỤC NHÂM */}
+          <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+            <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-purple-400" />
+              <span>Dự Trắc 6 Lĩnh Vực Nhân Sinh Theo Lục Nhâm</span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-amber-500/20 space-y-1">
+                <strong className="text-amber-300 block font-bold flex items-center gap-1.5">
+                  <Coins className="w-4 h-4 text-amber-400" /> Cầu Tài & Giao Thương
+                </strong>
+                <p className="text-slate-300 leading-relaxed">{combined.lucNham.sixAspects.cauTai}</p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-rose-500/20 space-y-1">
+                <strong className="text-rose-300 block font-bold flex items-center gap-1.5">
+                  <Heart className="w-4 h-4 text-rose-400" /> Hôn Nhân & Gia Đạo
+                </strong>
+                <p className="text-slate-300 leading-relaxed">{combined.lucNham.sixAspects.honNhan}</p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-cyan-500/20 space-y-1">
+                <strong className="text-cyan-300 block font-bold flex items-center gap-1.5">
+                  <GraduationCap className="w-4 h-4 text-cyan-400" /> Công Danh & Thi Cử
+                </strong>
+                <p className="text-slate-300 leading-relaxed">{combined.lucNham.sixAspects.quanVan}</p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-emerald-500/20 space-y-1">
+                <strong className="text-emerald-300 block font-bold flex items-center gap-1.5">
+                  <HeartPulse className="w-4 h-4 text-emerald-400" /> Bệnh Tật & Sức Khỏe
+                </strong>
+                <p className="text-slate-300 leading-relaxed">{combined.lucNham.sixAspects.benhTat}</p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-purple-500/20 space-y-1">
+                <strong className="text-purple-300 block font-bold flex items-center gap-1.5">
+                  <Scale className="w-4 h-4 text-purple-400" /> Tranh Chấp & Kiện Tụng
+                </strong>
+                <p className="text-slate-300 leading-relaxed">{combined.lucNham.sixAspects.kienTung}</p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-950 border border-blue-500/20 space-y-1">
+                <strong className="text-blue-300 block font-bold flex items-center gap-1.5">
+                  <Navigation className="w-4 h-4 text-blue-400" /> Xuất Hành & Đi Xa
+                </strong>
+                <p className="text-slate-300 leading-relaxed">{combined.lucNham.sixAspects.xuatHanh}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* PHẦN 4: TRA CỨU VIỆC ĐỜI CỔ BẢN (6 CHỦ ĐỀ KỲ MÔN BÍ KÍP)                   */}
+      {/* ========================================================================= */}
+      {activeMainTab === 'classical' && (
+        <div className="space-y-6 animate-fadeIn">
+          {/* Sub Navigation cho Cổ Bản */}
+          <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900 border border-slate-800 overflow-x-auto no-scrollbar">
+            {[
+              { id: 'marriage', label: '1. Hôn Nhân', icon: Heart },
+              { id: 'health', label: '2. Y Học & Bệnh', icon: HeartPulse },
+              { id: 'wealth', label: '3. Cầu Tài Lộc', icon: Coins },
+              { id: 'career', label: '4. Thi Cử Công Danh', icon: GraduationCap },
+              { id: 'lostItems', label: '5. Mất Vật & Trộm', icon: Search },
+              { id: 'lawsuit', label: '6. Kiện Tụng', icon: Scale },
+              { id: 'destiny', label: 'Thân Mệnh Quý Tiện', icon: User },
+              { id: 'overview', label: 'Tam Bàn & Chủ Khách', icon: Layers },
+            ].map((topic) => {
+              const Icon = topic.icon;
+              const isActive = activeClassicalTopic === topic.id;
+              return (
+                <button
+                  key={topic.id}
+                  onClick={() => setActiveClassicalTopic(topic.id as any)}
+                  className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 whitespace-nowrap transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-amber-500 text-slate-950 shadow-md font-black'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  }`}
+                >
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-slate-950' : 'text-amber-400'}`} />
+                  <span>{topic.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Render từng chủ đề */}
+          {activeClassicalTopic === 'marriage' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <Heart className="w-5 h-5 text-rose-400" />
-                <h3 className="text-base font-bold text-white">Vị Trí Cung Hôn Nhân Trên Bàn Kỳ Môn Hiện Tại</h3>
-              </div>
-
-              <div className="space-y-3">
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center">
-                  <div>
-                    <span className="text-slate-400 text-[11px] block">Người Chồng / Nhà Trai (Canh):</span>
-                    <span className="font-bold text-amber-300 text-sm">
-                      Cung {pData.canhPalace.palaceNum} ({pData.canhPalace.palaceName} - {pData.canhPalace.element})
-                    </span>
-                  </div>
-                  <span className="text-xs font-mono text-slate-400">
-                    {pData.canhPalace.door} • {pData.canhPalace.heavenStar}
-                  </span>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center">
-                  <div>
-                    <span className="text-slate-400 text-[11px] block">Người Vợ / Nhà Gái (Ất):</span>
-                    <span className="font-bold text-emerald-300 text-sm">
-                      Cung {pData.atPalace.palaceNum} ({pData.atPalace.palaceName} - {pData.atPalace.element})
-                    </span>
-                  </div>
-                  <span className="text-xs font-mono text-slate-400">
-                    {pData.atPalace.door} • {pData.atPalace.heavenStar}
-                  </span>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center">
-                  <div>
-                    <span className="text-slate-400 text-[11px] block">Người Mối / Mai Mối (Lục Hợp):</span>
-                    <span className="font-bold text-cyan-300 text-sm">
-                      Cung {pData.lucHopPalace.palaceNum} ({pData.lucHopPalace.palaceName} - {pData.lucHopPalace.element})
-                    </span>
-                  </div>
-                  <span className="text-xs font-mono text-slate-400">{pData.lucHopPalace.door}</span>
-                </div>
-
-                {/* Tương quan Ngũ hành */}
-                <div className="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-200">
-                  <span className="font-bold block mb-1">Tương Quan Sinh Khắc Vợ (Ất) - Chồng (Canh):</span>
-                  <p>
-                    Cung Ất ({pData.atPalace.element}) đối với Cung Canh ({pData.canhPalace.element}):{' '}
-                    <strong>{evaluateElementRelation(pData.atPalace.element, pData.canhPalace.element)}</strong>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Bí Kíp Toàn Thư Luận Đoán Hôn Nhân */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <h3 className="text-base font-bold text-white pb-3 border-b border-slate-800 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-amber-400" />
-                Khẩu Quyết Luận Đoán Hôn Nhân & Thê Thiếp
+                <span>Chiêm Hôn Nhân & Vợ Chồng Cổ Bản (Kỳ Môn Độn Giáp)</span>
               </h3>
-              <div className="space-y-2.5 text-slate-300 leading-relaxed">
-                <p>
-                  • <strong>Tương sinh, tương hợp:</strong> Nếu cung Ất và Canh tương sinh, tương hợp thì hôn nhân thành công mỹ mãn, vợ chồng hòa thuận trăm năm.
-                </p>
-                <p>
-                  • <strong>Tương khắc:</strong> Nếu Ất khắc Canh hoặc Canh khắc Ất thì một trong hai bên chê bai, không thuận ý; nếu cưỡng ép lấy nhau thì về sau dễ hình khắc phân ly.
-                </p>
-                <p>
-                  • <strong>Thê - Thiếp (Ất & Đinh):</strong> Nếu cung Ất sinh Canh và Đinh sinh Canh thì người nữ thuận lòng tòng phu. Nếu Ất khắc Đinh thì vợ cả ghen tuông không dung thứ vợ lẽ; Đinh khắc Ất thì vợ lẽ lấn lướt vợ cả.
-                </p>
-                <p>
-                  • <strong>Mộ Tuyệt & Kích Hình:</strong> Nếu Ất và Đinh rơi vào cung Mộ, Tuyệt thì hôn nhân khó thành. Ất gặp Kích Hình thì tính người nữ hung dữ; đắc Đức Hợp thì người nữ hiền thục nết na.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CATEGORY 4: Y HỌC, TRỊ BỆNH & TÌM THẦY THUỐC */}
-      {activeCategory === 'health' && (
-        <div className="space-y-6 animate-fadeIn text-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Chẩn Đoán Bệnh Chứng Hiện Tại */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
-                <HeartPulse className="w-5 h-5 text-rose-400" />
-                <h3 className="text-base font-bold text-white">Chẩn Đoán Bệnh Chứng Qua Thiên Nhuế</h3>
-              </div>
-
-              <div className="space-y-3">
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-bold text-amber-300 text-sm">
-                      Thần Bệnh: Sao Thiên Nhuế lâm Cung {pData.thienNhuePalace.palaceNum} ({pData.thienNhuePalace.palaceName})
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-500/40 font-mono text-[11px]">
-                      Hành {pData.thienNhuePalace.element}
-                    </span>
-                  </div>
-                  {THIEN_NHUE_DISEASE_MAP[pData.thienNhuePalace.palaceNum] && (
-                    <div className="space-y-2 text-slate-300">
-                      <p>
-                        <strong className="text-white">• Bệnh Nội Tạng (Bên trong):</strong>{' '}
-                        {THIEN_NHUE_DISEASE_MAP[pData.thienNhuePalace.palaceNum].internal}
-                      </p>
-                      <p>
-                        <strong className="text-white">• Bệnh Thể Xác (Bên ngoài):</strong>{' '}
-                        {THIEN_NHUE_DISEASE_MAP[pData.thienNhuePalace.palaceNum].external}
-                      </p>
-                      <p className="text-amber-200/90 italic font-serif pt-1">
-                        {THIEN_NHUE_DISEASE_MAP[pData.thienNhuePalace.palaceNum].summary}
-                      </p>
-                    </div>
-                  )}
+              <p>
+                <strong>Dụng thần:</strong> Lấy <strong>Ất Kỳ</strong> làm Nhà gái (Cô dâu / Vợ), <strong>Canh</strong> làm Nhà trai (Chú rể / Chồng), <strong>Lục Hợp</strong> làm Mối lái (Người trung gian, tác hợp).
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                  <strong className="text-amber-400 block mb-1">Cung Vị Ất Kỳ (Nhà Gái):</strong>
+                  <span>Cung {pData.atPalace?.palaceName} - Cửa: {pData.atPalace?.door} - Sao: {pData.atPalace?.heavenStar}</span>
                 </div>
-
-                <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 block font-semibold">Sinh Môn (Sự Sống):</span>
-                    <span className="font-bold text-emerald-300">Cung {pData.sinhMonPalace.palaceNum} ({pData.sinhMonPalace.palaceName})</span>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 block font-semibold">Tử Môn (Nguy Kịch):</span>
-                    <span className="font-bold text-rose-300">Cung {pData.tuMonPalace.palaceNum} ({pData.tuMonPalace.palaceName})</span>
-                  </div>
+                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                  <strong className="text-amber-400 block mb-1">Cung Vị Canh (Nhà Trai):</strong>
+                  <span>Cung {pData.canhPalace?.palaceName} - Cửa: {pData.canhPalace?.door} - Sao: {pData.canhPalace?.heavenStar}</span>
                 </div>
               </div>
+              <p className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <strong>Nguyên tắc:</strong> Hai cung tương sinh tương hợp, hoặc Ất Canh đồng cung, Lục Hợp đắc cát môn thì hôn nhân đại cát, trăm năm hòa hợp. Nếu tương khắc, hoặc gặp Hung thần (Bạch Hổ, Huyền Vũ) thì hôn sự nhiều trắc trở, cần hóa giải.
+              </p>
             </div>
+          )}
 
-            {/* Tìm Thầy Thuốc & Phương Thuốc */}
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <h3 className="text-base font-bold text-white pb-3 border-b border-slate-800 flex items-center gap-2">
-                <Shield className="w-5 h-5 text-cyan-400" />
-                Tìm Thầy Thuốc & Hiệu Lực Trị Bệnh
+          {activeClassicalTopic === 'health' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <HeartPulse className="w-5 h-5 text-emerald-400" />
+                <span>Chiêm Y Học & Trị Bệnh Cổ Bản</span>
               </h3>
-
-              <div className="space-y-3 text-slate-300 leading-relaxed">
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-cyan-400 font-bold block mb-1">
-                    Thần Thầy Thuốc: Sao Thiên Tâm & Kỳ Ất
-                  </span>
-                  <p>
-                    • <strong>Thiên Tâm:</strong> Cung {pData.thienTamPalace.palaceNum} ({pData.thienTamPalace.palaceName} - {pData.thienTamPalace.element})
+              <p>
+                <strong>Dụng thần:</strong> <strong>Thiên Nhuế</strong> đại diện cho Bệnh tật, <strong>Thiên Tâm / Ất Kỳ</strong> là Lương y (Bác sĩ, thuốc men), <strong>Sinh Môn</strong> là Khí sống (Sinh khí), <strong>Tử Môn</strong> là Bệnh trầm kha.
+              </p>
+              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                <strong className="text-amber-300 block">Vị Trí Sao Thiên Nhuế (Bệnh):</strong>
+                <span>Cung {pData.thienNhuePalace?.palaceName} ({pData.thienNhuePalace?.direction})</span>
+                {THIEN_NHUE_DISEASE_MAP[pData.thienNhuePalace?.palaceNum || 2] && (
+                  <p className="text-slate-400 pt-1">
+                    {THIEN_NHUE_DISEASE_MAP[pData.thienNhuePalace?.palaceNum || 2].summary}
                   </p>
-                  <p>
-                    • <strong>Kỳ Ất (Dược Thần):</strong> Cung {pData.atPalace.palaceNum} ({pData.atPalace.palaceName} - {pData.atPalace.element})
-                  </p>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-amber-400 font-bold block mb-1">Quy Tắc Khắc Chế Bệnh Tật:</span>
-                  <p>
-                    Cung Thầy Thuốc (Thiên Tâm / Kỳ Ất) phải <strong>khắc được</strong> cung của Thần Bệnh (Thiên Nhuế) thì uống thuốc mới mau lành, gặp được danh y.
-                  </p>
-                  <p className="text-slate-400 mt-1">
-                    Nếu Cung Bệnh (Thiên Nhuế) khắc ngược lại Cung Thầy Thuốc thì dù gặp thầy giỏi cũng khó cứu chữa, bệnh tình dai dẳng.
-                  </p>
-                </div>
+                )}
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
-      {/* CATEGORY 5: CẦU TÀI, KINH DOANH & GIAO DỊCH */}
-      {activeCategory === 'wealth' && (
-        <div className="space-y-6 animate-fadeIn text-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
+          {activeClassicalTopic === 'wealth' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <Coins className="w-5 h-5 text-amber-400" />
-                <h3 className="text-base font-bold text-white">Vị Trí Tài Thần & Sinh Môn Trên Bàn Cờ</h3>
-              </div>
-
-              <div className="space-y-3">
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 text-[11px] block">Vốn Liếng / Tiền Vốn (Giáp Tý Mậu):</span>
-                  <span className="font-bold text-amber-300 text-sm">
-                    Cung {pData.mauPalace.palaceNum} ({pData.mauPalace.palaceName} - {pData.mauPalace.element})
-                  </span>
-                  <p className="text-slate-400 text-[11px] mt-0.5">
-                    Cửa: {pData.mauPalace.door} • Sao: {pData.mauPalace.heavenStar} • Thần: {pData.mauPalace.god}
-                  </p>
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 text-[11px] block">Lợi Nhuận & Phương Vị Có Tài (Sinh Môn):</span>
-                  <span className="font-bold text-emerald-300 text-sm">
-                    Cung {pData.sinhMonPalace.palaceNum} ({pData.sinhMonPalace.palaceName} - {pData.sinhMonPalace.element})
-                  </span>
-                  <p className="text-slate-400 text-[11px] mt-0.5">
-                    Sao: {pData.sinhMonPalace.heavenStar} • Thần: {pData.sinhMonPalace.god}
-                  </p>
-                </div>
-
-                <div className="p-3 rounded-xl bg-amber-950/30 border border-amber-500/30 text-amber-200">
-                  <span className="font-bold block mb-1">Tương Quan Lợi Nhuận (Sinh Môn) & Tiền Vốn (Mậu):</span>
-                  <p>
-                    Sinh Môn ({pData.sinhMonPalace.element}) đối với Mậu ({pData.mauPalace.element}):{' '}
-                    <strong>{evaluateElementRelation(pData.sinhMonPalace.element, pData.mauPalace.element)}</strong>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <h3 className="text-base font-bold text-white pb-3 border-b border-slate-800 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-amber-400" />
-                Bí Kíp Giao Dịch & Mua Bán
+                <span>Chiêm Cầu Tài & Giao Thương Cổ Bản</span>
               </h3>
-              <div className="space-y-2.5 text-slate-300 leading-relaxed">
-                <p>
-                  • <strong>Buôn Bán Lời Lỗ:</strong> Nếu cung Sinh môn được Kỳ Môn cát cách và sinh cho cung Mậu thì việc buôn bán được lời lớn, bội thu. Nếu Sinh môn khắc Mậu tất bị tổn hao tiền vốn.
-                </p>
-                <p>
-                  • <strong>Giao Dịch Người Mua - Người Bán:</strong>
-                  <span className="block pl-3 text-slate-400 mt-1">
-                    - Nhật can là Ta (Người mua), Thời can là Người (Người bán), Lục Hợp là người môi giới.
-                  </span>
-                  <span className="block pl-3 text-slate-400">
-                    - Nhật can sinh Thời can: Ta mua chịu; Thời can sinh Nhật can: Người bán thuận lòng bán.
-                  </span>
-                  <span className="block pl-3 text-slate-400">
-                    - Lục Hợp sinh Nhật can: Người mối đứng về phía ta; nếu rơi vào Không Vong: Giao dịch bất thành.
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CATEGORY 6: THI CỬ & CÔNG DANH */}
-      {activeCategory === 'career' && (
-        <div className="space-y-6 animate-fadeIn text-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
-                <GraduationCap className="w-5 h-5 text-amber-400" />
-                <h3 className="text-base font-bold text-white">Vị Trí Trường Thi Trên Bàn Cờ</h3>
-              </div>
-
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Sĩ Tử Đi Thi (Nhật Can):</span>
-                    <span className="font-bold text-amber-300">Cung {pData.dayPalace.palaceNum} ({pData.dayPalace.palaceName})</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Bài Thi / Văn Chương (Kỳ Đinh):</span>
-                    <span className="font-bold text-rose-300">Cung {pData.dinhPalace.palaceNum} ({pData.dinhPalace.palaceName})</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Quan Chủ Khảo (Trực Phù):</span>
-                    <span className="font-bold text-cyan-300">Cung {pData.trucPhuPalace.palaceNum} ({pData.trucPhuPalace.palaceName})</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Giám Khảo Chấm Thi (Trực Sử):</span>
-                    <span className="font-bold text-emerald-300">Cung {pData.trucSuPalace.palaceNum} ({pData.trucSuPalace.palaceName})</span>
-                  </div>
-                </div>
-
+              <p>
+                <strong>Dụng thần:</strong> <strong>Giáp Tý Mậu</strong> làm Vốn liếng (Tiền vốn ban đầu), <strong>Sinh Môn</strong> làm Lợi tức (Lợi nhuận thu về).
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 text-[11px] block">Thăng Chức Quan Văn / Quan Võ:</span>
-                  <p className="text-slate-200 mt-0.5">
-                    • Quan Văn xem <strong>Khai Môn</strong> tại Cung {pData.khaiMonPalace.palaceNum} ({pData.khaiMonPalace.palaceName}).
-                  </p>
-                  <p className="text-slate-200">
-                    • Quan Võ xem <strong>Đỗ Môn</strong> tại Cung {pData.doMonPalace.palaceNum} ({pData.doMonPalace.palaceName}).
-                  </p>
+                  <strong className="text-amber-300 block">Vốn Liếng (Mậu):</strong>
+                  <span>Cung {pData.mauPalace?.palaceName} - {pData.mauPalace?.door}</span>
                 </div>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <h3 className="text-base font-bold text-white pb-3 border-b border-slate-800 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-amber-400" />
-                Luận Đoán Đỗ Đạt Bảng Vàng
-              </h3>
-              <div className="space-y-2.5 text-slate-300 leading-relaxed">
-                <p>
-                  • <strong>Đỗ Bảng Vàng:</strong> Nếu Trực Phù và Trực Sử cùng tương sinh cho cung Can ngày (sĩ tử), bài thi Kỳ Đinh vượng tướng đắc Kỳ Môn thì thi cử đỗ đạt vinh hiển.
-                </p>
-                <p>
-                  • <strong>Hỏng Thi / Trục Trặc:</strong> Nếu Trực Phù hoặc Trực Sử khắc Can ngày thì giám khảo gạt bỏ; nếu Kỳ Đinh rơi vào Hưu Tù Phế Mộ thì bài thi lạc đề, văn chương tối nghĩa.
-                </p>
-                <p>
-                  • <strong>Phạm Quy:</strong> Kỳ Đinh rơi vào Không Vong thì bài làm dang dở; rơi vào Mộ thì phạm trường quy; gặp Huyền Vũ thì văn chương bị sai lệch.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CATEGORY 7: TÌM NGƯỜI & MẤT VẬT */}
-      {activeCategory === 'lostItems' && (
-        <div className="space-y-6 animate-fadeIn text-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
-                <Search className="w-5 h-5 text-amber-400" />
-                <h3 className="text-base font-bold text-white">Xác Định Đồ Vật & Phương Vị Rơi Mất</h3>
-              </div>
-
-              <div className="space-y-3">
-                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 text-[11px] block">Vật Bị Mất (Can Giờ đóng tại Cung):</span>
-                  <span className="font-bold text-amber-300 text-sm">
-                    Cung {pData.hourPalace.palaceNum} ({pData.hourPalace.palaceName} - {pData.hourPalace.direction})
-                  </span>
-                  {LOST_ITEMS_MAP[pData.hourPalace.palaceNum] && (
-                    <div className="mt-2 space-y-1.5 text-slate-300">
-                      <p>
-                        <strong className="text-white">• Loại vật phẩm:</strong>{' '}
-                        {LOST_ITEMS_MAP[pData.hourPalace.palaceNum].items}
-                      </p>
-                      <p>
-                        <strong className="text-white">• Loài vật / Thú nuôi:</strong>{' '}
-                        {LOST_ITEMS_MAP[pData.hourPalace.palaceNum].animal}
-                      </p>
-                      <p className="text-amber-200/90 italic pt-0.5">
-                        {LOST_ITEMS_MAP[pData.hourPalace.palaceNum].nature}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex justify-between items-center">
-                  <div>
-                    <span className="text-slate-400 text-[11px] block">Kẻ Lấy Cắp (Sao Thiên Bồng):</span>
-                    <span className="font-bold text-rose-300">Cung {pData.thienBongPalace.palaceNum} ({pData.thienBongPalace.palaceName})</span>
-                  </div>
-                  <span className="text-[11px] text-slate-400 font-mono">Thần: {pData.thienBongPalace.god}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <h3 className="text-base font-bold text-white pb-3 border-b border-slate-800 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-amber-400" />
-                Quy Tắc Tìm Lại Đồ Vật & Nhận Diện Kẻ Trộm
-              </h3>
-              <div className="space-y-2.5 text-slate-300 leading-relaxed">
-                <p>
-                  • <strong>Tìm Lại Được:</strong> Nếu cung Can giờ vượng tướng và tương sinh cho cung Can ngày (chủ mất), hoặc gặp Phản Ngâm thì vật mất tìm lại được rất nhanh.
-                </p>
-                <p>
-                  • <strong>Không Tìm Thấy:</strong> Nếu Can giờ rơi vào Không Vong, Mộ, Tuyệt thì đồ vật đã bị tẩu tán hoặc không còn cơ hội tìm thấy.
-                </p>
-                <p>
-                  • <strong>Nhận Diện Kẻ Trộm:</strong> Lấy sao Thiên Bồng làm chủ trộm. Nếu Thiên Bồng đắc khí đắc Kỳ Môn là kẻ sang trọng lấy cắp; thất khí là kẻ tiểu nhân bần hàn. Nếu Lục Hợp đi cùng là bị lừa dối dắt đi.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* CATEGORY 8: KIỆN TỤNG & TRANH CHẤP */}
-      {activeCategory === 'lawsuit' && (
-        <div className="space-y-6 animate-fadeIn text-xs">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 pb-3 border-b border-slate-800">
-                <Scale className="w-5 h-5 text-amber-400" />
-                <h3 className="text-base font-bold text-white">Vị Trí Tòa Án & Kiện Tụng Trên Bàn Cờ</h3>
-              </div>
-
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Nguyên Cáo / Người Kiện (Nhật Can):</span>
-                    <span className="font-bold text-emerald-300">Cung {pData.dayPalace.palaceNum} ({pData.dayPalace.palaceName})</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Bị Cáo / Người Bị Kiện (Thời Can):</span>
-                    <span className="font-bold text-rose-300">Cung {pData.hourPalace.palaceNum} ({pData.hourPalace.palaceName})</span>
-                  </div>
-                </div>
-
                 <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-slate-400 text-[11px] block">Quan Tòa / Quan Xét Xử (Trực Phù):</span>
-                  <span className="font-bold text-cyan-300 text-sm">
-                    Cung {pData.trucPhuPalace.palaceNum} ({pData.trucPhuPalace.palaceName})
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Đơn Trạng / Văn Thư (Kinh Môn):</span>
-                    <span className="font-bold text-amber-300">Cung {pData.kinhMonPalace.palaceNum} ({pData.kinhMonPalace.palaceName})</span>
-                  </div>
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                    <span className="text-slate-400 text-[11px] block">Văn Khế / Chứng Cứ (Cảnh Môn):</span>
-                    <span className="font-bold text-purple-300">Cung {pData.canhMonPalace.palaceNum} ({pData.canhMonPalace.palaceName})</span>
-                  </div>
+                  <strong className="text-emerald-300 block">Lợi Nhuận (Sinh Môn):</strong>
+                  <span>Cung {pData.sinhMonPalace?.palaceName} - {pData.sinhMonPalace?.direction}</span>
                 </div>
               </div>
+              <p className="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <strong>Quy luật:</strong> Cung Sinh Môn sinh cung Mậu hoặc cung Nhật Can thì buôn bán một vốn bốn lời. Nếu Sinh Môn khắc Mậu hoặc lạc Tuần Không thì cẩn trọng kẻo thâm hụt vốn.
+              </p>
             </div>
+          )}
 
-            <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-              <h3 className="text-base font-bold text-white pb-3 border-b border-slate-800 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-amber-400" />
-                Luận Đoán Thắng Thua & Thụ Lý Đơn
+          {activeClassicalTopic === 'career' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <GraduationCap className="w-5 h-5 text-cyan-400" />
+                <span>Chiêm Thi Cử & Công Danh Sự Nghiệp</span>
               </h3>
-              <div className="space-y-2.5 text-slate-300 leading-relaxed">
-                <p>
-                  • <strong>Quan Tòa Trách Phạt:</strong> Nếu cung Trực Phù khắc Can ngày thì quan trách phạt Nguyên Cáo; nếu khắc Can giờ thì trách phạt Bị Cáo. Nếu Trực Phù sinh Can ngày thì quan xử có lợi cho bên kiện.
-                </p>
-                <p>
-                  • <strong>Đơn Từ Thụ Lý (Kinh & Cảnh):</strong> Nếu cửa Kinh và Cảnh vượng tướng đắc Kỳ Môn, không bị cửa Khai (quan trưởng) xung khắc thì đơn trạng được phê chuẩn nhanh chóng.
-                </p>
-                <p>
-                  • <strong>Bác Đơn:</strong> Nếu Kinh, Cảnh rơi vào Mộ thì lời lẽ mờ mịt không rõ nên quan không chuẩn; nếu rơi vào Không Vong thì đơn bị hủy bỏ, không được thụ lý.
-                </p>
+              <p>
+                <strong>Dụng thần:</strong> <strong>Nhật Can</strong> đại diện cho Sĩ tử (Người đi thi/xin việc), <strong>Trực Phù</strong> là Chủ khảo (Cấp trên/Người tuyển dụng), <strong>Khai Môn</strong> là Chức vị/Cơ quan, <strong>Cảnh Môn</strong> là Bài thi/Văn bằng.
+              </p>
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <span>Trực Phù: Cung {chartKyMon.trucPhuNewPalace} ({chartKyMon.trucPhuStar})</span>
+                <span className="block">Khai Môn: Cung {pData.khaiMonPalace?.palaceName}</span>
+                <span className="block">Cảnh Môn: Cung {pData.canhMonPalace?.palaceName}</span>
               </div>
             </div>
-          </div>
+          )}
+
+          {activeClassicalTopic === 'lostItems' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Search className="w-5 h-5 text-purple-400" />
+                <span>Chiêm Mất Của & Kẻ Trộm</span>
+              </h3>
+              <p>
+                <strong>Dụng thần:</strong> <strong>Thời Can</strong> là Đồ vật bị mất, <strong>Thiên Bồng</strong> hoặc <strong>Huyền Vũ</strong> là Kẻ trộm, <strong>Sinh Môn</strong> là Nơi cất giấu / Tìm lại được.
+              </p>
+              {LOST_ITEMS_MAP[chartKyMon.trucPhuNewPalace] && (
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                  <strong className="text-amber-300 block">Dấu vết đồ vật theo cung:</strong>
+                  <p>{LOST_ITEMS_MAP[chartKyMon.trucPhuNewPalace].nature}</p>
+                  <p className="text-slate-400">Đặc tính vật: {LOST_ITEMS_MAP[chartKyMon.trucPhuNewPalace].items}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeClassicalTopic === 'lawsuit' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Scale className="w-5 h-5 text-rose-400" />
+                <span>Chiêm Kiện Tụng & Tranh Chấp</span>
+              </h3>
+              <p>
+                <strong>Dụng thần:</strong> <strong>Trực Phù</strong> là Quan tòa / Trọng tài, <strong>Kinh Môn</strong> là Tranh cãi / Đấu lý, <strong>Cảnh Môn</strong> là Đơn từ khởi kiện, <strong>Can Ngày</strong> là Nguyên đơn, <strong>Can Giờ</strong> là Bị đơn.
+              </p>
+              <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                <span>Kinh Môn: Cung {pData.kinhMonPalace?.palaceName}</span>
+                <span className="block">Cảnh Môn: Cung {pData.canhMonPalace?.palaceName}</span>
+              </div>
+            </div>
+          )}
+
+          {activeClassicalTopic === 'destiny' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <User className="w-5 h-5 text-amber-400" />
+                <span>Chiêm Thân Mệnh (Nhân Sinh Quý Tiện)</span>
+              </h3>
+              <p>
+                Xem cung Bản Mệnh dựa trên Thiên Can Ngày sinh hoặc Can Giờ chiêm: Nếu lâm Tam Cát Môn (Khai, Hưu, Sinh) đắc Trực Phù, Thái Âm, Lục Hợp là người tôn quý, phúc thọ song toàn. Nếu lâm Hung Môn (Tử, Kinh, Thương) lại bị Cung khắc thì cuộc đời nhiều bôn ba sóng gió, cần tu nhân tích đức để cải biến.
+              </p>
+            </div>
+          )}
+
+          {activeClassicalTopic === 'overview' && (
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl text-xs text-slate-300 leading-relaxed">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Layers className="w-5 h-5 text-cyan-400" />
+                <span>Nguyên Lý Tam Bàn & Phân Định Chủ - Khách</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                  <strong className="text-cyan-300 block">Quy Luật Tam Bàn:</strong>
+                  <p>• Thiên Bàn (9 Sao): Đại diện cho Thiên thời, cát hung định sẵn.</p>
+                  <p>• Nhân Bàn (8 Cửa): Đại diện cho Nhân sự, sự chủ động của con người.</p>
+                  <p>• Địa Bàn (9 Cung): Đại diện cho Địa lợi, cơ sở đất đai vững chãi.</p>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+                  <strong className="text-amber-300 block">Phân Định Chủ - Khách:</strong>
+                  <p>• Ta chủ động tìm người: Ta là Khách (Thiên bàn), người là Chủ (Địa bàn).</p>
+                  <p>• Người tìm đến ta: Ta là Chủ (Địa bàn), người là Khách (Thiên bàn).</p>
+                  <p>• Khách sinh Chủ: Ít hao tốn, mang lại đại lợi cho phía Chủ.</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

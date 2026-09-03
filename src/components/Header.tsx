@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Thiên Văn' },
     { id: 'daily-calendar', label: 'Lịch Ngày Chi Tiết', icon: '📅', badge: 'Lịch Block' },
     { id: 'trach-cat', label: 'Trạch Cát Hiệp Kỷ', icon: '🏛️', badge: 'Tứ Khố Toàn Thư' },
-    { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: '6 Chủ Đề' },
+    { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: 'Kỳ Môn & Lục Nhâm' },
     { id: 'table', label: '24 Tiết Khí Năm', icon: '🗓️', badge: 'Toàn Niên' },
   ];
 
