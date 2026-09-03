@@ -63,12 +63,19 @@ export const TrachCatView: React.FC<TrachCatViewProps> = ({
     return DUNG_SU_60_CATEGORIES.find((c) => c.id === selectedCategoryId) || DUNG_SU_60_CATEGORIES[0];
   }, [selectedCategoryId]);
 
-  // Base days in the selected target month
+  // Vietnam timezone components of selected date
+  const vnYear = useMemo(() => {
+    return new Date(currentDate.getTime() + 7 * 3600 * 1000).getUTCFullYear();
+  }, [currentDate.getTime()]);
+
+  const vnMonth = useMemo(() => {
+    return new Date(currentDate.getTime() + 7 * 3600 * 1000).getUTCMonth();
+  }, [currentDate.getTime()]);
+
+  // Base days in the selected target month (fast O(1) day calculations with astronomical timeline cache)
   const targetMonthData = useMemo(() => {
-    const vn = new Date(currentDate.getTime() + 7 * 3600 * 1000);
-    const y = vn.getUTCFullYear();
-    const m = vn.getUTCMonth() + searchMonthOffset; // 0..11 + offset
-    const targetDate = new Date(Date.UTC(y, m, 1));
+    const m = vnMonth + searchMonthOffset; // 0..11 + offset
+    const targetDate = new Date(Date.UTC(vnYear, m, 1));
     const targetYear = targetDate.getUTCFullYear();
     const targetMonth = targetDate.getUTCMonth();
     const daysInTargetMonth = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate();
@@ -89,7 +96,7 @@ export const TrachCatView: React.FC<TrachCatViewProps> = ({
       targetMonth: targetMonth + 1,
       days,
     };
-  }, [currentDate.getFullYear(), currentDate.getMonth(), searchMonthOffset]);
+  }, [vnYear, vnMonth, searchMonthOffset]);
 
   // Evaluated list for selected category (pure in-memory O(1) comparison per day)
   const evaluatedDaysInMonth = useMemo(() => {
