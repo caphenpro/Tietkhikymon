@@ -69,6 +69,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'trach-cat-hiep-ky', title: '22. Trạch Cát Toàn Thư "Hiệp Kỷ Biện Phương Thư" & 6 Bậc Biện Chứng Cát Hung', icon: Shield },
     { id: 'kymon-energy-trends', title: '23. Biểu Đồ Thống Kê Năng Lượng 9 Cung & Xu Hướng Cục (Recharts)', icon: Zap },
     { id: 'combined-prognostication', title: '24. Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)', icon: Sparkles },
+    { id: 'dual-pillars-structure', title: '25. Cấu Trúc Song Trụ: Lịch Vạn Niên & Lập Quẻ Song Thức (Kỳ Môn - Lục Nhâm)', icon: Layers },
   ];
 
   return (
@@ -1390,6 +1391,58 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
               <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                 <span className="text-amber-400 font-bold">Truy cập chuyên mục:</span> Mở tab <strong className="text-amber-300">"Dự Trắc Chuyên Sâu"</strong> trên thanh Header hoặc nhấn nút <strong>"Dự Trắc Song Thức"</strong> trong giao diện Bàn Kỳ Môn / Lục Nhâm.
+              </div>
+            </div>
+          )}
+
+          {/* Section 25: Cấu Trúc Song Trụ: Lịch Vạn Niên & Lập Quẻ Song Thức (Kỳ Môn - Lục Nhâm) */}
+          {(activeSection === 'all' || activeSection === 'dual-pillars-structure') && (
+            <div className="space-y-4 p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80">
+              <div className="flex items-center gap-3 pb-3 border-b border-slate-800">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500/20 to-purple-500/20 flex items-center justify-center text-amber-400 shrink-0">
+                  <Layers className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-white">25. Cấu Trúc Song Trụ: Lịch Vạn Niên Chuẩn Hóa & Lập Quẻ Song Thức</h4>
+                  <p className="text-xs text-slate-400">Quy tụ trọng tâm vào 2 giá trị cốt lõi, loại bỏ lý thuyết dư thừa và tập trung vào ứng dụng thực tiễn</p>
+                </div>
+              </div>
+
+              <p className="text-slate-300 leading-relaxed text-sm">
+                Theo chuẩn mực tối ưu hóa trải nghiệm, toàn bộ ứng dụng được tổ chức xoay quanh hai trụ cột vững chắc:
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-2">
+                  <strong className="text-amber-300 block font-bold text-sm flex items-center gap-1.5">
+                    <span>📅 Trụ Cột 1: Lịch Vạn Niên & Cát Hung</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Tổng hòa toàn bộ các yếu tố cấu thành lịch pháp chuẩn cổ truyền và thiên văn học hiện đại:<br />
+                    • <strong>Dương Lịch & Âm Lịch:</strong> Ngày tháng năm, thứ, giờ thực tế, tháng nhuận và điểm Sóc.<br />
+                    • <strong>Tứ Trụ Bát Tự & Tiết Khí:</strong> Can Chi 4 trụ, nạp âm ngũ hành và kinh độ mặt trời (0°-360°).<br />
+                    • <strong>Thập Nhị Trực & 28 Sao:</strong> Luận giải trực ngày (Kiến, Trừ, Mãn...) và Nhị Thập Bát Tú.<br />
+                    • <strong>Thần Sát Cát Tinh & Hung Tinh:</strong> Bảng sao tốt (Thiên Đức, Nguyệt Đức...) và sao xấu (Sát Chủ, Thụ Tử...) theo Hiệp Kỷ Biện Phương Thư.<br />
+                    • <strong>12 Canh Giờ Hoàng/Hắc Đạo:</strong> Xem đủ 12 canh giờ hoặc lọc 6 giờ Hoàng Đạo.<br />
+                    • <strong>Hành Động Nghi & Kỵ:</strong> Phán định việc nên làm, việc kiêng cữ và hướng xuất hành (Hỷ Thần, Tài Thần, tránh Hạc Thần).
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-purple-500/30 space-y-2">
+                  <strong className="text-purple-300 block font-bold text-sm flex items-center gap-1.5">
+                    <span>🧭🔮 Trụ Cột 2: Lập Quẻ Kỳ Môn & Lục Nhâm</span>
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Phối hợp song thức bổ trợ hoàn hảo giữa Không Gian và Quá Trình:<br />
+                    • <strong>Kỳ Môn Độn Giáp (Luận Bàn Không - Thời Gian):</strong> Luận giải thời điểm đang hiển thị Cát hay Hung, xem xét cát hung của toàn bộ 8 hướng phương vị trong không gian, chỉ ra vị trí đắc cát khí, hướng kỵ sát và chiến lược Chủ - Khách động tĩnh.<br />
+                    • <strong>Đại Lục Nhâm (Luận Bàn Quá Trình Thành Bại):</strong> Bám sát tiến trình nhân quả 3 giai đoạn của Tam Truyền (Sơ Truyền khởi đầu, Trung Truyền diễn biến, Mạt Truyền quy túc), phán định rõ ràng kết quả chung cuộc Thành hay Bại và tư vấn phương án giải quyết tối ưu.<br />
+                    • <strong>Song Thức Tổng Hợp:</strong> Kết luận dứt khoát: thời khắc này NÊN LÀM GÌ, KHÔNG NÊN LÀM GÌ, hướng nào thuận lợi, hướng nào không.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                <span className="text-amber-400 font-bold">Triết lý thiết kế:</span> Đơn giản hóa cấu trúc, loại bỏ các mục lý thuyết trừu tượng dư thừa và hộp thoại AI chatbot để đem lại tốc độ phản hồi tức thì, giao diện sắc nét và tính năng tra cứu - lập quẻ thực chiến cao độ.
               </div>
             </div>
           )}

@@ -6,6 +6,33 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.29.0]] - 2026-09-03
+### Codename: *Tinh Gọn Song Trụ: Lịch Vạn Niên Chuẩn Hóa & Lập Quẻ Song Thức Kỳ Môn - Lục Nhâm (Streamlined Dual-Pillars Calendar & Divination System)*
+
+#### 🎯 Quy Tụ Cấu Trúc Toàn Diện Vào 2 Trụ Cột Thực Chiến Cốt Lõi
+- **Trụ cột 1: Lịch Vạn Niên Chuẩn Hóa & Toàn Bộ Yếu Tố Cấu Thành (`/src/components/DailyCalendarView.tsx`)**:
+  - Tích hợp và hiển thị đầy đủ các yếu tố cấu thành lịch pháp chuẩn cổ truyền: Dương lịch, Âm lịch, Tứ Trụ Bát Tự Can Chi, Tiết khí thiên văn học chính xác.
+  - Phân tích chi tiết **Thập Nhị Trực** (12 Trực cát hung) và **Nhị Thập Bát Tú** (28 Sao cùng ngũ hành và tính chất).
+  - Tích hợp bảng **Thần Sát Cát Tinh & Hung Tinh** trọn vẹn theo *Hiệp Kỷ Biện Phương Thư* với chế độ xem mở rộng.
+  - Tích hợp bộ chuyển đổi xem **Toàn bộ 12 Canh Giờ** (phân định rõ Hoàng Đạo & Hắc Đạo) hoặc lọc riêng 6 Giờ Hoàng Đạo.
+  - Đánh giá tổng hòa cát hung ngày, phán từ hành động: **Nên Làm (Nghi)**, **Kiêng Cữ (Kỵ)**, và **Hướng Xuất Hành Cát Lợi** (Hỷ Thần, Tài Thần, phương kỵ Hạc Thần).
+  - Bổ sung hệ thống nút bấm điều hướng một chạm kết nối trực tiếp từ Lịch Vạn Niên sang Lập Quẻ Kỳ Môn, Lập Quẻ Lục Nhâm, và Dự Trắc Song Thức.
+- **Trụ cột 2: Lập Quẻ Song Thức Kỳ Môn & Lục Nhâm**:
+  - **Kỳ Môn Độn Giáp (Luận Bàn Không - Thời Gian) (`/src/components/KyMonCompleteBoard.tsx` & `/src/components/TimeEvaluationCard.tsx`)**:
+    - Luận giải trục Thời Gian: Đánh giá thời điểm hiện tại Cát hay Hung, điểm số định lượng, thiên thời Cục Độn và chiến lược Chủ - Khách động tĩnh.
+    - Luận giải trục Không Gian: Phân tích cát hung của 8 hướng phương vị bát quái (9 Cung Lạc Thư), chỉ rõ vị trí đắc sinh khí, hướng kỵ sát và các cửa cát Khai - Hưu - Sinh.
+  - **Đại Lục Nhâm (Luận Bàn Quá Trình Thành Bại) (`/src/components/LucNhamPanel.tsx`)**:
+    - Phân tích sâu sắc tiến trình nhân quả 3 giai đoạn của **Tam Truyền**: Sơ Truyền (khởi đầu/phát đoan), Trung Truyền (diễn biến/di dời), Mạt Truyền (kết quả/quy túc).
+    - Đưa ra nhận định dứt khoát về **Thành hay Bại** chung cuộc và tư vấn phương án hành động phù hợp theo từng giai đoạn.
+  - **Hội Tụ Dự Trắc Song Thức (`/src/components/KyMonPrognosticationView.tsx`)**:
+    - Trả lời trực tiếp và rõ ràng: Thời khắc này **NÊN LÀM GÌ**, **KHÔNG NÊN LÀM GÌ**, **HƯỚNG NÀO THUẬN LỢI/BẤT LỢI**, và **TƯ VẤN PHƯƠNG ÁN TỐI ƯU**.
+- **Tinh Gọn Hệ Thống & Tối Ưu Tốc Độ**:
+  - Lược bỏ hoàn toàn các phần lý thuyết dư thừa và hộp thoại AI chatbot để ứng dụng vận hành siêu tốc, sạch sẽ và hoàn toàn tập trung vào công năng tra cứu lịch cùng lập quẻ.
+- **Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Cập nhật Mục 25 thuyết minh cấu trúc hai trụ cột của hệ thống.
+
+---
+
 ## [[2.28.0]] - 2026-09-02
 ### Codename: *Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)*
 

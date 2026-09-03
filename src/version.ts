@@ -11,18 +11,46 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.28.0';
-export const APP_RELEASE_DATE = '2026-09-02';
-export const APP_CODENAME = 'Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)';
+export const APP_VERSION = '2.29.0';
+export const APP_RELEASE_DATE = '2026-09-03';
+export const APP_CODENAME = 'Tinh Gọn Song Trụ: Lịch Vạn Niên Chuẩn Hóa & Lập Quẻ Song Thức Kỳ Môn - Lục Nhâm (Streamlined Dual-Pillars Calendar & Divination System)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.29.0',
+    releaseDate: '2026-09-03',
+    codename: 'Tinh Gọn Song Trụ: Lịch Vạn Niên Chuẩn Hóa & Lập Quẻ Song Thức Kỳ Môn - Lục Nhâm (Streamlined Dual-Pillars Calendar & Divination System)',
+    tagline: 'Sắp xếp lại toàn bộ ứng dụng, tinh giản lý thuyết dư thừa và chatbox AI, quy tụ tuyệt đối vào 2 trụ cột cốt lõi: 1) Lịch Vạn Niên đầy đủ các yếu tố cấu thành và cát hung; 2) Lập Quẻ Kỳ Môn (luận Không - Thời Gian) và Lục Nhâm (luận Quá Trình Thành Bại).',
+    isLatest: true,
+    highlights: [
+      'Trụ cột 1 - Lịch Vạn Niên Chuẩn Hóa Toàn Diện: Trực quan hóa đầy đủ các yếu tố cấu thành lịch vạn niên gồm Dương lịch, Âm lịch, Tứ Trụ Can Chi, Tiết khí thiên văn, Thập Nhị Trực, Nhị Thập Bát Tú, Thần Sát Cát Tinh & Hung Tinh, Bảng 12 Canh Giờ Hoàng Đạo/Hắc Đạo, cùng Luận đoán Cát Hung (Nghi, Kỵ, Hướng xuất hành Hỷ Thần, Tài Thần, tránh Hạc Thần).',
+      'Trụ cột 2 - Lập Quẻ Kỳ Môn Độn Giáp (Luận Bàn Không - Thời Gian): Khắc họa rõ nét 2 trục Không Gian (8 hướng phương vị, cung cát hung, thế Tọa - Hướng) và Thời Gian (thiên thời thời điểm hiện tại, vượng suy, Trực Phù, Trực Sử, quy luật Chủ - Khách động tĩnh).',
+      'Trụ cột 2 - Lập Quẻ Đại Lục Nhâm (Luận Bàn Quá Trình Thành Bại): Đi sâu vào tiến trình 3 giai đoạn của Tam Truyền (Sơ Truyền khởi đầu, Trung Truyền diễn biến, Mạt Truyền quy túc định đoạt kết quả), đưa ra nhận định Thành hay Bại chung cuộc rõ ràng và phương án tối ưu.',
+      'Dự Trắc Song Thức Hội Tụ: Tổng hợp hoàn hảo giữa Kỳ Môn (Thời khắc này nên làm gì, không nên làm gì, hướng nào thuận lợi, hướng nào không) và Lục Nhâm (lộ trình hành động tối ưu theo từng giai đoạn phát triển).',
+      'Lược bỏ triệt để các phần lý thuyết dư thừa và hộp thoại AI chatbot để tối ưu hóa hiệu năng và mang lại trải nghiệm chuyên môn trực quan, tốc độ, tinh gọn.',
+      'Cập nhật Mục 25 trong Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Bảng chuyển đổi xem Toàn Bộ 12 Canh Giờ (Hoàng Đạo/Hắc Đạo) trong DailyCalendarView.',
+      'Bộ hiển thị Thần Sát Cát Tinh & Hung Tinh chi tiết trong DailyCalendarView.',
+      'Khối đánh giá Quá Trình Thành Bại 3 giai đoạn Tam Truyền trong LucNhamPanel.',
+      'Các nút cầu nối trực tiếp giữa Lịch Vạn Niên và 2 phân hệ Lập Quẻ Kỳ Môn & Lục Nhâm.',
+    ],
+    improved: [
+      'Cấu trúc điều hướng Header và App.tsx hoàn toàn quy tụ vào 2 trụ cột chính, loại bỏ các tab lý thuyết phụ.',
+      'Giao diện và trải nghiệm tải nhanh, tập trung cao độ vào thực hành tra cứu lịch và lập quẻ dự trắc.',
+    ],
+    fixed: [
+      'Đồng bộ hoàn hảo hướng xuất hành Cát/Kỵ giữa Lịch Vạn Niên và Bàn Kỳ Môn Độn Giáp.',
+    ],
+  },
   {
     version: '2.28.0',
     releaseDate: '2026-09-02',
     codename: 'Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)',
     tagline: 'Tái thiết phân hệ Dự Trắc Chuyên Sâu thành hệ thống dự trắc song thức đỉnh cao: Kỳ Môn Độn Giáp (đoán định thời điểm & cát hung 8 hướng) kết hợp Đại Lục Nhâm (tiến trình 3 giai đoạn Tam Truyền) và tổng hợp tư vấn NÊN/KHÔNG NÊN LÀM cùng phương án tối ưu.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Dự trắc theo Kỳ Môn Độn Giáp: Đưa ra lời dự đoán chuẩn xác thời điểm đang hiển thị Cát Hung thế nào (điểm số 0-100, phán từ, Bát Môn Trực Sử, Cửu Tinh Trực Phù, Cách Cục đặc biệt), Cát Hung của tất cả 8 hướng phương vị và thời điểm này phù hợp làm gì.',
       'Dự trắc theo Đại Lục Nhâm (3 Giai Đoạn Tam Truyền): Phân tích tiến trình sự việc qua 3 mắt xích thời gian: Sơ Truyền (Khởi đầu/Phát đoan), Trung Truyền (Diễn biến/Di dời), Mạt Truyền (Kết quả/Quy túc), cùng luận giải 6 lĩnh vực nhân sinh.',

@@ -102,6 +102,59 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
     );
   };
 
+  // Evaluation of Process Success/Failure through 3 stages (Tam Truyen)
+  const processEvaluation = useMemo(() => {
+    const so = chart.tamTruyen[0];
+    const trung = chart.tamTruyen[1];
+    const mat = chart.tamTruyen[2];
+
+    const isSoGood = so.thienTuongInfo.nature === 'Cát' && !so.isTuanKhong;
+    const isTrungGood = trung.thienTuongInfo.nature !== 'Hung';
+    const isMatGood = mat.thienTuongInfo.nature === 'Cát' && !mat.isTuanKhong;
+
+    let outcomeTitle = 'Thành Công Thuận Lợi';
+    let outcomeBadge = 'Đại Cát';
+    let outcomeColor = 'text-emerald-400 border-emerald-500/40 bg-emerald-950/30';
+    let advice = '';
+
+    if (mat.isTuanKhong) {
+      outcomeTitle = 'Hoa Trong Gương, Trăng Dưới Nước (Dây Dưa / Hư Vọng Khó Thành)';
+      outcomeBadge = 'Cần Thận Trọng';
+      outcomeColor = 'text-amber-400 border-amber-500/40 bg-amber-950/30';
+      advice = 'Mạt Truyền lâm Tuần Không, kết quả cuối cùng dễ bị hụt hẫng hoặc không như dự kiến. Cần chuẩn bị phương án dự phòng và kiên định nền tảng thực chất.';
+    } else if (mat.thienTuongInfo.nature === 'Hung') {
+      outcomeTitle = 'Có Trở Ngại Cuối Đường / Dễ Thất Bại';
+      outcomeBadge = 'Hung';
+      outcomeColor = 'text-rose-400 border-rose-500/40 bg-rose-950/30';
+      advice = `Mạt Truyền gặp hung tướng ${mat.thienTuong}, kết cục dễ phát sinh hao tổn hoặc tranh chấp. Nên thu hẹp quy mô, không nên dấn sâu vào mạo hiểm.`;
+    } else if (isSoGood && isTrungGood && isMatGood) {
+      outcomeTitle = 'Đại Cát Đại Lợi - Việc Tất Thành';
+      outcomeBadge = 'Đại Cát';
+      outcomeColor = 'text-emerald-400 border-emerald-500/40 bg-emerald-950/30';
+      advice = 'Cả ba giai đoạn từ Khởi đầu đến Diễn biến và Kết thúc đều có cát thần che chở. Hãy tự tin dốc toàn lực thực thi mục tiêu.';
+    } else if (!isSoGood && isMatGood) {
+      outcomeTitle = 'Tiền Nan Hậu Dị (Khởi Đầu Khó Khăn Nhưng Cuối Cùng Thành Công)';
+      outcomeBadge = 'Cát';
+      outcomeColor = 'text-cyan-400 border-cyan-500/40 bg-cyan-950/30';
+      advice = 'Khởi đầu gặp chút trắc trở gian nan nhưng càng về sau càng hanh thông nhờ Mạt Truyền quy tụ cát khí. Cần kiên nhẫn vượt qua thử thách ban đầu.';
+    } else {
+      outcomeTitle = 'Tiến Triển Bình Hòa / Tùy Thuộc Nỗ Lực Bản Thân';
+      outcomeBadge = 'Bình Hòa';
+      outcomeColor = 'text-indigo-400 border-indigo-500/40 bg-indigo-950/30';
+      advice = 'Tiến trình bình ổn, sự thành bại phụ thuộc vào sự cẩn trọng và xử lý mềm dẻo của bản thân trong từng bước.';
+    }
+
+    return {
+      soDesc: isSoGood ? 'Khởi đầu thuận lợi, có nhân duyên mở lối' : 'Khởi đầu có vướng mắc hoặc hao phí, cần chuẩn bị kỹ',
+      trungDesc: isTrungGood ? 'Diễn biến có chuyển biến tích cực, từng bước đi vào quỹ đạo' : 'Giai đoạn giữa có biến động hoặc thử thách, cần kiên trì',
+      matDesc: isMatGood ? 'Kết quả sáng sủa, công việc đạt mục tiêu' : 'Kết quả cần nỗ lực duy trì, tránh sơ suất phút chót',
+      outcomeTitle,
+      outcomeBadge,
+      outcomeColor,
+      advice,
+    };
+  }, [chart.tamTruyen]);
+
   return (
     <div className="space-y-6">
       {/* TOP TAB SWITCHER: KỲ MÔN ĐỘN GIÁP vs ĐẠI LỤC NHÂM */}
@@ -395,6 +448,111 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
               Đại diện cho người ngoài, hoàn cảnh khách quan, nhà cửa, nơi chốn và đối tác.
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* 2.5 LUẬN BÀN QUÁ TRÌNH THÀNH BẠI (3 GIAI ĐOẠN: SƠ - TRUNG - MẠT) */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
+              <TrendingUp className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold text-white text-base">
+                Luận Bàn Quá Trình Thành Bại (Đại Lục Nhâm 3 Giai Đoạn)
+              </h3>
+              <p className="text-xs text-slate-400">
+                Đại Lục Nhâm chuyên biệt luận giải tiến trình nhân quả: Khởi nguyên ➔ Biến chuyển ➔ Kết cục quy túc
+              </p>
+            </div>
+          </div>
+
+          <div className={`px-3 py-1 rounded-xl border text-xs font-bold font-mono ${processEvaluation.outcomeColor}`}>
+            {processEvaluation.outcomeBadge}
+          </div>
+        </div>
+
+        {/* 3 Stages Horizontal Flow */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
+          {/* Stage 1 */}
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-amber-300 text-sm flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">
+                  1
+                </span>
+                <span>Giai Đoạn 1: Khởi Sự</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono">Sơ Truyền ({chart.tamTruyen[0].chi})</span>
+            </div>
+            <p className="text-slate-300 leading-relaxed text-xs">
+              {processEvaluation.soDesc}. Thần tướng: <strong>{chart.tamTruyen[0].thienTuong}</strong> ({chart.tamTruyen[0].thienTuongInfo.nature}).
+            </p>
+            <div className="text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+              Chủ về: {chart.tamTruyen[0].meaning}
+            </div>
+          </div>
+
+          {/* Stage 2 */}
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-indigo-300 text-sm flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full bg-indigo-500 text-white font-bold text-xs flex items-center justify-center">
+                  2
+                </span>
+                <span>Giai Đoạn 2: Diễn Biến</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono">Trung Truyền ({chart.tamTruyen[1].chi})</span>
+            </div>
+            <p className="text-slate-300 leading-relaxed text-xs">
+              {processEvaluation.trungDesc}. Thần tướng: <strong>{chart.tamTruyen[1].thienTuong}</strong> ({chart.tamTruyen[1].thienTuongInfo.nature}).
+            </p>
+            <div className="text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+              Chủ về: {chart.tamTruyen[1].meaning}
+            </div>
+          </div>
+
+          {/* Stage 3 */}
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-emerald-300 text-sm flex items-center gap-1.5">
+                <span className="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs flex items-center justify-center">
+                  3
+                </span>
+                <span>Giai Đoạn 3: Kết Cục</span>
+              </span>
+              <span className="text-[10px] text-slate-400 font-mono">Mạt Truyền ({chart.tamTruyen[2].chi})</span>
+            </div>
+            <p className="text-slate-300 leading-relaxed text-xs">
+              {processEvaluation.matDesc}. Thần tướng: <strong>{chart.tamTruyen[2].thienTuong}</strong> ({chart.tamTruyen[2].thienTuongInfo.nature}).
+            </p>
+            <div className="text-[11px] text-slate-400 pt-1 border-t border-slate-800/80">
+              Chủ về: {chart.tamTruyen[2].meaning}
+            </div>
+          </div>
+        </div>
+
+        {/* Verdict Banner */}
+        <div className={`p-4 rounded-xl border ${processEvaluation.outcomeColor} flex flex-col sm:flex-row sm:items-center justify-between gap-3`}>
+          <div className="space-y-1">
+            <div className="text-xs font-semibold text-slate-300">Định Đoạt Thành Bại Chung Cuộc:</div>
+            <div className="text-sm sm:text-base font-extrabold text-white">
+              {processEvaluation.outcomeTitle}
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed mt-1">
+              {processEvaluation.advice}
+            </p>
+          </div>
+          {onNavigateTab && (
+            <button
+              onClick={() => onNavigateTab('kymon-prognostication')}
+              className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-md transition-colors cursor-pointer shrink-0 flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Xem Luận Giải Song Thức</span>
+            </button>
+          )}
         </div>
       </div>
 

@@ -26,7 +26,6 @@ interface OnboardingTourModalProps {
   isOpen: boolean;
   onClose: () => void;
   onNavigateTab?: (tabId: string) => void;
-  onOpenAIChat?: () => void;
   onOpenAlgorithmModal?: () => void;
 }
 
@@ -36,7 +35,6 @@ export const OnboardingTourModal: React.FC<OnboardingTourModalProps> = ({
   isOpen,
   onClose,
   onNavigateTab,
-  onOpenAIChat,
   onOpenAlgorithmModal,
 }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -399,52 +397,59 @@ export const OnboardingTourModal: React.FC<OnboardingTourModalProps> = ({
       ),
     },
 
-    // BƯỚC 7: TRỢ LÝ AI LUẬN GIẢI CỔ THUẬT TOÀN NĂNG (OPENROUTER)
+    // BƯỚC 7: DỰ TRẮC SONG THỨC: KỲ MÔN & LỤC NHÂM (KHÔNG - THỜI GIAN & QUÁ TRÌNH THÀNH BẠI)
     {
-      id: 'ai-metaphysics-advisor',
-      title: 'Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng',
-      subtitle: 'Đối thoại thông minh cùng các mô hình AI hàng đầu (Gemini, DeepSeek, Claude, GPT)',
-      icon: Sparkles,
-      badge: 'Trí Tuệ Nhân Tạo',
+      id: 'song-thuc-prognostication',
+      title: 'Dự Trắc Song Thức: Kỳ Môn & Lục Nhâm',
+      subtitle: 'Kỳ Môn định Không - Thời Gian, Lục Nhâm định Quá Trình Thành Bại',
+      icon: Target,
+      badge: 'Song Thức Hợp Nhất',
       color: 'amber',
       content: (
         <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
           <p className="text-slate-200">
-            Bạn có thể trò chuyện trực tiếp với <strong>AI Luận Giải Cổ Thuật</strong> bất kỳ lúc nào để nhận giải đáp chuyên sâu cho mọi câu hỏi thực tế!
+            Hệ thống quy tụ <strong>2 Đại Trụ Cột Thực Chiến</strong> giúp bạn ra quyết định chuẩn xác nhất:
           </p>
 
-          <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/40 via-purple-950/40 to-cyan-950/40 border border-amber-500/40 space-y-2.5">
-            <div className="flex items-center gap-2 text-amber-300 font-bold text-xs">
-              <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-              <span>Ưu Điểm Vượt Trội Của AI Chatbot:</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="p-3.5 rounded-2xl bg-amber-950/40 border border-amber-500/40 space-y-2">
+              <div className="flex items-center gap-2 text-amber-300 font-bold text-xs">
+                <Compass className="w-4 h-4 text-amber-400" />
+                <span>1. Kỳ Môn: Luận Bàn Không - Thời Gian</span>
+              </div>
+              <p className="text-xs text-slate-300">
+                • <strong>Thiên Thời</strong>: Thời điểm này vượng hay suy, hợp tiến hay thủ, nên làm Chủ hay làm Khách.<br />
+                • <strong>Địa Lợi</strong>: 8 Phương hướng cát hung (Khai/Hưu/Sinh đón sinh khí, Tử/Kinh/Thương cần tránh).
+              </p>
             </div>
-            <ul className="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
-              <li>
-                <strong>Tự Động Nạp Ngữ Cảnh Thời Gian Thực:</strong> AI tự đọc toàn bộ Bát Tự Tứ Trụ, 24 Tiết Khí, Bàn Kỳ Môn 9 Cung và Lục Nhâm hiện tại của bạn.
-              </li>
-              <li>
-                <strong>Đa Dạng Mô Hình:</strong> Hỗ trợ Gemini 2.5 Flash, DeepSeek V3/R1, Claude 3.5 Sonnet, GPT-4o Mini qua OpenRouter.
-              </li>
-              <li>
-                <strong>Bảo Mật Tuyệt Đối:</strong> Dán API Key cá nhân từ <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-amber-400 underline font-semibold">openrouter.ai/keys</a>, lưu an toàn 100% trong trình duyệt.
-              </li>
-            </ul>
+
+            <div className="p-3.5 rounded-2xl bg-cyan-950/40 border border-cyan-500/40 space-y-2">
+              <div className="flex items-center gap-2 text-cyan-300 font-bold text-xs">
+                <Sparkles className="w-4 h-4 text-cyan-400" />
+                <span>2. Lục Nhâm: Quá Trình Thành Bại</span>
+              </div>
+              <p className="text-xs text-slate-300">
+                • <strong>Sơ Truyền</strong>: Manh nha khởi đầu sự việc thuận hay nghịch.<br />
+                • <strong>Trung Truyền</strong>: Diễn biến chuyển dời, gian truân hay trợ lực.<br />
+                • <strong>Mạt Truyền</strong>: Đoán định THÀNH hay BẠI sau cùng!
+              </p>
+            </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between gap-2">
             <span className="text-xs text-slate-400">
-              Nhấp vào nút <Sparkles className="w-3.5 h-3.5 inline text-amber-400 mx-1" /> nổi ở góc phải màn hình hoặc trên thanh Header để mở AI Chatbot bất cứ lúc nào.
+              Chuyển đổi linh hoạt giữa <strong>Lịch Vạn Niên</strong> và <strong>Lập Quẻ</strong> trên thanh điều hướng.
             </span>
-            {onOpenAIChat && (
+            {onNavigateTab && (
               <button
                 type="button"
                 onClick={() => {
                   handleFinish();
-                  onOpenAIChat();
+                  onNavigateTab('kymon-prognostication');
                 }}
                 className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs shadow transition-all shrink-0 cursor-pointer"
               >
-                Mở AI Chatbot Ngay
+                Xem Dự Trắc Song Thức
               </button>
             )}
           </div>

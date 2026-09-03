@@ -7,12 +7,9 @@ import { TrachCatView } from './components/TrachCatView';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
 import { LucNhamPanel } from './components/LucNhamPanel';
-import { CosmicKnowledgeGuide } from './components/CosmicKnowledgeGuide';
 import { AlgorithmGuideModal } from './components/AlgorithmGuideModal';
 import { ExportModal } from './components/ExportModal';
 import { ChangelogModal } from './components/ChangelogModal';
-import { AIChatbotModal } from './components/AIChatbotModal';
-import { AIChatbotFloatingButton } from './components/AIChatbotFloatingButton';
 import { OnboardingTourModal, ONBOARDING_STORAGE_KEY } from './components/OnboardingTourModal';
 import { calculateComprehensiveResult, calculateSolarTermsForYear } from './astronomy/calculator';
 import { SolarTermEvent } from './types';
@@ -21,14 +18,13 @@ import { APP_VERSION, APP_RELEASE_DATE } from './version';
 export default function App() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
   const [isLive, setIsLive] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<string>('guide');
+  // Trọng tâm 1: Mặc định hiển thị Lịch Vạn Niên (Cát Hung)
+  const [activeTab, setActiveTab] = useState<string>('daily-calendar');
 
   // Modals state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
   const [isChangelogOpen, setIsChangelogOpen] = useState<boolean>(false);
-  const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
-  const [aiChatInitialQuestion, setAiChatInitialQuestion] = useState<string>('');
   const [isOnboardingTourOpen, setIsOnboardingTourOpen] = useState<boolean>(() => {
     // Open by default if first time user
     return !localStorage.getItem(ONBOARDING_STORAGE_KEY);
@@ -63,18 +59,11 @@ export default function App() {
   const handleSelectTermDate = useCallback((date: Date) => {
     setIsLive(false);
     setCurrentDate(date);
-    setActiveTab('moon');
+    setActiveTab('daily-calendar');
   }, []);
 
   const handleExportMarkdown = useCallback((_year: number, _terms: SolarTermEvent[]) => {
     setIsExportOpen(true);
-  }, []);
-
-  const handleOpenAIChat = useCallback((question?: string) => {
-    if (question) {
-      setAiChatInitialQuestion(question);
-    }
-    setIsAIChatOpen(true);
   }, []);
 
   return (
@@ -87,7 +76,6 @@ export default function App() {
         onOpenGuide={() => setIsGuideOpen(true)}
         onOpenExport={() => setIsExportOpen(true)}
         onOpenChangelog={() => setIsChangelogOpen(true)}
-        onOpenAIChat={() => handleOpenAIChat()}
         onOpenOnboardingTour={() => setIsOnboardingTourOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -97,34 +85,7 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Tab 1: Cẩm Nang Tri Thức (Trang Chủ) */}
-        {activeTab === 'guide' && (
-          <div className="space-y-6">
-            <CosmicKnowledgeGuide
-              result={result}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-              onOpenAlgorithmModal={() => setIsGuideOpen(true)}
-              onOpenAIChat={handleOpenAIChat}
-            />
-          </div>
-        )}
-
-        {/* Tab 2: Điểm Sóc & Âm Lịch (Thiên Văn) */}
-        {activeTab === 'moon' && (
-          <div className="space-y-6">
-            <LunarNewMoonSection
-              newMoon={result.newMoon}
-              calculationDate={currentDate}
-              currentDate={currentDate}
-              onDateChange={(d) => setCurrentDate(d)}
-              isLive={isLive}
-              onSetLive={(live) => setIsLive(live)}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {/* Tab Lịch Ngày Chi Tiết / Lịch Block Truyền Thống */}
+        {/* TRỤ CỘT 1: LỊCH VẠN NIÊN - CÁC YẾU TỐ CẤU THÀNH & CÁT HUNG */}
         {activeTab === 'daily-calendar' && (
           <div className="space-y-6">
             <DailyCalendarView
@@ -133,27 +94,12 @@ export default function App() {
                 setIsLive(false);
                 setCurrentDate(d);
               }}
-              onClose={() => setActiveTab('moon')}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
         )}
 
-        {/* Tab Chuyên Mục Trạch Cát Hiệp Kỷ Biện Phương Thư */}
-        {activeTab === 'trach-cat' && (
-          <div className="space-y-6">
-            <TrachCatView
-              currentDate={currentDate}
-              onDateChange={(d) => {
-                setIsLive(false);
-                setCurrentDate(d);
-              }}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {/* Bàn Kỳ Môn Độn Giáp 9 Cung (Điều hướng từ Cẩm Nang) */}
+        {/* TRỤ CỘT 2: LẬP QUẺ KỲ MÔN (LUẬN BÀN KHÔNG - THỜI GIAN) */}
         {activeTab === 'kymon-chart' && (
           <div className="space-y-6">
             <KyMonCompleteBoard
@@ -171,7 +117,7 @@ export default function App() {
           </div>
         )}
 
-        {/* Bàn Đại Lục Nhâm Tam Truyền (Điều hướng từ Cẩm Nang) */}
+        {/* TRỤ CỘT 2: LẬP QUẺ LỤC NHÂM (LUẬN BÀN QUÁ TRÌNH THÀNH BẠI) */}
         {activeTab === 'luc-nham' && (
           <div className="space-y-6">
             <LucNhamPanel
@@ -184,7 +130,7 @@ export default function App() {
           </div>
         )}
 
-        {/* Tab 3: Dự Trắc Chuyên Sâu Song Thức (Kỳ Môn & Đại Lục Nhâm) */}
+        {/* TỔNG HỢP SONG THỨC: DỰ TRẮC KẾT HỢP KỲ MÔN & LỤC NHÂM */}
         {activeTab === 'kymon-prognostication' && (
           <div className="space-y-6">
             <KyMonPrognosticationView
@@ -192,13 +138,42 @@ export default function App() {
               solarLongitude={result.solarLongitude}
               currentKyMon={result.kyMon}
               currentBatTu={result.batTu}
-              onBackToBoard={() => setActiveTab('guide')}
+              onBackToBoard={() => setActiveTab('kymon-chart')}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
         )}
 
-        {/* Tab 4: 24 Tiết Khí Năm */}
+        {/* CHUYÊN MỤC TRẠCH CÁT HIỆP KỶ BIỆN PHƯƠNG THƯ */}
+        {activeTab === 'trach-cat' && (
+          <div className="space-y-6">
+            <TrachCatView
+              currentDate={currentDate}
+              onDateChange={(d) => {
+                setIsLive(false);
+                setCurrentDate(d);
+              }}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
+        {/* ĐIỂM SÓC & ÂM LỊCH THIÊN VĂN */}
+        {activeTab === 'moon' && (
+          <div className="space-y-6">
+            <LunarNewMoonSection
+              newMoon={result.newMoon}
+              calculationDate={currentDate}
+              currentDate={currentDate}
+              onDateChange={(d) => setCurrentDate(d)}
+              isLive={isLive}
+              onSetLive={(live) => setIsLive(live)}
+              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
+            />
+          </div>
+        )}
+
+        {/* 24 TIẾT KHÍ NĂM */}
         {activeTab === 'table' && (
           <div className="space-y-6">
             <YearTermsTable
@@ -216,7 +191,7 @@ export default function App() {
       <footer className="border-t border-slate-200 dark:border-slate-900 bg-white/80 dark:bg-slate-950/80 py-4 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span>Tính Tiết Khí & Kỳ Môn Độn Giáp • </span>
+            <span>Tiết Khí, Lịch Vạn Niên & Kỳ Môn - Lục Nhâm • </span>
             <button
               onClick={() => setIsChangelogOpen(true)}
               className="inline-flex items-center gap-1 font-mono text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-semibold px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20 transition-colors"
@@ -266,10 +241,6 @@ export default function App() {
           setActiveTab(tabId);
           setIsOnboardingTourOpen(false);
         }}
-        onOpenAIChat={() => {
-          setIsOnboardingTourOpen(false);
-          setIsAIChatOpen(true);
-        }}
         onOpenAlgorithmModal={() => {
           setIsOnboardingTourOpen(false);
           setIsGuideOpen(true);
@@ -292,27 +263,6 @@ export default function App() {
       <ChangelogModal
         isOpen={isChangelogOpen}
         onClose={() => setIsChangelogOpen(false)}
-      />
-
-      {/* AI Chatbot Metaphysics Advisor Modal & Floating Trigger Widget */}
-      <AIChatbotFloatingButton
-        onClick={() => handleOpenAIChat()}
-        isOpen={isAIChatOpen}
-      />
-
-      <AIChatbotModal
-        isOpen={isAIChatOpen}
-        onClose={() => {
-          setIsAIChatOpen(false);
-          setAiChatInitialQuestion('');
-        }}
-        result={result}
-        currentDate={currentDate}
-        initialQuestion={aiChatInitialQuestion}
-        onNavigateTab={(tabId) => {
-          setActiveTab(tabId);
-          setIsAIChatOpen(false);
-        }}
       />
     </div>
   );

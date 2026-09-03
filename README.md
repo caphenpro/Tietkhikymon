@@ -1,35 +1,38 @@
 # Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.28.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.29.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Trang Lịch Ngày Vạn Niên Block Truyền Thống**, **Chuyên Mục Trạch Cát Toàn Thư "Khâm Định Hiệp Kỷ Biện Phương Thư"**, **Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)**, **Biểu Đồ Thống Kê Năng Lượng Kỳ Môn (Recharts Dynamics)**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư**, **Trợ Lý AI Luận Giải Cổ Thuật Toàn Năng**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Trang Lịch Ngày Vạn Niên Block Truyền Thống**, **Chuyên Mục Trạch Cát Toàn Thư "Khâm Định Hiệp Kỷ Biện Phương Thư"**, **Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)**, **Biểu Đồ Thống Kê Năng Lượng Kỳ Môn (Recharts Dynamics)**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.28.0`** *(Phát hành: 02/09/2026)*
-**Tên mã:** *Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn) (Combined Ky Mon & Luc Nham Prognostication Engine)*
+### 🚀 **Phiên bản hiện tại: `v2.29.0`** *(Phát hành: 03/09/2026)*
+**Tên mã:** *Tinh Gọn Song Trụ: Lịch Vạn Niên Chuẩn Hóa & Lập Quẻ Song Thức Kỳ Môn - Lục Nhâm (Streamlined Dual-Pillars Calendar & Divination System)*
 
-- 🌟 **Tái Thiết Toàn Diện Phân Hệ Dự Trắc Chuyên Sâu**:
-  - **Dự Trắc Kỳ Môn Độn Giáp**: Đưa ra lời dự đoán chuẩn xác thời điểm đang hiển thị Cát Hung thế nào (điểm số 0-100, phán từ, Bát Môn Trực Sử, Cửu Tinh Trực Phù, Cách Cục đặc biệt), đánh giá chi tiết cát hung của tất cả 8 hướng phương vị và thời điểm này phù hợp làm gì.
-  - **Dự Trắc Đại Lục Nhâm (3 Giai Đoạn Tam Truyền)**: Phân tích tiến trình sự việc qua 3 mắt xích thời gian: Sơ Truyền (Khởi đầu/Phát đoan), Trung Truyền (Diễn biến/Di dời), Mạt Truyền (Kết quả/Quy túc), cùng luận giải 6 lĩnh vực nhân sinh.
-  - **Tổng Hợp Song Thức**: Hội tụ tri thức Không Gian (Kỳ Môn) và Thời Gian (Lục Nhâm) để trả lời dứt khoát 3 câu hỏi thực chiến:
-    1. *Thời khắc này NÊN LÀM GÌ?* (Danh mục hành động cát lợi)
-    2. *Thời khắc này KHÔNG NÊN LÀM GÌ?* (Danh mục cấm kỵ)
-    3. *HƯỚNG NÀO THUẬN LỢI, HƯỚNG NÀO BẤT LỢI?* (Bảng 8 hướng phương vị kèm điểm số & khuyến nghị)
-  - **Tư Vấn Phương Án Tốt Nhất (Master Strategy)**: Thiết lập chiến lược phối hợp hành động giữa phương vị xuất hành đón cát khí Kỳ Môn và lộ trình 3 bước chuẩn bị - ứng biến - thu hoạch của Lục Nhâm.
-  - **Bảo Tồn Toàn Thư 6 Chủ Đề Cổ Bản**: Hôn nhân, Y học trị bệnh, Cầu tài giao dịch, Thi cử công danh, Mất của tìm vật, Kiện tụng cùng Thân Mệnh và Tam Bàn Chủ Khách.
-- 📖 **Cập Nhật Thuyết Minh Thuật Toán**:
-  - Bổ sung Mục 24 trong `AlgorithmGuideModal.tsx` giải trình chi tiết cấu trúc hệ thống Dự Trắc Song Thức.
+- 🎯 **Sắp Xếp Lại Toàn Bộ Ứng Dụng Quy Tụ Vào 2 Trụ Cột Thực Chiến Cốt Lõi**:
+  - **Trụ cột 1: Lịch Vạn Niên & Toàn Bộ Yếu Tố Cấu Thành**:
+    - Hiển thị đầy đủ Dương lịch, Âm lịch, Tứ Trụ Bát Tự, Tiết khí thiên văn chính xác.
+    - Luận giải chi tiết Thập Nhị Trực và Nhị Thập Bát Tú.
+    - Tích hợp bảng Thần Sát Cát Tinh & Hung Tinh trọn vẹn theo *Hiệp Kỷ Biện Phương Thư*.
+    - Bảng chuyển đổi xem đủ 12 Canh Giờ Hoàng/Hắc Đạo hoặc lọc 6 Giờ Hoàng Đạo.
+    - Cát hung ngày: Việc nên làm (Nghi), kiêng cữ (Kỵ), và Hướng xuất hành cát lợi (Hỷ Thần, Tài Thần, tránh Hạc Thần).
+    - Cầu nối điều hướng tức thì từ Lịch sang Lập Quẻ Kỳ Môn, Lục Nhâm, Song Thức.
+  - **Trụ cột 2: Lập Quẻ Song Thức**:
+    - **Kỳ Môn Độn Giáp (Luận Bàn Không - Thời Gian)**: Luận giải thời điểm hiện tại Cát hay Hung, cát hung của 8 hướng phương vị trong không gian, hướng cát khí, hướng hung sát và chiến lược Chủ - Khách động tĩnh.
+    - **Đại Lục Nhâm (Luận Bàn Quá Trình Thành Bại)**: Phân tích 3 giai đoạn tiến trình Tam Truyền (Sơ Truyền khởi đầu, Trung Truyền diễn biến, Mạt Truyền quy túc), phán định rõ Thành hay Bại chung cuộc và tư vấn phương án tối ưu.
+    - **Dự Trắc Song Thức Tổng Hợp**: Trả lời rõ ràng thời khắc này nên làm gì, không nên làm gì, hướng nào thuận lợi, hướng nào không, và tư vấn phương án tốt nhất.
+- ⚡ **Loại Bỏ Lý Thuyết Dư Thừa & AI Chatbox**: Tinh gọn hệ thống để mang lại tốc độ tức thì, giao diện sắc nét và trực quan thực chiến.
+- 📖 **Cập Nhật Thuyết Minh Thuật Toán**: Bổ sung Mục 25 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.27.0`** *(Phát hành: 01/09/2026)*
+### 📦 **Phiên bản trước: `v2.28.0`** *(Phát hành: 02/09/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

@@ -26,7 +26,6 @@ interface HeaderProps {
   onOpenGuide: () => void;
   onOpenExport: () => void;
   onOpenChangelog?: () => void;
-  onOpenAIChat?: () => void;
   onOpenOnboardingTour?: () => void;
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -41,7 +40,6 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGuide,
   onOpenExport,
   onOpenChangelog,
-  onOpenAIChat,
   onOpenOnboardingTour,
   activeTab,
   setActiveTab,
@@ -50,14 +48,14 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  // Navigation Tabs: Cẩm Nang Tri Thức -> Điểm Sóc & Âm Lịch -> Lịch Ngày Chi Tiết -> Trạch Cát Hiệp Kỷ -> Dự Trắc Chuyên Sâu -> 24 Tiết Khí Năm
+  // Navigation Tabs: Tập trung vào 1. Lịch Vạn Niên (Cát Hung) và 2. Lập Quẻ (Kỳ Môn & Lục Nhâm)
   const navTabs = [
-    { id: 'guide', label: 'Cẩm Nang Tri Thức', icon: '📚', badge: 'Trang Chủ' },
-    { id: 'moon', label: 'Điểm Sóc & Âm Lịch', icon: '🌙', badge: 'Thiên Văn' },
-    { id: 'daily-calendar', label: 'Lịch Ngày Chi Tiết', icon: '📅', badge: 'Lịch Block' },
-    { id: 'trach-cat', label: 'Trạch Cát Hiệp Kỷ', icon: '🏛️', badge: 'Tứ Khố Toàn Thư' },
-    { id: 'kymon-prognostication', label: 'Dự Trắc Chuyên Sâu', icon: '🎯', badge: 'Kỳ Môn & Lục Nhâm' },
-    { id: 'table', label: '24 Tiết Khí Năm', icon: '🗓️', badge: 'Toàn Niên' },
+    { id: 'daily-calendar', label: 'Lịch Vạn Niên', icon: '📅', badge: 'Cát Hung' },
+    { id: 'kymon-chart', label: 'Quẻ Kỳ Môn', icon: '🧭', badge: 'Không - Thời Gian' },
+    { id: 'luc-nham', label: 'Quẻ Lục Nhâm', icon: '🔮', badge: 'Quá Trình Thành Bại' },
+    { id: 'kymon-prognostication', label: 'Dự Trắc Song Thức', icon: '🎯', badge: 'Tổng Hợp' },
+    { id: 'trach-cat', label: 'Trạch Cát Hiệp Kỷ', icon: '🏛️', badge: 'Hiệp Kỷ' },
+    { id: 'table', label: '24 Tiết Khí', icon: '🗓️', badge: 'Thiên Văn' },
   ];
 
   // Format date for datetime-local picker
@@ -143,16 +141,6 @@ export const Header: React.FC<HeaderProps> = ({
                   title="Tour Hướng Dẫn Nhanh"
                 >
                   <Compass className="w-4 h-4 text-amber-500" />
-                </button>
-              )}
-              {onOpenAIChat && (
-                <button
-                  id="btn-header-mobile-ai-chat"
-                  onClick={onOpenAIChat}
-                  className="p-1.5 rounded-lg bg-gradient-to-r from-amber-500/20 to-purple-500/20 border border-amber-500/50 text-amber-600 dark:text-amber-300"
-                  title="Hỏi AI Luận Giải"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
                 </button>
               )}
               <button
@@ -253,23 +241,10 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           )}
 
-          {/* Action Buttons: ThemeSwitcher, Thuyết Minh, Báo Cáo, AI Luận Giải */}
+          {/* Action Buttons: ThemeSwitcher, Thuyết Minh, Báo Cáo */}
           <div className="hidden sm:flex items-center gap-1.5 text-xs shrink-0">
             {/* Light / Dark / System Theme Switcher */}
             <ThemeSwitcher />
-
-            {onOpenAIChat && (
-              <button
-                id="btn-header-open-ai-chat"
-                onClick={onOpenAIChat}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-cyan-500/20 hover:from-amber-500/30 hover:via-purple-500/30 hover:to-cyan-500/30 text-amber-800 dark:text-amber-300 border border-amber-500/40 rounded-xl transition-all shadow-xs font-semibold group cursor-pointer"
-                title="Hỏi AI Đại Sư Luận Giải Cổ Thuật"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-500 group-hover:scale-110 transition-transform" />
-                <span className="hidden md:inline">AI Luận Giải</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              </button>
-            )}
 
             {onOpenOnboardingTour && (
               <button
