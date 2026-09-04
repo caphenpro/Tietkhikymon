@@ -11,18 +11,48 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.29.1';
-export const APP_RELEASE_DATE = '2026-09-03';
-export const APP_CODENAME = 'Tối Ưu Tuyệt Đối Trạch Cát: Bộ Đệm Toàn Cục Trục Thời Gian Thiên Văn (Astronomical Timeline Caching)';
+export const APP_VERSION = '2.30.0';
+export const APP_RELEASE_DATE = '2026-09-04';
+export const APP_CODENAME = 'Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ Toàn Diện (Bazi Day Master Strength Engine)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.30.0',
+    releaseDate: '2026-09-04',
+    codename: 'Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ Toàn Diện (Bazi Day Master Strength Engine)',
+    tagline: 'Xây dựng và tích hợp động cơ thẩm định Vượng Nhược Bát Tự chuẩn xác theo Tử Bình cổ điển: Đắc lệnh, Đắc địa, Được sinh, Được trợ giúp và Khắc - Hao - Tiết, tính điểm trọng số ma trận khoảng cách gần - xa.',
+    isLatest: true,
+    highlights: [
+      'Xây dựng trọn bộ Động cơ Thẩm Duyệt Vượng Nhược Bát Tự (batTuVuongNhuoc.ts): Phân tích chi tiết sức mạnh của Nhật Chủ (Can ngày sinh) dựa trên tương quan giữa lực lượng Sinh Phù (làm thân vượng) và lực lượng Khắc - Hao - Tiết (làm thân nhược).',
+      'Thẩm định 4 Yếu Tố Sinh Trợ (Lực lượng làm thân vượng): 1) Đắc Lệnh (Nguyệt lệnh chi tháng thuộc Trường Sinh, Mộc Dục, Quan Đới, Lâm Quan, Đế Vượng - chiếm ~40% lực lượng); 2) Đắc Địa (Căn ở chi khác là Trường Sinh, Lộc, Kình Dương, Mộ khố); 3) Được Sinh (Chính Ấn, Thiên Ấn sinh cho); 4) Được Trợ Giúp (Tỷ Kiên, Kiếp Tài đồng hành).',
+      'Định lượng 3 Lực Lượng Làm Thân Nhược: Khắc (Quan Sát: Chính Quan, Thất Sát); Hao (Tài Tinh: Chính Tài, Thiên Tài); Tiết (Thực Thương: Thực Thần, Thương Quan).',
+      'Ma trận trọng số vị trí gần - xa chuẩn hóa 100%: Chi Tháng 40%, Chi Ngày 18%, Can Tháng 12%, Can Giờ 12%, Chi Giờ 10%, Can Năm 4%, Chi Năm 4%.',
+      'Phân loại chuẩn xác 9 cấp độ Thân Mệnh: Quá Vượng (Cực Vượng), Thiên Vượng Thiên Cường, Thân Vượng, Vượng mà hóa Nhược (Ngoại vượng nội hư), Nhược mà hóa Vượng ("Nhược mà không phải nhược"), Bình Hòa, Thân Nhược, Thiên Nhược, Quá Nhược (Tòng Thế Cách).',
+      'Xác định chuẩn Dụng Thần, Hỷ Thần và Kỵ Thần tương ứng với từng trạng thái vượng nhược.',
+      'Tích hợp Thẻ Giao Diện BatTuVuongNhuocCard đẹp mắt, trực quan vào cả Mô-đun Bát Tự Trang Chủ (OverviewCard) và Lịch Vạn Niên Chi Tiết (DailyCalendarView).',
+      'Cập nhật Mục 27 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Mô-đun tính toán /src/astronomy/batTuVuongNhuoc.ts với đầy đủ bảng 12 Cung Trường Sinh, Tàng Can, Thập Thần, Căn Gốc Lộc/Nhận/Mộ.',
+      'Thành phần giao diện /src/components/BatTuVuongNhuocCard.tsx hỗ trợ mở rộng, biểu đồ thanh tương quan lực lượng, thẻ phân tích 4 yếu tố sinh trợ và 3 lực lượng khắc-hao-tiết.',
+      'Mục số 27 trong AlgorithmGuideModal.tsx thuyết minh chi tiết phương pháp Tử Bình đánh giá vượng nhược.',
+    ],
+    improved: [
+      'Tích hợp tự động trường vuongNhuoc vào hàm tinhBatTu() trong canChi.ts và cấu trúc BatTuInfo trong types.ts.',
+      'Hiển thị chip tóm tắt Vượng Nhược Thân Mệnh ngay trong Card Tứ Trụ Can Chi ở OverviewCard.',
+      'Mở rộng DailyAlmanacInfo để cung cấp dữ liệu Bát Tự Vượng Nhược cho trang Lịch Ngày.',
+    ],
+    fixed: [
+      'Khắc phục sự thiếu hụt phần đánh giá vượng nhược chuyên sâu trong lá số Bát Tự hiện có.',
+    ],
+  },
   {
     version: '2.29.1',
     releaseDate: '2026-09-03',
     codename: 'Tối Ưu Tuyệt Đối Trạch Cát: Bộ Đệm Toàn Cục Trục Thời Gian Thiên Văn (Astronomical Timeline Caching)',
     tagline: 'Khắc phục triệt để hiện tượng đơ/lag/treo trình duyệt khi vào chuyên mục Trạch Cát Hiệp Kỷ Biện Phương Thư bằng thuật toán Bộ đệm chu kỳ thiên văn 6.5 năm O(1).',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Giải quyết triệt để lỗi đơ/lag khi vào phần Trạch Cát Hiệp Kỷ Biện Phương Thư: Giảm thời gian tính toán từ 15.5 giây xuống dưới 3 mili-giây (tăng tốc hơn 5.000 lần).',
       'Bộ đệm toàn cục chu kỳ thiên văn (Astronomical Timeline Caching): Khởi tạo mảng tháng âm lịch và tiết khí 6.5 năm một lần duy nhất, các truy vấn ngày tiếp theo đạt tốc độ O(1) tức thì (< 0.005ms).',

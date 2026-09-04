@@ -71,6 +71,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'combined-prognostication', title: '24. Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)', icon: Sparkles },
     { id: 'dual-pillars-structure', title: '25. Cấu Trúc Song Trụ: Lịch Vạn Niên & Lập Quẻ Song Thức (Kỳ Môn - Lục Nhâm)', icon: Layers },
     { id: 'trach-cat-perf-opt', title: '26. Tối Ưu Hiệu Năng: Bộ Đệm Chu Kỳ Thiên Văn (Loại Bỏ Hoàn Toàn Đơ/Lag)', icon: Zap },
+    { id: 'battu-vuong-nhuoc', title: '27. Thẩm Duyệt Vượng Nhược Bát Tự (Sức Mạnh Nhật Chủ Tử Bình)', icon: Layers },
   ];
 
   return (
@@ -1486,6 +1487,114 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
                 <div className="p-3 bg-slate-900/80 rounded-xl border border-emerald-500/30 text-xs text-emerald-300">
                   <strong>Kết quả đo lường thực tế:</strong> Thời gian khởi tạo tab Trạch Cát giảm từ <strong>15.500ms xuống còn chưa đầy 3ms</strong> (tăng tốc hơn 5.000 lần), hoàn toàn mượt mà 60fps trên cả máy tính lẫn thiết bị di động.
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 27: THẨM DUYỆT VƯỢNG NHƯỢC BÁT TỰ TỬ BÌNH (ĐÁNH GIÁ SỨC MẠNH NHẬT CHỦ) */}
+          {(activeSection === 'all' || activeSection === 'battu-vuong-nhuoc') && (
+            <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-sm sm:text-base border-b border-slate-800 pb-2">
+                <Layers className="w-5 h-5 text-amber-400" />
+                <span>27. Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ (Ngũ Hành Can Ngày)</span>
+              </div>
+
+              <div className="space-y-4 text-xs leading-relaxed text-slate-300">
+                <p>
+                  Trong dự đoán Tứ Trụ Bát Tự, <strong>Nhật Chủ (Nhật Nguyên - Can của Ngày sinh)</strong> đại diện cho chính bản thân mệnh chủ. Đánh giá Thân Vượng hay Thân Nhược là bước khởi đầu quan trọng bậc nhất, quyết định toàn bộ việc lựa chọn <em>Dụng Thần, Hỷ Thần và Kỵ Thần</em>. Hệ thống thẩm duyệt chuẩn xác dựa trên 4 trụ cột kinh điển:
+                </p>
+
+                {/* 4 Yếu Tố Sinh Trợ */}
+                <div className="p-4 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-2">
+                  <strong className="text-emerald-400 block font-bold text-sm">
+                    I. 4 Yếu Tố Sinh Trợ (Lực Lượng Làm Thân Vượng):
+                  </strong>
+                  <ul className="list-disc pl-5 space-y-1.5 text-slate-300 text-xs">
+                    <li>
+                      <strong>1. Đắc Lệnh (Nguyệt Lệnh):</strong> Nhật can sinh vào tháng vượng (địa chi của tháng sinh rơi vào các cung <em>Trường Sinh, Mộc Dục, Quan Đới, Lâm Quan, Đế Vượng</em>). Đây là yếu tố then chốt nhất, chiếm khoảng <strong>40% tổng lực lượng</strong> toàn cục.
+                    </li>
+                    <li>
+                      <strong>2. Đắc Địa (Căn Gốc Địa Chi):</strong> Nhật can có gốc ở các địa chi khác (Năm, Ngày, Giờ) là <em>Trường Sinh, Lộc (Lâm Quan), Kình Dương (Nhận), hoặc Mộ Khố</em>. Có rễ cắm sâu giúp Thân chủ tự lập, vững chãi trước sóng gió.
+                    </li>
+                    <li>
+                      <strong>3. Được Sinh (Ấn Tinh):</strong> Nhật can được <em>Chính Ấn hoặc Thiên Ấn</em> của các can chi trong tứ trụ sinh dưỡng, nhận được sự chở che của gia đình, thầy bạn, quý nhân và học vấn.
+                    </li>
+                    <li>
+                      <strong>4. Được Trợ Giúp (Tỷ Kiếp):</strong> Nhật can gặp các can chi khác cùng ngũ hành (<em>Tỷ Kiên hoặc Kiếp Tài</em>) phò trợ đồng loại, có anh em bè bạn chung sức gánh vác.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Các Điều Kiện Phân Đoán */}
+                <div className="p-4 rounded-xl bg-slate-900 border border-amber-500/30 space-y-2">
+                  <strong className="text-amber-400 block font-bold text-sm">
+                    II. Các Điều Kiện Phân Đoán Thân Vượng / Thân Nhược:
+                  </strong>
+                  <ul className="list-disc pl-5 space-y-1.5 text-slate-300 text-xs">
+                    <li>
+                      <strong>Thân vượng khi đắc lệnh:</strong> Nhật can đắc lệnh chi tháng, đồng thời có thêm ít nhất một trong các yếu tố còn lại (đắc địa, được sinh hoặc được trợ giúp).
+                      <ul className="list-circle pl-5 mt-1 space-y-1 text-slate-400">
+                        <li>Nếu có thêm 2 yếu tố hỗ trợ: Gọi là <em>Thiên Vượng Thiên Cường</em> (khí lực dồi dào, cần Quan Sát, Tài Tinh).</li>
+                        <li>Nếu có đủ cả 3 yếu tố hỗ trợ: Gọi là <em>Quá Vượng (Vượng tới cực)</em> (cần Thực Thương tiết tú xả khí, kỵ thêm Ấn Tỷ).</li>
+                      </ul>
+                    </li>
+                    <li>
+                      <strong>Thân vượng khi thất lệnh ("Nhược mà không phải nhược"):</strong> Nhật can tuy không đắc lệnh (sinh vào tháng suy), nhưng nếu được đắc địa, được sinh hoặc được trợ giúp có từ 2 yếu tố trở lên có lực thì vẫn được tính là Thân Vượng vững vàng.
+                    </li>
+                    <li>
+                      <strong>Lưu ý đặc biệt ("Vượng mà hóa không vượng"):</strong> Nhật can dù đắc lệnh tháng nhưng hoàn toàn không đắc địa, không được sinh, không được trợ giúp, đồng thời bị khắc-hao-tiết áp đảo thì vẫn là <em>"Ngoại vượng nội hư"</em>, quy về Thân Nhược.
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Lực Lượng Làm Thân Nhược */}
+                <div className="p-4 rounded-xl bg-slate-900 border border-rose-500/30 space-y-2">
+                  <strong className="text-rose-400 block font-bold text-sm">
+                    III. 3 Lực Lượng Làm Thân Nhược (Khắc - Hao - Tiết):
+                  </strong>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
+                    <div className="p-2.5 rounded-lg bg-slate-950 border border-rose-500/20">
+                      <span className="font-bold text-rose-400 block">• Khắc (Quan Sát):</span>
+                      <span className="text-slate-400">Chính Quan, Thất Sát khắc chế Nhật chủ, tạo áp lực công việc, kỷ luật và trách nhiệm.</span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-slate-950 border border-amber-500/20">
+                      <span className="font-bold text-amber-400 block">• Hao (Tài Tinh):</span>
+                      <span className="text-slate-400">Chính Tài, Thiên Tài bị Nhật chủ khắc, khiến Thân chủ tiêu hao tâm lực để mưu cầu và quản lý tiền tài.</span>
+                    </div>
+                    <div className="p-2.5 rounded-lg bg-slate-950 border border-cyan-500/20">
+                      <span className="font-bold text-cyan-400 block">• Tiết (Thực Thương):</span>
+                      <span className="text-slate-400">Thực Thần, Thương Quan do Nhật chủ sinh ra, làm rò rỉ nguyên khí để phát tiết tài hoa sáng tạo.</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trọng Số Gần Xa */}
+                <div className="p-4 rounded-xl bg-slate-900 border border-purple-500/30 space-y-2">
+                  <strong className="text-purple-400 block font-bold text-sm">
+                    IV. Tổng Hòa So Sánh Tương Quan Thực Tế (Trọng Số Khoảng Cách Gần - Xa):
+                  </strong>
+                  <p className="text-slate-400 text-xs">
+                    Hệ thống tính toán ma trận điểm số 100% dựa trên vị trí gần xa đối với Nhật Chủ:
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs pt-1">
+                    <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                      <div className="font-bold text-amber-300">Chi Tháng: 40%</div>
+                      <div className="text-[10px] text-slate-500">Nguyệt lệnh thời tiết</div>
+                    </div>
+                    <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                      <div className="font-bold text-emerald-300">Chi Ngày: 18%</div>
+                      <div className="text-[10px] text-slate-500">Tọa chi bản mệnh</div>
+                    </div>
+                    <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                      <div className="font-bold text-cyan-300">Can Tháng / Giờ: 12% + 12%</div>
+                      <div className="text-[10px] text-slate-500">Áp sát hai bên Thân</div>
+                    </div>
+                    <div className="p-2 bg-slate-950 rounded border border-slate-800">
+                      <div className="font-bold text-purple-300">Chi Giờ & Năm: 18%</div>
+                      <div className="text-[10px] text-slate-500">Hậu vận & Tiền kiếp</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

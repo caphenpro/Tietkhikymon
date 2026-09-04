@@ -1,3 +1,5 @@
+import { BatTuVuongNhuocResult } from './astronomy/batTuVuongNhuoc';
+
 export interface SolarTerm {
   degree: number;
   name: string;
@@ -87,6 +89,7 @@ export interface BatTuInfo {
   hourCanChi: string;
   fullText: string;
   solarYear: number;
+  vuongNhuoc?: BatTuVuongNhuocResult;
 }
 
 export type KyMonRuleType = 'Chính Khí' | 'Siêu Thần' | 'Tiếp Khí' | 'Nhuận Cục';

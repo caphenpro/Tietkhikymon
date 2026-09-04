@@ -1,4 +1,5 @@
 import { BatTuInfo } from '../types';
+import { evaluateBatTuVuongNhuoc } from './batTuVuongNhuoc';
 
 export const CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
 export const CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tị', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
@@ -131,6 +132,8 @@ export function tinhBatTu(date: Date, lonNow: number): BatTuInfo {
   const canThangIdx = (baseCanDan + monthOffset) % 10;
   const thangStr = `${CAN[canThangIdx]} ${CHI[chiThangIdx]}`;
 
+  const vuongNhuoc = evaluateBatTuVuongNhuoc(namStr, thangStr, ngayStr, gioStr);
+
   return {
     yearCanChi: namStr,
     monthCanChi: thangStr,
@@ -138,5 +141,6 @@ export function tinhBatTu(date: Date, lonNow: number): BatTuInfo {
     hourCanChi: gioStr,
     solarYear,
     fullText: `Năm ${namStr} - Tháng ${thangStr} - Ngày ${ngayStr} - Giờ ${gioStr}`,
+    vuongNhuoc,
   };
 }

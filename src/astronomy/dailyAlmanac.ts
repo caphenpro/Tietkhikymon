@@ -1,3 +1,4 @@
+import { BatTuInfo } from '../types';
 import { CAN, CHI, getLocalComponents, tinhCanChiNgay, tinhBatTu } from './canChi';
 import { getAstronomicalLunarDate } from './lunarCalendar';
 import { getSunEclipticLongitude } from './sunMoon';
@@ -89,6 +90,9 @@ export interface DailyAlmanacInfo {
   
   // Animal Zodiac Symbol
   zodiacAnimal: string;
+
+  // Bát Tự Tứ Trụ & Thẩm duyệt Vượng Nhược Nhật Chủ
+  batTu: BatTuInfo;
 }
 
 // Hour Ranges for the 12 Chi
@@ -456,6 +460,7 @@ export function calculateDailyAlmanac(date: Date): DailyAlmanacInfo {
     historicalEvent,
     quote,
     zodiacAnimal,
+    batTu,
   };
 
   almanacCache.set(cacheKey, result);

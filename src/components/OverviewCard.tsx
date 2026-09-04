@@ -29,6 +29,7 @@ import { formatVietnamDateTime, BAGUA_PALACES } from '../astronomy/solarTerms';
 import { buildCompleteKyMonChart, CompleteKyMonChart } from '../astronomy/kymonChart';
 import { evaluateKyMonTimeMoment } from '../astronomy/kymonEvaluation';
 import { TimeEvaluationCard } from './TimeEvaluationCard';
+import { BatTuVuongNhuocCard } from './BatTuVuongNhuocCard';
 
 interface OverviewCardProps {
   result: ComprehensiveResult;
@@ -358,10 +359,27 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({
               <span className="text-slate-400">Chuỗi Bát Tự đầy đủ: </span>
               <span className="text-white font-semibold">{batTu.fullText}</span>
             </div>
+
+            {batTu.vuongNhuoc && (
+              <div className="mt-2 flex items-center justify-between text-xs bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-lg flex-wrap gap-2">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="font-bold text-amber-300">Vượng Nhược Thân Mệnh:</span>
+                  <span className="font-extrabold text-white px-2 py-0.5 rounded bg-amber-600/30 border border-amber-500/40">
+                    {batTu.vuongNhuoc.tongHoa.level}
+                  </span>
+                  <span className="text-[11px] text-slate-400 font-normal">
+                    ({batTu.vuongNhuoc.yeuToSinhTro.dacLenh.isDacLenh ? 'Đắc lệnh' : 'Thất lệnh'})
+                  </span>
+                </div>
+                <div className="text-[11px] font-mono text-emerald-400 font-semibold">
+                  Sinh Phù {batTu.vuongNhuoc.tongHoa.sinhTroScore}% / Khắc Hao Tiết {batTu.vuongNhuoc.tongHoa.khacHaoTietScore}%
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="text-[11px] text-slate-400">
-            * Bát tự được dùng làm dữ liệu đầu vào cốt lõi để tính Tuần Thủ Giáp và phối bàn Kỳ Môn.
+            * Bát tự được dùng làm dữ liệu đầu vào cốt lõi để tính Tuần Thủ Giáp, phối bàn Kỳ Môn và thẩm duyệt Thân Mệnh Vượng Nhược.
           </div>
         </div>
 
@@ -454,6 +472,11 @@ export const OverviewCard: React.FC<OverviewCardProps> = ({
           )}
         </div>
       </div>
+
+      {/* 2B. THẨM DUYỆT CHI TIẾT VƯỢNG NHƯỢC BÁT TỰ */}
+      {batTu.vuongNhuoc && (
+        <BatTuVuongNhuocCard vuongNhuoc={batTu.vuongNhuoc} />
+      )}
 
       {/* 3. BÀN KỲ MÔN 9 CUNG & TOÀN THƯ DỰ TRẮC PORTAL CARDS */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

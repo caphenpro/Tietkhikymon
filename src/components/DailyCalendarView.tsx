@@ -22,6 +22,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { calculateDailyAlmanac, DailyAlmanacInfo } from '../astronomy/dailyAlmanac';
+import { BatTuVuongNhuocCard } from './BatTuVuongNhuocCard';
 
 interface DailyCalendarViewProps {
   currentDate: Date;
@@ -526,6 +527,13 @@ export const DailyCalendarView: React.FC<DailyCalendarViewProps> = ({
               </div>
             </div>
           </div>
+
+          {/* THẨM DUYỆT VƯỢNG NHƯỢC BÁT TỰ TỬ BÌNH */}
+          {almanac.batTu?.vuongNhuoc && (
+            <div className="pt-2">
+              <BatTuVuongNhuocCard vuongNhuoc={almanac.batTu.vuongNhuoc} compact={true} />
+            </div>
+          )}
 
           {/* TRẠCH CÁT HIỆP KỶ BIỆN PHƯƠNG THƯ: CÁT THẦN, HUNG THẦN, NGHI & KỴ */}
           <div className="pt-4 border-t border-amber-900/15 dark:border-slate-800 space-y-3">

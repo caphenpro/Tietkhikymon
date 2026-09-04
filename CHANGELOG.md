@@ -6,6 +6,38 @@ Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ M
 
 ---
 
+## [[2.30.0]] - 2026-09-04
+### Codename: *Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ Toàn Diện (Bazi Day Master Strength Engine)*
+
+#### 🌟 Xây Dựng & Tích Hợp Động Cơ Thẩm Định Vượng Nhược Bát Tự Tử Bình Chuẩn Xác
+- **Mô-Đun Đánh Giá Sức Mạnh Nhật Chủ (`/src/astronomy/batTuVuongNhuoc.ts`)**:
+  - Xây dựng thuật toán đánh giá tương quan lực lượng giữa **Nhóm Sinh Trợ** (làm Thân vượng) và **Nhóm Khắc - Hao - Tiết** (làm Thân nhược) theo nguyên lý Tử Bình chính tông.
+  - **4 Yếu Tố Sinh Trợ (Lực lượng làm thân vượng)**:
+    1. *Đắc Lệnh (Nguyệt Lệnh)*: Nhật can sinh vào tháng vượng (địa chi của tháng sinh rơi vào Trường Sinh, Mộc Dục, Quan Đới, Lâm Quan, Đế Vượng) - chiếm trọng số tối cao **40%**.
+    2. *Đắc Địa (Căn Gốc Địa Chi)*: Nhật can có gốc ở các chi khác (Năm, Ngày, Giờ) là Trường Sinh, Lộc (Lâm Quan), Kình Dương (Nhận), hoặc Mộ Khố.
+    3. *Được Sinh (Ấn Tinh)*: Nhật can được Chính Ấn, Thiên Ấn của các can chi trong tứ trụ sinh dưỡng.
+    4. *Được Trợ Giúp (Tỷ Kiếp)*: Nhật can gặp Tỷ Kiên, Kiếp Tài phò trợ đồng loại.
+  - **3 Lực Lượng Làm Thân Nhược (Khắc - Hao - Tiết)**:
+    1. *Khắc (Quan Sát)*: Chính Quan, Thất Sát khắc chế Nhật Chủ.
+    2. *Hao (Tài Tinh)*: Chính Tài, Thiên Tài khiến Nhật Chủ tiêu hao lực lượng.
+    3. *Tiết (Thực Thương)*: Thực Thần, Thương Quan tiết tú xả khí.
+  - **Ma Trận Trọng Số Vị Trí Gần - Xa Chuẩn Hóa 100%**:
+    - Chi Tháng: **40%** (Tiết lệnh thời tiết)
+    - Chi Ngày: **18%** (Tọa chi bản mệnh)
+    - Can Tháng: **12%** & Can Giờ: **12%** (Áp sát hai bên thân)
+    - Chi Giờ: **10%**, Can Năm: **4%**, Chi Năm: **4%**.
+  - **Phân Loại 9 Cấp Độ Vượng Nhược**: Quá Vượng, Thiên Vượng Thiên Cường, Thân Vượng, Vượng mà hóa Nhược (Ngoại vượng nội hư), Nhược mà hóa Vượng ("Nhược mà không phải nhược"), Bình Hòa, Thân Nhược, Thiên Nhược, Quá Nhược.
+  - Định hướng chi tiết **Dụng Thần**, **Hỷ Thần**, và **Kỵ Thần**.
+- **Tích Hợp Giao Diện Trực Quan (`/src/components/BatTuVuongNhuocCard.tsx`)**:
+  - Thanh tiến trình tương quan lực lượng tỷ lệ phần trăm trực quan: Lực Sinh Trợ vs Lực Khắc-Hao-Tiết.
+  - Huy hiệu phân định Đắc lệnh / Thất lệnh, Đắc địa / Thất địa.
+  - Thẻ chi tiết 4 Yếu Tố Sinh Trợ và 3 Lực Lượng Khắc-Hao-Tiết có thể mở rộng / thu gọn linh hoạt.
+  - Tích hợp vào **OverviewCard.tsx** (Mô-đun Bát Tự) và **DailyCalendarView.tsx** (Lịch Vạn Niên).
+- **Thuyết Minh Thuật Toán (`/src/components/AlgorithmGuideModal.tsx`)**:
+  - Bổ sung **Mục 27** thuyết minh đầy đủ các nguyên lý Tử Bình, bảng 12 Cung Trường Sinh, Tàng Can và phương pháp luận đoán.
+
+---
+
 ## [[2.29.1]] - 2026-09-03
 ### Codename: *Tối Ưu Tuyệt Đối Trạch Cát: Bộ Đệm Toàn Cục Trục Thời Gian Thiên Văn (Astronomical Timeline Caching)*
 
