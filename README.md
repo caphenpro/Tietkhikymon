@@ -1,33 +1,36 @@
-# Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)
+# Kỳ Môn & Lục Nhâm Độn Giáp (Astronomical Precision & Ancient Divination Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.30.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.31.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng web toàn diện hỗ trợ tính toán và tra cứu **24 Tiết Khí Thiên Văn Chính Xác Cao**, **Lịch Sóc Âm Dương & Tháng Âm Lịch Thiên Văn**, **Trang Lịch Ngày Vạn Niên Block Truyền Thống**, **Chuyên Mục Trạch Cát Toàn Thư "Khâm Định Hiệp Kỷ Biện Phương Thư"**, **Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình (Sức Mạnh Nhật Chủ)**, **Hệ Thống Dự Trắc Song Thức: Kỳ Môn (Thời Điểm & 8 Hướng) & Lục Nhâm (3 Giai Đoạn)**, **Biểu Đồ Thống Kê Năng Lượng Kỳ Môn (Recharts Dynamics)**, **Bát Tự Tứ Trụ Can Chi**, **Luận Cục Kỳ Môn Độn Giáp (Siêu Thần Tiếp Khí Nhuận Cục)**, **Bàn Kỳ Môn 9 Cung 4 Tầng Hoàn Chỉnh**, **Đại Lục Nhâm Độn Giáp Toàn Thư**, và **Toàn Thư Dự Trắc Bàn Kỳ Môn Cổ Bản**.
+Ứng dụng chuyên sâu lập quẻ và giải mã **Cổ Tam Thức Độn Giáp**: **Quẻ Kỳ Môn Độn Giáp 9 Cung Lạc Thư (4 Tầng Không - Thời Gian)**, **Đại Lục Nhâm (Tam Truyền Tứ Khoa Phân Định Thành Bại)**, **Dự Trắc Song Thức Tổng Hợp**, kết hợp **Lịch & Tiết Khí Tối Giản** và **Mô Hình Tính Toán Thiên Văn Chuẩn Xác (Jean Meeus, VSOP87 & ELP2000)**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.30.0`** *(Phát hành: 04/09/2026)*
-**Tên mã:** *Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ Toàn Diện (Bazi Day Master Strength Engine)*
+### 🚀 **Phiên bản hiện tại: `v2.31.0`** *(Phát hành: 22/09/2026)*
+**Tên mã:** *Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)*
 
-- 🌟 **Xây Dựng & Tích Hợp Động Cơ Thẩm Định Vượng Nhược Bát Tự Chuẩn Cổ Điển**:
-  - Đánh giá tương quan giữa **Nhóm Sinh Trợ** (làm Thân vượng) và **Nhóm Khắc - Hao - Tiết** (làm Thân nhược).
-  - **4 Yếu Tố Sinh Trợ**: Đắc lệnh (Nguyệt lệnh chi tháng, 40%), Đắc địa (Gốc Lộc/Nhận/Mộ ở các chi khác), Được sinh (Ấn Tinh), Được trợ giúp (Tỷ Kiếp).
-  - **3 Lực Lượng Làm Thân Nhược**: Khắc (Quan Sát), Hao (Tài Tinh), Tiết (Thực Thương).
-  - **Ma Trận Trọng Số Vị Trí Gần - Xa Chuẩn Hóa 100%**: Chi tháng (40%), Chi ngày (18%), Can tháng (12%), Can giờ (12%), Chi giờ (10%), Can năm (4%), Chi năm (4%).
-  - **Phân Loại 9 Cấp Độ Vượng Nhược**: Quá Vượng, Thiên Vượng Thiên Cường, Thân Vượng, Vượng mà hóa Nhược, Nhược mà hóa Vượng, Bình Hòa, Thân Nhược, Thiên Nhược, Quá Nhược.
-  - Tự động định hướng **Dụng Thần, Hỷ Thần, Kỵ Thần** tương ứng.
-- 🎨 **Giao Diện Trực Quan Cao Cấp**: Component `BatTuVuongNhuocCard` hiển thị biểu đồ thanh tiến trình tương quan lực lượng, thẻ phân tích chi tiết và xuất hiện đồng bộ trong cả Mô-đun Bát Tự Trang Chủ (`OverviewCard`) lẫn Lịch Vạn Niên Chi Tiết (`DailyCalendarView`).
-- 📖 **Cập Nhật Thuyết Minh Thuật Toán**: Bổ sung Mục 27 trong `AlgorithmGuideModal.tsx`.
+- 🔮 **Chuyển Trọng Tâm Hoàn Toàn Sang Lập & Luận Giải Quẻ Kỳ Môn & Lục Nhâm**:
+  - **Mặc định hiển thị Quẻ Kỳ Môn (`kymon-chart`)**: Ngay khi truy cập, bàn cờ Ma Trận 9 Cung Lạc Thư Kỳ Môn Độn Giáp được nạp trực tiếp ở vị trí trung tâm, trực quan và không bị che khuất.
+  - **Sắp xếp bố cục tối ưu**: Ma Trận 9 Cung Kỳ Môn đặt lên hàng đầu, tiếp nối là Thẻ Đánh Giá Cát Hung 5 Sao và Biểu Đồ Năng Lượng Xu Hướng, đáp ứng hoàn hảo nhu cầu tra cứu và luận quẻ nhanh.
+- 📅 **Tối Giản Hóa Phân Hệ Lịch (`CompactCalendarView.tsx`)**:
+  - Loại bỏ các bảng biểu dài và phức tạp, gom gọn thành mô-đun tra cứu nhanh các thông tin cốt lõi (Ngày Âm/Dương, Tứ Trụ Can Chi, Tiết Khí, Giờ Hoàng Đạo trong ngày) phục vụ chọn thời khắc chiêm quẻ.
+  - Nút chuyển nhanh vào lập quẻ Kỳ Môn và Lục Nhâm chỉ bằng 1 thao tác bấm.
+- 🧭 **Thanh Điều Hướng Header 4 Tab Tinh Gọn**:
+  1. 🔮 **Quẻ Kỳ Môn** (9 Cung Lạc Thư)
+  2. 🧭 **Quẻ Lục Nhâm** (Tam Truyền Tứ Khoa)
+  3. 🎯 **Dự Trắc Song Thức** (Kỳ Môn & Lục Nhâm)
+  4. 📅 **Lịch & Tiết Khí (Tối Giản)** (Tra Cứu Hỗ Trợ)
+- 📖 **Cập Nhật Thuyết Minh Thuật Toán**: Bổ sung Mục 28 trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.29.1`** *(Phát hành: 03/09/2026)*
+### 📦 **Phiên bản trước: `v2.30.0`** *(Phát hành: 04/09/2026)*
 
 ## 🌟 Tính Năng Nổi Bật
 

@@ -11,18 +11,42 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.30.0';
-export const APP_RELEASE_DATE = '2026-09-04';
-export const APP_CODENAME = 'Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ Toàn Diện (Bazi Day Master Strength Engine)';
+export const APP_VERSION = '2.31.0';
+export const APP_RELEASE_DATE = '2026-09-22';
+export const APP_CODENAME = 'Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.31.0',
+    releaseDate: '2026-09-22',
+    codename: 'Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)',
+    tagline: 'Tối giản hóa toàn diện giao diện ứng dụng, lược bỏ hiển thị rườm rà của phần lịch, chuyển mục tiêu chính sang lập và luận giải quẻ Kỳ Môn 9 Cung và Đại Lục Nhâm Tam Truyền trực quan, dễ nhìn nhất.',
+    isLatest: true,
+    highlights: [
+      'Chuyển đổi mục tiêu trung tâm: Ứng dụng đặt trọng tâm tuyệt đối vào việc lập quẻ và giải mã Cổ Tam Thức (Kỳ Môn Độn Giáp & Đại Lục Nhâm).',
+      'Mặc định tải thẳng Quẻ Kỳ Môn (kymon-chart): Khi mở ứng dụng, Ma Trận 9 Cung Lạc Thư Kỳ Môn Độn Giáp được hiển thị ngay lập tức ở vị trí trung tâm, không bị che khuất hay phải cuộn trang.',
+      'Sắp xếp lại giao diện Kỳ Môn trực quan: Ma Trận 9 Cung Lạc Thư được đưa lên trước, theo sau là Thẻ Đánh Giá Cát Hung 5 Sao và Biểu Đồ Năng Lượng 9 Cung, tối ưu cho thao tác tra cứu thực chiến.',
+      'Tối giản hóa phần Lịch: Thay thế giao diện lịch nhiều tầng trước đây bằng mô-đun CompactCalendarView gọn gàng, súc tích, chỉ giữ lại các dữ liệu cốt lõi (Âm Dương lịch, Can Chi Tứ Trụ, Tiết Khí, Giờ Hoàng Đạo) để hỗ trợ chọn thời khắc chiêm quẻ.',
+      'Tinh giản thanh điều hướng Navigation Tabs còn 4 mục rõ ràng: 1. Quẻ Kỳ Môn; 2. Quẻ Lục Nhâm; 3. Dự Trắc Song Thức; 4. Lịch & Tiết Khí (Tối Giản).',
+      'Cập nhật tài liệu thuyết minh thuật toán (AlgorithmGuideModal.tsx) mục 28 và đồng bộ hóa siêu dữ liệu ứng dụng.',
+    ],
+    added: [
+      'Thành phần giao diện /src/components/CompactCalendarView.tsx siêu tinh gọn, hỗ trợ xem nhanh lịch và giờ Hoàng Đạo.',
+      'Mục số 28 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+    ],
+    improved: [
+      'Thiết lập viewTab mặc định là "matrix" (Bàn 9 Cung) trong KyMonCompleteBoard.tsx.',
+      'Căn chỉnh bố cục Ma Trận 9 Cung Kỳ Môn nổi bật lên hàng đầu.',
+      'Đồng bộ metadata.json và index.html với tên gọi "Kỳ Môn & Lục Nhâm Độn Giáp".',
+    ],
+  },
   {
     version: '2.30.0',
     releaseDate: '2026-09-04',
     codename: 'Hệ Thống Thẩm Duyệt Vượng Nhược Bát Tự Tử Bình: Đánh Giá Sức Mạnh Nhật Chủ Toàn Diện (Bazi Day Master Strength Engine)',
     tagline: 'Xây dựng và tích hợp động cơ thẩm định Vượng Nhược Bát Tự chuẩn xác theo Tử Bình cổ điển: Đắc lệnh, Đắc địa, Được sinh, Được trợ giúp và Khắc - Hao - Tiết, tính điểm trọng số ma trận khoảng cách gần - xa.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Xây dựng trọn bộ Động cơ Thẩm Duyệt Vượng Nhược Bát Tự (batTuVuongNhuoc.ts): Phân tích chi tiết sức mạnh của Nhật Chủ (Can ngày sinh) dựa trên tương quan giữa lực lượng Sinh Phù (làm thân vượng) và lực lượng Khắc - Hao - Tiết (làm thân nhược).',
       'Thẩm định 4 Yếu Tố Sinh Trợ (Lực lượng làm thân vượng): 1) Đắc Lệnh (Nguyệt lệnh chi tháng thuộc Trường Sinh, Mộc Dục, Quan Đới, Lâm Quan, Đế Vượng - chiếm ~40% lực lượng); 2) Đắc Địa (Căn ở chi khác là Trường Sinh, Lộc, Kình Dương, Mộ khố); 3) Được Sinh (Chính Ấn, Thiên Ấn sinh cho); 4) Được Trợ Giúp (Tỷ Kiên, Kiếp Tài đồng hành).',

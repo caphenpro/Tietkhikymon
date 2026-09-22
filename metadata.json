@@ -1,6 +1,6 @@
 {
-  "name": "Tính Tiết Khí & Kỳ Môn Độn Giáp",
-  "description": "Ứng dụng tính toán thiên văn 24 Tiết khí, Điểm Sóc Âm lịch, Bát Tự Can Chi và Lập Bàn Kỳ Môn Độn Giáp hoàn chỉnh với luận giải Thập Can Khắc Ứng, Bát Môn Cung, Cửu Tinh, Bát Thần và Cách Cục theo Bí Kíp Toàn Thư.",
+  "name": "Kỳ Môn & Lục Nhâm Độn Giáp",
+  "description": "Ứng dụng chuyên sâu lập quẻ Cổ Tam Thức: Kỳ Môn Độn Giáp (Ma trận 9 Cung Lạc Thư) và Đại Lục Nhâm (Tam Truyền - Tứ Khoa) với giao diện tối giản, trực quan và dễ nhìn nhất.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

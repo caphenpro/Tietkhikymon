@@ -67,7 +67,7 @@ export const OnboardingTourModal: React.FC<OnboardingTourModalProps> = ({
     // BƯỚC 1: CHÀO MỪNG & HỢP NHẤT THIÊN VĂN - CỔ TAM THỨC
     {
       id: 'welcome',
-      title: 'Chào Mừng Đến Với Hệ Thống Tiết Khí & Kỳ Môn Độn Giáp',
+      title: 'Chào Mừng Đến Với Hệ Thống Kỳ Môn & Lục Nhâm Độn Giáp',
       subtitle: 'Hệ Tọa Độ Thời - Không Vũ Trụ 4 Chiều (Thiên Văn Chính Xác & Cổ Tam Thức)',
       icon: Compass,
       badge: 'Tổng Quan Hệ Thống',

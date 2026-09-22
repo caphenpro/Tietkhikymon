@@ -72,6 +72,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'dual-pillars-structure', title: '25. Cấu Trúc Song Trụ: Lịch Vạn Niên & Lập Quẻ Song Thức (Kỳ Môn - Lục Nhâm)', icon: Layers },
     { id: 'trach-cat-perf-opt', title: '26. Tối Ưu Hiệu Năng: Bộ Đệm Chu Kỳ Thiên Văn (Loại Bỏ Hoàn Toàn Đơ/Lag)', icon: Zap },
     { id: 'battu-vuong-nhuoc', title: '27. Thẩm Duyệt Vượng Nhược Bát Tự (Sức Mạnh Nhật Chủ Tử Bình)', icon: Layers },
+    { id: 'streamlined-kymon-focus', title: '28. Tối Giản Hóa Trọng Tâm: Kỳ Môn & Lục Nhâm Độn Giáp', icon: Compass },
   ];
 
   return (
@@ -1595,6 +1596,55 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                       <div className="text-[10px] text-slate-500">Hậu vận & Tiền kiếp</div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 28: TỐI GIẢN HÓA TRỌNG TÂM - CHUYỂN SANG CHUYÊN SÂU QUẺ KỲ MÔN & LỤC NHÂM */}
+          {(activeSection === 'all' || activeSection === 'streamlined-kymon-focus') && (
+            <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-4">
+              <div className="flex items-center gap-2 text-amber-400 font-bold text-sm sm:text-base border-b border-slate-800 pb-2">
+                <Compass className="w-5 h-5 text-amber-400" />
+                <span>28. Tối Giản Hóa Trọng Tâm: Chuyển Trực Diện Sang Quẻ Kỳ Môn 9 Cung & Đại Lục Nhâm</span>
+              </div>
+
+              <div className="space-y-4 text-xs leading-relaxed text-slate-300">
+                <p>
+                  Đáp ứng trọn vẹn yêu cầu tối giản hóa giao diện và nâng cao tính khả dụng thực chiến, hệ thống đã tái định hình toàn bộ trải nghiệm người dùng:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 space-y-2">
+                    <strong className="text-amber-400 block font-bold text-sm">
+                      1. Mặc Định Quẻ Kỳ Môn:
+                    </strong>
+                    <p className="text-slate-400 text-xs leading-relaxed">
+                      Khi mở ứng dụng, màn hình nạp thẳng vào <strong>Ma Trận 9 Cung Lạc Thư Kỳ Môn Độn Giáp</strong>. Toàn bộ 4 tầng Thần - Tinh - Môn - Can được dàn trang thoáng đãng, sắc nét, tương tác xem chi tiết từng cung chỉ bằng 1 cú nhấp.
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-cyan-500/30 space-y-2">
+                    <strong className="text-cyan-400 block font-bold text-sm">
+                      2. Đại Lục Nhâm Chuyên Sâu:
+                    </strong>
+                    <p className="text-slate-400 text-xs leading-relaxed">
+                      Phân hệ <strong>Đại Lục Nhâm Tam Truyền Tứ Khoa</strong> được đặt ở vị trí tab chủ lực thứ 2, giúp phân tích tường tận quá trình thành bại theo thời khắc thực tế.
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/30 space-y-2">
+                    <strong className="text-emerald-400 block font-bold text-sm">
+                      3. Tối Giản Lịch Tra Cứu:
+                    </strong>
+                    <p className="text-slate-400 text-xs leading-relaxed">
+                      Lược bỏ các bảng biểu rườm rà của lịch ngày; quy tụ lại thành phân hệ <strong>Lịch & Tiết Khí Tối Giản</strong> (CompactCalendarView), phục vụ đối chiếu giờ Hoàng Đạo nhanh trước khi gieo quẻ.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
+                  <span className="text-amber-400 font-bold">Mục tiêu tối thượng:</span> Đem lại giao diện sạch sẽ, tập trung tuyệt đối vào việc lập quẻ và giải mã quy luật vũ trụ của Cổ Tam Thức Độn Giáp.
                 </div>
               </div>
             </div>

@@ -48,14 +48,12 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  // Navigation Tabs: Tập trung vào 1. Lịch Vạn Niên (Cát Hung) và 2. Lập Quẻ (Kỳ Môn & Lục Nhâm)
+  // Navigation Tabs: Tối giản, tập trung tuyệt đối vào Quẻ Kỳ Môn & Lục Nhâm Độn Giáp
   const navTabs = [
-    { id: 'daily-calendar', label: 'Lịch Vạn Niên', icon: '📅', badge: 'Cát Hung' },
-    { id: 'kymon-chart', label: 'Quẻ Kỳ Môn', icon: '🧭', badge: 'Không - Thời Gian' },
-    { id: 'luc-nham', label: 'Quẻ Lục Nhâm', icon: '🔮', badge: 'Quá Trình Thành Bại' },
-    { id: 'kymon-prognostication', label: 'Dự Trắc Song Thức', icon: '🎯', badge: 'Tổng Hợp' },
-    { id: 'trach-cat', label: 'Trạch Cát Hiệp Kỷ', icon: '🏛️', badge: 'Hiệp Kỷ' },
-    { id: 'table', label: '24 Tiết Khí', icon: '🗓️', badge: 'Thiên Văn' },
+    { id: 'kymon-chart', label: 'Quẻ Kỳ Môn', icon: '🔮', badge: '9 Cung Lạc Thư' },
+    { id: 'luc-nham', label: 'Quẻ Lục Nhâm', icon: '🧭', badge: 'Tam Truyền Tứ Khoa' },
+    { id: 'kymon-prognostication', label: 'Dự Trắc Song Thức', icon: '🎯', badge: 'Kỳ Môn & Lục Nhâm' },
+    { id: 'calendar-compact', label: 'Lịch & Tiết Khí (Tối Giản)', icon: '📅', badge: 'Tra Cứu' },
   ];
 
   // Format date for datetime-local picker
@@ -125,7 +123,7 @@ export const Header: React.FC<HeaderProps> = ({
                   </button>
                 </div>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium hidden sm:block">
-                  Cổ Tam Thức • Thiên Văn 24 Tiết Khí • Siêu Thần Tiếp Khí
+                  Cổ Tam Thức Độn Giáp • Lập Quẻ Chuyên Sâu • Trực Quan Dễ Nhìn
                 </p>
               </div>
             </div>

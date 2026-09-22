@@ -1,8 +1,33 @@
 # Nhật Ký Thay Đổi & Cập Nhật (Changelog)
 
-Tất cả các thay đổi đáng chú ý của dự án **Tiết Khí & Kỳ Môn Độn Giáp (Astronomical Precision Engine)** sẽ được ghi lại chi tiết và có hệ thống trong tệp tin này.
+Tất cả các thay đổi đáng chú ý của dự án **Kỳ Môn & Lục Nhâm Độn Giáp (Astronomical Precision & Ancient Divination Engine)** sẽ được ghi lại chi tiết và có hệ thống trong tệp tin này.
 
 Định dạng dựa trên [Keep a Changelog](https://keepachangelog.com/vi/1.0.0/), và dự án tuân thủ [Semantic Versioning (Phiên Bản Ngữ Nghĩa)](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [[2.31.0]] - 2026-09-22
+### Codename: *Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)*
+
+#### 🔮 Chuyển Đổi Mục Tiêu Trung Tâm Sang Quẻ Kỳ Môn & Lục Nhâm Độn Giáp Tối Giản, Dễ Nhìn
+- **Mặc Định Tải Thẳng Quẻ Kỳ Môn (`kymon-chart`)**:
+  - Khi mở ứng dụng, màn hình lập tức hiển thị **Ma Trận 9 Cung Lạc Thư Kỳ Môn Độn Giáp** ở vị trí trung tâm, trực quan và không bị che khuất bởi các thẻ đánh giá dài.
+  - Sắp xếp lại thứ tự giao diện trong `KyMonCompleteBoard.tsx`: Bàn Cờ 9 Cung được đưa lên hàng đầu, tiếp theo là Thẻ Đánh Giá Cát Hung 5 Sao và Biểu Đồ Năng Lượng 9 Cung.
+  - Thiết lập chế độ hiển thị mặc định `viewTab = 'matrix'` (Bàn 9 Cung) giúp giao diện gọn gàng, trong sáng và dễ quan sát nhất.
+- **Tối Giản Hóa Phân Hệ Lịch (`/src/components/CompactCalendarView.tsx`)**:
+  - Lược bỏ hiển thị rườm rà của giao diện lịch cũ, thay thế bằng thành phần `CompactCalendarView` siêu tinh gọn.
+  - Tập trung cung cấp các thông tin cốt lõi nhất: Ngày Dương/Âm, Tứ Trụ Can Chi, Tiết Khí, Cát Hung Hoàng Đạo, và Giờ Hoàng Đạo trong ngày để người dùng nhanh chóng chọn thời điểm tốt gieo quẻ.
+  - Tích hợp 2 nút thao tác nhanh: **"Mở Quẻ Kỳ Môn"** và **"Mở Quẻ Lục Nhâm"** nạp thời khắc trực tiếp.
+- **Tinh Giản Thanh Điều Hướng Header (`/src/components/Header.tsx`)**:
+  - Tinh gọn danh sách Navigation Tabs còn 4 mục trọng tâm:
+    1. 🔮 **Quẻ Kỳ Môn** (9 Cung Lạc Thư)
+    2. 🧭 **Quẻ Lục Nhâm** (Tam Truyền Tứ Khoa)
+    3. 🎯 **Dự Trắc Song Thức** (Kỳ Môn & Lục Nhâm)
+    4. 📅 **Lịch & Tiết Khí (Tối Giản)** (Tra Cứu Hỗ Trợ)
+  - Cập nhật tiêu đề, thương hiệu và mô tả thành "Kỳ Môn & Lục Nhâm Độn Giáp".
+- **Đồng Bộ Siêu Dữ Liệu & Thuyết Minh Thuật Toán**:
+  - Cập nhật `metadata.json` và `index.html` đồng bộ tên và mô tả ứng dụng.
+  - Bổ sung **Mục 28** trong Cẩm Nang Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`).
 
 ---
 

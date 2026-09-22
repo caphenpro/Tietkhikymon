@@ -76,8 +76,8 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
   // Mode: 'auto' (đồng bộ với thời gian thực / tính toán thiên văn) hoặc 'manual' (tự chọn Cục & Can Chi)
   const [mode, setMode] = useState<'auto' | 'manual'>('auto');
 
-  // Display View: 'both' | 'matrix_only' | 'chart_only'
-  const [viewTab, setViewTab] = useState<'matrix' | 'trends' | 'both'>('both');
+  // Display View: 'matrix' (mặc định tối giản, dễ nhìn nhất) | 'trends' | 'both'
+  const [viewTab, setViewTab] = useState<'matrix' | 'trends' | 'both'>('matrix');
 
   // Manual configuration state
   const [manualIsDuongDon, setManualIsDuongDon] = useState<boolean>(true);
@@ -476,14 +476,7 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
         </div>
       </div>
 
-      {/* 3. TIME MOMENT EVALUATION 5-STAR SCORE CARD */}
-      <TimeEvaluationCard
-        evaluation={evaluation}
-        chart={chart}
-        onSelectPalace={(pNum) => handleCellClick(pNum)}
-      />
-
-      {/* 4. MAIN WORKSPACE: BÀN CỜ 9 CUNG KỲ MÔN (LƯỚI GRID 3X3 LẠC THƯ) */}
+      {/* 3. MAIN WORKSPACE: BÀN CỜ 9 CUNG KỲ MÔN (LƯỚI GRID 3X3 LẠC THƯ - TRỌNG TÂM CỦA QUẺ) */}
       {(viewTab === 'matrix' || viewTab === 'both') && (
       <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-7 shadow-2xl space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
@@ -655,6 +648,13 @@ export const KyMonCompleteBoard: React.FC<KyMonCompleteBoardProps> = ({
         </div>
       </div>
       )}
+
+      {/* 4. TIME MOMENT EVALUATION 5-STAR SCORE CARD */}
+      <TimeEvaluationCard
+        evaluation={evaluation}
+        chart={chart}
+        onSelectPalace={(pNum) => handleCellClick(pNum)}
+      />
 
       {/* 5. VISUAL ENERGY TRENDS CHART (RECHARTS INTEGRATION) */}
       {(viewTab === 'trends' || viewTab === 'both') && (

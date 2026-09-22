@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Header } from './components/Header';
-import { YearTermsTable } from './components/YearTermsTable';
-import { LunarNewMoonSection } from './components/LunarNewMoonSection';
-import { DailyCalendarView } from './components/DailyCalendarView';
-import { TrachCatView } from './components/TrachCatView';
+import { CompactCalendarView } from './components/CompactCalendarView';
 import { KyMonCompleteBoard } from './components/KyMonCompleteBoard';
 import { KyMonPrognosticationView } from './components/KyMonPrognosticationView';
 import { LucNhamPanel } from './components/LucNhamPanel';
@@ -18,8 +15,8 @@ import { APP_VERSION, APP_RELEASE_DATE } from './version';
 export default function App() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
   const [isLive, setIsLive] = useState<boolean>(true);
-  // Trọng tâm 1: Mặc định hiển thị Lịch Vạn Niên (Cát Hung)
-  const [activeTab, setActiveTab] = useState<string>('daily-calendar');
+  // TRỌNG TÂM CHÍNH: Mặc định hiển thị Quẻ Kỳ Môn Độn Giáp (9 Cung Lạc Thư)
+  const [activeTab, setActiveTab] = useState<string>('kymon-chart');
 
   // Modals state
   const [isGuideOpen, setIsGuideOpen] = useState<boolean>(false);
@@ -85,21 +82,7 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* TRỤ CỘT 1: LỊCH VẠN NIÊN - CÁC YẾU TỐ CẤU THÀNH & CÁT HUNG */}
-        {activeTab === 'daily-calendar' && (
-          <div className="space-y-6">
-            <DailyCalendarView
-              currentDate={currentDate}
-              onDateChange={(d) => {
-                setIsLive(false);
-                setCurrentDate(d);
-              }}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {/* TRỤ CỘT 2: LẬP QUẺ KỲ MÔN (LUẬN BÀN KHÔNG - THỜI GIAN) */}
+        {/* TRỌNG TÂM 1: QUẺ KỲ MÔN ĐỘN GIÁP (9 CUNG LẠC THƯ - KHÔNG VÀ THỜI GIAN) */}
         {activeTab === 'kymon-chart' && (
           <div className="space-y-6">
             <KyMonCompleteBoard
@@ -117,7 +100,7 @@ export default function App() {
           </div>
         )}
 
-        {/* TRỤ CỘT 2: LẬP QUẺ LỤC NHÂM (LUẬN BÀN QUÁ TRÌNH THÀNH BẠI) */}
+        {/* TRỌNG TÂM 2: QUẺ ĐẠI LỤC NHÂM (TAM TRUYỀN TỨ KHOA - QUÁ TRÌNH THÀNH BẠI) */}
         {activeTab === 'luc-nham' && (
           <div className="space-y-6">
             <LucNhamPanel
@@ -144,43 +127,15 @@ export default function App() {
           </div>
         )}
 
-        {/* CHUYÊN MỤC TRẠCH CÁT HIỆP KỶ BIỆN PHƯƠNG THƯ */}
-        {activeTab === 'trach-cat' && (
+        {/* PHẦN LỊCH & TIẾT KHÍ TỐI GIẢN (TRA CỨU HỖ TRỢ CHIÊM QUẺ) */}
+        {(activeTab === 'calendar-compact' || activeTab === 'daily-calendar' || activeTab === 'table' || activeTab === 'moon' || activeTab === 'trach-cat') && (
           <div className="space-y-6">
-            <TrachCatView
+            <CompactCalendarView
               currentDate={currentDate}
               onDateChange={(d) => {
                 setIsLive(false);
                 setCurrentDate(d);
               }}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {/* ĐIỂM SÓC & ÂM LỊCH THIÊN VĂN */}
-        {activeTab === 'moon' && (
-          <div className="space-y-6">
-            <LunarNewMoonSection
-              newMoon={result.newMoon}
-              calculationDate={currentDate}
-              currentDate={currentDate}
-              onDateChange={(d) => setCurrentDate(d)}
-              isLive={isLive}
-              onSetLive={(live) => setIsLive(live)}
-              onNavigateTab={(tabId: string) => setActiveTab(tabId)}
-            />
-          </div>
-        )}
-
-        {/* 24 TIẾT KHÍ NĂM */}
-        {activeTab === 'table' && (
-          <div className="space-y-6">
-            <YearTermsTable
-              initialYear={currentYear}
-              currentTermName={result.currentTerm.name}
-              onSelectTermDate={handleSelectTermDate}
-              onExportMarkdown={handleExportMarkdown}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}
             />
           </div>
