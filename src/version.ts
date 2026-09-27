@@ -11,18 +11,45 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.31.0';
-export const APP_RELEASE_DATE = '2026-09-22';
-export const APP_CODENAME = 'Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)';
+export const APP_VERSION = '2.32.0';
+export const APP_RELEASE_DATE = '2026-09-27';
+export const APP_CODENAME = 'Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.32.0',
+    releaseDate: '2026-09-27',
+    codename: 'Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)',
+    tagline: 'Hoàn thiện và chuẩn hóa toàn diện phân hệ Đại Lục Nhâm theo cổ bản Hiệp Kỷ Biện Phương Thư: Bổ sung bộ điều khiển lập quẻ với đầy đủ Tứ Trụ Thời Gian và Nhân Mệnh người hỏi (Năm sinh, Giới tính, Bản Mệnh vi Căn, Hành Niên vi Diệp), luận giải cá nhân hóa sâu sắc.',
+    isLatest: true,
+    highlights: [
+      'Bổ sung Bộ Điều Khiển Lập Quẻ Lục Nhâm (Thời Khắc Chiêm & Nhân Mệnh): Hiển thị đầy đủ, minh bạch các thông số đầu vào để lập quẻ bao gồm Tứ Trụ Can Chi (Năm, Tháng, Ngày, Giờ), Kinh độ Mặt Trời (Thái Dương triền cung), Tiết khí và Nguyệt Tướng.',
+      'Tích hợp Thân Mệnh Người Hỏi (Hiệp Kỷ Biện Phương Thư - Quyển 32): Tự động tính toán Bản Mệnh (Chi năm sinh, 60 Hoa Giáp Nạp Âm, Tuổi mụ) và Hành Niên theo khẩu quyết cổ "Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành".',
+      'Khảo sát Bản Mệnh vi Căn & Hành Niên vi Diệp: Xác định Thượng Thần và Thần Tướng ngự trên Bản Mệnh và Hành Niên; phân tích quan hệ Sinh Khắc (Thần sinh Mệnh đại cát, Thần khắc Mệnh thụ ách, Mệnh khắc Thần đoạt tài lộc, Tiết khí, Tỷ hòa).',
+      'Định vị Ma Trận 12 Cung trực quan: Gắn các huy hiệu định danh sinh động trên từng cung: [Bản Mệnh], [Hành Niên], [Can Ký], [Chi Ngày], [Sơ], [Trung], [Mạt], [Quý Nhân], [Lộc Thần], [Dịch Mã], [Tuần Không].',
+      'Cung cấp bảng tra cứu chi tiết cung khi bấm chọn (Selected Palace Explorer) với phân tích Thần Tướng, Ngũ Hành và mối tương tác trực tiếp với Thân Mệnh người hỏi.',
+      'Nâng cấp hệ thống Dự Trắc Chuyên Đề lên 8 phương diện thực tiễn: Cầu tài & Đầu tư, Quan vận & Công danh, Tình cảm & Hôn nhân, Sức khỏe & Tật bệnh, Kiện tụng & Giải oan, Xuất hành & Cầu danh, Nhà cửa & Gia đạo, Thất vật & Tìm đồ.',
+      'Cập nhật Mục 29 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx), đồng bộ package.json, CHANGELOG.md và README.md.',
+    ],
+    added: [
+      'Bảng 60 Hoa Giáp Nạp Âm chuẩn (LUC_THAP_HOA_GIAP_NAP_AM) trong /src/astronomy/lucNham.ts.',
+      'Hàm calculateBanMenhHanhNien() tính toán Bản Mệnh, Hành Niên và tương tác Thân Mệnh với Tam Truyền theo Hiệp Kỷ Biện Phương Thư.',
+      'Bộ điều khiển tương tác người hỏi (Năm sinh, Giới tính Nam/Nữ, Lĩnh vực hỏi) và chuyển đổi thời khắc (Live / Tùy chỉnh canh giờ / ngày).',
+      'Mục 29 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+    ],
+    improved: [
+      'Tái thiết kế giao diện LucNhamPanel.tsx trực quan, rõ ràng, phân định rạch ròi từng bước lập quẻ từ đầu vào đến đầu ra.',
+      'Bổ sung 2 phương diện dự trắc mới: Nhà Cửa & Gia Đạo (giaDao) và Tìm Đồ Thất Lạc (thatVat).',
+      'Cải tiến thuật toán chấm điểm và đánh giá cát hung Lục Nhâm có tính đến trợ lực hoặc áp lực từ Thân Mệnh và Hành Niên.',
+    ],
+  },
   {
     version: '2.31.0',
     releaseDate: '2026-09-22',
     codename: 'Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)',
     tagline: 'Tối giản hóa toàn diện giao diện ứng dụng, lược bỏ hiển thị rườm rà của phần lịch, chuyển mục tiêu chính sang lập và luận giải quẻ Kỳ Môn 9 Cung và Đại Lục Nhâm Tam Truyền trực quan, dễ nhìn nhất.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Chuyển đổi mục tiêu trung tâm: Ứng dụng đặt trọng tâm tuyệt đối vào việc lập quẻ và giải mã Cổ Tam Thức (Kỳ Môn Độn Giáp & Đại Lục Nhâm).',
       'Mặc định tải thẳng Quẻ Kỳ Môn (kymon-chart): Khi mở ứng dụng, Ma Trận 9 Cung Lạc Thư Kỳ Môn Độn Giáp được hiển thị ngay lập tức ở vị trí trung tâm, không bị che khuất hay phải cuộn trang.',

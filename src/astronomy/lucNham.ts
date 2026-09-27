@@ -1,4 +1,4 @@
-import { CAN, CHI, CAN_NGU_HANH } from './canChi';
+import { CAN, CHI, CAN_NGU_HANH, CHI_CON_GIAP } from './canChi';
 
 export interface ThienTuongInfo {
   name: string;
@@ -8,6 +8,69 @@ export interface ThienTuongInfo {
   meaning: string;
   description: string;
 }
+
+export const LUC_THAP_HOA_GIAP_NAP_AM: Record<string, string> = {
+  'Giáp Tý': 'Hải Trung Kim',
+  'Ất Sửu': 'Hải Trung Kim',
+  'Bính Dần': 'Lư Trung Hỏa',
+  'Đinh Mão': 'Lư Trung Hỏa',
+  'Mậu Thìn': 'Đại Lâm Mộc',
+  'Kỷ Tị': 'Đại Lâm Mộc',
+  'Canh Ngọ': 'Lộ Bàng Thổ',
+  'Tân Mùi': 'Lộ Bàng Thổ',
+  'Nhâm Thân': 'Kiếm Phong Kim',
+  'Quý Dậu': 'Kiếm Phong Kim',
+  'Giáp Tuất': 'Sơn Đầu Hỏa',
+  'Ất Hợi': 'Sơn Đầu Hỏa',
+  'Bính Tý': 'Giản Hạ Thủy',
+  'Đinh Sửu': 'Giản Hạ Thủy',
+  'Mậu Dần': 'Thành Đầu Thổ',
+  'Kỷ Mão': 'Thành Đầu Thổ',
+  'Canh Thìn': 'Bạch Lạp Kim',
+  'Tân Tị': 'Bạch Lạp Kim',
+  'Nhâm Ngọ': 'Dương Liễu Mộc',
+  'Quý Mùi': 'Dương Liễu Mộc',
+  'Giáp Thân': 'Tuyền Trung Thủy',
+  'Ất Dậu': 'Tuyền Trung Thủy',
+  'Bính Tuất': 'Ốc Thượng Thổ',
+  'Đinh Hợi': 'Ốc Thượng Thổ',
+  'Mậu Tý': 'Tích Lịch Hỏa',
+  'Kỷ Sửu': 'Tích Lịch Hỏa',
+  'Canh Dần': 'Tùng Bách Mộc',
+  'Tân Mão': 'Tùng Bách Mộc',
+  'Nhâm Thìn': 'Trường Lưu Thủy',
+  'Quý Tị': 'Trường Lưu Thủy',
+  'Giáp Ngọ': 'Sa Trung Kim',
+  'Ất Mùi': 'Sa Trung Kim',
+  'Bính Thân': 'Sơn Hạ Hỏa',
+  'Đinh Dậu': 'Sơn Hạ Hỏa',
+  'Mậu Tuất': 'Bình Địa Mộc',
+  'Kỷ Hợi': 'Bình Địa Mộc',
+  'Canh Tý': 'Bích Thượng Thổ',
+  'Tân Sửu': 'Bích Thượng Thổ',
+  'Nhâm Dần': 'Kim Bạc Kim',
+  'Quý Mão': 'Kim Bạc Kim',
+  'Giáp Thìn': 'Phúc Đăng Hỏa',
+  'Ất Tị': 'Phúc Đăng Hỏa',
+  'Bính Ngọ': 'Thiên Hà Thủy',
+  'Đinh Mùi': 'Thiên Hà Thủy',
+  'Mậu Thân': 'Đại Trạch Thổ',
+  'Kỷ Dậu': 'Đại Trạch Thổ',
+  'Canh Tuất': 'Thoa Xuyến Kim',
+  'Tân Hợi': 'Thoa Xuyến Kim',
+  'Nhâm Tý': 'Tang Đố Mộc',
+  'Quý Sửu': 'Tang Đố Mộc',
+  'Giáp Dần': 'Đại Khê Thủy',
+  'Ất Mão': 'Đại Khê Thủy',
+  'Bính Thìn': 'Sa Trung Thổ',
+  'Đinh Tị': 'Sa Trung Thổ',
+  'Mậu Ngọ': 'Thiên Thượng Hỏa',
+  'Kỷ Mùi': 'Thiên Thượng Hỏa',
+  'Canh Thân': 'Thạch Lựu Mộc',
+  'Tân Dậu': 'Thạch Lựu Mộc',
+  'Nhâm Tuất': 'Đại Hải Thủy',
+  'Quý Hợi': 'Đại Hải Thủy',
+};
 
 export const THAP_NHI_THIEN_TUONG: Record<string, ThienTuongInfo> = {
   'Quý Nhân': {
@@ -177,6 +240,13 @@ export interface LucNhamPalace {
   isDichMa: boolean;     // Dịch mã
   isDuongNhan: boolean;  // Dương nhận
   isQuyNhan: boolean;    // Quý nhân đáo
+  isBanMenh?: boolean;   // Bản mệnh người hỏi
+  isHanhNien?: boolean;  // Hành niên người hỏi
+  isCanKy?: boolean;     // Ký cung của Can ngày
+  isChiNgay?: boolean;   // Cung Chi của ngày
+  isSoTruyen?: boolean;  // Sơ Truyền đáo
+  isTrungTruyen?: boolean; // Trung Truyền đáo
+  isMatTruyen?: boolean; // Mạt Truyền đáo
   nguHanhDia: string;
   nguHanhThien: string;
   relation: string;      // Quan hệ Thiên - Địa sinh khắc
@@ -207,14 +277,87 @@ export interface LucNhamTruyen {
   isTuanKhong: boolean;
 }
 
+export interface QuerentInput {
+  birthYear?: number;
+  gender?: 'Nam' | 'Nữ';
+  currentYear?: number;
+  questionAspect?: string;
+  yearCanChi?: string;
+  monthCanChi?: string;
+}
+
+export interface BanMenhHanhNienInfo {
+  birthYear: number;
+  birthCanChi: string;
+  birthNapAm: string;
+  birthChi: string;
+  birthCan: string;
+  birthConGiap: string;
+  gender: 'Nam' | 'Nữ';
+  tuoiMu: number;
+  currentYear: number;
+  questionAspect: string;
+
+  // Bản Mệnh (Căn)
+  banMenhChi: string;
+  banMenhThienChi: string;
+  banMenhThienTuong: string;
+  banMenhThienTuongInfo: ThienTuongInfo;
+  banMenhRelation: string;
+  banMenhKhacType: 'Sinh' | 'Khắc' | 'Được Sinh' | 'Bị Khắc' | 'Tỷ Hòa';
+  banMenhVerdict: string;
+  banMenhIsTuanKhong: boolean;
+  banMenhIsQuyNhan: boolean;
+  banMenhIsLocThan: boolean;
+  banMenhIsDichMa: boolean;
+
+  // Hành Niên (Diệp)
+  hanhNienChi: string;
+  hanhNienThienChi: string;
+  hanhNienThienTuong: string;
+  hanhNienThienTuongInfo: ThienTuongInfo;
+  hanhNienRelation: string;
+  hanhNienKhacType: 'Sinh' | 'Khắc' | 'Được Sinh' | 'Bị Khắc' | 'Tỷ Hòa';
+  hanhNienVerdict: string;
+  hanhNienIsTuanKhong: boolean;
+  hanhNienIsQuyNhan: boolean;
+  hanhNienIsLocThan: boolean;
+  hanhNienIsDichMa: boolean;
+
+  // Tương tác Thân - Mệnh với Tam Truyền
+  inTamTruyen: {
+    inSoTruyen: boolean;
+    inTrungTruyen: boolean;
+    inMatTruyen: boolean;
+    roleDesc: string;
+  };
+
+  interactionSummary: string;
+  classicalQuote: string;
+}
+
 export interface LucNhamChart {
-  // Can Chi ngày giờ
+  // Can Chi ngày giờ & Tứ Trụ
   ngayCanChi: string;
+  dayCanChi: string;
   dayCan: string;
   dayChi: string;
   gioCanChi: string;
   hourChi: string;
   isDayTime: boolean; // Đán quý hay Dạ quý
+
+  tuTru: {
+    yearCanChi: string;
+    monthCanChi: string;
+    dayCanChi: string;
+    hourCanChi: string;
+    tietKhi: string;
+    solarLongitude: number;
+    solarLonDegree: string;
+  };
+
+  // Người Hỏi (Nhân Khí / Bản Mệnh & Hành Niên)
+  querent: BanMenhHanhNienInfo;
 
   // Nguyệt Tướng
   nguyetTuongChi: string;
@@ -250,6 +393,16 @@ export interface LucNhamChart {
     thaiTue: string;
   };
 
+  // Diễn giải quy trình lập quẻ theo Hiệp Kỷ Biện Phương Thư
+  setupExplanation: {
+    nguyetTuongRule: string;
+    thienBanRule: string;
+    quyNhanRule: string;
+    tuKhoaRule: string;
+    tamTruyenRule: string;
+    menhNienRule: string;
+  };
+
   // Đánh giá tổng quan
   score: number;
   stars: number;
@@ -265,6 +418,8 @@ export interface LucNhamChart {
     benhTat: string;
     kienTung: string;
     xuatHanh: string;
+    giaDao?: string;
+    thatVat?: string;
   };
 }
 
@@ -430,13 +585,181 @@ export function getTuanKhong(dayCan: string, dayChi: string): { tuanKhong: [stri
 }
 
 /**
+ * Tính toán Bản Mệnh và Hành Niên theo Hiệp Kỷ Biện Phương Thư & Lục Nhâm Đại Toàn
+ * "Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành"
+ * "Chiêm sự dĩ Can vi Chủ, Chi vi Sự, Bản Mệnh vi Căn, Hành Niên vi Diệp"
+ */
+export function calculateBanMenhHanhNien(
+  querentInput: QuerentInput | undefined,
+  thienBanMap: Record<string, string>,
+  thienTuongThienBan: Record<string, string>,
+  tuanKhong: [string, string],
+  locThan: string,
+  dichMa: string,
+  quyNhanChi: string,
+  soTruyen: string,
+  trungTruyen: string,
+  matTruyen: string
+): BanMenhHanhNienInfo {
+  const currentYear = querentInput?.currentYear || 2026;
+  const birthYear = querentInput?.birthYear || 1990;
+  const gender: 'Nam' | 'Nữ' = querentInput?.gender || 'Nam';
+  const questionAspect = querentInput?.questionAspect || 'all';
+
+  // 1. Tính Can Chi & Nạp Âm của năm sinh
+  let canNamIdx = (birthYear - 4) % 10;
+  if (canNamIdx < 0) canNamIdx += 10;
+  let chiNamIdx = (birthYear - 4) % 12;
+  if (chiNamIdx < 0) chiNamIdx += 12;
+
+  const birthCan = CAN[canNamIdx];
+  const birthChi = CHI[chiNamIdx];
+  const birthCanChi = `${birthCan} ${birthChi}`;
+  const birthConGiap = CHI_CON_GIAP[birthChi] || '';
+  const birthNapAm = LUC_THAP_HOA_GIAP_NAP_AM[birthCanChi] || 'Chưa định';
+  const tuoiMu = Math.max(1, currentYear - birthYear + 1);
+
+  // 2. Tính Cung Bản Mệnh (Căn)
+  const banMenhChi = birthChi;
+  const banMenhThienChi = thienBanMap[banMenhChi] || 'Tý';
+  const banMenhThienTuong = thienTuongThienBan[banMenhThienChi] || 'Quý Nhân';
+  const banMenhThienTuongInfo = THAP_NHI_THIEN_TUONG[banMenhThienTuong] || THAP_NHI_THIEN_TUONG['Quý Nhân'];
+  const banMenhSk = checkSinhKhac(CHI_NGU_HANH[banMenhThienChi], CHI_NGU_HANH[banMenhChi]);
+
+  let banMenhKhacType: 'Sinh' | 'Khắc' | 'Được Sinh' | 'Bị Khắc' | 'Tỷ Hòa' = 'Tỷ Hòa';
+  let banMenhVerdict = '';
+  if (banMenhSk.khacType === 'Tỷ Hòa') {
+    banMenhKhacType = 'Tỷ Hòa';
+    banMenhVerdict = `Thần Mệnh Tỷ Hòa (${banMenhThienChi} hòa ${banMenhChi}): Đương số có nội lực bình ổn, được bằng hữu đồng sự tương trợ, thế cục an định.`;
+  } else if (banMenhSk.khacType === 'Thượng khắc Hạ') {
+    banMenhKhacType = 'Bị Khắc';
+    banMenhVerdict = `Thượng Thần khắc Bản Mệnh (${banMenhThienChi} khắc ${banMenhChi} - Thụ Khắc): Thân mệnh bị hoàn cảnh bức bách, đề phòng tật ách, thị phi hoặc cấp trên gây khó khăn. Nên thủ thế tĩnh lặng.`;
+  } else if (banMenhSk.khacType === 'Hạ khắc Thượng') {
+    banMenhKhacType = 'Khắc';
+    banMenhVerdict = `Bản Mệnh khắc Thượng Thần (${banMenhChi} khắc ${banMenhThienChi} - Chế Thần): Bản thân làm chủ tình thế, mưu cầu tài lộc tất thành, chuyển biến nghịch cảnh thành thắng lợi.`;
+  } else if (banMenhSk.relation.includes('Thượng sinh Hạ')) {
+    banMenhKhacType = 'Được Sinh';
+    banMenhVerdict = `Thượng Thần sinh Bản Mệnh (${banMenhThienChi} sinh ${banMenhChi} - Đắc Sinh): Đại cát! Được quý nhân nâng đỡ, phúc thọ tăng tiến, thân mệnh hưng thịnh, mưu sự đại lợi.`;
+  } else {
+    banMenhKhacType = 'Sinh';
+    banMenhVerdict = `Bản Mệnh sinh Thượng Thần (${banMenhChi} sinh ${banMenhThienChi} - Tiết Khí): Bản thân phải lao tâm khổ tứ, hao tốn công sức tài lộc vì công việc người ngoài. Cần dưỡng sức tránh quá tải.`;
+  }
+
+  // 3. Tính Cung Hành Niên (Diệp)
+  // Nam nhất tuế khởi Dần thuận hành; Nữ nhất tuế khởi Thân nghịch hành
+  let hanhNienIdx = 0;
+  if (gender === 'Nam') {
+    hanhNienIdx = (CHI.indexOf('Dần') + (tuoiMu - 1)) % 12;
+  } else {
+    hanhNienIdx = (CHI.indexOf('Thân') - ((tuoiMu - 1) % 12) + 12) % 12;
+  }
+  const hanhNienChi = CHI[hanhNienIdx];
+  const hanhNienThienChi = thienBanMap[hanhNienChi] || 'Tý';
+  const hanhNienThienTuong = thienTuongThienBan[hanhNienThienChi] || 'Quý Nhân';
+  const hanhNienThienTuongInfo = THAP_NHI_THIEN_TUONG[hanhNienThienTuong] || THAP_NHI_THIEN_TUONG['Quý Nhân'];
+  const hanhNienSk = checkSinhKhac(CHI_NGU_HANH[hanhNienThienChi], CHI_NGU_HANH[hanhNienChi]);
+
+  let hanhNienKhacType: 'Sinh' | 'Khắc' | 'Được Sinh' | 'Bị Khắc' | 'Tỷ Hòa' = 'Tỷ Hòa';
+  let hanhNienVerdict = '';
+  if (hanhNienSk.khacType === 'Tỷ Hòa') {
+    hanhNienKhacType = 'Tỷ Hòa';
+    hanhNienVerdict = `Hành Niên bình hòa, vận thế trong năm quân bình, duy trì ổn định việc cũ.`;
+  } else if (hanhNienSk.khacType === 'Thượng khắc Hạ') {
+    hanhNienKhacType = 'Bị Khắc';
+    hanhNienVerdict = `Hành Niên bị Thượng Thần khắc chế (${hanhNienThienChi} khắc ${hanhNienChi}): Trong năm dễ gặp áp lực đột xuất hoặc hao tốn ngoại cảnh, cần giữ vững tâm lý.`;
+  } else if (hanhNienSk.khacType === 'Hạ khắc Thượng') {
+    hanhNienKhacType = 'Khắc';
+    hanhNienVerdict = `Hành Niên khắc Thượng Thần (${hanhNienChi} khắc ${hanhNienThienChi}): Chủ động xoay chuyển cục diện trong năm, mưu cầu tài chính hoặc bứt phá sự nghiệp có cơ hội lớn.`;
+  } else if (hanhNienSk.relation.includes('Thượng sinh Hạ')) {
+    hanhNienKhacType = 'Được Sinh';
+    hanhNienVerdict = `Hành Niên đắc Thượng Thần sinh dưỡng (${hanhNienThienChi} sinh ${hanhNienChi}): Năm nay gặp nhiều may mắn, có quý nhân trợ lực bất ngờ, mọi dự định phát triển suôn sẻ.`;
+  } else {
+    hanhNienKhacType = 'Sinh';
+    hanhNienVerdict = `Hành Niên sinh Thượng Thần (${hanhNienChi} sinh ${hanhNienThienChi}): Năm nay việc nhiều hao tâm, chi xuất tài chính lớn, nên có kế hoạch chi tiêu cụ thể.`;
+  }
+
+  // 4. Kiểm tra Thần Sát & Tuần Không
+  const banMenhIsTuanKhong = tuanKhong.includes(banMenhChi) || tuanKhong.includes(banMenhThienChi);
+  const banMenhIsQuyNhan = quyNhanChi === banMenhThienChi;
+  const banMenhIsLocThan = locThan === banMenhThienChi;
+  const banMenhIsDichMa = dichMa === banMenhThienChi;
+
+  const hanhNienIsTuanKhong = tuanKhong.includes(hanhNienChi) || tuanKhong.includes(hanhNienThienChi);
+  const hanhNienIsQuyNhan = quyNhanChi === hanhNienThienChi;
+  const hanhNienIsLocThan = locThan === hanhNienThienChi;
+  const hanhNienIsDichMa = dichMa === hanhNienThienChi;
+
+  // 5. Tương tác Thân - Mệnh với Tam Truyền
+  const inSoTruyen = banMenhChi === soTruyen || hanhNienChi === soTruyen;
+  const inTrungTruyen = banMenhChi === trungTruyen || hanhNienChi === trungTruyen;
+  const inMatTruyen = banMenhChi === matTruyen || hanhNienChi === matTruyen;
+
+  let roleDesc = 'Thân Mệnh không trực tiếp nhập Tam Truyền, sự việc diễn ra theo quy luật khách quan, đương số đóng vai trò quan sát và điều tiết hài hòa.';
+  if (inSoTruyen) {
+    roleDesc = 'Bản Mệnh hoặc Hành Niên nhập Sơ Truyền: Đương số là ngòi nổ, khởi xướng hoặc nguyên nhân trực tiếp làm phát sinh sự việc.';
+  } else if (inMatTruyen) {
+    roleDesc = 'Bản Mệnh hoặc Hành Niên nhập Mạt Truyền: Kết quả cuối cùng quy tụ vào bản thân đương số, gánh vác trách nhiệm và hưởng quả ngọt sau cùng.';
+  } else if (inTrungTruyen) {
+    roleDesc = 'Bản Mệnh hoặc Hành Niên nhập Trung Truyền: Đương số đứng giữa tâm điểm biến chuyển, có vai trò điều đình hóa giải xung đột.';
+  }
+
+  const interactionSummary = `Người hỏi sinh năm ${birthCanChi} (${birthNapAm}), tuổi mụ ${tuoiMu} (${gender}). Bản Mệnh tại cung ${banMenhChi}, Thượng Thần ${banMenhThienChi} (${banMenhThienTuong}). Hành Niên tại cung ${hanhNienChi}, Thượng Thần ${hanhNienThienChi} (${hanhNienThienTuong}). ${banMenhVerdict} ${hanhNienVerdict}`;
+
+  const classicalQuote = `Hiệp Kỷ Biện Phương Thư (Quyển 32 - Lục Nhâm Khởi Hành Niên): "Chiêm nhân dĩ Can vi Chủ, Chi vi Sự, Bản Mệnh vi Căn, Hành Niên vi Diệp. Mệnh gia cát thần tắc thân vinh, gia hung thần tắc thân khốn; Hành Niên cát tắc đương niên thuận toại, hung tắc đương niên trắc trở. Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành."`;
+
+  return {
+    birthYear,
+    birthCanChi,
+    birthNapAm,
+    birthChi,
+    birthCan,
+    birthConGiap,
+    gender,
+    tuoiMu,
+    currentYear,
+    questionAspect,
+    banMenhChi,
+    banMenhThienChi,
+    banMenhThienTuong,
+    banMenhThienTuongInfo,
+    banMenhRelation: banMenhSk.relation,
+    banMenhKhacType,
+    banMenhVerdict,
+    banMenhIsTuanKhong,
+    banMenhIsQuyNhan,
+    banMenhIsLocThan,
+    banMenhIsDichMa,
+    hanhNienChi,
+    hanhNienThienChi,
+    hanhNienThienTuong,
+    hanhNienThienTuongInfo,
+    hanhNienRelation: hanhNienSk.relation,
+    hanhNienKhacType,
+    hanhNienVerdict,
+    hanhNienIsTuanKhong,
+    hanhNienIsQuyNhan,
+    hanhNienIsLocThan,
+    hanhNienIsDichMa,
+    inTamTruyen: {
+      inSoTruyen,
+      inTrungTruyen,
+      inMatTruyen,
+      roleDesc,
+    },
+    interactionSummary,
+    classicalQuote,
+  };
+}
+
+/**
  * LẬP QUẺ ĐẠI LỤC NHÂM HOÀN CHỈNH
  */
 export function buildLucNhamChart(
   solarLon: number,
   dayCanChi: string,
   hourCanChi: string,
-  localHour: number
+  localHour: number,
+  querentInput?: QuerentInput
 ): LucNhamChart {
   const [dayCan, dayChi] = dayCanChi.split(' ');
   const [_hourCan, hourChi] = hourCanChi.split(' ');
@@ -738,6 +1061,20 @@ export function buildLucNhamChart(
   const dichMa = dichMaMap[dayChi] || 'Thân';
   const duongNhan = duongNhanMap[dayCan] || 'Mão';
 
+  // 6.5. Tính toán Thân Mệnh Người Hỏi (Bản Mệnh & Hành Niên theo Hiệp Kỷ Biện Phương Thư)
+  const querent = calculateBanMenhHanhNien(
+    querentInput,
+    thienBanMap,
+    thienTuongThienBan,
+    tuanKhong,
+    locThan,
+    dichMa,
+    quyNhanChi,
+    soTruyen,
+    trungTruyen,
+    matTruyen
+  );
+
   // 7. Lập danh sách 12 Cung Bàn
   const palaces: Record<string, LucNhamPalace> = {};
   const palacesList: LucNhamPalace[] = [];
@@ -762,6 +1099,13 @@ export function buildLucNhamChart(
       isDichMa: dichMa === tChi,
       isDuongNhan: duongNhan === tChi,
       isQuyNhan: quyNhanChi === tChi,
+      isBanMenh: dChi === querent.banMenhChi,
+      isHanhNien: dChi === querent.hanhNienChi,
+      isCanKy: dChi === canKyCung,
+      isChiNgay: dChi === dayChi,
+      isSoTruyen: tChi === soTruyen,
+      isTrungTruyen: tChi === trungTruyen,
+      isMatTruyen: tChi === matTruyen,
       nguHanhDia,
       nguHanhThien,
       relation: sk.relation,
@@ -782,6 +1126,16 @@ export function buildLucNhamChart(
   if (tamTruyen[2].isTuanKhong) score -= 10;
   if (tongMonName.includes('Nguyên Thủ')) score += 8;
   if (isPhanNgam || isPhucNgam) score -= 8;
+
+  // Ảnh hưởng từ Bản Mệnh & Hành Niên
+  if (querent.banMenhKhacType === 'Được Sinh') score += 8;
+  if (querent.banMenhKhacType === 'Bị Khắc') score -= 8;
+  if (querent.hanhNienKhacType === 'Được Sinh') score += 6;
+  if (querent.hanhNienKhacType === 'Bị Khắc') score -= 6;
+  if (querent.banMenhIsTuanKhong) score -= 10;
+  if (querent.hanhNienIsTuanKhong) score -= 8;
+  if (querent.banMenhIsQuyNhan || querent.banMenhIsLocThan) score += 7;
+  if (querent.hanhNienIsQuyNhan || querent.hanhNienIsLocThan) score += 5;
 
   score = Math.max(12, Math.min(96, score));
 
@@ -804,52 +1158,85 @@ export function buildLucNhamChart(
     level = 'Đại Hung';
   }
 
-  // 9. Lời đoán chuyên đề 6 phương diện
+  // 9. Lời đoán chuyên đề kết hợp Bàn Quẻ & Thân Mệnh Người Hỏi
   const soTuong = tamTruyen[0].thienTuong;
   const matTuong = tamTruyen[2].thienTuong;
 
+  const menhNote = `[Thân Mệnh: Tuổi ${querent.birthCanChi} (${querent.birthNapAm}), Hành Niên lâm ${querent.hanhNienChi} - ${querent.hanhNienVerdict}]`;
+
   const prognostications = {
     cauTai: ['Thanh Long', 'Lục Hợp', 'Thái Thường'].includes(soTuong) || ['Thanh Long', 'Lục Hợp'].includes(matTuong)
-      ? 'Đắc Cát thần phò trợ tài lộc, giao thương phát đạt, mưu cầu lợi ích tất thành, tiền của hanh thông.'
+      ? `Đắc Cát thần phò trợ tài lộc, giao thương phát đạt, mưu cầu lợi ích tất thành, tiền của hanh thông. ${menhNote}`
       : ['Huyền Vũ', 'Thiên Không'].includes(soTuong)
-      ? 'Cẩn phòng mất trộm hoặc bị tiểu nhân lừa gạt tài sản, không nên cho vay mượn hay đầu tư mạo hiểm.'
-      : 'Tài vận ở mức bình ổn, nên lấy chữ tín làm đầu, tích tiểu thành đại.',
+      ? `Cẩn phòng mất trộm hoặc bị tiểu nhân lừa gạt tài sản, không nên cho vay mượn hay đầu tư mạo hiểm. ${menhNote}`
+      : `Tài vận ở mức bình ổn, nên lấy chữ tín làm đầu, tích tiểu thành đại. ${menhNote}`,
     honNhan: ['Lục Hợp', 'Thiên Hậu', 'Thái Âm'].includes(soTuong) || ['Lục Hợp', 'Thiên Hậu'].includes(matTuong)
-      ? 'Duyên lành hội ngộ, gia đạo êm ấm, vợ chồng hòa thuận, mưu cầu hôn phối đại cát.'
+      ? `Duyên lành hội ngộ, gia đạo êm ấm, vợ chồng hòa thuận, mưu cầu hôn phối đại cát. ${menhNote}`
       : ['Đằng Xà', 'Chu Tước', 'Câu Trận'].includes(soTuong)
-      ? 'Gia đạo phát sinh bất hòa, nghi kỵ, có khẩu thiệt thị phi, cần nhẫn nại lắng nghe để giữ hòa khí.'
-      : 'Tình cảm bình hòa, thuận theo tự nhiên sẽ an lành.',
+      ? `Gia đạo phát sinh bất hòa, nghi kỵ, có khẩu thiệt thị phi, cần nhẫn nại lắng nghe để giữ hòa khí. ${menhNote}`
+      : `Tình cảm bình hòa, thuận theo tự nhiên sẽ an lành. ${menhNote}`,
     quanVan: ['Quý Nhân', 'Thanh Long', 'Thắng Quang'].includes(soTuong)
-      ? 'Được bề trên cất nhắc, quan lộc hanh thông, thi cử đỗ đạt, công danh thăng tiến vững vàng.'
+      ? `Được bề trên cất nhắc, quan lộc hanh thông, thi cử đỗ đạt, công danh thăng tiến vững vàng. ${menhNote}`
       : ['Câu Trận', 'Bạch Hổ'].includes(soTuong)
-      ? 'Công việc gặp trắc trở, cản trở từ thủ tục hoặc cấp trên khắt khe, cần thận trọng từng bước.'
-      : 'Giữ vững vị trí hiện tại, trau dồi chuyên môn chờ đợi thời cơ chín muồi.',
+      ? `Công việc gặp trắc trở, cản trở từ thủ tục hoặc cấp trên khắt khe, cần thận trọng từng bước. ${menhNote}`
+      : `Giữ vững vị trí hiện tại, trau dồi chuyên môn chờ đợi thời cơ chín muồi. ${menhNote}`,
     benhTat: ['Bạch Hổ', 'Đằng Xà'].includes(soTuong) || tamTruyen[0].lucThan.includes('Quan Quỷ')
-      ? 'Bệnh tật phát tác cấp tính hoặc do tâm lý lo âu thái quá, cần sớm thăm khám thầy thuốc chuyên khoa.'
-      : 'Thân thể bình an, được cát tinh che chở, nếu có bệnh nhẹ cũng mau chóng thuyên giảm hồi phục.',
+      ? `Bệnh tật phát tác cấp tính hoặc do tâm lý lo âu thái quá, cần sớm thăm khám thầy thuốc chuyên khoa. ${menhNote}`
+      : `Thân thể bình an, được cát tinh che chở, nếu có bệnh nhẹ cũng mau chóng thuyên giảm hồi phục. ${menhNote}`,
     kienTung: ['Chu Tước', 'Câu Trận'].includes(soTuong)
-      ? 'Tranh chấp kéo dài, khẩu thiệt kiện tụng bất lợi, nên tìm phương án hòa giải đôi bên cùng có lợi.'
+      ? `Tranh chấp kéo dài, khẩu thiệt kiện tụng bất lợi, nên tìm phương án hòa giải đôi bên cùng có lợi. ${menhNote}`
       : ['Quý Nhân', 'Thái Âm'].includes(soTuong)
-      ? 'Được người phân xử công minh, đắc lý sáng tỏ, giải tỏa được oan ức.'
-      : 'Không nên sinh sự đôi co, tránh việc bé xé ra to.',
+      ? `Được người phân xử công minh, đắc lý sáng tỏ, giải tỏa được oan ức. ${menhNote}`
+      : `Không nên sinh sự đôi co, tránh việc bé xé ra to. ${menhNote}`,
     xuatHanh: ['Dịch Mã', 'Thái Ất', 'Truyền Tống'].includes(soTuong) || tamTruyen[0].chi === dichMa
-      ? 'Dịch Mã động chiếu, xuất hành phương xa gặp nhiều may mắn, mở rộng giao lưu tài lộc.'
+      ? `Dịch Mã động chiếu, xuất hành phương xa gặp nhiều may mắn, mở rộng giao lưu tài lộc. ${menhNote}`
       : ['Thiên Không', 'Bạch Hổ'].includes(soTuong)
-      ? 'Đường đi có trở ngại hoặc hao tài tốn của, nên hoãn chuyến đi hoặc chuẩn bị phương tiện chu đáo.'
-      : 'Xuất hành bình an, thuận buồm xuôi gió.',
+      ? `Đường đi có trở ngại hoặc hao tài tốn của, nên hoãn chuyến đi hoặc chuẩn bị phương tiện chu đáo. ${menhNote}`
+      : `Xuất hành bình an, thuận buồm xuôi gió. ${menhNote}`,
+    giaDao: `Gia đạo nội trạch xét theo Cung Chi Ngày (${dayChi}) và Cung Hành Niên (${querent.hanhNienChi}): ${
+      querent.hanhNienKhacType === 'Bị Khắc'
+        ? 'Nội trạch có chút áp lực hoặc hao phí sửa sang, cần giữ hòa khí anh em gia đình.'
+        : 'Nội trạch hưng vượng, người nhà hòa mục, đón niềm vui bất ngờ.'
+    }`,
+    thatVat: ['Huyền Vũ'].includes(soTuong)
+      ? 'Đồ vật mất do người quen lấy hoặc đánh rơi nơi khuất lấp, tìm về hướng Bắc hoặc nơi ẩm thấp.'
+      : ['Lục Hợp', 'Thái Âm'].includes(soTuong)
+      ? 'Đồ vật còn trong nhà hoặc nơi kín đáo, bình tĩnh tìm kiếm sẽ thấy lại.'
+      : 'Đồ vật thất lạc có thể tìm được nhờ người khác giúp sức chỉ dẫn.',
   };
 
-  const verdict = `Quẻ đắc ${tongMonName} (${stars}/5.0 ⭐ - ${level}). Nguyệt Tướng ${nguyetTuong.name} (${nguyetTuong.chi}) lâm Giờ ${hourChi}. Sơ Truyền ${soTruyen} mang ${soTuong}, Mạt Truyền ${matTruyen} mang ${matTuong}. ${
+  const verdict = `Quẻ đắc ${tongMonName} (${stars}/5.0 ⭐ - ${level}). Nguyệt Tướng ${nguyetTuong.name} (${nguyetTuong.chi}) lâm Giờ ${hourChi}. Sơ Truyền ${soTruyen} (${soTuong}) ➔ Mạt Truyền ${matTruyen} (${matTuong}). Bản Mệnh ${querent.banMenhChi} (${querent.banMenhThienTuong}), Hành Niên ${querent.hanhNienChi} (${querent.hanhNienThienTuong}). ${
     score >= 66 ? 'Trường khí hanh thông, trăm sự cát tường thuận lợi.' : score >= 48 ? 'Khí trường quân bình, nên giữ tĩnh làm chủ.' : 'Có nhiều điểm xung khắc trở ngại, cần thận trọng hành sự.'
   }`;
 
+  // 10. Thuyết minh quy trình lập quẻ theo Hiệp Kỷ Biện Phương Thư
+  const setupExplanation = {
+    nguyetTuongRule: `Thái Dương triền cung tại hoàng đạo ${solarLon.toFixed(2)}° (khoảng Tiết khí ${nguyetTuong.season}), Nguyệt Tướng định vị là ${nguyetTuong.name} (Địa chi ${nguyetTuong.chi}).`,
+    thienBanRule: `Đem Nguyệt Tướng ${nguyetTuong.chi} gia lâm lên Chi Giờ chiêm quẻ (${hourChi}) trên Địa bàn, an thuận hành 12 Thiên Chi tạo thành Thiên Bàn.`,
+    quyNhanRule: `Thời khắc chiêm thuộc ${isDayTime ? 'Ban Ngày (Đán Quý)' : 'Ban Đêm (Dạ Quý)'}, Nhật Can là ${dayCan}. Quý Nhân khởi tại ${quyNhanChi}. Cung ${quyNhanDiaChi} trên Địa bàn thuộc ${isThuan ? 'Nửa Đông (Hợi đến Tị)' : 'Nửa Tây (Ngọ đến Tuất)'}, nên 12 Thiên Tướng an ${quyNhanDirection} hành.`,
+    tuKhoaRule: `Khoa 1: Can Thượng (${k1Thuong}/${dayCan} ký ${canKyCung}); Khoa 2: Can Âm (${k2Thuong}/${k2Ha}); Khoa 3: Chi Thượng (${k3Thuong}/${dayChi}); Khoa 4: Chi Âm (${k4Thuong}/${k4Ha}).`,
+    tamTruyenRule: `Xét tương tác khắc chế Tứ Khoa, quẻ phát động theo ${tongMonName}: Sơ Truyền ${soTruyen} (${soTuong}) ➔ Trung Truyền ${trungTruyen} ➔ Mạt Truyền ${matTruyen} (${matTuong}).`,
+    menhNienRule: `Theo Hiệp Kỷ Biện Phương Thư: Người hỏi sinh năm ${querent.birthCanChi} (${querent.birthNapAm}), Bản Mệnh tại ${querent.banMenhChi}. ${querent.gender === 'Nam' ? 'Nam 1 tuổi khởi Dần thuận hành' : 'Nữ 1 tuổi khởi Thân nghịch hành'}, tuổi mụ ${querent.tuoiMu} nên Hành Niên đáo cung ${querent.hanhNienChi}.`,
+  };
+
   return {
     ngayCanChi: dayCanChi,
+    dayCanChi,
     dayCan,
     dayChi,
     gioCanChi: hourCanChi,
     hourChi,
     isDayTime,
+    tuTru: {
+      yearCanChi: querentInput?.yearCanChi || 'Bính Ngọ',
+      monthCanChi: querentInput?.monthCanChi || 'Kỷ Mùi',
+      dayCanChi,
+      hourCanChi,
+      tietKhi: nguyetTuong.season,
+      solarLongitude: solarLon,
+      solarLonDegree: `${solarLon.toFixed(2)}°`,
+    },
+    querent,
     nguyetTuongChi: nguyetTuong.chi,
     nguyetTuongName: nguyetTuong.name,
     nguyetTuongSeason: nguyetTuong.season,
@@ -872,11 +1259,12 @@ export function buildLucNhamChart(
       nguyetDuc: 'Bính',
       thaiTue: 'Bính Ngọ',
     },
+    setupExplanation,
     score,
     stars,
     level,
     verdict,
-    summary: `${tongMonName} • ${soTruyen} (${soTuong}) ➔ ${trungTruyen} ➔ ${matTruyen} (${matTuong})`,
+    summary: `${tongMonName} • ${soTruyen} (${soTuong}) ➔ ${trungTruyen} ➔ ${matTruyen} (${matTuong}) • Thân Mệnh: ${querent.banMenhChi}/${querent.hanhNienChi}`,
     prognostications,
   };
 }

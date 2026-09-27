@@ -20,14 +20,30 @@ import {
   AlertCircle,
   Eye,
   Info,
+  User,
+  Calendar,
+  RotateCcw,
+  Sliders,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  Search,
 } from 'lucide-react';
 import { ComprehensiveResult } from '../types';
-import { buildLucNhamChart, LucNhamChart, LucNhamPalace, THAP_NHI_THIEN_TUONG, NGUYET_TUONG_MAP } from '../astronomy/lucNham';
-import { getLocalComponents } from '../astronomy/canChi';
+import {
+  buildLucNhamChart,
+  LucNhamChart,
+  LucNhamPalace,
+  THAP_NHI_THIEN_TUONG,
+  NGUYET_TUONG_MAP,
+  LUC_THAP_HOA_GIAP_NAP_AM,
+} from '../astronomy/lucNham';
+import { getLocalComponents, CAN, CHI, CHI_CON_GIAP } from '../astronomy/canChi';
 
 interface LucNhamPanelProps {
   result: ComprehensiveResult;
   currentDate: Date;
+  onDateChange?: (date: Date) => void;
   onOpenAlgorithmModal?: () => void;
   onSwitchToKyMon?: () => void;
   onNavigateTab?: (tabId: string) => void;
@@ -36,23 +52,72 @@ interface LucNhamPanelProps {
 export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
   result,
   currentDate,
+  onDateChange,
   onOpenAlgorithmModal,
   onSwitchToKyMon,
   onNavigateTab,
 }) => {
+  // Người hỏi (Nhân Mệnh - Bản Mệnh & Hành Niên)
+  const [birthYear, setBirthYear] = useState<number>(1990);
+  const [gender, setGender] = useState<'Nam' | 'Nữ'>('Nam');
+  const [questionAspect, setQuestionAspect] = useState<string>('all');
+  const [isSetupOpen, setIsSetupOpen] = useState<boolean>(true);
+
+  // Chọn cung trên bàn cờ để tra cứu
   const [selectedPalaceChi, setSelectedPalaceChi] = useState<string>('Tý');
-  const [activeAspect, setActiveAspect] = useState<'all' | 'cautai' | 'honnhan' | 'quanvan' | 'benhtat' | 'kientung' | 'xuathanh'>('all');
 
   const localTime = useMemo(() => getLocalComponents(currentDate), [currentDate]);
 
+  // Can Chi & Nạp Âm của năm sinh người hỏi (Preview nhanh trên form)
+  const querentQuickInfo = useMemo(() => {
+    let canIdx = (birthYear - 4) % 10;
+    if (canIdx < 0) canIdx += 10;
+    let chiIdx = (birthYear - 4) % 12;
+    if (chiIdx < 0) chiIdx += 12;
+
+    const canStr = CAN[canIdx];
+    const chiStr = CHI[chiIdx];
+    const canChiStr = `${canStr} ${chiStr}`;
+    const napAmStr = LUC_THAP_HOA_GIAP_NAP_AM[canChiStr] || 'Chưa định';
+    const conGiap = CHI_CON_GIAP[chiStr] || '';
+    const tuoiMu = Math.max(1, localTime.year - birthYear + 1);
+
+    return {
+      canChi: canChiStr,
+      napAm: napAmStr,
+      conGiap,
+      tuoiMu,
+    };
+  }, [birthYear, localTime.year]);
+
+  // Lập bàn quẻ Đại Lục Nhâm hoàn chỉnh theo Tứ Trụ Thời Gian & Thân Mệnh Người Hỏi
   const chart: LucNhamChart = useMemo(() => {
     return buildLucNhamChart(
       result.solarLongitude,
       result.batTu.dayCanChi,
       result.batTu.hourCanChi,
-      localTime.hour
+      localTime.hour,
+      {
+        birthYear,
+        gender,
+        currentYear: localTime.year,
+        questionAspect,
+        yearCanChi: result.batTu.yearCanChi,
+        monthCanChi: result.batTu.monthCanChi,
+      }
     );
-  }, [result.solarLongitude, result.batTu, localTime.hour]);
+  }, [
+    result.solarLongitude,
+    result.batTu.dayCanChi,
+    result.batTu.hourCanChi,
+    result.batTu.yearCanChi,
+    result.batTu.monthCanChi,
+    localTime.hour,
+    localTime.year,
+    birthYear,
+    gender,
+    questionAspect,
+  ]);
 
   const selectedPalace: LucNhamPalace | undefined = chart.palaces[selectedPalaceChi];
 
@@ -100,6 +165,24 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
         })}
       </div>
     );
+  };
+
+  // Nhanh chóng điều chỉnh thời gian chiêm quẻ
+  const handleTimeShift = (hoursDelta: number) => {
+    if (!onDateChange) return;
+    const newDate = new Date(currentDate.getTime() + hoursDelta * 3600 * 1000);
+    onDateChange(newDate);
+  };
+
+  const handleDayShift = (daysDelta: number) => {
+    if (!onDateChange) return;
+    const newDate = new Date(currentDate.getTime() + daysDelta * 24 * 3600 * 1000);
+    onDateChange(newDate);
+  };
+
+  const handleResetToNow = () => {
+    if (!onDateChange) return;
+    onDateChange(new Date());
   };
 
   // Evaluation of Process Success/Failure through 3 stages (Tam Truyen)
@@ -188,7 +271,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-bold text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 ring-2 ring-indigo-400/40"
           >
             <span>🧭</span>
-            <span>Đại Lục Nhâm</span>
+            <span>Đại Lục Nhâm Độn Giáp</span>
           </button>
 
           {onNavigateTab && (
@@ -198,7 +281,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
               className="px-3.5 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>Dự Trắc Chuyên Sâu</span>
+              <span>Dự Trắc Song Thức</span>
             </button>
           )}
         </div>
@@ -209,12 +292,290 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             className="px-3.5 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center gap-1.5 self-end sm:self-auto transition-colors cursor-pointer"
           >
             <HelpCircle className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Thuyết Minh Cửu Tông Môn</span>
+            <span>Thuyết Minh Hiệp Kỷ Biện Phương</span>
           </button>
         )}
       </div>
 
-      {/* 1. HEADER BANNER & THỜI ĐIỂM CHIÊM QUẺ */}
+      {/* 1. THIẾT LẬP THÔNG TIN CƠ BẢN LẬP QUẺ (THỜI KHẮC CHIÊM & NHÂN MỆNH NGƯỜI HỎI) */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl overflow-hidden transition-all">
+        {/* Header toggle bar */}
+        <div
+          onClick={() => setIsSetupOpen((prev) => !prev)}
+          className="p-4 sm:p-5 bg-gradient-to-r from-slate-900 via-indigo-950/30 to-slate-900 border-b border-slate-800 cursor-pointer flex items-center justify-between gap-4"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold">
+              <Sliders className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs uppercase font-mono font-bold tracking-wider text-amber-400">
+                  Hiệp Kỷ Biện Phương Thư • Bí Quyết Khởi Quẻ
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-[10px] font-bold">
+                  Bản Mệnh vi Căn • Hành Niên vi Diệp
+                </span>
+              </div>
+              <h3 className="text-base sm:text-lg font-black text-white mt-0.5 flex items-center gap-2">
+                <span>Thông Tin Cơ Bản Để Lập Quẻ Lục Nhâm</span>
+                <span className="text-xs text-slate-400 font-normal">
+                  (Thời Gian Chiêm Quẻ & Nhân Mệnh Người Hỏi)
+                </span>
+              </h3>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+            <span className="text-xs hidden sm:inline">
+              {isSetupOpen ? 'Thu gọn thiết lập' : 'Tùy chỉnh thông tin'}
+            </span>
+            {isSetupOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+          </div>
+        </div>
+
+        {/* Collapsible Content */}
+        {isSetupOpen && (
+          <div className="p-5 sm:p-6 space-y-5 bg-slate-950/70">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+              {/* CỘT 1: THÔNG TIN NGƯỜI HỎI (NHÂN MỆNH) - 6 cols */}
+              <div className="lg:col-span-6 p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                  <div className="flex items-center gap-2 text-white font-bold text-sm">
+                    <User className="w-4 h-4 text-cyan-400" />
+                    <span>1. Thông Tin Người Hỏi (Nhân Mệnh)</span>
+                  </div>
+                  <span className="text-[11px] text-cyan-300 font-mono">
+                    {querentQuickInfo.canChi} ({querentQuickInfo.napAm})
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {/* Năm Sinh Input */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center justify-between">
+                      <span>Năm Sinh (Dương Lịch):</span>
+                      <span className="text-[11px] text-amber-400 font-mono">
+                        Tuổi Mụ: {querentQuickInfo.tuoiMu}
+                      </span>
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        min={1930}
+                        max={2030}
+                        value={birthYear}
+                        onChange={(e) => setBirthYear(Number(e.target.value) || 1990)}
+                        className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white font-mono text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Giới Tính Toggle */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Giới Tính (Khởi Hành Niên):
+                    </label>
+                    <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800">
+                      <button
+                        type="button"
+                        onClick={() => setGender('Nam')}
+                        className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
+                          gender === 'Nam'
+                            ? 'bg-cyan-500 text-slate-950 shadow-sm'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        ♂ Nam (Dần thuận)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setGender('Nữ')}
+                        className={`py-1.5 rounded-lg text-xs font-bold transition-all ${
+                          gender === 'Nữ'
+                            ? 'bg-rose-500 text-white shadow-sm'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        ♀ Nữ (Thân nghịch)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mục đích / Lĩnh vực hỏi */}
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    Lĩnh Vực Chiêm Đoán Cần Hỏi:
+                  </label>
+                  <select
+                    value={questionAspect}
+                    onChange={(e) => setQuestionAspect(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition-colors"
+                  >
+                    <option value="all">🌟 Toàn Cảnh Mưu Sự & Việc Đời (Tổng Quan)</option>
+                    <option value="cautai">💰 Cầu Tài Lộc, Kinh Doanh, Đầu Tư, Hợp Đồng</option>
+                    <option value="quanvan">👔 Công Danh, Quan Vận, Thăng Tiến, Thi Cử</option>
+                    <option value="honnhan">💍 Tình Duyên, Hôn Nhân, Gia Đạo Hòa Hợp</option>
+                    <option value="benhtat">🩺 Sức Khỏe, Thân Thể, Tật Bệnh, Thầy Thuốc</option>
+                    <option value="kientung">⚖️ Kiện Tụng, Tranh Chấp, Pháp Lý, Giải Oan</option>
+                    <option value="xuathanh">🐎 Xuất Hành, Đi Xa, Định Cư, Cầu Vận Xa</option>
+                    <option value="giadao">🏡 Nhà Cửa, Điền Sản, Phong Thủy Nơi Ở</option>
+                    <option value="thatvat">🔍 Tìm Đồ Thất Lạc, Tìm Người, Mất Mát</option>
+                  </select>
+                </div>
+
+                {/* Quick Hint */}
+                <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+                  <span>
+                    Bản Mệnh: <strong className="text-amber-300 font-mono">{chart.querent.banMenhChi}</strong> ({chart.querent.birthConGiap})
+                  </span>
+                  <span>•</span>
+                  <span>
+                    Hành Niên năm nay: <strong className="text-cyan-300 font-mono">{chart.querent.hanhNienChi}</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    Nạp Âm: <strong className="text-purple-300">{chart.querent.birthNapAm}</strong>
+                  </span>
+                </div>
+              </div>
+
+              {/* CỘT 2: THỜI GIAN CHIÊM QUẺ (TỨ TRỤ THIÊN VĂN) - 6 cols */}
+              <div className="lg:col-span-6 p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                  <div className="flex items-center gap-2 text-white font-bold text-sm">
+                    <Clock className="w-4 h-4 text-amber-400" />
+                    <span>2. Thời Gian Lập Quẻ (Tứ Trụ Thiên Văn)</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {onDateChange && (
+                      <button
+                        onClick={handleResetToNow}
+                        className="px-2 py-0.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                        title="Đồng bộ giờ hiện tại"
+                      >
+                        <RotateCcw className="w-3 h-3 text-amber-400" />
+                        <span>Giờ Hiện Tại</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Quick Shift Controls */}
+                <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs">
+                  <span className="text-slate-400 font-medium">Chuyển Đổi Thời Khắc:</span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleTimeShift(-2)}
+                      className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer"
+                      title="Lùi 1 canh giờ (2 tiếng)"
+                    >
+                      -1 Canh
+                    </button>
+                    <button
+                      onClick={() => handleTimeShift(-1)}
+                      className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer"
+                      title="Lùi 1 giờ"
+                    >
+                      -1h
+                    </button>
+                    <button
+                      onClick={() => handleTimeShift(1)}
+                      className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer"
+                      title="Tiến 1 giờ"
+                    >
+                      +1h
+                    </button>
+                    <button
+                      onClick={() => handleTimeShift(2)}
+                      className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer"
+                      title="Tiến 1 canh giờ (2 tiếng)"
+                    >
+                      +1 Canh
+                    </button>
+                    <button
+                      onClick={() => handleDayShift(-1)}
+                      className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer"
+                      title="Lùi 1 ngày"
+                    >
+                      -1 Ngày
+                    </button>
+                    <button
+                      onClick={() => handleDayShift(1)}
+                      className="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-mono cursor-pointer"
+                      title="Tiến 1 ngày"
+                    >
+                      +1 Ngày
+                    </button>
+                  </div>
+                </div>
+
+                {/* Tứ Trụ Can Chi Cards */}
+                <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                  <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
+                    <div className="text-[10px] text-slate-400">Năm (Niên)</div>
+                    <div className="font-bold text-amber-300 font-mono text-sm mt-0.5">
+                      {chart.tuTru.yearCanChi}
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
+                    <div className="text-[10px] text-slate-400">Tháng (Nguyệt)</div>
+                    <div className="font-bold text-amber-300 font-mono text-sm mt-0.5">
+                      {chart.tuTru.monthCanChi}
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 ring-1 ring-amber-500/30">
+                    <div className="text-[10px] text-slate-400">Ngày (Nhật)</div>
+                    <div className="font-bold text-amber-300 font-mono text-sm mt-0.5">
+                      {chart.dayCanChi}
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-slate-950 border border-slate-800 ring-1 ring-indigo-500/30">
+                    <div className="text-[10px] text-slate-400">Giờ (Thời)</div>
+                    <div className="font-bold text-amber-300 font-mono text-sm mt-0.5">
+                      {chart.gioCanChi}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tiết Khí & Nguyệt Tướng Hint */}
+                <div className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-300 flex items-center justify-between">
+                  <span>
+                    Nguyệt Tướng: <strong className="text-indigo-300 font-mono">{chart.nguyetTuongName} ({chart.nguyetTuongChi})</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    Thời Khắc: <strong className="text-purple-300">{chart.quyNhanType}</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    Quý Nhân: <strong className="text-cyan-300 font-mono">{chart.quyNhanChi} ({chart.quyNhanDirection})</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quy trình lập quẻ tóm tắt theo Hiệp Kỷ Biện Phương Thư */}
+            <div className="p-3.5 rounded-xl bg-indigo-950/20 border border-indigo-500/30 text-xs text-slate-300 space-y-1.5">
+              <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                <Info className="w-4 h-4 text-indigo-400" />
+                <span>Quy Trình Lập Quẻ Đầy Đủ (Đã Tự Động Định Vị Chuẩn Xác):</span>
+              </div>
+              <p className="text-[11px] leading-relaxed text-slate-400">
+                1. <strong>Định Nguyệt Tướng</strong> ({chart.setupExplanation.nguyetTuongRule}) ➔ 
+                2. <strong>Lập Thiên Bàn</strong> ({chart.setupExplanation.thienBanRule}) ➔ 
+                3. <strong>An 12 Thiên Tướng</strong> ({chart.setupExplanation.quyNhanRule}) ➔ 
+                4. <strong>Khởi Tứ Khoa</strong> ({chart.setupExplanation.tuKhoaRule}) ➔ 
+                5. <strong>Phát Động Tam Truyền</strong> ({chart.setupExplanation.tamTruyenRule}) ➔ 
+                6. <strong>Khảo Xét Thân Mệnh</strong> ({chart.setupExplanation.menhNienRule}).
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 2. HEADER BANNER & TỔNG QUAN KẾT QUẢ ĐẠI LỤC NHÂM */}
       <div className="bg-gradient-to-br from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-5 shadow-xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
@@ -226,7 +587,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
                 <span>BÍ TÀNG ĐẠI LỤC NHÂM TOÀN THƯ</span>
               </div>
               <div className="px-2.5 py-1 rounded-lg bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-semibold">
-                Tam Thức Chi Nhất (Thiên Kỳ Môn - Địa Lục Nhâm - Nhân Thái Ất)
+                Cửu Tông Môn: {chart.tongMonName}
               </div>
             </div>
 
@@ -236,7 +597,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
-              Lập bàn quẻ Lục Nhâm theo chuẩn cổ bản: Lấy <strong>Nguyệt Tướng</strong> theo Tiết khí gia lên <strong>Chi Giờ</strong> trên Địa bàn, khởi <strong>Tứ Khoa</strong>, phát động <strong>Tam Truyền (Cửu Tông Môn)</strong> và gia lâm <strong>12 Thần Tướng</strong> để thông tỏ quá khứ, hiện tại và tương lai.
+              Người hỏi: <strong className="text-amber-300 font-mono">{chart.querent.birthCanChi}</strong> ({chart.querent.birthNapAm}), tuổi mụ <strong>{chart.querent.tuoiMu}</strong> ({chart.querent.gender}). Lập bàn quẻ Lục Nhâm chuẩn cổ bản Hiệp Kỷ Biện Phương Thư: Nguyệt Tướng <strong>{chart.nguyetTuongName} ({chart.nguyetTuongChi})</strong> gia lâm Giờ <strong>{chart.hourChi}</strong>, an Quý Nhân <strong>{chart.quyNhanChi} ({chart.quyNhanDirection})</strong>, phát động Tam Truyền định đoạt tiến trình nhân quả.
             </p>
           </div>
 
@@ -281,8 +642,10 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </div>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
-            <div className="text-[10px] text-slate-400">Thời Khắc Chiêm</div>
-            <div className="font-bold text-purple-300 font-mono mt-0.5">{chart.quyNhanType}</div>
+            <div className="text-[10px] text-slate-400">Bản Mệnh / Hành Niên</div>
+            <div className="font-bold text-purple-300 font-mono mt-0.5">
+              {chart.querent.banMenhChi} / {chart.querent.hanhNienChi}
+            </div>
           </div>
           <div className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800">
             <div className="text-[10px] text-slate-400">Tuần Không</div>
@@ -293,7 +656,176 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
         </div>
       </div>
 
-      {/* 2. TAM TRUYỀN & TỨ KHOA (CORE ENGINE OF LUC NHAM) */}
+      {/* 3. BẢN MỆNH & HÀNH NIÊN CỦA NGƯỜI HỎI (HIỆP KỶ BIỆN PHƯƠNG THƯ) */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-bold">
+              <User className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="font-bold text-white text-base">
+                Khảo Xét Thân Mệnh Người Hỏi (Bản Mệnh vi Căn • Hành Niên vi Diệp)
+              </h3>
+              <p className="text-xs text-slate-400">
+                Hiệp Kỷ Biện Phương Thư: Bản Mệnh là gốc rễ họa phúc, Hành Niên là hoa lá ứng nghiệm trong năm xem quẻ.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1 rounded-xl bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 text-xs font-bold font-mono">
+              Tuổi {chart.querent.birthCanChi} ({chart.querent.birthNapAm}) • {chart.querent.tuoiMu} tuổi
+            </span>
+          </div>
+        </div>
+
+        {/* 2 Cards Grid: Bản Mệnh vs Hành Niên */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Card 1: Bản Mệnh (Căn) */}
+          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">
+                  Căn
+                </span>
+                <span className="font-bold text-white text-sm">Bản Mệnh (Gốc Rễ Đương Số)</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-mono font-bold">
+                Cung {chart.querent.banMenhChi}
+              </span>
+            </div>
+
+            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800/80 space-y-1.5 text-xs">
+              <div className="flex items-center justify-between text-slate-300">
+                <span>Thiên Bàn gia lâm (Thượng Thần):</span>
+                <strong className="text-amber-300 font-mono text-sm">
+                  {chart.querent.banMenhThienChi}
+                </strong>
+              </div>
+              <div className="flex items-center justify-between text-slate-300">
+                <span>Thần Tướng ngự trị:</span>
+                <span className="font-bold text-slate-200 flex items-center gap-1">
+                  <span>{chart.querent.banMenhThienTuongInfo.symbol}</span>
+                  <span>{chart.querent.banMenhThienTuong}</span>
+                  {getNatureBadge(chart.querent.banMenhThienTuongInfo.nature)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-slate-300">
+                <span>Quan hệ Thần - Mệnh:</span>
+                <span className="font-bold text-indigo-300">
+                  {chart.querent.banMenhRelation}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {chart.querent.banMenhVerdict}
+            </p>
+
+            <div className="flex flex-wrap gap-1.5 pt-1 text-[10px]">
+              {chart.querent.banMenhIsQuyNhan && (
+                <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
+                  👑 Lâm Quý Nhân
+                </span>
+              )}
+              {chart.querent.banMenhIsLocThan && (
+                <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">
+                  💰 Lâm Lộc Thần
+                </span>
+              )}
+              {chart.querent.banMenhIsDichMa && (
+                <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
+                  🐎 Lâm Dịch Mã
+                </span>
+              )}
+              {chart.querent.banMenhIsTuanKhong && (
+                <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold">
+                  ⭕ Phạm Tuần Không
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Card 2: Hành Niên (Diệp) */}
+          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 relative overflow-hidden">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs flex items-center justify-center">
+                  Diệp
+                </span>
+                <span className="font-bold text-white text-sm">Hành Niên (Cành Lá Năm Nay)</span>
+              </div>
+              <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-bold">
+                Cung {chart.querent.hanhNienChi}
+              </span>
+            </div>
+
+            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800/80 space-y-1.5 text-xs">
+              <div className="flex items-center justify-between text-slate-300">
+                <span>Thiên Bàn gia lâm (Thượng Thần):</span>
+                <strong className="text-cyan-300 font-mono text-sm">
+                  {chart.querent.hanhNienThienChi}
+                </strong>
+              </div>
+              <div className="flex items-center justify-between text-slate-300">
+                <span>Thần Tướng ngự trị:</span>
+                <span className="font-bold text-slate-200 flex items-center gap-1">
+                  <span>{chart.querent.hanhNienThienTuongInfo.symbol}</span>
+                  <span>{chart.querent.hanhNienThienTuong}</span>
+                  {getNatureBadge(chart.querent.hanhNienThienTuongInfo.nature)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-slate-300">
+                <span>Quan hệ Thần - Niên:</span>
+                <span className="font-bold text-indigo-300">
+                  {chart.querent.hanhNienRelation}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {chart.querent.hanhNienVerdict}
+            </p>
+
+            <div className="flex flex-wrap gap-1.5 pt-1 text-[10px]">
+              {chart.querent.hanhNienIsQuyNhan && (
+                <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold">
+                  👑 Lâm Quý Nhân
+                </span>
+              )}
+              {chart.querent.hanhNienIsLocThan && (
+                <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">
+                  💰 Lâm Lộc Thần
+                </span>
+              )}
+              {chart.querent.hanhNienIsDichMa && (
+                <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
+                  🐎 Lâm Dịch Mã
+                </span>
+              )}
+              {chart.querent.hanhNienIsTuanKhong && (
+                <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold">
+                  ⭕ Phạm Tuần Không
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Tương tác Thân Mệnh với Tam Truyền */}
+        <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span className="font-bold text-amber-300">Tương Tác Tam Truyền: </span>
+            <span>{chart.querent.inTamTruyen.roleDesc}</span>
+          </div>
+          <div className="text-[11px] text-slate-400 italic shrink-0">
+            {chart.querent.classicalQuote}
+          </div>
+        </div>
+      </div>
+
+      {/* 4. TAM TRUYỀN & TỨ KHOA (CORE ENGINE OF LUC NHAM) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* TAM TRUYỀN (SƠ - TRUNG - MẠT) - 5 cols */}
         <div className="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
@@ -390,7 +922,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </div>
 
             <p className="text-xs text-slate-400 mt-2 mb-4">
-              Tứ Khoa phân định ranh giới giữa <strong>Can (Chủ thể/Người)</strong> và <strong>Chi (Khách thể/Nhà/Việc)</strong>; Thượng Thần biểu hiện trạng thái lộ rõ, Hạ Thần biểu hiện nền tảng gốc rễ.
+              Tứ Khoa phân định ranh giới giữa <strong>Can (Chủ thể / Người hỏi)</strong> và <strong>Chi (Khách thể / Nhà cửa / Sự việc)</strong>; Thượng Thần biểu hiện trạng thái lộ rõ, Hạ Thần biểu hiện nền tảng gốc rễ.
             </p>
 
             {/* 4 Khoa Cards Grid (Reversed from 4 to 1 like classical books) */}
@@ -441,7 +973,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
             <div className="p-2.5 rounded-xl bg-amber-950/20 border border-amber-500/20 text-slate-300">
               <strong className="text-amber-300">Khoa 1 & Khoa 2 (Can Thượng/Can Âm): </strong>
-              Đại diện cho ta, bản thân, nhân tâm, ý chí chủ quan và gia đạo nội bộ.
+              Đại diện cho bản thân người xem, ý chí chủ quan và gia đạo nội bộ.
             </div>
             <div className="p-2.5 rounded-xl bg-indigo-950/20 border border-indigo-500/20 text-slate-300">
               <strong className="text-indigo-300">Khoa 3 & Khoa 4 (Chi Thượng/Chi Âm): </strong>
@@ -451,7 +983,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
         </div>
       </div>
 
-      {/* 2.5 LUẬN BÀN QUÁ TRÌNH THÀNH BẠI (3 GIAI ĐOẠN: SƠ - TRUNG - MẠT) */}
+      {/* 5. LUẬN BÀN QUÁ TRÌNH THÀNH BẠI (3 GIAI ĐOẠN: SƠ - TRUNG - MẠT) */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
           <div className="flex items-center gap-2.5">
@@ -556,7 +1088,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
         </div>
       </div>
 
-      {/* 3. BÀN 12 CUNG ĐẠI LỤC NHÂM (THIÊN BÀN - ĐỊA BÀN - 12 THẦN TƯỚNG) */}
+      {/* 6. BÀN 12 CUNG ĐẠI LỤC NHÂM (THIÊN BÀN - ĐỊA BÀN - 12 THẦN TƯỚNG) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* 12 Palaces Matrix (8 cols) */}
         <div className="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
@@ -567,24 +1099,21 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
                 <span>Bàn 12 Cung Đại Lục Nhâm (Địa Bàn & Thiên Bàn)</span>
               </h3>
               <p className="text-xs text-slate-400">
-                Nhấp vào từng cung để tra cứu chi tiết Thần Tướng, Nguyệt Tướng và Sinh Khắc.
+                Nhấp vào từng cung để tra cứu Thần Tướng, Bản Mệnh, Hành Niên và Tương Tác Sinh Khắc.
               </p>
             </div>
 
-            <div className="flex items-center gap-2 text-xs">
+            <div className="flex flex-wrap items-center gap-2 text-xs">
               <span className="px-2 py-1 rounded bg-slate-800 border border-slate-700 text-slate-300">
                 Nguyệt Tướng: <strong className="text-indigo-300">{chart.nguyetTuongName} ({chart.nguyetTuongChi})</strong>
               </span>
             </div>
           </div>
 
-          {/* 12 Cung Grid (arranged in 3 rows x 4 cols or classical 12-palace circle) */}
+          {/* 12 Cung Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {chart.palacesList.map((p) => {
               const isSelected = selectedPalaceChi === p.diaChi;
-              const isSoTruyen = chart.tamTruyen[0].chi === p.thienChi;
-              const isTrungTruyen = chart.tamTruyen[1].chi === p.thienChi;
-              const isMatTruyen = chart.tamTruyen[2].chi === p.thienChi;
 
               return (
                 <div
@@ -602,18 +1131,28 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
                       Cung {p.diaChi}
                     </span>
 
-                    <div className="flex items-center gap-1">
-                      {isSoTruyen && (
-                        <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500 text-slate-950 font-bold">
+                    <div className="flex flex-wrap items-center gap-1">
+                      {p.isBanMenh && (
+                        <span className="text-[9px] px-1 py-0.2 rounded bg-amber-500 text-slate-950 font-bold" title="Cung Bản Mệnh">
+                          Mệnh
+                        </span>
+                      )}
+                      {p.isHanhNien && (
+                        <span className="text-[9px] px-1 py-0.2 rounded bg-cyan-500 text-slate-950 font-bold" title="Cung Hành Niên">
+                          Niên
+                        </span>
+                      )}
+                      {p.isSoTruyen && (
+                        <span className="text-[9px] px-1 py-0.2 rounded bg-amber-400 text-slate-950 font-bold">
                           Sơ
                         </span>
                       )}
-                      {isTrungTruyen && (
+                      {p.isTrungTruyen && (
                         <span className="text-[9px] px-1 py-0.2 rounded bg-indigo-500 text-white font-bold">
                           Trung
                         </span>
                       )}
-                      {isMatTruyen && (
+                      {p.isMatTruyen && (
                         <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500 text-slate-950 font-bold">
                           Mạt
                         </span>
@@ -723,13 +1262,25 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
 
               {/* Than Sat in this palace */}
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                <div className="font-bold text-slate-200">Thần Sát & Tương Tác:</div>
+                <div className="font-bold text-slate-200">Thần Sát & Thân Mệnh:</div>
                 <ul className="space-y-1 text-slate-300 list-disc list-inside">
+                  {selectedPalace.isBanMenh && (
+                    <li>Là <strong className="text-amber-300 font-mono">Cung Bản Mệnh</strong> của người hỏi ({chart.querent.birthCanChi}).</li>
+                  )}
+                  {selectedPalace.isHanhNien && (
+                    <li>Là <strong className="text-cyan-300 font-mono">Cung Hành Niên</strong> năm nay của người hỏi ({chart.querent.gender} {chart.querent.tuoiMu} tuổi).</li>
+                  )}
+                  {selectedPalace.isCanKy && (
+                    <li>Là <strong className="text-indigo-300">Cung Ký của Can Ngày</strong> ({chart.dayCan}).</li>
+                  )}
+                  {selectedPalace.isChiNgay && (
+                    <li>Là <strong className="text-purple-300">Cung Chi của Ngày</strong> ({chart.dayChi}).</li>
+                  )}
                   {selectedPalace.isQuyNhan && <li>Có <strong className="text-amber-300">Quý Nhân</strong> tọa trấn đem lại cát lợi, che chở trăm sự.</li>}
                   {selectedPalace.isLocThan && <li>Gặp <strong className="text-emerald-300">Lộc Thần</strong> chủ tiền tài, bổng lộc tăng trưởng.</li>}
                   {selectedPalace.isDichMa && <li>Lâm <strong className="text-indigo-300">Dịch Mã</strong> chủ biến động, di chuyển, đi xa có lợi.</li>}
                   {selectedPalace.isTuanKhong && <li>Phạm <strong className="text-rose-300">Tuần Không</strong> chủ sự tình hư ảo, chưa thành hình.</li>}
-                  {!selectedPalace.isQuyNhan && !selectedPalace.isLocThan && !selectedPalace.isDichMa && !selectedPalace.isTuanKhong && (
+                  {!selectedPalace.isBanMenh && !selectedPalace.isHanhNien && !selectedPalace.isQuyNhan && !selectedPalace.isLocThan && !selectedPalace.isDichMa && !selectedPalace.isTuanKhong && (
                     <li>Cung vị bình hòa, không có xung sát đặc biệt.</li>
                   )}
                 </ul>
@@ -747,16 +1298,16 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
         </div>
       </div>
 
-      {/* 4. DỰ TRẮC CHUYÊN ĐỀ 6 PHƯƠNG DIỆN ĐỜI SỐNG */}
+      {/* 7. DỰ TRẮC CHUYÊN ĐỀ 8 PHƯƠNG DIỆN (CÁ NHÂN HÓA THEO NGƯỜI HỎI) */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
           <div>
             <h3 className="font-bold text-white text-base flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Dự Trắc Đại Lục Nhâm 6 Phương Diện Đời Sống</span>
+              <span>Dự Trắc Đại Lục Nhâm Chuyên Biệt (Cá Nhân Hóa Đương Số)</span>
             </h3>
             <p className="text-xs text-slate-400">
-              Tổng luận chiêm đoán các vấn đề thực tiễn theo Tam Truyền, Tứ Khoa và Thần Tướng.
+              Tổng luận chiêm đoán kết hợp giữa Bàn Quẻ, Bản Mệnh ({chart.querent.birthCanChi}) và Hành Niên ({chart.querent.hanhNienChi}).
             </p>
           </div>
 
@@ -765,17 +1316,19 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             {[
               { id: 'all', label: 'Tất Cả' },
               { id: 'cautai', label: 'Cầu Tài' },
-              { id: 'honnhan', label: 'Hôn Nhân' },
               { id: 'quanvan', label: 'Công Danh' },
+              { id: 'honnhan', label: 'Hôn Nhân' },
               { id: 'benhtat', label: 'Sức Khỏe' },
               { id: 'kientung', label: 'Kiện Tụng' },
               { id: 'xuathanh', label: 'Xuất Hành' },
+              { id: 'giadao', label: 'Gia Đạo' },
+              { id: 'thatvat', label: 'Tìm Đồ' },
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveAspect(tab.id as any)}
-                className={`px-2.5 py-1 rounded-lg transition-colors font-medium ${
-                  activeAspect === tab.id
+                onClick={() => setQuestionAspect(tab.id)}
+                className={`px-2.5 py-1 rounded-lg transition-colors font-medium cursor-pointer ${
+                  questionAspect === tab.id
                     ? 'bg-amber-500 text-slate-950 font-bold'
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
@@ -788,11 +1341,11 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
 
         {/* Aspect Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {(activeAspect === 'all' || activeAspect === 'cautai') && (
+          {(questionAspect === 'all' || questionAspect === 'cautai') && (
             <div className="p-4 rounded-xl bg-slate-950 border border-emerald-500/30 space-y-2">
               <div className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
                 <TrendingUp className="w-4 h-4" />
-                <span>1. Cầu Tài & Giao Thương</span>
+                <span>1. Cầu Tài & Giao Thương Đầu Tư</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
                 {chart.prognostications.cauTai}
@@ -800,23 +1353,11 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </div>
           )}
 
-          {(activeAspect === 'all' || activeAspect === 'honnhan') && (
-            <div className="p-4 rounded-xl bg-slate-950 border border-rose-500/30 space-y-2">
-              <div className="flex items-center gap-2 text-rose-400 font-bold text-sm">
-                <Heart className="w-4 h-4" />
-                <span>2. Tình Duyên & Hôn Nhân</span>
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                {chart.prognostications.honNhan}
-              </p>
-            </div>
-          )}
-
-          {(activeAspect === 'all' || activeAspect === 'quanvan') && (
+          {(questionAspect === 'all' || questionAspect === 'quanvan') && (
             <div className="p-4 rounded-xl bg-slate-950 border border-indigo-500/30 space-y-2">
               <div className="flex items-center gap-2 text-indigo-400 font-bold text-sm">
                 <Briefcase className="w-4 h-4" />
-                <span>3. Công Danh & Sự Nghiệp</span>
+                <span>2. Công Danh, Sự Nghiệp & Quan Vận</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
                 {chart.prognostications.quanVan}
@@ -824,11 +1365,23 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </div>
           )}
 
-          {(activeAspect === 'all' || activeAspect === 'benhtat') && (
+          {(questionAspect === 'all' || questionAspect === 'honnhan') && (
+            <div className="p-4 rounded-xl bg-slate-950 border border-rose-500/30 space-y-2">
+              <div className="flex items-center gap-2 text-rose-400 font-bold text-sm">
+                <Heart className="w-4 h-4" />
+                <span>3. Tình Duyên & Hôn Nhân Lương Duyên</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {chart.prognostications.honNhan}
+              </p>
+            </div>
+          )}
+
+          {(questionAspect === 'all' || questionAspect === 'benhtat') && (
             <div className="p-4 rounded-xl bg-slate-950 border border-amber-500/30 space-y-2">
               <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
                 <Activity className="w-4 h-4" />
-                <span>4. Sức Khỏe & Tật Bệnh</span>
+                <span>4. Sức Khỏe & Tật Bệnh Thân Thể</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
                 {chart.prognostications.benhTat}
@@ -836,11 +1389,11 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </div>
           )}
 
-          {(activeAspect === 'all' || activeAspect === 'kientung') && (
+          {(questionAspect === 'all' || questionAspect === 'kientung') && (
             <div className="p-4 rounded-xl bg-slate-950 border border-purple-500/30 space-y-2">
               <div className="flex items-center gap-2 text-purple-400 font-bold text-sm">
                 <Scale className="w-4 h-4" />
-                <span>5. Tranh Chấp & Pháp Lý</span>
+                <span>5. Tranh Chấp, Pháp Lý & Kiện Tụng</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
                 {chart.prognostications.kienTung}
@@ -848,14 +1401,38 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
             </div>
           )}
 
-          {(activeAspect === 'all' || activeAspect === 'xuathanh') && (
+          {(questionAspect === 'all' || questionAspect === 'xuathanh') && (
             <div className="p-4 rounded-xl bg-slate-950 border border-cyan-500/30 space-y-2">
               <div className="flex items-center gap-2 text-cyan-400 font-bold text-sm">
                 <Navigation className="w-4 h-4" />
-                <span>6. Xuất Hành & Cầu Vận</span>
+                <span>6. Xuất Hành, Đi Xa & Cầu Vận Xứ Người</span>
               </div>
               <p className="text-xs text-slate-300 leading-relaxed">
                 {chart.prognostications.xuatHanh}
+              </p>
+            </div>
+          )}
+
+          {(questionAspect === 'all' || questionAspect === 'giadao') && chart.prognostications.giaDao && (
+            <div className="p-4 rounded-xl bg-slate-950 border border-amber-500/30 space-y-2">
+              <div className="flex items-center gap-2 text-amber-300 font-bold text-sm">
+                <Home className="w-4 h-4" />
+                <span>7. Nhà Cửa, Gia Đạo & Điền Sản</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {chart.prognostications.giaDao}
+              </p>
+            </div>
+          )}
+
+          {(questionAspect === 'all' || questionAspect === 'thatvat') && chart.prognostications.thatVat && (
+            <div className="p-4 rounded-xl bg-slate-950 border border-teal-500/30 space-y-2">
+              <div className="flex items-center gap-2 text-teal-400 font-bold text-sm">
+                <Search className="w-4 h-4" />
+                <span>8. Thất Vật & Tìm Đồ Mất Mát</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                {chart.prognostications.thatVat}
               </p>
             </div>
           )}
@@ -870,7 +1447,7 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
           </div>
           <div>
             <h4 className="font-bold text-white text-xs sm:text-sm">Khám Phá Cẩm Nang Tri Thức & Kỳ Môn Độn Giáp</h4>
-            <p className="text-slate-400 text-xs">Tra cứu ý nghĩa Tứ Khoa, Tam Truyền, Thần Tướng và đối chiếu với Bàn Kỳ Môn 9 Cung.</p>
+            <p className="text-slate-400 text-xs">Tra cứu ý nghĩa Tứ Khoa, Tam Truyền, Bản Mệnh, Hành Niên và đối chiếu với Bàn Kỳ Môn 9 Cung.</p>
           </div>
         </div>
 

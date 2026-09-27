@@ -106,6 +106,10 @@ export default function App() {
             <LucNhamPanel
               result={result}
               currentDate={currentDate}
+              onDateChange={(d) => {
+                setIsLive(false);
+                setCurrentDate(d);
+              }}
               onOpenAlgorithmModal={() => setIsGuideOpen(true)}
               onSwitchToKyMon={() => setActiveTab('kymon-chart')}
               onNavigateTab={(tabId: string) => setActiveTab(tabId)}

@@ -73,6 +73,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'trach-cat-perf-opt', title: '26. Tối Ưu Hiệu Năng: Bộ Đệm Chu Kỳ Thiên Văn (Loại Bỏ Hoàn Toàn Đơ/Lag)', icon: Zap },
     { id: 'battu-vuong-nhuoc', title: '27. Thẩm Duyệt Vượng Nhược Bát Tự (Sức Mạnh Nhật Chủ Tử Bình)', icon: Layers },
     { id: 'streamlined-kymon-focus', title: '28. Tối Giản Hóa Trọng Tâm: Kỳ Môn & Lục Nhâm Độn Giáp', icon: Compass },
+    { id: 'luc-nham-querent-hiep-ky', title: '29. Chuẩn Hóa Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư', icon: User },
   ];
 
   return (
@@ -1645,6 +1646,71 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
 
                 <div className="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400">
                   <span className="text-amber-400 font-bold">Mục tiêu tối thượng:</span> Đem lại giao diện sạch sẽ, tập trung tuyệt đối vào việc lập quẻ và giải mã quy luật vũ trụ của Cổ Tam Thức Độn Giáp.
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SECTION 29: CHUẨN HÓA LỤC NHÂM - BẢN MỆNH & HÀNH NIÊN THEO HIỆP KỶ BIỆN PHƯƠNG THƯ */}
+          {(activeSection === 'all' || activeSection === 'luc-nham-querent-hiep-ky') && (
+            <div className="p-5 rounded-2xl bg-slate-950/60 border border-cyan-500/30 space-y-4 shadow-xl">
+              <div className="flex items-center gap-2 text-cyan-400 font-bold text-sm sm:text-base border-b border-cyan-900/50 pb-2">
+                <User className="w-5 h-5 text-cyan-400" />
+                <span>29. Chuẩn Hóa Lập Quẻ Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư</span>
+              </div>
+
+              <div className="space-y-4 text-xs leading-relaxed text-slate-300">
+                <p>
+                  Theo bộ kinh điển <strong>Ngự Định Hiệp Kỷ Biện Phương Thư</strong> (Quyển 32 - Lục Nhâm Khởi Hành Niên Pháp) và <strong>Đại Lục Nhâm Toàn Thư</strong>: Một bàn quẻ Lục Nhâm hoàn chỉnh <em>không thể chỉ dựa vào thời gian</em>, mà bắt buộc phải tích hợp đầy đủ <strong>Nhân Mệnh người hỏi</strong> (Năm sinh, Giới tính, Bản Mệnh, Hành Niên) để xác định sự việc ứng nghiệm vào ai, gốc rễ thế nào và hoa trái từng năm ra sao.
+                </p>
+
+                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-amber-300 font-serif italic text-xs leading-relaxed">
+                  "Chiêm sự dĩ Can vi Chủ, Chi vi Sự, Bản Mệnh vi Căn, Hành Niên vi Diệp. Mệnh gia cát thần cát tướng tắc thân vinh, gia hung thần hung tướng tắc thân khốn; Hành Niên cát tắc đương niên thuận toại, hung tắc đương niên trắc trở."
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {/* Bản Mệnh vi Căn */}
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                    <strong className="text-amber-400 block font-bold text-sm">
+                      1. Bản Mệnh vi Căn (Gốc Rễ Đương Số):
+                    </strong>
+                    <ul className="space-y-1.5 text-slate-400 list-disc list-inside">
+                      <li><strong>Địa Chi Bản Mệnh:</strong> Chi của năm sinh người hỏi (Tý..Hợi) cố định trên Địa bàn.</li>
+                      <li><strong>Bản Mệnh Thượng Thần:</strong> Chi của Thiên Bàn xoay đè lên cung Bản Mệnh.</li>
+                      <li><strong>Thần Tướng Bản Mệnh:</strong> Thần Tướng trong 12 Thiên Tướng ngự trị trên Thượng Thần của Bản Mệnh.</li>
+                      <li><strong>Thần sinh Mệnh:</strong> Đại cát, thân tâm an ổn, quý nhân phò trợ.</li>
+                      <li><strong>Thần khắc Mệnh:</strong> Thụ khắc ách, áp lực từ ngoại cảnh, đề phòng bệnh tật thị phi.</li>
+                      <li><strong>Mệnh khắc Thần:</strong> Chế Thần đoạt tài lộc, chủ động xoay chuyển cục diện.</li>
+                    </ul>
+                  </div>
+
+                  {/* Hành Niên vi Diệp */}
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                    <strong className="text-cyan-400 block font-bold text-sm">
+                      2. Hành Niên vi Diệp (Cành Lá Vận Niên):
+                    </strong>
+                    <ul className="space-y-1.5 text-slate-400 list-disc list-inside">
+                      <li><strong>Quy luật Khởi Hành Niên:</strong> "Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành".</li>
+                      <li><strong>Với Nam:</strong> 1 tuổi Dần, 2 tuổi Mão, 3 tuổi Thìn... thuận chiều kim đồng hồ qua 12 Chi theo tuổi mụ.</li>
+                      <li><strong>Với Nữ:</strong> 1 tuổi Thân, 2 tuổi Mùi, 3 tuổi Ngọ... nghịch chiều kim đồng hồ qua 12 Chi theo tuổi mụ.</li>
+                      <li><strong>Hành Niên Thượng Thần:</strong> Thiên Bàn đè lên cung Hành Niên của năm xem quẻ.</li>
+                      <li>Định đoạt sự biến chuyển, cơ hội thăng tiến hoặc trắc trở cụ thể trong năm hiện tại.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-indigo-500/30 space-y-2">
+                  <strong className="text-indigo-300 block font-bold text-sm">
+                    3. Tương Tác Giữa Thân Mệnh Với Tam Truyền & Thần Sát:
+                  </strong>
+                  <p className="text-slate-400 leading-relaxed">
+                    Hệ thống tự động liên kết Bản Mệnh và Hành Niên với Tam Truyền (Sơ - Trung - Mạt):
+                    <br />• <strong>Nhập Sơ Truyền:</strong> Người hỏi là nguyên nhân, ngòi nổ phát sinh sự việc.
+                    <br />• <strong>Nhập Trung Truyền:</strong> Người hỏi đứng giữa tâm điểm điều đình, chuyển biến.
+                    <br />• <strong>Nhập Mạt Truyền:</strong> Người hỏi trực tiếp đón nhận kết quả sau cùng.
+                    <br />• <strong>Gặp Tuần Không:</strong> Vận thế hụt hẫng, mưu sự chưa thành hình thực tế.
+                    <br />• <strong>Gặp Quý Nhân, Lộc Thần, Dịch Mã:</strong> Được cát khí trợ lực, biến hung hóa cát.
+                  </p>
                 </div>
               </div>
             </div>

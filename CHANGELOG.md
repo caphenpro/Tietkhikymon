@@ -6,6 +6,30 @@ Tất cả các thay đổi đáng chú ý của dự án **Kỳ Môn & Lục Nh
 
 ---
 
+## [[2.32.0]] - 2026-09-27
+### Codename: *Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)*
+
+#### 🧭 Hoàn Thiện & Chuẩn Hóa Toàn Diện Quẻ Đại Lục Nhâm Theo Hiệp Kỷ Biện Phương Thư
+- **Bổ Sung Bộ Điều Khiển Lập Quẻ Đầy Đủ & Minh Bạch (`/src/components/LucNhamPanel.tsx`)**:
+  - Tích hợp khung điều khiển trực tiếp trên đầu quẻ Lục Nhâm với 2 phân hệ thiết yếu:
+    1. *Nhân Mệnh Người Hỏi:* Nhập/chọn năm sinh (tự động tính Can Chi, Ngũ Hành Nạp Âm, Tuổi mụ, Con giáp), chọn giới tính (Nam / Nữ) và lĩnh vực cần hỏi.
+    2. *Thời Gian Lập Quẻ:* Cung cấp bảng Tứ Trụ Thời Gian (Năm Can Chi, Tháng Can Chi, Ngày Can Chi, Giờ Can Chi), Tiết Khí, Kinh Độ Mặt Trời và chuyển đổi nhanh thời khắc (Live / Tùy chỉnh canh giờ / ngày).
+  - Tóm lược quy trình lập quẻ 6 bước minh bạch theo văn bản cổ, không để thiếu hay mập mờ bất kỳ dữ liệu khởi bàn nào.
+- **Tích Hợp Thân Mệnh Người Hỏi Theo Hiệp Kỷ Biện Phương Thư (Quyển 32 - Lục Nhâm Khởi Hành Niên)**:
+  - *Bản Mệnh vi Căn:* Xác định Cung Bản Mệnh (Địa chi năm sinh), Thượng Thần đè lên Bản Mệnh và Thần Tướng ngự trị; phân tích quan hệ Sinh Khắc (Thần sinh Mệnh = Đắc sinh; Thần khắc Mệnh = Thụ khắc ách; Mệnh khắc Thần = Chế Thần đoạt tài; Bản Mệnh sinh Thần = Tiết khí; Tỷ hòa).
+  - *Hành Niên vi Diệp:* Áp dụng chuẩn xác khẩu quyết kinh điển: *"Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành"* để xác định Cung Hành Niên, Thượng Thần Hành Niên và luận đoán vận trình cụ thể trong năm xem quẻ.
+  - Tương tác Thân Mệnh với Tam Truyền (Sơ - Trung - Mạt) và các Thần Sát (Quý Nhân, Lộc Thần, Dịch Mã, Tuần Không).
+- **Trực Quan Hóa Ma Trận 12 Cung Địa Bàn - Thiên Bàn**:
+  - Gắn huy hiệu nhận diện sinh động trên từng cung: `[Mệnh]` (Bản Mệnh người hỏi), `[Niên]` (Hành Niên người hỏi), `[Can Ký]`, `[Chi Ngày]`, `[Sơ]`, `[Trung]`, `[Mạt]`, `[Quý Nhân]`, `[Lộc Thần]`, `[Dịch Mã]`, `[Tuần Không]`.
+  - Bảng tra cứu chi tiết cung (Selected Palace Explorer) phân tích tường tận Thần Tướng, Ngũ Hành và mối quan hệ trực tiếp với Thân Mệnh người hỏi.
+- **Nâng Cấp Dự Trắc Chuyên Đề Lên 8 Phương Diện (Cá Nhân Hóa Đương Số)**:
+  - Tích hợp sâu Bản Mệnh & Hành Niên vào các lời đoán: 1. Cầu Tài; 2. Công Danh; 3. Hôn Nhân; 4. Sức Khỏe; 5. Kiện Tụng; 6. Xuất Hành; 7. Nhà Cửa Gia Đạo; 8. Thất Vật Tìm Đồ.
+- **Đồng Bộ Thuyết Minh Thuật Toán**:
+  - Bổ sung **Mục 29** trong Cẩm Nang Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`).
+  - Nâng cấp phiên bản lên **v2.32.0** trong `version.ts`, `package.json`, `README.md`.
+
+---
+
 ## [[2.31.0]] - 2026-09-22
 ### Codename: *Tối Giản Hóa Trọng Tâm: Chuyên Sâu Quẻ Kỳ Môn & Lục Nhâm Độn Giáp (Streamlined Ky Mon & Luc Nham Focus)*
 
