@@ -6,6 +6,31 @@ Tất cả các thay đổi đáng chú ý của dự án **Kỳ Môn & Lục Nh
 
 ---
 
+## [[2.33.0]] - 2026-09-27
+### Codename: *Chuẩn Hóa Cửu Tông Môn Rút Tam Truyền Lục Nhâm (Precision Tam Truyền & Nine Gates Engine)*
+
+#### ⚔️ Chuẩn Hóa 100% Thuật Toán Rút Tam Truyền Theo Cửu Tông Môn Cổ Bản
+- **Thực Thi Chuẩn Mực Quy Tắc Tối Thượng: "Hạ Tặc Thượng Vi Trọng"**:
+  - Khi xem xét Tứ Khoa, ưu tiên tuyệt đối nhóm **Hạ khắc Thượng (Tố Khắc / Tặc)** trước **Thượng khắc Hạ (Tà Khắc / Khắc)**.
+  - Nếu chỉ có 1 Hạ khắc Thượng ➔ Đắc **Trùng Thẩm Khóa**; chỉ khi không có Hạ khắc Thượng và có 1 Thượng khắc Hạ ➔ Đắc **Nguyên Thủ Khóa**.
+- **Chuẩn Hóa Đầy Đủ 9 Cửa Khởi Tam Truyền (Cửu Tông Môn)**:
+  1. *Nguyên Thủ Khóa & Trùng Thẩm Khóa:* Khởi từ Thượng Thần của khoa có khắc.
+  2. *Tỷ Dụng Khóa (Tri Nhất):* Khi có từ 2 cặp khắc cùng nhóm trở lên, lọc Thượng Thần đồng khí Âm Dương với Can Ngày.
+  3. *Thiệp Hại Khóa (Kiến Cơ & Sát Gian):* Đếm số lần kinh qua cung tương khắc trên lộ trình Địa bàn từ bản vị đến vị trí ngự trị; phân cấp ưu tiên theo vị trí cung Địa bàn: Mạnh (Dần Thân Tị Hợi) ➔ Trọng (Tý Ngọ Mão Dậu) ➔ Quý (Thìn Tuất Sửu Mùi).
+  4. *Dao Khắc Khóa (Đạn Xạ & Cảo Cừu):* Phân định rạch ròi Đạn Xạ (Thần khắc Can - ưu tiên số 1) và Cảo Cừu (Can khắc Thần - ưu tiên số 2).
+  5. *Mão Tinh Khóa:* Cương Mão (Dương Can dụng Dậu Thượng Thần, Trung Chi Thượng, Mạt Can Thượng) & Nhu Mão (Âm Can dụng Dậu Hạ Thần, Trung Can Thượng, Mạt Chi Thượng).
+  6. *Biệt Trách Khóa:* Khi Tứ Khoa bất toàn 3 khoa độc lập: Dương Can khởi Can Hợp Ký Cung Thượng Thần; Âm Can khởi Chi Tiền Tam Hợp. Trung & Mạt quy Can Thượng Thần.
+  7. *Bát Chuyên Khóa:* Khi Can Chi đồng vị: Dương Can tiến 3 vị trên Địa bàn, Âm Can thoái 3 vị trên Địa bàn. Trung & Mạt quy Can Thượng Thần.
+  8. *Phục Ngâm Khóa:* Thiên bàn trùng Địa bàn: Hữu Khắc lấy Khắc thần; Vô Khắc truyền theo Hình của Địa Chi (Dần-Tị-Thân, Sửu-Tuất-Mùi, Tý-Mão; tự hình đổi Chi Thần hoặc Xung).
+  9. *Phản Ngâm Khóa:* Thiên Địa đối xung 180°: Hữu Khắc lấy Khắc thần; Vô Khắc (Tỉnh Lan Khóa) lấy Dịch Mã Chi Ngày làm Sơ Truyền.
+- **Trực Quan Hóa Khẩu Quyết Cổ Thư (Hiệp Kỷ Biện Phương Thư & Lục Nhâm Đại Toàn)**:
+  - Tích hợp trường `ruleExplanation` và hiển thị trực tiếp danh ngôn / khẩu quyết cổ thư trong khối Tam Truyền trên giao diện `LucNhamPanel.tsx`.
+- **Cập Nhật Thuyết Minh Thuật Toán**:
+  - Bổ sung **Mục 30** trong Cẩm Nang Thuyết Minh Thuật Toán (`AlgorithmGuideModal.tsx`).
+  - Nâng cấp phiên bản lên **v2.33.0** trong `version.ts`, `package.json`, `README.md`.
+
+---
+
 ## [[2.32.0]] - 2026-09-27
 ### Codename: *Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)*
 

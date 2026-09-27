@@ -230,6 +230,68 @@ export const CAN_KY_CUNG: Record<string, string> = {
   'Quý': 'Sửu',
 };
 
+// Thiên Can Ngũ Hợp (Dùng cho Biệt Trách Khóa Can Dương)
+export const CAN_HOP_MAP: Record<string, string> = {
+  'Giáp': 'Kỷ',
+  'Ất': 'Canh',
+  'Bính': 'Tân',
+  'Đinh': 'Nhâm',
+  'Mậu': 'Quý',
+  'Kỷ': 'Giáp',
+  'Canh': 'Ất',
+  'Tân': 'Bính',
+  'Nhâm': 'Đinh',
+  'Quý': 'Mậu',
+};
+
+// Chi Tiền Tam Hợp (Dùng cho Biệt Trách Khóa Can Âm)
+export const CHI_TAM_HOP_TIEN_MAP: Record<string, string> = {
+  'Thân': 'Tý',
+  'Tý': 'Thìn',
+  'Thìn': 'Thân',
+  'Dần': 'Ngọ',
+  'Ngọ': 'Tuất',
+  'Tuất': 'Dần',
+  'Tị': 'Dậu',
+  'Dậu': 'Sửu',
+  'Sửu': 'Tị',
+  'Hợi': 'Mão',
+  'Mão': 'Mùi',
+  'Mùi': 'Hợi',
+};
+
+// Địa Chi Tương Hình (Dùng cho Phục Ngâm Khóa & Hình Sát)
+export const CHI_HINH_MAP: Record<string, string> = {
+  'Dần': 'Tị',
+  'Tị': 'Thân',
+  'Thân': 'Dần',
+  'Sửu': 'Tuất',
+  'Tuất': 'Mùi',
+  'Mùi': 'Sửu',
+  'Tý': 'Mão',
+  'Mão': 'Tý',
+  'Thìn': 'Thìn', // Tự hình
+  'Ngọ': 'Ngọ',   // Tự hình
+  'Dậu': 'Dậu',   // Tự hình
+  'Hợi': 'Hợi',   // Tự hình
+};
+
+// Địa Chi Tương Xung (Dùng khi gặp Tự Hình & Phản Ngâm)
+export const CHI_XUNG_MAP: Record<string, string> = {
+  'Tý': 'Ngọ',
+  'Sửu': 'Mùi',
+  'Dần': 'Thân',
+  'Mão': 'Dậu',
+  'Thìn': 'Tuất',
+  'Tị': 'Hợi',
+  'Ngọ': 'Tý',
+  'Mùi': 'Sửu',
+  'Thân': 'Dần',
+  'Dậu': 'Mão',
+  'Tuất': 'Thìn',
+  'Hợi': 'Tị',
+};
+
 export interface LucNhamPalace {
   diaChi: string;        // Địa bàn (Cố định)
   thienChi: string;      // Thiên bàn (Xoay chuyển)
@@ -260,8 +322,10 @@ export interface LucNhamKhoa {
   haThan: string;         // Địa bàn (hoặc Can Ngày)
   thuongNguHanh: string;
   haNguHanh: string;
-  relation: string;       // Sinh / Khắc / Tỷ hòa
+  relation: string;       // Sinh / Khắc / Tỷ hòa / Tặc
   isKhac: boolean;
+  isTac?: boolean;         // Khóa Tặc (Hạ khắc Thượng)
+  isThuongKhacHa?: boolean; // Khóa Khắc (Thượng khắc Hạ)
   khacType?: 'Thượng khắc Hạ' | 'Hạ khắc Thượng' | 'Tỷ Hòa' | 'Tương Sinh';
   thienTuong: string;
 }
@@ -379,7 +443,9 @@ export interface LucNhamChart {
   // Tam Truyền
   tamTruyen: LucNhamTruyen[];
   tongMonName: string; // Tên môn (Nguyên Thủ, Trùng Thẩm, Tỷ Dụng, Thiệp Hại, Dao Khắc, Mão Tinh, Biệt Trạch, Bát Chuyên, Phục Ngâm, Phản Ngâm)
+  tongMonCode?: string;
   tongMonDescription: string;
+  ruleExplanation?: string;
 
   // Thần Sát & Tuần Không
   tuanKhong: [string, string];
@@ -751,6 +817,413 @@ export function calculateBanMenhHanhNien(
   };
 }
 
+export interface CuuTongMonResult {
+  soTruyen: string;
+  trungTruyen: string;
+  matTruyen: string;
+  tongMonName: string;
+  tongMonCode: string;
+  tongMonDescription: string;
+  ruleExplanation: string;
+}
+
+/**
+ * RÚT TAM TRUYỀN CHUẨN XÁC THEO CỬU TÔNG MÔN (HIỆP KỶ BIỆN PHƯƠNG THƯ & LỤC NHÂM ĐẠI TOÀN)
+ * Bao gồm đầy đủ 9 tông môn:
+ * 1. Tặc Khắc (Nguyên Thủ / Trùng Thẩm)
+ * 2. Tỷ Dụng (Tri Nhất)
+ * 3. Thiệp Hại (Kiến Cơ / Sát Gian)
+ * 4. Dao Khắc (Đạn Xạ / Cảo Cừu)
+ * 5. Mão Tinh (Cương Mão / Nhu Mão)
+ * 6. Biệt Trách
+ * 7. Bát Chuyên
+ * 8. Phục Ngâm (Hữu Khắc / Vô Khắc - Truyền theo Hình của Địa Chi)
+ * 9. Phản Ngâm (Hữu Khắc / Vô Khắc - Tỉnh Lan Khóa)
+ */
+export function deriveCuuTongMonTamTruyen(
+  dayCan: string,
+  dayChi: string,
+  hourChi: string,
+  nguyetTuongChi: string,
+  thienBanMap: Record<string, string>,
+  diaBanFromThienMap: Record<string, string>,
+  tuKhoa: LucNhamKhoa[],
+  canKyCung: string,
+  canNguHanh: string
+): CuuTongMonResult {
+  const ntChiIdx = CHI.indexOf(nguyetTuongChi);
+  const hourChiIdx = CHI.indexOf(hourChi);
+  const isDuongCan = ['Giáp', 'Bính', 'Mậu', 'Canh', 'Nhâm'].includes(dayCan);
+  const duongChiList = ['Tý', 'Dần', 'Thìn', 'Ngọ', 'Thân', 'Tuất'];
+
+  const k1Thuong = tuKhoa[0].thuongThan;
+  const k3Thuong = tuKhoa[2].thuongThan;
+  const k4Thuong = tuKhoa[3].thuongThan;
+
+  // Lọc các cặp khắc trong Tứ Khoa
+  const thuongKhacHa = tuKhoa.filter((k) => k.khacType === 'Thượng khắc Hạ');
+  const haKhacThuong = tuKhoa.filter((k) => k.khacType === 'Hạ khắc Thượng');
+
+  // Bản đồ Dịch Mã
+  const dichMaMap: Record<string, string> = {
+    'Thân': 'Dần', 'Tý': 'Dần', 'Thìn': 'Dần',
+    'Hợi': 'Tị', 'Mão': 'Tị', 'Mùi': 'Tị',
+    'Dần': 'Thân', 'Ngọ': 'Thân', 'Tuất': 'Thân',
+    'Tị': 'Hợi', 'Dậu': 'Hợi', 'Sửu': 'Hợi',
+  };
+
+  // Helper tính độ thiệp hại (số lần kinh qua cung tương khắc trên lộ trình từ Bản vị đến Cung địa bàn hiện tại)
+  const calcThiepHaiScore = (than: string, diaBanCung: string): number => {
+    const banViIdx = CHI.indexOf(than);
+    const curIdx = CHI.indexOf(diaBanCung);
+    const steps = (curIdx - banViIdx + 12) % 12;
+    let score = 0;
+    const thanNguHanh = CHI_NGU_HANH[than];
+
+    for (let s = 0; s <= steps; s++) {
+      const stepChi = CHI[(banViIdx + s) % 12];
+      const stepNguHanh = CHI_NGU_HANH[stepChi];
+      const sk = checkSinhKhac(thanNguHanh, stepNguHanh);
+      if (sk.isKhac) {
+        score++;
+      }
+    }
+    return score;
+  };
+
+  // Helper xếp hạng cung Mạnh > Trọng > Quý
+  const getCungRank = (chi: string): number => {
+    if (['Dần', 'Thân', 'Tị', 'Hợi'].includes(chi)) return 3; // Mạnh (Tứ Sinh)
+    if (['Tý', 'Ngọ', 'Mão', 'Dậu'].includes(chi)) return 2;  // Trọng (Tứ Vượng)
+    return 1; // Quý (Tứ Mộ)
+  };
+
+  // 1. PHỤC NGÂM KHÓA (Nguyệt Tướng trùng Chi Giờ)
+  if (nguyetTuongChi === hourChi) {
+    if (haKhacThuong.length > 0 || thuongKhacHa.length > 0) {
+      // Phục Ngâm Hữu Khắc
+      const target = haKhacThuong.length > 0 ? haKhacThuong[0] : thuongKhacHa[0];
+      const so = target.thuongThan;
+      let trung = CHI_HINH_MAP[so] || so;
+      if (trung === so) {
+        // Tự hình -> đổi sang Chi Thần
+        trung = dayChi;
+      }
+      let mat = CHI_HINH_MAP[trung] || trung;
+      if (mat === trung) {
+        mat = CHI_XUNG_MAP[trung] || 'Tý';
+      }
+      return {
+        soTruyen: so,
+        trungTruyen: trung,
+        matTruyen: mat,
+        tongMonName: 'Phục Ngâm Khóa (Hữu Khắc)',
+        tongMonCode: 'phuc-ngam',
+        tongMonDescription: 'Thiên bàn trùng khít Địa bàn, vạn tượng bất động đình trệ. Tứ khoa hữu khắc lấy Thần có khắc làm Sơ Truyền, truyền theo Hình của Địa Chi.',
+        ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Phục Ngâm bế tắc sự do đình, hữu khắc tặc khắc vô tòng mệnh, tuần tự tương hình giải cố nhân".',
+      };
+    } else {
+      // Phục Ngâm Vô Khắc
+      const so = isDuongCan ? canKyCung : dayChi;
+      let trung = CHI_HINH_MAP[so] || so;
+      if (trung === so) {
+        trung = isDuongCan ? dayChi : canKyCung;
+      }
+      let mat = CHI_HINH_MAP[trung] || trung;
+      if (mat === trung) {
+        mat = CHI_XUNG_MAP[trung] || 'Ngọ';
+      }
+      return {
+        soTruyen: so,
+        trungTruyen: trung,
+        matTruyen: mat,
+        tongMonName: 'Phục Ngâm Khóa (Vô Khắc)',
+        tongMonCode: 'phuc-ngam',
+        tongMonDescription: 'Thiên bàn trùng Địa bàn, tứ khoa thuần tĩnh không khắc. Can Dương khởi Can Thượng, Can Âm khởi Chi Thượng, tuần hoàn theo Địa Chi tương hình.',
+        ruleExplanation: 'Lục Nhâm Đại Toàn: "Phục Ngâm vô khắc kiến nan phân, Can Dương tòng Can Âm tòng Chi, tương hình truyền nhập Mạt trung di".',
+      };
+    }
+  }
+
+  // 2. PHẢN NGÂM KHÓA (Nguyệt Tướng xung Chi Giờ 180°)
+  if ((ntChiIdx + 6) % 12 === hourChiIdx) {
+    if (haKhacThuong.length > 0 || thuongKhacHa.length > 0) {
+      // Phản Ngâm Hữu Khắc
+      const target = haKhacThuong.length > 0 ? haKhacThuong[0] : thuongKhacHa[0];
+      const so = target.thuongThan;
+      const trung = thienBanMap[dayChi]; // Chi Thượng Thần
+      const mat = thienBanMap[canKyCung]; // Can Thượng Thần
+      return {
+        soTruyen: so,
+        trungTruyen: trung,
+        matTruyen: mat,
+        tongMonName: 'Phản Ngâm Khóa (Hữu Khắc)',
+        tongMonCode: 'phan-ngam',
+        tongMonDescription: 'Thiên Địa đối xung 180°, đại biến động phản phục. Lấy Thần có khắc làm Sơ Truyền, Trung Truyền quy Chi Thượng, Mạt Truyền quy Can Thượng.',
+        ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Phản Ngâm hữu khắc tặc vi tiên, Chi Thượng vi Trung Can Thượng Mạt, phản phục lôi đình sự biến thiên".',
+      };
+    } else {
+      // Phản Ngâm Vô Khắc (Tỉnh Lan Khóa)
+      const so = dichMaMap[dayChi] || 'Dần';
+      const trung = thienBanMap[dayChi];
+      const mat = thienBanMap[canKyCung];
+      return {
+        soTruyen: so,
+        trungTruyen: trung,
+        matTruyen: mat,
+        tongMonName: 'Phản Ngâm Khóa (Tỉnh Lan - Vô Khắc)',
+        tongMonCode: 'phan-ngam',
+        tongMonDescription: 'Thiên Địa đối xung nhưng Tứ Khoa thuần hòa vô khắc (Tỉnh Lan Khóa). Lấy Dịch Mã Chi Ngày làm Sơ Truyền, Trung quy Chi Thượng, Mạt quy Can Thượng.',
+        ruleExplanation: 'Lục Nhâm Đại Toàn: "Phản Ngâm vô khắc Tỉnh Lan danh, Dịch Mã thừa phong phát động hành, Chi Can nhị thượng hoàn thành cuộc".',
+      };
+    }
+  }
+
+  // 3. TẶC KHẮC KHÓA (Nguyên Thủ / Trùng Thẩm)
+  // Ưu tiên tuyệt đối: "Hạ tặc Thượng vi trọng"
+  if (haKhacThuong.length === 1) {
+    const so = haKhacThuong[0].thuongThan;
+    const trung = thienBanMap[so];
+    const mat = thienBanMap[trung];
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Trùng Thẩm Khóa (Tặc Khắc)',
+      tongMonCode: 'trung-tham',
+      tongMonDescription: 'Tứ Khoa có duy nhất một cặp Hạ khắc Thượng (Tố Khắc). Lục Nhâm coi trọng sự việc dấy lên từ cấp dưới/nội bộ, cần nghiêm cẩn thẩm tra.',
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Hạ khắc Thượng hề viết Tố Khắc, thống danh viết Tặc thị Trùng Thẩm, sự do nội khởi phục do ti".',
+    };
+  }
+
+  if (haKhacThuong.length === 0 && thuongKhacHa.length === 1) {
+    const so = thuongKhacHa[0].thuongThan;
+    const trung = thienBanMap[so];
+    const mat = thienBanMap[trung];
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Nguyên Thủ Khóa (Tặc Khắc)',
+      tongMonCode: 'nguyen-thu',
+      tongMonDescription: 'Tứ Khoa có duy nhất một cặp Thượng khắc Hạ (Tà Khắc). Khí thế thuận theo đạo trời, chính đạo hanh thông, danh chính ngôn thuận.',
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Thượng khắc Hạ hề viết Tà Khắc, thống danh viết Khắc thị Nguyên Thủ, sự sự thuận tòng thiên lý hành".',
+    };
+  }
+
+  // 4 & 5. TỶ DỤNG & THIỆP HẠI KHÓA (Khi có từ 2 cặp khắc trở lên)
+  if (haKhacThuong.length > 1 || (haKhacThuong.length === 0 && thuongKhacHa.length > 1)) {
+    // Nhóm ưu tiên: nếu có Hạ khắc Thượng thì chỉ lấy Hạ khắc Thượng; nếu không thì lấy Thượng khắc Hạ
+    const targetGroup = haKhacThuong.length > 1 ? haKhacThuong : thuongKhacHa;
+    const isHaKhac = haKhacThuong.length > 1;
+
+    // Lọc theo đồng khí Âm Dương với Can Ngày
+    const matched = targetGroup.filter((k) => {
+      const isDuongChi = duongChiList.includes(k.thuongThan);
+      return isDuongCan ? isDuongChi : !isDuongChi;
+    });
+
+    if (matched.length === 1) {
+      // 4. TỶ DỤNG KHÓA
+      const so = matched[0].thuongThan;
+      const trung = thienBanMap[so];
+      const mat = thienBanMap[trung];
+      return {
+        soTruyen: so,
+        trungTruyen: trung,
+        matTruyen: mat,
+        tongMonName: 'Tỷ Dụng Khóa (Tri Nhất)',
+        tongMonCode: 'ty-dung',
+        tongMonDescription: `Có ${targetGroup.length} cặp ${isHaKhac ? 'Hạ khắc Thượng' : 'Thượng khắc Hạ'}, dùng phép Tỷ Dụng chọn Thần ${so} đồng khí Âm Dương (${isDuongCan ? 'Dương' : 'Âm'}) với Can Ngày ${dayCan} làm Sơ Truyền.`,
+        ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Khắc phạt đa đoan thủ Thượng thần, đồng loại tương khan định chủ quân. Dương nhật dụng Dương Âm dụng Âm, Tri Nhất định vị vạn sự an".',
+      };
+    }
+
+    // 5. THIỆP HẠI KHÓA (Cùng đồng khí Âm Dương hoặc cùng bất đồng)
+    const pool = matched.length > 1 ? matched : targetGroup;
+    let bestKhoa = pool[0];
+    let maxScore = -1;
+    let maxRank = -1;
+
+    for (const k of pool) {
+      const diaBanCung = diaBanFromThienMap[k.thuongThan] || k.thuongThan;
+      const score = calcThiepHaiScore(k.thuongThan, diaBanCung);
+      const rank = getCungRank(diaBanCung);
+
+      if (score > maxScore) {
+        maxScore = score;
+        maxRank = rank;
+        bestKhoa = k;
+      } else if (score === maxScore) {
+        if (rank > maxRank) {
+          maxRank = rank;
+          bestKhoa = k;
+        }
+      }
+    }
+
+    const so = bestKhoa.thuongThan;
+    const trung = thienBanMap[so];
+    const mat = thienBanMap[trung];
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Thiệp Hại Khóa (Kiến Cơ / Sát Gian)',
+      tongMonCode: 'thiep-hai',
+      tongMonDescription: `Các cặp khắc tương tranh, đo lường số lần kinh qua cung tương khắc trên lộ trình Địa bàn, Thần ${so} đạt độ thiệp hại thâm nhất (${maxScore} bước khắc) làm Sơ Truyền.`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Tỷ Dụng câu đồng hoặc câu dị, phục tương Thiệp Hại sát thâm thâm. Mạnh Trọng Quý vị phân cao hạ, Kiến Cơ Sát Gian kiến kỳ công".',
+    };
+  }
+
+  // 6. KHI TỨ KHOA HOÀN TOÀN KHÔNG CÓ THƯỢNG HẠ TƯƠNG KHẮC (VÔ KHẮC)
+  // 6.1. DAO KHẮC KHÓA (Đạn Xạ & Cảo Cừu)
+  // Đạn Xạ: Thượng Thần khắc Can Ngày
+  // Cảo Cừu: Can Ngày khắc Thượng Thần
+  const danXaList: string[] = [];
+  const caoCuuList: string[] = [];
+
+  for (const k of tuKhoa) {
+    const thanEl = CHI_NGU_HANH[k.thuongThan];
+    const thanKhacCan = checkSinhKhac(thanEl, canNguHanh);
+    if (thanKhacCan.isKhac && thanKhacCan.khacType === 'Thượng khắc Hạ') {
+      if (!danXaList.includes(k.thuongThan)) danXaList.push(k.thuongThan);
+    }
+    const canKhacThan = checkSinhKhac(canNguHanh, thanEl);
+    if (canKhacThan.isKhac && canKhacThan.khacType === 'Thượng khắc Hạ') {
+      if (!caoCuuList.includes(k.thuongThan)) caoCuuList.push(k.thuongThan);
+    }
+  }
+
+  if (danXaList.length > 0) {
+    // Đạn Xạ ưu tiên số 1 trong Dao Khắc
+    let chosen = danXaList[0];
+    if (danXaList.length > 1) {
+      const matched = danXaList.filter((t) => isDuongCan ? duongChiList.includes(t) : !duongChiList.includes(t));
+      if (matched.length > 0) chosen = matched[0];
+    }
+    const so = chosen;
+    const trung = thienBanMap[so];
+    const mat = thienBanMap[trung];
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Dao Khắc Khóa (Đạn Xạ)',
+      tongMonCode: 'dao-khac',
+      tongMonDescription: `Tứ Khoa không khắc nhưng Thần ${so} ở xa khắc Nhật Can ${dayCan} (Đạn Xạ). Sự việc đến từ phương xa, ngoại lai đe dọa bất ngờ.`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Tứ khoa vô khắc tiễu vô hình, Thần khắc Nhật Can Đạn Xạ kinh. Dao tương khắc phạt phân chủ khách, ngoại lai biến cố cánh kham phòng".',
+    };
+  }
+
+  if (caoCuuList.length > 0) {
+    // Cảo Cừu (Can khắc Thần)
+    let chosen = caoCuuList[0];
+    if (caoCuuList.length > 1) {
+      const matched = caoCuuList.filter((t) => isDuongCan ? duongChiList.includes(t) : !duongChiList.includes(t));
+      if (matched.length > 0) chosen = matched[0];
+    }
+    const so = chosen;
+    const trung = thienBanMap[so];
+    const mat = thienBanMap[trung];
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Dao Khắc Khóa (Cảo Cừu / Cảo Đạn)',
+      tongMonCode: 'dao-khac',
+      tongMonDescription: `Tứ Khoa không khắc nhưng Can Ngày ${dayCan} dao khắc Thần ${so} ở xa (Cảo Cừu). Chủ động xuất chiêu chế ngự biến động bên ngoài.`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Nhật Can khắc Thần danh Cảo Cừu, dao khắc vọng xạ tự hữu mưu. Tiên phát chế nhân thành công cuộc, Trung Mạt tuần hoàn tiễu sầu ưu".',
+    };
+  }
+
+  // 6.2. KHI HOÀN TOÀN KHÔNG CÓ DAO KHẮC: ĐẾM SỐ LƯỢNG KHOA PHÂN BIỆT
+  const uniqueKhoas = Array.from(new Set(tuKhoa.map((k) => `${k.thuongThan}/${k.haThan}`)));
+
+  // BÁT CHUYÊN KHÓA: Can Chi đồng cung hoặc Tứ Khoa chỉ còn 2 khoa phân biệt
+  const isCanChiDongCung = canKyCung === dayChi || uniqueKhoas.length <= 2;
+
+  if (isCanChiDongCung) {
+    let so = k1Thuong;
+    if (isDuongCan) {
+      // Can Dương: từ Can Thượng Thần tiến 3 cung trên Địa Bàn
+      const k1Idx = CHI.indexOf(k1Thuong);
+      so = CHI[(k1Idx + 2) % 12];
+    } else {
+      // Can Âm: từ Khoa 4 Thượng Thần thoái 3 cung trên Địa Bàn
+      const k4Idx = CHI.indexOf(k4Thuong);
+      so = CHI[(k4Idx - 2 + 12) % 12];
+    }
+    const trung = k1Thuong;
+    const mat = k1Thuong;
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Bát Chuyên Khóa',
+      tongMonCode: 'bat-chuyen',
+      tongMonDescription: `Can Ký Cung và Chi Ngày đồng vị (${canKyCung}), Tứ Khoa thuần hòa chỉ gom lại 2 khoa. Can ${isDuongCan ? 'Dương tiến 3 cung' : 'Âm thoái 3 cung'}, Trung Mạt đều quy về Can Thượng Thần (${k1Thuong}).`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Can Chi đồng vị lưỡng khoa hoàn, Bát Chuyên khóa phát định gian nan. Dương nhật tiến tam Âm thoái tam, Trung Mạt quy Can định bất đàm".',
+    };
+  }
+
+  // BIỆT TRÁCH KHÓA: Tứ Khoa có 3 khoa phân biệt (1 khoa bị trùng lặp - Bất toàn khoa)
+  if (uniqueKhoas.length === 3) {
+    let so = k1Thuong;
+    if (isDuongCan) {
+      // Can Dương: Can Hợp Ký Cung Thượng Thần
+      const canHop = CAN_HOP_MAP[dayCan] || 'Kỷ';
+      const canHopCung = CAN_KY_CUNG[canHop] || 'Ngọ';
+      so = thienBanMap[canHopCung] || canHopCung;
+    } else {
+      // Can Âm: Chi Tiền Tam Hợp
+      so = CHI_TAM_HOP_TIEN_MAP[dayChi] || dayChi;
+    }
+    const trung = k1Thuong;
+    const mat = k1Thuong;
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Biệt Trách Khóa',
+      tongMonCode: 'biet-trach',
+      tongMonDescription: `Tứ Khoa bất toàn (chỉ có 3 khoa phân biệt), vô khắc vô dao. Mượn ${isDuongCan ? `Can Hợp (${CAN_HOP_MAP[dayCan]}) Ký Cung Thượng Thần` : `Chi Tiền Tam Hợp (${CHI_TAM_HOP_TIEN_MAP[dayChi]})`} làm Sơ Truyền, Trung Mạt quy Can Thượng (${k1Thuong}).`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Tứ khoa bất toàn tam khoa tồn, vô khắc vô dao Biệt Trách môn. Dương nhật can hợp thướng vi sơ, Âm nhật chi tiền tam hợp tôn. Trung Mạt quy Can bổ khuyết di".',
+    };
+  }
+
+  // MÃO TINH KHÓA: Tứ Khoa đầy đủ 4 khoa phân biệt, thuần hòa vô khắc
+  if (isDuongCan) {
+    // Cương Mão: Dậu Thượng Thần
+    const so = thienBanMap['Dậu'];
+    const trung = k3Thuong; // Chi Thượng
+    const mat = k1Thuong;   // Can Thượng
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Mão Tinh Khóa (Cương Mão)',
+      tongMonCode: 'mao-tinh',
+      tongMonDescription: `Tứ Khoa đầy đủ 4 khoa không khắc, không dao khắc. Can Dương lấy Thượng thần ngự trên cung Dậu (Mão Tinh: ${so}) làm Sơ Truyền, Trung Truyền quy Chi Thượng (${trung}), Mạt Truyền quy Can Thượng (${mat}).`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Tứ khoa vô khắc diệc vô dao, Cương Mão tòng Dậu thượng thần tiêu. Trung quy Chi Thượng Mạt Can Thượng, xuất nhập mông muội kiến phân miêu".',
+    };
+  } else {
+    // Nhu Mão: Dậu Hạ Thần (vị trí Địa bàn của Dậu Thiên bàn)
+    const so = diaBanFromThienMap['Dậu'] || 'Mão';
+    const trung = k1Thuong; // Can Thượng
+    const mat = k3Thuong;   // Chi Thượng
+    return {
+      soTruyen: so,
+      trungTruyen: trung,
+      matTruyen: mat,
+      tongMonName: 'Mão Tinh Khóa (Nhu Mão)',
+      tongMonCode: 'mao-tinh',
+      tongMonDescription: `Tứ Khoa đầy đủ 4 khoa không khắc, không dao khắc. Can Âm lấy Hạ thần đè dưới sao Dậu (${so}) làm Sơ Truyền, Trung Truyền quy Can Thượng (${trung}), Mạt Truyền quy Chi Thượng (${mat}).`,
+      ruleExplanation: 'Hiệp Kỷ Biện Phương Thư: "Nhu Mão Dậu hạ vi sơ vị, Can Thượng vi Trung Chi Thượng Mạt, tòng âm thủ tĩnh định gia cơ".',
+    };
+  }
+}
+
 /**
  * LẬP QUẺ ĐẠI LỤC NHÂM HOÀN CHỈNH
  */
@@ -866,6 +1339,8 @@ export function buildLucNhamChart(
       haNguHanh: canNguHanh,
       relation: k1Sk.relation,
       isKhac: k1Sk.isKhac,
+      isTac: k1Sk.khacType === 'Hạ khắc Thượng',
+      isThuongKhacHa: k1Sk.khacType === 'Thượng khắc Hạ',
       khacType: k1Sk.khacType,
       thienTuong: thienTuongThienBan[k1Thuong] || 'Quý Nhân',
     },
@@ -879,6 +1354,8 @@ export function buildLucNhamChart(
       haNguHanh: CHI_NGU_HANH[k2Ha],
       relation: k2Sk.relation,
       isKhac: k2Sk.isKhac,
+      isTac: k2Sk.khacType === 'Hạ khắc Thượng',
+      isThuongKhacHa: k2Sk.khacType === 'Thượng khắc Hạ',
       khacType: k2Sk.khacType,
       thienTuong: thienTuongThienBan[k2Thuong] || 'Quý Nhân',
     },
@@ -892,6 +1369,8 @@ export function buildLucNhamChart(
       haNguHanh: CHI_NGU_HANH[dayChi],
       relation: k3Sk.relation,
       isKhac: k3Sk.isKhac,
+      isTac: k3Sk.khacType === 'Hạ khắc Thượng',
+      isThuongKhacHa: k3Sk.khacType === 'Thượng khắc Hạ',
       khacType: k3Sk.khacType,
       thienTuong: thienTuongThienBan[k3Thuong] || 'Quý Nhân',
     },
@@ -905,108 +1384,35 @@ export function buildLucNhamChart(
       haNguHanh: CHI_NGU_HANH[k4Ha],
       relation: k4Sk.relation,
       isKhac: k4Sk.isKhac,
+      isTac: k4Sk.khacType === 'Hạ khắc Thượng',
+      isThuongKhacHa: k4Sk.khacType === 'Thượng khắc Hạ',
       khacType: k4Sk.khacType,
       thienTuong: thienTuongThienBan[k4Thuong] || 'Quý Nhân',
     },
   ];
 
-  // 5. Khởi Tam Truyền (Cửu Tông Môn)
+  // 5. Khởi Tam Truyền Chuẩn Xác Theo Cửu Tông Môn (Hiệp Kỷ Biện Phương Thư)
   const { tuanKhong, tuanGiap } = getTuanKhong(dayCan, dayChi);
 
-  let soTruyen = k1Thuong;
-  let tongMonName = 'Nguyên Thủ Khóa';
-  let tongMonDescription = 'Thượng khắc Hạ duy nhất, sự tình minh bạch, thuận theo đạo trời mà hành xử.';
+  const cuuTongMon = deriveCuuTongMonTamTruyen(
+    dayCan,
+    dayChi,
+    hourChi,
+    nguyetTuong.chi,
+    thienBanMap,
+    diaBanFromThienMap,
+    tuKhoa,
+    canKyCung,
+    canNguHanh
+  );
 
-  // Kiểm tra các cặp khắc trong Tứ Khoa
-  const khacKhoas = tuKhoa.filter((k) => k.isKhac);
-  const thuongKhacHa = tuKhoa.filter((k) => k.khacType === 'Thượng khắc Hạ');
-  const haKhacThuong = tuKhoa.filter((k) => k.khacType === 'Hạ khắc Thượng');
-
-  // Xét Phục Ngâm / Phản Ngâm trước
-  const isPhucNgam = nguyetTuong.chi === hourChi;
-  const isPhanNgam = (ntChiIdx + 6) % 12 === hourChiIdx;
-
-  if (isPhucNgam) {
-    tongMonName = 'Phục Ngâm Khóa';
-    tongMonDescription = 'Thiên bàn trùng Địa bàn, sự việc bất động, đình trệ, nên giữ tĩnh làm chủ, thủ hộ cựu nghiệp.';
-    soTruyen = canKyCung;
-  } else if (isPhanNgam) {
-    tongMonName = 'Phản Ngâm Khóa';
-    tongMonDescription = 'Thiên bàn đối xung Địa bàn, chủ biến động kịch liệt, tráo trở, phản phục nhanh chóng.';
-    // Dịch mã
-    const dichMaMap: Record<string, string> = {
-      'Thân': 'Dần', 'Tý': 'Dần', 'Thìn': 'Dần',
-      'Hợi': 'Tị', 'Mão': 'Tị', 'Mùi': 'Tị',
-      'Dần': 'Thân', 'Ngọ': 'Thân', 'Tuất': 'Thân',
-      'Tị': 'Hợi', 'Dậu': 'Hợi', 'Sửu': 'Hợi',
-    };
-    soTruyen = dichMaMap[dayChi] || k1Thuong;
-  } else if (thuongKhacHa.length === 1 && haKhacThuong.length === 0) {
-    // 1. Nguyên Thủ Khóa
-    tongMonName = 'Nguyên Thủ Khóa (Tặc Khắc)';
-    tongMonDescription = 'Có duy nhất một cặp Thượng khắc Hạ (Tà Khắc). Khí thế thuận lý thành chương, chính đạo hanh thông.';
-    soTruyen = thuongKhacHa[0].thuongThan;
-  } else if (haKhacThuong.length === 1 && thuongKhacHa.length === 0) {
-    // 2. Trùng Thẩm Khóa
-    tongMonName = 'Trùng Thẩm Khóa (Tặc Khắc)';
-    tongMonDescription = 'Có duy nhất một cặp Hạ khắc Thượng (Tố Khắc). Việc bắt đầu từ dưới dấy lên, cần xét nét kỹ lưỡng nội bộ.';
-    soTruyen = haKhacThuong[0].thuongThan;
-  } else if (thuongKhacHa.length > 1 || haKhacThuong.length > 1 || (thuongKhacHa.length > 0 && haKhacThuong.length > 0)) {
-    // 3. Tỷ Dụng / Thiệp Hại Khóa
-    const targetGroup = thuongKhacHa.length > 0 ? thuongKhacHa : haKhacThuong;
-    const isDuongCan = ['Giáp', 'Bính', 'Mậu', 'Canh', 'Nhâm'].includes(dayCan);
-
-    // Tìm thần cùng dương/âm với Can ngày
-    const duongChiList = ['Tý', 'Dần', 'Thìn', 'Ngọ', 'Thân', 'Tuất'];
-    const matched = targetGroup.filter((k) => {
-      const isDuongChi = duongChiList.includes(k.thuongThan);
-      return isDuongCan ? isDuongChi : !isDuongChi;
-    });
-
-    if (matched.length === 1) {
-      tongMonName = 'Tỷ Dụng Khóa (Trí Dung)';
-      tongMonDescription = 'Có nhiều cặp khắc nhưng Thượng thần đồng khí Âm Dương với Can ngày. Chọn thần đồng loại để ứng phó sự việc.';
-      soTruyen = matched[0].thuongThan;
-    } else {
-      tongMonName = 'Thiệp Hại Khóa (Kiến Cơ)';
-      tongMonDescription = 'Các cặp khắc tương đồng, sự việc kinh qua nhiều chông gai thử thách, cần xem độ sâu cạn để giải quyết.';
-      soTruyen = (matched.length > 0 ? matched[0] : targetGroup[0]).thuongThan;
-    }
-  } else {
-    // Không có Thượng Hạ khắc -> Xét Dao Khắc hoặc Mão Tinh
-    // Dao khắc: Can ngày khắc Thượng thần (Cảo Đạn) hoặc Thượng thần khắc Can ngày (Đạn Xạ)
-    let daoKhacKhoa: LucNhamKhoa | undefined;
-    for (const k of tuKhoa) {
-      const sk = checkSinhKhac(canNguHanh, CHI_NGU_HANH[k.thuongThan]);
-      if (sk.isKhac) {
-        daoKhacKhoa = k;
-        break;
-      }
-    }
-
-    if (daoKhacKhoa) {
-      tongMonName = 'Dao Khắc Khóa (Dao Vọng)';
-      tongMonDescription = 'Tứ khoa không có khắc trực diện nhưng Can ngày và Thượng thần dao khắc lẫn nhau. Sự việc đến từ phương xa, bất ngờ.';
-      soTruyen = daoKhacKhoa.thuongThan;
-    } else {
-      // Mão Tinh Khóa
-      const isDuongCan = ['Giáp', 'Bính', 'Mậu', 'Canh', 'Nhâm'].includes(dayCan);
-      if (isDuongCan) {
-        tongMonName = 'Mão Tinh Khóa (Cương Mão)';
-        tongMonDescription = 'Tứ khoa hòa bình không khắc. Can Dương lấy Thượng thần của sao Dậu làm Sơ truyền.';
-        soTruyen = thienBanMap['Dậu'];
-      } else {
-        tongMonName = 'Mão Tinh Khóa (Nhu Mão)';
-        tongMonDescription = 'Tứ khoa hòa bình không khắc. Can Âm lấy Hạ thần đè dưới sao Mão làm Sơ truyền.';
-        soTruyen = diaBanFromThienMap['Mão'];
-      }
-    }
-  }
-
-  // Trung Truyền = Thiên Bàn đè lên Sơ Truyền
-  const trungTruyen = thienBanMap[soTruyen] || k2Thuong;
-  // Mạt Truyền = Thiên Bàn đè lên Trung Truyền
-  const matTruyen = thienBanMap[trungTruyen] || k3Thuong;
+  const soTruyen = cuuTongMon.soTruyen;
+  const trungTruyen = cuuTongMon.trungTruyen;
+  const matTruyen = cuuTongMon.matTruyen;
+  const tongMonName = cuuTongMon.tongMonName;
+  const tongMonCode = cuuTongMon.tongMonCode;
+  const tongMonDescription = cuuTongMon.tongMonDescription;
+  const ruleExplanation = cuuTongMon.ruleExplanation;
 
   const tamTruyen: LucNhamTruyen[] = [
     {
@@ -1125,7 +1531,7 @@ export function buildLucNhamChart(
   if (tamTruyen[0].isTuanKhong) score -= 15;
   if (tamTruyen[2].isTuanKhong) score -= 10;
   if (tongMonName.includes('Nguyên Thủ')) score += 8;
-  if (isPhanNgam || isPhucNgam) score -= 8;
+  if (tongMonName.includes('Phản Ngâm') || tongMonName.includes('Phục Ngâm')) score -= 8;
 
   // Ảnh hưởng từ Bản Mệnh & Hành Niên
   if (querent.banMenhKhacType === 'Được Sinh') score += 8;
@@ -1215,7 +1621,7 @@ export function buildLucNhamChart(
     thienBanRule: `Đem Nguyệt Tướng ${nguyetTuong.chi} gia lâm lên Chi Giờ chiêm quẻ (${hourChi}) trên Địa bàn, an thuận hành 12 Thiên Chi tạo thành Thiên Bàn.`,
     quyNhanRule: `Thời khắc chiêm thuộc ${isDayTime ? 'Ban Ngày (Đán Quý)' : 'Ban Đêm (Dạ Quý)'}, Nhật Can là ${dayCan}. Quý Nhân khởi tại ${quyNhanChi}. Cung ${quyNhanDiaChi} trên Địa bàn thuộc ${isThuan ? 'Nửa Đông (Hợi đến Tị)' : 'Nửa Tây (Ngọ đến Tuất)'}, nên 12 Thiên Tướng an ${quyNhanDirection} hành.`,
     tuKhoaRule: `Khoa 1: Can Thượng (${k1Thuong}/${dayCan} ký ${canKyCung}); Khoa 2: Can Âm (${k2Thuong}/${k2Ha}); Khoa 3: Chi Thượng (${k3Thuong}/${dayChi}); Khoa 4: Chi Âm (${k4Thuong}/${k4Ha}).`,
-    tamTruyenRule: `Xét tương tác khắc chế Tứ Khoa, quẻ phát động theo ${tongMonName}: Sơ Truyền ${soTruyen} (${soTuong}) ➔ Trung Truyền ${trungTruyen} ➔ Mạt Truyền ${matTruyen} (${matTuong}).`,
+    tamTruyenRule: `Rút Tam Truyền theo Cửu Tông Môn (${tongMonName}): Sơ Truyền ${soTruyen} (${soTuong}) ➔ Trung Truyền ${trungTruyen} ➔ Mạt Truyền ${matTruyen} (${matTuong}). ${tongMonDescription} ${ruleExplanation}`,
     menhNienRule: `Theo Hiệp Kỷ Biện Phương Thư: Người hỏi sinh năm ${querent.birthCanChi} (${querent.birthNapAm}), Bản Mệnh tại ${querent.banMenhChi}. ${querent.gender === 'Nam' ? 'Nam 1 tuổi khởi Dần thuận hành' : 'Nữ 1 tuổi khởi Thân nghịch hành'}, tuổi mụ ${querent.tuoiMu} nên Hành Niên đáo cung ${querent.hanhNienChi}.`,
   };
 
@@ -1248,7 +1654,9 @@ export function buildLucNhamChart(
     tuKhoa,
     tamTruyen,
     tongMonName,
+    tongMonCode,
     tongMonDescription,
+    ruleExplanation,
     tuanKhong,
     tuanGiap,
     thanSat: {

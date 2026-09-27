@@ -840,9 +840,16 @@ export const LucNhamPanel: React.FC<LucNhamPanelProps> = ({
               </span>
             </div>
 
-            <p className="text-xs text-slate-400 mt-2 mb-4 leading-relaxed">
+            <p className="text-xs text-slate-400 mt-2 mb-3 leading-relaxed">
               {chart.tongMonDescription}
             </p>
+
+            {chart.ruleExplanation && (
+              <div className="mb-3.5 p-2.5 rounded-lg bg-amber-950/20 border border-amber-500/25 text-[11px] text-amber-200/90 italic flex items-start gap-2 font-serif leading-relaxed">
+                <BookOpen className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                <span>{chart.ruleExplanation}</span>
+              </div>
+            )}
 
             <div className="space-y-3">
               {chart.tamTruyen.map((t, idx) => (

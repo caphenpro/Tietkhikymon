@@ -1,37 +1,30 @@
 # Kỳ Môn & Lục Nhâm Độn Giáp (Astronomical Precision & Ancient Divination Engine)
 
-[![Version](https://img.shields.io/badge/version-v2.32.0-amber.svg?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v2.33.0-amber.svg?style=flat-square)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Engine](https://img.shields.io/badge/astronomy-VSOP87%20%2F%20ELP2000-emerald.svg?style=flat-square)](src/astronomy/)
 
-Ứng dụng chuyên sâu lập quẻ và giải mã **Cổ Tam Thức Độn Giáp**: **Quẻ Kỳ Môn Độn Giáp 9 Cung Lạc Thư (4 Tầng Không - Thời Gian)**, **Đại Lục Nhâm (Tam Truyền Tứ Khoa Phân Định Thành Bại & Thân Mệnh Người Hỏi)**, **Dự Trắc Song Thức Tổng Hợp**, kết hợp **Lịch & Tiết Khí Tối Giản** và **Mô Hình Tính Toán Thiên Văn Chuẩn Xác (Jean Meeus, VSOP87 & ELP2000)**.
+Ứng dụng chuyên sâu lập quẻ và giải mã **Cổ Tam Thức Độn Giáp**: **Quẻ Kỳ Môn Độn Giáp 9 Cung Lạc Thư (4 Tầng Không - Thời Gian)**, **Đại Lục Nhâm (Tam Truyền Tứ Khoa Chuẩn Cửu Tông Môn & Thân Mệnh Người Hỏi)**, **Dự Trắc Song Thức Tổng Hợp**, kết hợp **Lịch & Tiết Khí Tối Giản** và **Mô Hình Tính Toán Thiên Văn Chuẩn Xác (Jean Meeus, VSOP87 & ELP2000)**.
 
 ---
 
 ## 📢 Thông Báo Cập Nhật Phiên Bản Mới Nhất
 
-### 🚀 **Phiên bản hiện tại: `v2.32.0`** *(Phát hành: 27/09/2026)*
-**Tên mã:** *Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)*
+### 🚀 **Phiên bản hiện tại: `v2.33.0`** *(Phát hành: 27/09/2026)*
+**Tên mã:** *Chuẩn Hóa Cửu Tông Môn Rút Tam Truyền Lục Nhâm (Precision Tam Truyền & Nine Gates Engine)*
 
-- 🧭 **Bổ Sung Bộ Điều Khiển Lập Quẻ Lục Nhâm Đầy Đủ & Minh Bạch**:
-  - Tích hợp khung điều khiển trực tiếp trên quẻ Lục Nhâm: Nhập/chọn năm sinh (tự động tính Can Chi, 60 Hoa Giáp Nạp Âm, Tuổi mụ, Con giáp), chọn giới tính (Nam / Nữ) và lĩnh vực cần hỏi.
-  - Bảng Tứ Trụ Thời Gian (Năm, Tháng, Ngày, Giờ Can Chi), Tiết Khí, Kinh Độ Mặt Trời, Nguyệt Tướng, Thời Chi và điều chỉnh nhanh thời khắc (Live / Tùy chỉnh canh giờ / ngày).
-- 👤 **Khảo Xét Thân Mệnh Người Hỏi Theo Hiệp Kỷ Biện Phương Thư (Quyển 32 - Lục Nhâm Khởi Hành Niên)**:
-  - *Bản Mệnh vi Căn:* Xác định Cung Bản Mệnh (Chi năm sinh), Thượng Thần đè lên Bản Mệnh và Thần Tướng ngự trị; phân tích quan hệ Sinh Khắc (Được sinh, Bị khắc, Khắc xuất, Tiết khí, Tỷ hòa).
-  - *Hành Niên vi Diệp:* Áp dụng khẩu quyết cổ *"Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành"* định vị Cung Hành Niên và luận đoán vận trình cụ thể trong năm xem quẻ.
-  - Tương tác Thân Mệnh với Tam Truyền (Sơ - Trung - Mạt) và các Thần Sát (Quý Nhân, Lộc Thần, Dịch Mã, Tuần Không).
-- 🏛️ **Trực Quan Hóa Ma Trận 12 Cung Địa Bàn - Thiên Bàn**:
-  - Gắn huy hiệu sinh động trên từng cung: `[Mệnh]`, `[Niên]`, `[Can Ký]`, `[Chi Ngày]`, `[Sơ]`, `[Trung]`, `[Mạt]`, `[Quý Nhân]`, `[Lộc Thần]`, `[Dịch Mã]`, `[Tuần Không]`.
-  - Bảng tra cứu chi tiết cung (Selected Palace Explorer) phân tích tường tận Thần Tướng, Ngũ Hành và mối quan hệ trực tiếp với Thân Mệnh người hỏi.
-- 🎯 **Nâng Cấp Dự Trắc Chuyên Đề Lên 8 Phương Diện (Cá Nhân Hóa Đương Số)**:
-  - Tích hợp sâu Bản Mệnh & Hành Niên vào các lời đoán: 1. Cầu Tài; 2. Công Danh; 3. Hôn Nhân; 4. Sức Khỏe; 5. Kiện Tụng; 6. Xuất Hành; 7. Nhà Cửa Gia Đạo; 8. Thất Vật Tìm Đồ.
-- 📖 **Cập Nhật Thuyết Minh Thuật Toán**: Bổ sung Mục 29 trong `AlgorithmGuideModal.tsx`.
+- ⚔️ **Chuẩn Hóa 100% Thuật Toán Rút Tam Truyền Theo Cửu Tông Môn Cổ Bản**:
+  - Thực thi quy tắc cốt lõi: *"Hạ tặc Thượng vi trọng"* - ưu tiên tuyệt đối nhóm Hạ khắc Thượng (Tố Khắc / Trùng Thẩm) trước Thượng khắc Hạ (Tà Khắc / Nguyên Thủ).
+  - Chuẩn hóa đầy đủ 9 tông môn: Nguyên Thủ, Trùng Thẩm, Tỷ Dụng (Tri Nhất), Thiệp Hại (Kiến Cơ / Sát Gian), Dao Khắc (Đạn Xạ & Cảo Cừu), Mão Tinh (Cương Mão & Nhu Mão), Biệt Trách, Bát Chuyên, Phục Ngâm & Phản Ngâm (Tỉnh Lan Khóa).
+  - Tích hợp khẩu quyết cổ thư (`ruleExplanation`) hiển thị trực quan ngay trên khối Tam Truyền của giao diện Lục Nhâm.
+- 📖 **Cập Nhật Thuyết Minh Thuật Toán**: Bổ sung **Mục 30** trong `AlgorithmGuideModal.tsx`.
 
 👉 **Xem toàn bộ lịch sử các lần cập nhật:** [Xem chi tiết tại CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-### 📦 **Phiên bản trước: `v2.31.0`** *(Phát hành: 22/09/2026)*
+### 📦 **Phiên bản trước: `v2.32.0`** *(Phát hành: 27/09/2026)*
+**Tên mã:** *Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)*
 
 ## 🌟 Tính Năng Nổi Bật
 

@@ -31,6 +31,7 @@ import {
   Bookmark,
   Bot,
   Cpu,
+  TrendingUp,
 } from 'lucide-react';
 import { APP_VERSION } from '../version';
 
@@ -74,6 +75,7 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
     { id: 'battu-vuong-nhuoc', title: '27. Thẩm Duyệt Vượng Nhược Bát Tự (Sức Mạnh Nhật Chủ Tử Bình)', icon: Layers },
     { id: 'streamlined-kymon-focus', title: '28. Tối Giản Hóa Trọng Tâm: Kỳ Môn & Lục Nhâm Độn Giáp', icon: Compass },
     { id: 'luc-nham-querent-hiep-ky', title: '29. Chuẩn Hóa Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư', icon: User },
+    { id: 'cuu-tong-mon-tam-truyen', title: '30. Chuẩn Hóa Cửu Tông Môn Rút Tam Truyền Theo Cổ Bản Hiệp Kỷ Biện Phương Thư & Lục Nhâm Đại Toàn', icon: TrendingUp },
   ];
 
   return (
@@ -1711,6 +1713,138 @@ export const AlgorithmGuideModal: React.FC<AlgorithmGuideModalProps> = ({ isOpen
                     <br />• <strong>Gặp Tuần Không:</strong> Vận thế hụt hẫng, mưu sự chưa thành hình thực tế.
                     <br />• <strong>Gặp Quý Nhân, Lộc Thần, Dịch Mã:</strong> Được cát khí trợ lực, biến hung hóa cát.
                   </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* MỤC 30: CHUẨN HÓA CỬU TÔNG MÔN RÚT TAM TRUYỀN (HIỆP KỶ BIỆN PHƯƠNG THƯ & LỤC NHÂM ĐẠI TOÀN) */}
+          {(activeSection === 'all' || activeSection === 'cuu-tong-mon-tam-truyen') && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/70 border border-amber-500/30 space-y-4">
+              <div className="flex items-center gap-2.5 text-amber-300 font-bold text-sm sm:text-base border-b border-amber-500/20 pb-2">
+                <TrendingUp className="w-5 h-5 text-amber-400" />
+                <span>30. Chuẩn Hóa Cửu Tông Môn Rút Tam Truyền Theo Cổ Bản Hiệp Kỷ Biện Phương Thư & Lục Nhâm Đại Toàn</span>
+              </div>
+
+              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Trong Đại Lục Nhâm Độn Giáp, <strong>Tam Truyền (Sơ Truyền - Trung Truyền - Mạt Truyền)</strong> là chìa khóa định đoạt tiến trình nhân quả: Khởi đầu (nguyên nhân) ➔ Diễn biến (xúc tác) ➔ Hậu vận (kết quả). Việc rút Tam Truyền tuân thủ tuyệt đối quy luật nghiêm cẩn của <strong>Cửu Tông Môn</strong> (9 cửa lấy truyền):
+              </p>
+
+              <div className="space-y-3 text-xs">
+                {/* Nguyên tắc cốt lõi */}
+                <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl space-y-1 text-slate-300">
+                  <strong className="text-amber-300 block font-bold text-xs uppercase tracking-wider">
+                    Quy Tắc Ưu Tiên Tối Cao: "Hạ Tặc Thượng Vi Trọng"
+                  </strong>
+                  <p>
+                    Khi xét Tứ Khoa, nếu có cặp <strong>Hạ khắc Thượng (Tố Khắc / Tặc)</strong>, Lục Nhâm coi trọng sự biến phát từ cấp dưới hoặc nội bộ dấy lên nên <strong>bắt buộc ưu tiên tuyệt đối nhóm Hạ khắc Thượng</strong>, bỏ qua các cặp Thượng khắc Hạ. Chỉ khi hoàn toàn không có Hạ khắc Thượng mới xét đến <strong>Thượng khắc Hạ (Tà Khắc / Khắc)</strong>.
+                  </p>
+                </div>
+
+                {/* 9 Tông Môn Chi Tiết */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-amber-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px]">1</span>
+                      <span>Tặc Khắc Khóa (Nguyên Thủ & Trùng Thẩm)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      • <strong>Nguyên Thủ:</strong> Duy nhất 1 cặp Thượng khắc Hạ (Tà Khắc). Lấy Thượng Thần làm Sơ Truyền, chính đạo hanh thông.
+                      <br />• <strong>Trùng Thẩm:</strong> Duy nhất 1 cặp Hạ khắc Thượng (Tố Khắc). Lấy Thượng Thần bị khắc làm Sơ Truyền, cần thẩm xét nội bộ cẩn mật.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-indigo-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center text-[10px]">2</span>
+                      <span>Tỷ Dụng Khóa (Tri Nhất Khóa)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Khi có từ 2 cặp Hạ khắc Thượng (hoặc 2 Thượng khắc Hạ) trở lên, so sánh tính Âm Dương của các Thượng Thần với Can Ngày (Dương Can dụng Dương Chi, Âm Can dụng Âm Chi). Thần nào đồng khí Âm Dương duy nhất sẽ làm Sơ Truyền.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-cyan-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-[10px]">3</span>
+                      <span>Thiệp Hại Khóa (Kiến Cơ & Sát Gian)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Khi sau phép Tỷ Dụng vẫn còn 2 thần cùng tính Âm Dương (hoặc cùng khác tính): Đếm số cung tương khắc trên lộ trình từ Bản vị Địa bàn đến vị trí Thiên bàn hiện tại. Thần nào có số lần khắc nhiều nhất (thiệp hại thâm nhất) làm Sơ Truyền. Nếu bằng nhau, ưu tiên cung Mạnh (Dần Thân Tị Hợi) ➔ Trọng (Tý Ngọ Mão Dậu) ➔ Quý (Thìn Tuất Sửu Mùi).
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-rose-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-rose-500/20 text-rose-300 flex items-center justify-center text-[10px]">4</span>
+                      <span>Dao Khắc Khóa (Đạn Xạ & Cảo Cừu)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Tứ Khoa không có Thượng Hạ khắc:
+                      <br />• <strong>Đạn Xạ:</strong> Thần ở xa khắc Can Ngày (ưu tiên số 1), lấy Thần đó làm Sơ Truyền.
+                      <br />• <strong>Cảo Cừu:</strong> Can Ngày khắc Thần ở xa (ưu tiên số 2), lấy Thần bị khắc làm Sơ Truyền.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-emerald-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px]">5</span>
+                      <span>Mão Tinh Khóa (Cương Mão & Nhu Mão)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Tứ Khoa đầy đủ 4 khoa phân biệt, thuần hòa vô khắc, không dao khắc:
+                      <br />• <strong>Cương Mão (Dương Can):</strong> Sơ = Dậu Thượng Thần; Trung = Chi Thượng; Mạt = Can Thượng.
+                      <br />• <strong>Nhu Mão (Âm Can):</strong> Sơ = Dậu Hạ Thần; Trung = Can Thượng; Mạt = Chi Thượng.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-purple-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-purple-500/20 text-purple-300 flex items-center justify-center text-[10px]">6</span>
+                      <span>Biệt Trách Khóa (Bất Toàn Tam Khoa)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Tứ Khoa có 3 khoa phân biệt, vô khắc vô dao:
+                      <br />• <strong>Dương Can:</strong> Can Hợp Ký Cung Thượng Thần làm Sơ Truyền (Giáp hợp Kỷ ký Ngọ...). Trung & Mạt quy về Can Thượng Thần.
+                      <br />• <strong>Âm Can:</strong> Chi Tiền Tam Hợp làm Sơ Truyền. Trung & Mạt quy về Can Thượng Thần.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-blue-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-blue-500/20 text-blue-300 flex items-center justify-center text-[10px]">7</span>
+                      <span>Bát Chuyên Khóa (Can Chi Đồng Vị)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Can Chi đồng vị (Can Ký Cung trùng Chi Ngày), Tứ Khoa chỉ còn 2 khoa phân biệt, thuần hòa vô khắc:
+                      <br />• <strong>Dương Can:</strong> Can Thượng Thần tiến 3 vị trên Địa bàn làm Sơ Truyền.
+                      <br />• <strong>Âm Can:</strong> Khoa 4 Thượng Thần thoái 3 vị trên Địa bàn làm Sơ Truyền. Trung & Mạt đều quy về Can Thượng Thần.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5">
+                    <div className="font-bold text-orange-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-orange-500/20 text-orange-300 flex items-center justify-center text-[10px]">8</span>
+                      <span>Phục Ngâm Khóa (Bất Động Đình Trệ)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Nguyệt Tướng trùng Chi Giờ, Thiên bàn = Địa bàn:
+                      <br />• <strong>Hữu Khắc:</strong> Lấy Thần có khắc làm Sơ Truyền, truyền theo Hình của Địa Chi (Dần-Tị-Thân, Sửu-Tuất-Mùi, Tý-Mão). Nếu tự hình đổi sang Chi Thần hoặc Xung.
+                      <br />• <strong>Vô Khắc:</strong> Dương Can khởi Can Ký Cung, Âm Can khởi Chi Ngày, truyền theo Hình Địa Chi.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5 md:col-span-2">
+                    <div className="font-bold text-teal-300 flex items-center gap-1.5">
+                      <span className="w-4 h-4 rounded-full bg-teal-500/20 text-teal-300 flex items-center justify-center text-[10px]">9</span>
+                      <span>Phản Ngâm Khóa (Xung Động 180° - Tỉnh Lan Khóa)</span>
+                    </div>
+                    <p className="text-slate-400">
+                      Nguyệt Tướng xung Chi Giờ 180°:
+                      <br />• <strong>Hữu Khắc:</strong> Lấy Tặc Khắc làm Sơ Truyền, Trung Truyền quy Chi Thượng, Mạt Truyền quy Can Thượng.
+                      <br />• <strong>Vô Khắc (Tỉnh Lan Khóa):</strong> Lấy Dịch Mã của Chi Ngày làm Sơ Truyền, Trung Truyền quy Chi Thượng, Mạt Truyền quy Can Thượng.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

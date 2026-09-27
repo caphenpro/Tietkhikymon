@@ -11,18 +11,46 @@ export interface ChangelogItem {
   astronomyNotes?: string[];
 }
 
-export const APP_VERSION = '2.32.0';
+export const APP_VERSION = '2.33.0';
 export const APP_RELEASE_DATE = '2026-09-27';
-export const APP_CODENAME = 'Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)';
+export const APP_CODENAME = 'Chuẩn Hóa Cửu Tông Môn Rút Tam Truyền Lục Nhâm (Precision Tam Truyền & Nine Gates Engine)';
 export const APP_GITHUB_REPO = 'https://github.com/caphenpro/Tietkhikymon';
 
 export const CHANGELOG_DATA: ChangelogItem[] = [
+  {
+    version: '2.33.0',
+    releaseDate: '2026-09-27',
+    codename: 'Chuẩn Hóa Cửu Tông Môn Rút Tam Truyền Lục Nhâm (Precision Tam Truyền & Nine Gates Engine)',
+    tagline: 'Chuẩn hóa 100% thuật toán rút Tam Truyền theo Cửu Tông Môn cổ bản Hiệp Kỷ Biện Phương Thư & Lục Nhâm Đại Toàn: Tuân thủ quy tắc tối thượng Hạ Tặc Thượng Vi Trọng, xử lý chuẩn xác 9 môn (Tặc Khắc, Tỷ Dụng, Thiệp Hại, Dao Khắc, Mão Tinh, Biệt Trách, Bát Chuyên, Phục Ngâm, Phản Ngâm).',
+    isLatest: true,
+    highlights: [
+      'Độc lập hóa & chuẩn hóa thuật toán rút Tam Truyền với hàm deriveCuuTongMonTamTruyen bao quát đầy đủ 9 tông môn kinh điển.',
+      'Thực thi chuẩn mực quy tắc cốt lõi: "Hạ tặc Thượng vi trọng" - ưu tiên tuyệt đối nhóm Hạ khắc Thượng (Tố Khắc / Trùng Thẩm) trước Thượng khắc Hạ (Tà Khắc / Nguyên Thủ).',
+      'Chuẩn hóa Thiệp Hại Khóa (Kiến Cơ / Sát Gian): Tính toán chính xác độ sâu thiệp hại bằng số bước tương khắc trên lộ trình Địa bàn, phân cấp ưu tiên Mạnh (Tứ Sinh) ➔ Trọng (Tứ Vượng) ➔ Quý (Tứ Mộ).',
+      'Chuẩn hóa Dao Khắc Khóa: Phân định rạch ròi Đạn Xạ (Thần khắc Can - ưu tiên số 1) và Cảo Cừu (Can khắc Thần - ưu tiên số 2), kết hợp phép Tỷ Dụng đồng khí Âm Dương.',
+      'Bát Chuyên & Biệt Trách Khóa: Nhận diện chính xác Can Chi đồng vị (Bát Chuyên: Dương tiến 3, Âm thoái 3, Trung Mạt quy Can Thượng) và Tứ Khoa bất toàn 3 khoa (Biệt Trách: Dương Can dụng Can Hợp, Âm Can dụng Chi Tiền Tam Hợp).',
+      'Phục Ngâm & Phản Ngâm Khóa: Phục Ngâm truyền tuần tự theo Địa Chi Tương Hình (Dần-Tị-Thân, Sửu-Tuất-Mùi, Tý-Mão; tự hình chuyển Chi Thần hoặc Xung); Phản Ngâm vô khắc lấy Dịch Mã (Tỉnh Lan Khóa).',
+      'Hiển thị khẩu quyết cổ thư (ruleExplanation) từ Hiệp Kỷ Biện Phương Thư và Lục Nhâm Đại Toàn ngay dưới khối Tam Truyền.',
+      'Cập nhật Mục 30 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+    ],
+    added: [
+      'Hàm deriveCuuTongMonTamTruyen() trong /src/astronomy/lucNham.ts với đầy đủ 9 môn kinh điển.',
+      'Bảng tra cứu CAN_HOP_MAP, CHI_TAM_HOP_TIEN_MAP, CHI_HINH_MAP, CHI_XUNG_MAP chuẩn cổ thư.',
+      'Mục 30 trong Cẩm Nang Thuyết Minh Thuật Toán (AlgorithmGuideModal.tsx).',
+      'Khối khẩu quyết cổ thư (Hiệp Kỷ Biện Phương Thư) trong khối Tam Truyền tại LucNhamPanel.tsx.',
+    ],
+    improved: [
+      'Loại bỏ hoàn toàn sự nhầm lẫn giữa Thượng khắc Hạ và Hạ khắc Thượng khi có nhiều cặp khắc.',
+      'Định vị chính xác Trung Truyền và Mạt Truyền cho các cách cục đặc thù (Phục Ngâm, Phản Ngâm, Mão Tinh, Biệt Trách, Bát Chuyên).',
+      'Thuyết minh chi tiết lý do và cơ chế chọn môn phát đoán trong setupExplanation.tamTruyenRule.',
+    ],
+  },
   {
     version: '2.32.0',
     releaseDate: '2026-09-27',
     codename: 'Chuẩn Hóa Quẻ Đại Lục Nhâm: Nhân Mệnh (Bản Mệnh & Hành Niên) Theo Hiệp Kỷ Biện Phương Thư (Standardized Luc Nham Querent & Destiny Engine)',
     tagline: 'Hoàn thiện và chuẩn hóa toàn diện phân hệ Đại Lục Nhâm theo cổ bản Hiệp Kỷ Biện Phương Thư: Bổ sung bộ điều khiển lập quẻ với đầy đủ Tứ Trụ Thời Gian và Nhân Mệnh người hỏi (Năm sinh, Giới tính, Bản Mệnh vi Căn, Hành Niên vi Diệp), luận giải cá nhân hóa sâu sắc.',
-    isLatest: true,
+    isLatest: false,
     highlights: [
       'Bổ sung Bộ Điều Khiển Lập Quẻ Lục Nhâm (Thời Khắc Chiêm & Nhân Mệnh): Hiển thị đầy đủ, minh bạch các thông số đầu vào để lập quẻ bao gồm Tứ Trụ Can Chi (Năm, Tháng, Ngày, Giờ), Kinh độ Mặt Trời (Thái Dương triền cung), Tiết khí và Nguyệt Tướng.',
       'Tích hợp Thân Mệnh Người Hỏi (Hiệp Kỷ Biện Phương Thư - Quyển 32): Tự động tính toán Bản Mệnh (Chi năm sinh, 60 Hoa Giáp Nạp Âm, Tuổi mụ) và Hành Niên theo khẩu quyết cổ "Nam nhất tuế khởi Dần thuận hành, Nữ nhất tuế khởi Thân nghịch hành".',
